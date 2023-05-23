@@ -9,8 +9,8 @@ const Hero = () => {
       <div className="w-[60%]">
         <Image src={BlogImage} alt="Blogy logo" className="w-[100%] h-[100%] md:block  hidden " />
       </div>
-      <div>
-        <div className="bg-white absolute w-[100%] md:w-[50%] sm:text-left text-center sm:items-start items-center   md:left-20 left-0 top-24  p-6 flex flex-col gap-2">
+      <div className="flex h-full items-center ">
+        <div className="bg-white absolute w-[100%] md:w-[50%] sm:text-left text-center sm:items-start items-center left-0 md:left-24  p-6 flex flex-col gap-2">
           <span className="flex items-center gap-1 ">
             <hr className="w-10 h-[2px]   border-0 rounded bg-orange-700" />
             <p>Interior</p>
