@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const Navbar = () => {
   return (
-    <div className="flex justify-around  items-center h-20">
+    <div className="flex justify-around  items-center h-16 ">
       <Image src={BlogyLogo} alt="Blogy logo" width={100} height={42} />
       <ul className="flex gap-4">
         <li className="hover:border-b border-orange-500">
@@ -24,10 +24,18 @@ const Navbar = () => {
         <li>
           <a href="">Fashion</a>
         </li>
-        <li className="bg-gray-430 h-20">
-          <div className="flex flex-1">
-            <Image src={SeachIcon} alt="search icon" width={20} height={20} />
-            <input type="text" placeholder="search here" />
+        <li>
+          <div className="flex gap-2 items-center">
+            <Image
+              src={SeachIcon}
+              alt="search icon"
+              className="w-[16px] h-[16px]"
+            />
+            <input
+              type="text"
+              className="focus:outline-none border-none "
+              placeholder="search here..."
+            />
           </div>
         </li>
       </ul>
