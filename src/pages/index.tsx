@@ -1,8 +1,12 @@
-import { Navbar, Hero } from "@/components";
+import { LatestPost, Hero, Card } from "@/components";
 
 const Home = () => {
   return (
-    <Hero />
+    <>
+      <Hero />
+
+      <LatestPost />
+    </>
   );
 };
 
