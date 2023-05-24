@@ -24,20 +24,22 @@ const Navbar = () => {
         <li>
           <a href="">Fashion</a>
         </li>
-
+        <li>
+          <div className="flex gap-2 items-center">
+            <Image
+              src={SeachIcon}
+              alt="search icon"
+              className="w-[16px] h-[16px]"
+            />
+            <input
+              type="text"
+              className="focus:outline-none border-none "
+              placeholder="search here..."
+            />
+          </div>
+        </li>
       </ul>
-      <div className="flex gap-2 items-center">
-        <Image
-          src={SeachIcon}
-          alt="search icon"
-          className="w-[16px] h-[16px]"
-        />
-        <input
-          type="text"
-          className="focus:outline-none border-none "
-          placeholder="search here..."
-        />
-      </div>
+
     </div>
   );
 };
