@@ -2,6 +2,7 @@ import React from "react";
 import BlogyLogo from "../../assest/Blogy.png";
 import SeachIcon from "../../assest/Search.png";
 import Image from "next/image";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
@@ -9,20 +10,20 @@ const Navbar = () => {
       <Image src={BlogyLogo} alt="Blogy logo" width={100} height={42} />
       <ul className="hidden gap-4 sm:flex">
         <li className="hover:border-b border-orange-500">
-          <a href="">Home</a>
+          <Link href="">Home</Link>
         </li>
         <li>
-          <a href="">Travel</a>
+          <Link href="">Travel</Link>
         </li>
 
         <li>
-          <a href="">Food</a>
+          <Link href="">Food</Link>
         </li>
         <li>
-          <a href="">Lifestyle</a>
+          <Link href="">Lifestyle</Link>
         </li>
         <li>
-          <a href="">Fashion</a>
+          <Link href="">Fashion</Link>
         </li>
         <li>
           <div className="flex gap-2 items-center">
