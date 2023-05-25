@@ -4,23 +4,27 @@ import BlogImage from "../../assest/BlogImage.png";
 
 const Hero = () => {
   return (
-    <div className="flex justify-center h-[calc(100vh_-_64px)] overflow-hidden">
+    <div className="flex justify-center h-[max(calc(100vh_-_64px),50vh)] overflow-hidden">
       <div className="w-[40%] relative bg-gray-50 md:block  hidden"></div>
       <div className="w-[60%]">
-        <Image src={BlogImage} alt="Blogy logo" className="w-[100%] h-[100%] md:block  hidden " />
+        <Image
+          src={BlogImage}
+          alt="Blogy logo"
+          className="w-[100%] h-[100%] md:block  hidden "
+        />
       </div>
       <div className="flex h-full items-center ">
-        <div className="bg-white absolute w-[100%] md:w-[50%] sm:text-left text-center sm:items-start items-center left-0 md:left-24  p-6 flex flex-col gap-2">
+        <div className="bg-white absolute  md:w-[50%]  w-[100%]  sm:text-left text-center sm:items-start items-center left-0 md:left-24  p-6 flex flex-col gap-2">
           <span className="flex items-center gap-1 ">
             <hr className="w-10 h-[2px]   border-0 rounded bg-orange-700" />
             <p>Interior</p>
           </span>
-          <h2 className="text-4xl lg:text-5xl font-bold font-PT ">
+          <h2 className="text-4xl md:text-5xl font-bold  ">
             How to Get Started With Interior Design
           </h2>
           <p className="text-gray-500 flex items-center gap-2 text-[12px] lg:text-[16px]">
             March 25, 2021
-            <span className="h-[5px] w-[5px] bg-gray-500 rounded-lg"></span> 4
+            <span className="h-[5px] w-[5px] bg-gray-500 rounded-lg"></span>4
             min read
           </p>
           <p className="text-gray-500 text-[12px] lg:text-[16px]">
