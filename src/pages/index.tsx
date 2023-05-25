@@ -1,5 +1,5 @@
 import React from "react";
-import { LatestPost, Hero, RecentPost } from "@/components";
+import { LatestPost, Hero, RecentPost, FeaturedSection } from "@/components";
 
 const Home = () => {
   return (
@@ -7,6 +7,7 @@ const Home = () => {
       <Hero />
       <RecentPost />
       <LatestPost />
+      <FeaturedSection />
     </React.Fragment>
   );
 };
