@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { useCallback, useMemo, useState } from "react";
 import BlogImage from "../../assest/BlogImage.png";
 import ContentContainer from "../ContentContainer";
-import { slideContent, slideContentPropsT } from "./heroContent";
+import { slideContent } from "./heroContent";
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -22,7 +22,7 @@ const Hero = () => {
 
   return (
     <div className="flex relative justify-center sm:h-[calc(100vh_-_64px)] h-[70vh] overflow-hidden">
-      <div className="w-[40%] relative md: bg-neutral-50 bg-none "></div>
+      <div className="w-[40%] relative md: bg-neutral-50 bg-none"></div>
       <div className="w-[60%]">
         <Image
           src={BlogImage}
@@ -30,11 +30,11 @@ const Hero = () => {
           className="w-[100%] h-[100%] md:block hidden "
         />
       </div>
-      <ContentContainer className="!absolute top-0 bottom-0 left-[50%] translate-x-[-50%]">
+      <ContentContainer className="!absolute top-0 lg:top-20 bottom-0 left-[50%]  sm:left-[55%] translate-x-[-50%]">
         <div className="absolute left-0 top-[50%] translate-y-[-50%] flex flex-col gap-10 max-w-[650px] width-[90%]">
           <div
             key={content?.id}
-            className="bg-white z-0 shadow-lg w-[100%] sm:text-left text-center sm:items-start items-center p-6 flex flex-col gap-2"
+            className="bg-white z-0 shadow-none sm:shadow-lg w-[100%] sm:text-left text-center sm:items-start items-center p-6 flex flex-col gap-2"
           >
             <span className="flex items-center gap-1 ">
               <hr className="w-10 h-[2px]   border-0 rounded bg-orange-700" />
@@ -103,9 +103,8 @@ const SliderIndicator = ({
       {slideContent.map((item) => (
         <span
           key={item.id}
-          className={`h-2 w-2 rounded-full ${
-            item.id == id ? "bg-orange-200" : " bg-orange-400"
-          }`}
+          className={`h-2 w-2 rounded-full ${item.id == id ? "bg-orange-200" : " bg-orange-400"
+            }`}
         ></span>
       ))}
     </div>

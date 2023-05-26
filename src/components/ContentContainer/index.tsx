@@ -7,7 +7,7 @@ export default ({ children, className }: PropsType) => {
   return (
     <div
       className={cx(
-        "max-w-7xl w-full p-5 mx-auto relative",
+        "max-w-7xl w-full sm:p-5 p-4 mx-auto relative",
         className && className
       )}
     >

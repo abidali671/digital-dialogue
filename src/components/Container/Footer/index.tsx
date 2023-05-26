@@ -5,10 +5,10 @@ import Logo from "../../../assest/icon/logo";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#272343]">
-      <ContentContainer className="py-20">
-        <div className="grid gap-y-5 place-items-start gap-x-8 md:gap-x-0 grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
-          <div className="flex   flex-col gap-5 items-start justify-start">
+    <footer className="bg-[#272343] ">
+      <ContentContainer className="pt-20 flex flex-col gap-6 absolute right-0 left-0 bottom-0">
+        <div className="grid gap-y-5  place-content-start pb-4 mx-auto px-4 grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-4">
+          <div className="flex  flex-col gap-5 items-start justify-start">
             <Logo fill="red" stroke="white" />
             <p className="text-gray-400 text-md leading-6 ">
               Phasellus porttitor sapien a purus venenatis condimentum. Nunc
@@ -24,7 +24,7 @@ const Footer = () => {
             title="Follow us"
             links={["Travel", "Food", "LifeStyle", "Fashion"]}
           />
-          <div className="flex flex-col gap-3 w-full ">
+          <div className="flex flex-col gap-3 w-full md:col-span-2  lg:col-span-1 ">
             <h3 className="text-2xl pt-3 text-white ">Newsletter</h3>
             <div className="flex gap-2 h-12 ">
               <input
@@ -37,6 +37,11 @@ const Footer = () => {
               </button>
             </div>
           </div>
+        </div>
+        <hr className=" border-1 border-[#7F7F7F]" />
+        <div className="text-white flex justify-between items-center">
+          <p className="text-md">@ 2023 - Digital Dialogue</p>
+          <p className="text-md">Designed & Develop by Zakirsoft</p>
         </div>
       </ContentContainer>
     </footer>
@@ -51,7 +56,7 @@ interface FooterLinkPropsT {
 }
 const FooterLink = ({ title, links }: FooterLinkPropsT) => {
   return (
-    <div className="flex gap-3 grid flex-col">
+    <div className="flex gap-3  flex-col">
       <h3 className="text-2xl pt-3 text-white">{title}</h3>
       <ul className="flex-col flex text-white gap-2">
         {links.map((link) => (
