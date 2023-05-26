@@ -4,7 +4,7 @@ import BlogImage from "../../assest/BlogImage.png";
 
 const Hero = () => {
   return (
-    <div className="flex justify-center h-[max(calc(100vh_-_64px),50vh)] overflow-hidden">
+    <div className="flex justify-center sm:h-[calc(100vh_-_64px)] h-[calc(100vh_-_400px)] overflow-hidden">
       <div className="w-[40%] relative bg-gray-50 md:block  hidden"></div>
       <div className="w-[60%]">
         <Image

@@ -5,8 +5,8 @@ import Link from "next/link";
 
 const Card = () => {
   return (
-    <div className="max-w-xs ">
-      <div className="relative  h-[240px] w-full object-contain">
+    <div className="max-w-sm">
+      <div className="relative  h-[240px] object-contain">
         <Image
           src="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
           alt="shoes"
