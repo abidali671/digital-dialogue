@@ -25,6 +25,10 @@ const Card = ({
 }: CardPropsT) => {
   const readingTime = useReadingTime(description); //reading hook
 
+  const customizeWidth: customizeWidthPropsT = { // props based customize width
+    'sm': 'max-w-xs',
+    'md': 'max-w-[380px]',
+  }
   const customizeWidth: customizeWidthPropsT = {
     // props based customize width
     sm: "max-w-xs",

@@ -1,8 +1,9 @@
 import React from "react";
-import { AppInitialProps } from "next/app";
-import "../styles/global.css";
-import { Navbar } from "@/components";
 import Layout from "@/components/layout";
+import Head from 'next/head'
+import "../styles/global.css";
+import { AppInitialProps } from "next/app";
+
 
 interface AppPropsT {
   Component: React.FC<AppInitialProps>;
@@ -11,8 +12,11 @@ interface AppPropsT {
 
 export default function MyApp({ Component, pageProps }: AppPropsT) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <>
+      <Head><title>Blogy</title></Head>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </>
   );
 }
