@@ -1,6 +1,7 @@
-export { default as Navbar } from "./Navbar";
-export { default as Hero } from "./HeroSection";
+export { default as Navbar } from "./navbar";
+export { default as Hero } from "./heroSection";
 export { default as Card } from "./Card";
-export { default as LatestPost } from "./LatestPost";
-export { default as RecentPost } from "./RecentPost";
+export { default as LatestPost } from "./latestPost";
+export { default as RecentPost } from "./recentPost";
 export { default as FeaturedSection } from "./featuredSection";
+export { default as AllPosts } from "./allPosts";
