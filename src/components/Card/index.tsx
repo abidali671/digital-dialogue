@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useReadingTime } from "../../hooks/readingTime";
@@ -23,27 +23,23 @@ const Card = ({
   date,
   width,
 }: CardPropsT) => {
-  const readingTime = useReadingTime(description); //reading hook
+  const readingTime = useReadingTime(description); //reading time hook
 
   const customizeWidth: customizeWidthPropsT = { // props based customize width
     'sm': 'max-w-xs',
     'md': 'max-w-[380px]',
   }
-  const customizeWidth: customizeWidthPropsT = {
-    // props based customize width
-    sm: "max-w-xs",
-    md: "max-w-md",
-  };
+
 
   return (
     <div className={`${customizeWidth[width]}`}>
       {imageUrl && (
-        <div className="relative h-[240px] min-w-full object-contain">
+        <div className="relative h-[240px] min-w-full object-contain  shadow-lg bg-gray-200">
           <Image src={imageUrl} alt={altText} fill />
         </div>
       )}
 
-      <div className="p-4 gap-1 flex flex-col text-left items-start border border-gray-200 shadow-gray-200 shadow-md border-t-0 bg-white sm:relative sm:w-[95%] sm:top-[-20px]">
+      <div className="p-4 gap-1 flex flex-col  text-left items-start border border-gray-200 shadow-gray-200 shadow-md border-t-0 bg-white sm:relative sm:w-[95%] sm:top-[-20px]">
         <span className="flex items-center gap-1">
           <hr className="w-10 h-[2px] border-0 rounded bg-orange-700" />
           <p>Interior</p>

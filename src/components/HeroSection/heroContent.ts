@@ -12,7 +12,7 @@ export const slideContent: slideContentPropsT[] = [
         id: "1",
         title: " How to Get Started With Interior Design",
         description:
-            "Nulla et commodo turpis. Etiam hendrerit ornare pharetra. Craseleifend purus vitae lorem venenatis bibendum.Sed commodo mi quis augue finibus, ut feugiat erat aliquam.",
+            "Nulla et commodo turpis. Etiam hendrerit ornare pharetra.",
         date: `${new Date().toLocaleString('default', { month: 'long' })} ${new Date().getDate()},${new Date().getFullYear()}`
 
     },
@@ -26,7 +26,7 @@ export const slideContent: slideContentPropsT[] = [
     {
         tag: "Interior",
         id: "3",
-        title: "How to Get Started With Digital Dialogue Design",
+        title: "Get Started With Digital Dialogue Design",
         description: "This is the first slide content.",
         date: `${new Date().toLocaleString('default', { month: 'long' })}/${new Date().getDate()}/${new Date().getFullYear()}`
 
