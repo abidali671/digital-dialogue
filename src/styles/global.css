@@ -10,10 +10,17 @@
 }
 
 @layer base {
+
   h4,
   h3,
   h2,
   h1 {
     font-family: PT Serif, serif;
+  }
+}
+
+@layer components {
+  .tag-span {
+    @apply px-2 py-1 w-auto text-center bg-gray-200
   }
 }

@@ -1,13 +1,13 @@
 import React from "react";
-import BlogyLogo from "../../assest/Blogy.png";
 import SeachIcon from "../../assest/Search.png";
+import Logo from "../../assest/icon/logo";
 import Image from "next/image";
 import Link from "next/link";
 
 const Navbar = () => {
   return (
     <div className="flex justify-around  items-center h-16 ">
-      <Image src={BlogyLogo} alt="Blogy logo" width={100} height={42} />
+      <Logo />
       <ul className="hidden gap-4 sm:flex">
         <li className="hover:border-b border-orange-500">
           <Link href="">Home</Link>
