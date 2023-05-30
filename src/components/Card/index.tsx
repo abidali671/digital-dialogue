@@ -9,30 +9,16 @@ interface CardPropsT {
   title: string;
   description: string;
   date: string;
-  width: string;
 }
 
 export interface customizeWidthPropsT {
   [key: string]: any;
 }
-const Card = ({
-  imageUrl,
-  altText,
-  title,
-  description,
-  date,
-  width,
-}: CardPropsT) => {
+const Card = ({ imageUrl, altText, title, description, date }: CardPropsT) => {
   const readingTime = useReadingTime(description); //reading time hook
 
-  const customizeWidth: customizeWidthPropsT = { // props based customize width
-    'sm': 'max-w-xs',
-    'md': 'max-w-[380px]',
-  }
-
-
   return (
-    <div className={`${customizeWidth[width]}`}>
+    <div>
       {imageUrl && (
         <div className="relative h-[240px] min-w-full object-contain  shadow-lg bg-gray-200">
           <Image src={imageUrl} alt={altText} fill />
