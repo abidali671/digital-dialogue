@@ -2,7 +2,7 @@ import Image from "next/image";
 import React, { useCallback, useMemo, useState } from "react";
 import BlogImage from "../../assest/BlogImage.png";
 import ContentContainer from "../ContentContainer";
-import { slideContent } from "./heroContent";
+import { slideContent, slideContentPropsT } from "./heroContent";
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -61,7 +61,7 @@ const Hero = () => {
           <SliderIndicator
             onPrevSlide={handlePrevSlide}
             onNextSlide={handleNextSlide}
-            content={content}
+            id={content?.id}
           />
         </div>
       </ContentContainer>
@@ -69,7 +69,16 @@ const Hero = () => {
   );
 };
 
-const SliderIndicator = ({ onPrevSlide, onNextSlide, content }) => (
+interface SliderIndicatorPropsT {
+  onPrevSlide: React.MouseEventHandler<HTMLDivElement>;
+  onNextSlide: React.MouseEventHandler<HTMLDivElement>;
+  id: string;
+}
+const SliderIndicator = ({
+  onPrevSlide,
+  onNextSlide,
+  id,
+}: SliderIndicatorPropsT) => (
   <div className="flex items-center gap-3">
     <div
       onClick={onPrevSlide}
@@ -95,7 +104,7 @@ const SliderIndicator = ({ onPrevSlide, onNextSlide, content }) => (
         <span
           key={item.id}
           className={`h-2 w-2 rounded-full ${
-            item.id == content?.id ? "bg-orange-200" : " bg-orange-400"
+            item.id == id ? "bg-orange-200" : " bg-orange-400"
           }`}
         ></span>
       ))}

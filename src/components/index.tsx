@@ -1,4 +1,4 @@
-export { default as Navbar } from "./Navbar";
+export { default as Navbar } from "./Container/Navbar";
 export { default as Hero } from "./HeroSection";
 export { default as RecentPost } from "./RecentPost";
 export { default as LatestPost } from "./LatestPost";

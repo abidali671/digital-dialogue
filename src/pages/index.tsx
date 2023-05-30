@@ -1,5 +1,11 @@
 import React from "react";
-import { LatestPost, Hero, RecentPost, FeaturedSection, AllPosts } from "@/components";
+import {
+  LatestPost,
+  Hero,
+  RecentPost,
+  FeaturedSection,
+  AllPosts,
+} from "@/components";
 
 const Home = () => {
   return (

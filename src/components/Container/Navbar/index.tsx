@@ -1,9 +1,9 @@
 import React from "react";
-import SeachIcon from "../../assest/Search.png";
-import Logo from "../../assest/icon/logo";
+import SeachIcon from "../../../assest/Search.png";
+import Logo from "../../../assest/icon/logo";
 import Image from "next/image";
 import Link from "next/link";
-import ContentContainer from "../ContentContainer";
+import ContentContainer from "../../ContentContainer";
 
 const Navbar = () => {
   return (
