@@ -10,7 +10,7 @@ const RecentPost = () => {
           <hr className="w-24 h-[4px]   border-1 rounded bg-orange-700" />
         </span>
 
-        <div className="py-10 grid place-items-center  gap-0 grid-cols-[repeat(3,minmax(300px,1fr))]">
+        <div className="py-10 grid place-items-center  gap-y-4  grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
           {Array(3).fill(
             <Card
               imageUrl=""
