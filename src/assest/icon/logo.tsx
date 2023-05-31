@@ -1,6 +1,6 @@
 import React from "react";
 
-function Logo() {
+function Logo(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,9 +8,10 @@ function Logo() {
       height="42"
       fill="none"
       viewBox="0 0 154 56"
+      {...props}
     >
       <path
-        fill="#F37341"
+        fill="currentColor"
         d="M43.375 15.041h-2.879v38.627h2.879V15.041z"
       ></path>
       <path
