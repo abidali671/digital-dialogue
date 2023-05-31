@@ -11,7 +11,7 @@ const Navbar = () => {
       <ContentContainer className="flex items-center justify-between h-16 relative">
         <Logo />
         <ul className="hidden gap-4 sm:flex">
-          <li className="hover:border-b border-orange-500">
+          <li className="hover:border-orange-600 border-transparent border-b-2">
             <Link href="">Home</Link>
           </li>
           <li>
