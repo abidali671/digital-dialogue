@@ -22,7 +22,7 @@ const AllPosts = () => {
               />
             )}
           </div>
-          <div className="sm:col-span-3 col-span-10 flex gap-2 flex-col">
+          <div className="sm:col-span-3   hidden md:flex gap-2 flex-col">
             <div className="gap-2 flex flex-col sm:px-0 px-4 ">
               <h2 className="text-xl font-bold">Featured Category</h2>
               <div className="w-full bg-[#C4C4C4] h-16">
