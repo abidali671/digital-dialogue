@@ -9,12 +9,20 @@ interface CardPropsT {
   title: string;
   description: string;
   date: string;
+  id?: string;
 }
 
 export interface customizeWidthPropsT {
   [key: string]: any;
 }
-const Card = ({ imageUrl, altText, title, description, date }: CardPropsT) => {
+const Card = ({
+  imageUrl,
+  altText,
+  title,
+  description,
+  date,
+  id,
+}: CardPropsT) => {
   const readingTime = useReadingTime(description); //reading time hook
 
   return (
@@ -46,7 +54,7 @@ const Card = ({ imageUrl, altText, title, description, date }: CardPropsT) => {
         </p>
 
         <Link
-          href="#"
+          href={`/blogs/${id}`}
           className="pt-2 inline-flex items-center text-md font-medium text-center text-black"
         >
           Read Article
