@@ -1,14 +1,12 @@
 import React from "react";
-import { useRouter } from "next/router";
 import { Card, ContentContainer } from "@/components";
 
 const searchResult = () => {
-  // const router = useRouter();
   return (
     <div className="relative">
       <div className="h-[50vh] w-full bg-neutral-200 ">
         <div className="flex flex-col h-full items-center  justify-center pt-10 gap-4 px-10 ">
-          <h3 className="sm:text-[40px] text-3xl text-center font-bold">Travel here’s what we’ve got</h3>
+          <h3 className="sm:text-[40px] text-3xl text-center font-bold">‘Travel’ here’s what we’ve got</h3>
 
           <div className="flex gap-2 justify-center items-center w-full sm:flex-row flex-col ">
             <div className="flex gap-2 h-12   w-full sm:w-6/12 bg-white items-center shadow-md px-3">
