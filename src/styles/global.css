@@ -14,13 +14,33 @@
   h4,
   h3,
   h2,
+  h5,
   h1 {
     font-family: PT Serif, serif;
+
   }
 }
 
 @layer components {
   .tag-span {
     @apply px-2 py-1 w-auto text-center bg-gray-200
+  }
+}
+
+@layer BlogPost {
+  .blog-post-p {
+    @apply text-gray-800 leading-7 !text-lg
+  }
+
+  .blog-post-link {
+    @apply text-[#0A81D8] font-normal
+  }
+
+  .blog-post-h2 {
+    @apply text-gray-800 !text-[28px] !font-bold
+  }
+
+  .blog-post-h5 {
+    @apply text-gray-800 !text-2xl font-medium
   }
 }
