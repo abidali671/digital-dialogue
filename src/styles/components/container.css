@@ -1,0 +1,27 @@
+.container-root {
+  @apply sticky top-0 z-10 shadow-lg bg-white;
+}
+
+.container-root > .content-wrapper {
+  @apply flex items-center justify-between h-16 relative;
+}
+
+.container-root > .content-wrapper > .nav-list {
+  @apply hidden gap-4 sm:flex items-center;
+}
+
+.container-root > .content-wrapper > .nav-list > li {
+  @apply hover:border-orange-600 border-transparent border-b-[1px];
+}
+
+.container-root > .content-wrapper > .nav-list > li .search-box {
+  @apply flex gap-2 items-center py-2;
+}
+
+.container-root > .content-wrapper > .nav-list > li .search-box input {
+  @apply focus:outline-none border-none;
+}
+
+.container-root > .content-wrapper > .nav-list > li .search-box img {
+  @apply w-[16px] h-[16px];
+}
