@@ -41,7 +41,7 @@ const Footer = () => {
         <hr className=" border-1 border-[#7F7F7F]" />
         <div className="text-white flex justify-between items-center">
           <p className="text-md">@ 2023 - Digital Dialogue</p>
-          <p className="text-md">Designed & Develop by Zakirsoft</p>
+          <p className="text-md">Develop by team Digital Dialogue</p>
         </div>
       </ContentContainer>
     </footer>
