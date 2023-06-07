@@ -40,15 +40,34 @@ const Blogs = () => {
       </div>
       <ContentContainer className="relative flex justify-center flex-col p-0">
         <div className="py-10 grid place-items-center gap-4  w-full sm:w-[70%] mx-auto grid-cols-[repeat(auto-fill,minmax(300px,1fr))] ">
-          {Array(4).fill(
-            <Card
-              imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
-              altText="shoes"
-              title="How to Get Started With UI/UX in Figma"
-              description=""
-              date="March 25, 2021"
-            />
-          )}
+          <Card
+            imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
+            altText="shoes"
+            title="How to Get Started With UI/UX in Figma"
+            description=""
+            date="March 25, 2021"
+          />
+          <Card
+            imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
+            altText="shoes"
+            title="How to Get Started With UI/UX in Figma"
+            description=""
+            date="March 25, 2021"
+          />
+          <Card
+            imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
+            altText="shoes"
+            title="How to Get Started With UI/UX in Figma"
+            description=""
+            date="March 25, 2021"
+          />
+          <Card
+            imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
+            altText="shoes"
+            title="How to Get Started With UI/UX in Figma"
+            description=""
+            date="March 25, 2021"
+          />
         </div>
       </ContentContainer>
     </div>

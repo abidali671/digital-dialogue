@@ -12,15 +12,34 @@ const AllPosts = () => {
         </span>
         <div className="grid-cols-10 grid py-10 gap-6">
           <div className="md:col-span-7 col-span-10 gap-6  grid place-items-center   grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
-            {Array(4).fill(
-              <Card
-                imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
-                altText="shoes"
-                title="Top 10 beautiful Place in Bangladesh"
-                description="Nulla et commodo turpis. Etiam hendrerit ornare pharetra."
-                date="March 25, 2021"
-              />
-            )}
+            <Card
+              imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
+              altText="shoes"
+              title="Top 10 beautiful Place in Bangladesh"
+              description="Nulla et commodo turpis. Etiam hendrerit ornare pharetra."
+              date="March 25, 2021"
+            />
+            <Card
+              imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
+              altText="shoes"
+              title="Top 10 beautiful Place in Bangladesh"
+              description="Nulla et commodo turpis. Etiam hendrerit ornare pharetra."
+              date="March 25, 2021"
+            />
+            <Card
+              imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
+              altText="shoes"
+              title="Top 10 beautiful Place in Bangladesh"
+              description="Nulla et commodo turpis. Etiam hendrerit ornare pharetra."
+              date="March 25, 2021"
+            />
+            <Card
+              imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
+              altText="shoes"
+              title="Top 10 beautiful Place in Bangladesh"
+              description="Nulla et commodo turpis. Etiam hendrerit ornare pharetra."
+              date="March 25, 2021"
+            />
           </div>
           <div className="sm:col-span-3   hidden md:flex gap-2 flex-col">
             <div className="gap-2 flex flex-col sm:px-0 px-4 ">
