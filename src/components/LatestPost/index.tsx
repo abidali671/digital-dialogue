@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "../Card";
 import ContentContainer from "../ContentContainer";
-import { slideContent } from "../heroSection/heroContent";
+import { slideContent } from "../HeroSection/data";
 
 const LatestPost = () => {
   return (

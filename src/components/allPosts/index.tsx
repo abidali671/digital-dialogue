@@ -1,6 +1,10 @@
+import Categories from "@/constants/categories";
+import Tags from "@/constants/tags";
 import React from "react";
 import Card from "../Card";
+import Category from "../Category";
 import ContentContainer from "../ContentContainer";
+import Tag from "../Tag";
 
 const AllPosts = () => {
   return (
@@ -12,44 +16,48 @@ const AllPosts = () => {
         </span>
         <div className="grid-cols-10 grid py-10 gap-6">
           <div className="md:col-span-7 col-span-10 gap-6  grid place-items-center   grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
-            {Array(4).fill(
-              <Card
-                imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
-                altText="shoes"
-                title="Top 10 beautiful Place in Bangladesh"
-                description="Nulla et commodo turpis. Etiam hendrerit ornare pharetra."
-                date="March 25, 2021"
-              />
-            )}
+            <Card
+              imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
+              altText="shoes"
+              title="Top 10 beautiful Place in Bangladesh"
+              description="Nulla et commodo turpis. Etiam hendrerit ornare pharetra."
+              date="March 25, 2021"
+            />
+            <Card
+              imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
+              altText="shoes"
+              title="Top 10 beautiful Place in Bangladesh"
+              description="Nulla et commodo turpis. Etiam hendrerit ornare pharetra."
+              date="March 25, 2021"
+            />
+            <Card
+              imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
+              altText="shoes"
+              title="Top 10 beautiful Place in Bangladesh"
+              description="Nulla et commodo turpis. Etiam hendrerit ornare pharetra."
+              date="March 25, 2021"
+            />
+            <Card
+              imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
+              altText="shoes"
+              title="Top 10 beautiful Place in Bangladesh"
+              description="Nulla et commodo turpis. Etiam hendrerit ornare pharetra."
+              date="March 25, 2021"
+            />
           </div>
-          <div className="sm:col-span-3   hidden md:flex gap-2 flex-col">
+          <div className="sm:col-span-3 hidden md:flex gap-2 flex-col">
             <div className="gap-2 flex flex-col sm:px-0 px-4 ">
               <h2 className="text-xl font-bold">Featured Category</h2>
-              <div className="w-full bg-[#C4C4C4] h-16">
-                <button className="w-20 bg-white mx-5 font-medium my-3 h-10">
-                  Travel
-                </button>
-              </div>
-              <div className="w-full bg-[#C4C4C4] h-16">
-                <button className="w-20 bg-white mx-5 font-medium my-3 h-10">
-                  Food
-                </button>
-              </div>
-              <div className="w-full bg-[#C4C4C4] h-16">
-                <button className="w-20 bg-white mx-5 font-medium my-3 h-10">
-                  LifeStyle
-                </button>
-              </div>
+              {Categories.map(({ label, slug }, ind) => (
+                <Category key={ind} label={label} slug={slug} />
+              ))}
             </div>
             <div>
               <h2 className="text-xl font-bold">All Tags</h2>
               <div className="flex gap-2 flex-wrap my-3">
-                <span className="tag-span">Journey</span>
-                <span className="tag-span">Life</span>
-                <span className="tag-span">Food</span>
-                <span className="tag-span">Fashion</span>
-                <span className="tag-span">Interior</span>
-                <span className="tag-span">Minimalistic</span>
+                {Tags.map((tag, ind) => (
+                  <Tag key={ind} label={tag.label} />
+                ))}
               </div>
             </div>
           </div>
