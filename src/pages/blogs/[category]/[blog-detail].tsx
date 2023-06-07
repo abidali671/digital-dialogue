@@ -56,9 +56,12 @@ const BlogDetail = () => {
           </div>
         </div>
         {/* Card end*/}
-        <main className="grid h-[100%] mx-auto md:grid-cols-[200px_1fr] gap-y-6  grid-cols-[1fr] w-11/12  md:w-8/12">
+        <main
+          // className="grid h-[100%] mx-auto lg:grid-cols-[200px_1fr] gap-y-6  grid-cols-[1fr] w-11/12  md:w-8/12"
+          className="mx-auto  w-11/12  md:w-8/12"
+        >
           {/* Aside column start*/}
-          <aside className="h-20 gap-8 grid py-2">
+          {/* <aside className="h-20 gap-8 grid py-2">
             <div className="flex gap-3">
               <Like stroke="#FB743E" />
               <p className="font-medium">24 Likes</p>
@@ -68,7 +71,7 @@ const BlogDetail = () => {
 
               <p className="font-medium">195 Comments</p>
             </div>
-          </aside>
+          </aside> */}
           {/* Aside column end*/}
           <article className=" ">
             <div className="flex flex-col gap-3">
