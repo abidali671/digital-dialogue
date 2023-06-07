@@ -1,10 +1,14 @@
 import { ContentContainer } from "@/components";
-import Image from "next/image";
-import { Facebook, Twitter, Pinterest, LinkIcon } from "@/assest/icon";
+import {
+  Facebook,
+  Twitter,
+  Pinterest,
+  LinkIcon,
+  Like,
+  Comment,
+} from "@/assest/icon";
 import Link from "next/link";
 import React from "react";
-import Like from "@/assest/icon/like";
-import Comment from "@/assest/icon/comment";
 
 const BlogDetail = () => {
   return (

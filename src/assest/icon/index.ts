@@ -6,3 +6,5 @@ export { default as SearchIcon } from "@/assest/icon/searchIcon";
 export { default as Arrow } from "@/assest/icon/arrow";
 export { default as ArrowLeft } from "@/assest/icon/arrowLeft";
 export { default as ArrowRight } from "@/assest/icon/arrowRight";
+export { default as Like } from "@/assest/icon/like";
+export { default as Comment } from "@/assest/icon/comment";
