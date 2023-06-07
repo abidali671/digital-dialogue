@@ -9,23 +9,22 @@ const Navbar = () => {
   return (
     <div className="sticky top-0 z-10 shadow-lg bg-white">
       <ContentContainer className="flex items-center justify-between h-16 relative">
-        <Logo />
+        <Link href="/">
+          <Logo />
+        </Link>
         <ul className="hidden gap-4 sm:flex">
           <li className="hover:border-orange-600 border-transparent border-b-2">
-            <Link href="">Home</Link>
+            <Link href="/">Home</Link>
           </li>
           <li>
-            <Link href="">Travel</Link>
+            <Link href="">Blogs</Link>
           </li>
 
           <li>
-            <Link href="">Food</Link>
+            <Link href="">Categories</Link>
           </li>
           <li>
-            <Link href="">Lifestyle</Link>
-          </li>
-          <li>
-            <Link href="">Fashion</Link>
+            <Link href="">Author</Link>
           </li>
           <li>
             <div className="flex gap-2 items-center">

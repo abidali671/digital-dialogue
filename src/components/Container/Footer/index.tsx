@@ -18,11 +18,11 @@ const Footer = () => {
 
           <FooterLink
             title="Category"
-            links={["Travel", "Food", "LifeStyle", "Fashion"]}
+            links={["Technalogy", "Freelancing", "Design and Creativity"]}
           />
           <FooterLink
             title="Follow us"
-            links={["Travel", "Food", "LifeStyle", "Fashion"]}
+            links={["Technalogy", "Freelancing", "Design and Creativity"]}
           />
           <div className="flex flex-col gap-3 w-full md:col-span-2  lg:col-span-1 ">
             <h3 className="text-2xl pt-3 text-white ">Newsletter</h3>
