@@ -1,4 +1,4 @@
-export interface slideContentPropsT {
+export interface SlideContentI {
   title: string;
   description: string;
   tag: string;
@@ -6,7 +6,7 @@ export interface slideContentPropsT {
   date: string;
 }
 
-export const slideContent: slideContentPropsT[] = [
+export const slideContent: SlideContentI[] = [
   {
     tag: "Interior",
     id: "1",
