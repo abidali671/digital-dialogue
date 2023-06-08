@@ -11,10 +11,15 @@ import { JSONValue } from "@/types";
 
 interface PropsT {
   posts: JSONValue[];
+  category: JSONValue[];
+  tag: JSONValue[];
 }
 
-const Home = ({ posts }: PropsT) => {
+const Home = ({ posts, category, tag }: PropsT) => {
   console.log("posts", posts);
+  console.log("category", category);
+  console.log("tag", tag);
+
   return (
     <React.Fragment>
       <Hero />
@@ -27,8 +32,14 @@ const Home = ({ posts }: PropsT) => {
 };
 
 export const getStaticProps = async () => {
-  const response = await contentful_client.getEntries({ content_type: "post" });
-  return { props: { posts: response.items } };
+  const responses = await Promise.all([
+    contentful_client.getEntries({ content_type: "post" }),
+    contentful_client.getEntries({ content_type: "category" }),
+    contentful_client.getEntries({ content_type: "tag" }),
+  ]);
+  return {
+    props: { posts: responses[0], category: responses[1], tag: responses[2] },
+  };
 };
 
 export default Home;
