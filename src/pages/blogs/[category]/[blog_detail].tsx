@@ -10,8 +10,13 @@ import {
 import Link from "next/link";
 import React from "react";
 import contentful_client from "@/lib/contentfull/client";
+import { useRouter } from "next/router";
 
-const BlogDetail = (props) => {
+const BlogDetail = ({ post }) => {
+  const router = useRouter();
+
+  if (router.isFallback) return <div>loading...</div>;
+
   return (
     <React.Fragment>
       <div className="h-[40vh] sm:h-[70vh] w-full bg-neutral-300 relative"></div>
@@ -211,7 +216,28 @@ const BlogDetail = (props) => {
 };
 
 export const getStaticProps = async ({ params }) => {
-  return { props: { params } };
+  try {
+    const { category, blog_detail } = params;
+
+    const category_response = await contentful_client.getEntries({
+      content_type: "category",
+      "fields.slug": category,
+    });
+
+    const response = await contentful_client.getEntries({
+      content_type: "post",
+      "fields.slug": blog_detail,
+      links_to_entry: category_response.items[0].sys.id,
+    });
+
+    if (!response?.items?.length || !category_response?.items?.length) {
+      throw "Error";
+    }
+
+    return { props: { params, post: response.items[0] } };
+  } catch (error) {
+    return { redirect: { destination: "/", permanent: false } };
+  }
 };
 
 export const getStaticPaths = async () => {
