@@ -219,7 +219,7 @@ export const getStaticPaths = async () => {
   const paths = response.items.map((item) => ({
     params: {
       category: item.fields.category.fields.slug,
-      "blog-detail": item.fields.slug,
+      blog_detail: item.fields.slug,
     },
   }));
 

@@ -55,8 +55,8 @@ const Card = ({
 
         <Link
           href={{
-            pathname: "/blogs/[category]/[blog-detail]",
-            query: { category: categoryId, "blog-detail": id },
+            pathname: "/blogs/[category]/[blog_detail]",
+            query: { category: categoryId, blog_detail: id },
           }}
           className="pt-2 inline-flex items-center text-md font-medium text-center text-black"
         >
