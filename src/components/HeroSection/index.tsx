@@ -1,8 +1,9 @@
+import { ArrowLeft, ArrowRight } from "@/assest/icon";
 import Image from "next/image";
 import React, { useCallback, useMemo, useState } from "react";
 import BlogImage from "../../assest/BlogImage.png";
 import ContentContainer from "../ContentContainer";
-import { slideContent } from "./heroContent";
+import { slideContent } from "./data";
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -84,27 +85,15 @@ const SliderIndicator = ({
       onClick={onPrevSlide}
       className="p-2 rounded-full text-center cursor-pointer bg-white shadow-md text-black"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        className="w-6 h-6"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M15.75 19.5L8.25 12l7.5-7.5"
-        />
-      </svg>
+      <ArrowLeft />
     </div>
     <div className="flex gap-1">
       {slideContent.map((item) => (
         <span
           key={item.id}
-          className={`h-2 w-2 rounded-full ${item.id == id ? "bg-orange-200" : " bg-orange-400"
-            }`}
+          className={`h-2 w-2 rounded-full ${
+            item.id == id ? "bg-orange-200" : " bg-orange-400"
+          }`}
         ></span>
       ))}
     </div>
@@ -112,20 +101,7 @@ const SliderIndicator = ({
       onClick={onNextSlide}
       className="p-2 rounded-full text-center cursor-pointer bg-white shadow-md text-black"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        className="w-6 h-6"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M8.25 4.5l7.5 7.5-7.5 7.5"
-        />
-      </svg>
+      <ArrowRight />
     </div>
   </div>
 );

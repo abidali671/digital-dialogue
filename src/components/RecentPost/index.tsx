@@ -11,15 +11,27 @@ const RecentPost = () => {
         </span>
 
         <div className="py-10 grid place-items-center  gap-y-4  grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
-          {Array(3).fill(
-            <Card
-              imageUrl=""
-              altText="shoes"
-              title="Top 10 beautiful Place in Bangladesh"
-              description="Nulla et commodo turpis. Etiam hendrerit ornare pharetra."
-              date="March 25, 2021"
-            />
-          )}
+          <Card
+            imageUrl=""
+            altText="shoes"
+            title="Top 10 beautiful Place in Bangladesh"
+            description="Nulla et commodo turpis. Etiam hendrerit ornare pharetra."
+            date="March 25, 2021"
+          />
+          <Card
+            imageUrl=""
+            altText="shoes"
+            title="Top 10 beautiful Place in Bangladesh"
+            description="Nulla et commodo turpis. Etiam hendrerit ornare pharetra."
+            date="March 25, 2021"
+          />
+          <Card
+            imageUrl=""
+            altText="shoes"
+            title="Top 10 beautiful Place in Bangladesh"
+            description="Nulla et commodo turpis. Etiam hendrerit ornare pharetra."
+            date="March 25, 2021"
+          />
         </div>
       </ContentContainer>
     </div>

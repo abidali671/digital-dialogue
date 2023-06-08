@@ -18,11 +18,11 @@ const Footer = () => {
 
           <FooterLink
             title="Category"
-            links={["Travel", "Food", "LifeStyle", "Fashion"]}
+            links={["Technalogy", "Freelancing", "Design and Creativity"]}
           />
           <FooterLink
             title="Follow us"
-            links={["Travel", "Food", "LifeStyle", "Fashion"]}
+            links={["Technalogy", "Freelancing", "Design and Creativity"]}
           />
           <div className="flex flex-col gap-3 w-full md:col-span-2  lg:col-span-1 ">
             <h3 className="text-2xl pt-3 text-white ">Newsletter</h3>
@@ -41,7 +41,7 @@ const Footer = () => {
         <hr className=" border-1 border-[#7F7F7F]" />
         <div className="text-white flex justify-between items-center">
           <p className="text-md">@ 2023 - Digital Dialogue</p>
-          <p className="text-md">Designed & Develop by Zakirsoft</p>
+          <p className="text-md">Develop by team Digital Dialogue</p>
         </div>
       </ContentContainer>
     </footer>
@@ -59,8 +59,8 @@ const FooterLink = ({ title, links }: FooterLinkPropsT) => {
     <div className="flex gap-3  flex-col">
       <h3 className="text-2xl pt-3 text-white">{title}</h3>
       <ul className="flex-col flex text-white gap-2">
-        {links.map((link) => (
-          <li className="hover:text-white text-gray-400">
+        {links.map((link, index) => (
+          <li key={index} className="hover:text-white text-gray-400">
             <Link href="">{link}</Link>
           </li>
         ))}
