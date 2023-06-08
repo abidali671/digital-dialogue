@@ -5,12 +5,13 @@ import {
   Pinterest,
   LinkIcon,
   Like,
-  Comment,
+  // Comment,
 } from "@/assest/icon";
 import Link from "next/link";
 import React from "react";
+import contentful_client from "@/lib/contentfull/client";
 
-const BlogDetail = () => {
+const BlogDetail = (props) => {
   return (
     <React.Fragment>
       <div className="h-[40vh] sm:h-[70vh] w-full bg-neutral-300 relative"></div>
@@ -207,6 +208,22 @@ const BlogDetail = () => {
       </ContentContainer>
     </React.Fragment>
   );
+};
+
+export const getStaticProps = async ({ params }) => {
+  return { props: { params } };
+};
+
+export const getStaticPaths = async () => {
+  const response = await contentful_client.getEntries({ content_type: "post" });
+  const paths = response.items.map((item) => ({
+    params: {
+      category: item.fields.category.fields.slug,
+      "blog-detail": item.fields.slug,
+    },
+  }));
+
+  return { paths, fallback: true };
 };
 
 export default BlogDetail;
