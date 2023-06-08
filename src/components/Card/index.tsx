@@ -54,7 +54,10 @@ const Card = ({
         </p>
 
         <Link
-          href={`/blogs/${categoryId}/${id}`}
+          href={{
+            pathname: "/blogs/[category]/[blog-detail]",
+            query: { category: categoryId, "blog-detail": id },
+          }}
           className="pt-2 inline-flex items-center text-md font-medium text-center text-black"
         >
           Read Article
