@@ -1,9 +1,9 @@
-import contentful from "contentful";
+const contentful = require("contentful");
 
 const contentful_client = contentful.createClient({
-  space: "bvnm7sul7e1u",
-  environment: "master",
-  accessToken: "kfML2B8yIYFftyzgIAXKEy54dshX6iMHbQESP5hi1zQ",
+  accessToken: process.env.CONTENTFUL_DELIVERY_ACCESS_TOKEN,
+  space: process.env.CONTENTFUL_SPACE_ID,
+  environment: process.env.CONTENTFUL_ENVIRONMENT,
 });
 
 export default contentful_client;
