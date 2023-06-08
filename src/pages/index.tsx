@@ -23,7 +23,7 @@ const Home = ({ posts, category, tag }: PropsT) => {
   return (
     <React.Fragment>
       <Hero />
-      <RecentPost />
+      <RecentPost posts={posts} />
       <LatestPost />
       <FeaturedSection />
       <AllPosts />
@@ -36,9 +36,14 @@ export const getStaticProps = async () => {
     contentful_client.getEntries({ content_type: "post" }),
     contentful_client.getEntries({ content_type: "category" }),
     contentful_client.getEntries({ content_type: "tag" }),
+    contentful_client.getEntries({ links_to_entry: "1IKm8tMF5LiivwlkyebxMC" }),
   ]);
   return {
-    props: { posts: responses[0], category: responses[1], tag: responses[2] },
+    props: {
+      posts: responses[0].items,
+      category: responses[1].items,
+      tag: responses[2].items,
+    },
   };
 };
 
