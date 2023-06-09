@@ -24,7 +24,7 @@ const Home = ({ posts, category, tag }: PropsT) => {
     <React.Fragment>
       <Hero />
       <RecentPost posts={posts} />
-      <LatestPost />
+      <LatestPost posts={posts} />
       <FeaturedSection />
       <AllPosts />
     </React.Fragment>
