@@ -22,17 +22,7 @@ const AllPosts = ({ posts }: PropsT) => {
         <div className="grid-cols-10 grid py-10 gap-6">
           <div className="md:col-span-7 col-span-10 gap-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
             {posts.map((post) => (
-              <Card
-                key={post.fields.slug}
-                id={post.fields.slug}
-                categoryId={post.fields.category.fields.slug}
-                imageUrl={"https:" + post.fields.coverImage.fields.file.url}
-                altText={post.fields.coverImage.fields.title}
-                title={post.fields.title}
-                description={post.fields.exerpt}
-                date={post.sys.createdAt}
-                imgAtt={post.fields.coverImage.fields.description}
-              />
+              <Card key={post.fields.slug} data={post} />
             ))}
           </div>
           <div className="sm:col-span-3 hidden md:flex gap-2 flex-col">

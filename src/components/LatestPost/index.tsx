@@ -17,17 +17,7 @@ const LatestPost = ({ posts }: PropsT) => {
         </span>
         <div className="py-10 grid gap-6 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
           {posts.map((post) => (
-            <Card
-              key={post.fields.slug}
-              id={post.fields.slug}
-              categoryId={post.fields.category.fields.slug}
-              imageUrl={"https:" + post.fields.coverImage.fields.file.url}
-              altText={post.fields.coverImage.fields.title}
-              title={post.fields.title}
-              description={post.fields.exerpt}
-              date={post.sys.createdAt}
-              imgAtt={post.fields.coverImage.fields.description}
-            />
+            <Card key={post.fields.slug} data={post} />
           ))}
         </div>
       </ContentContainer>

@@ -3,38 +3,30 @@ import Image from "next/image";
 import Link from "next/link";
 import { useReadingTime } from "../../hooks/readingTime";
 import { Arrow } from "@/assest/icon";
+import { JSONValue } from "@/types";
 
 interface CardPropsT {
-  imageUrl: string;
-  altText: string;
-  title: string;
-  description: string;
-  date: string;
-  id?: string;
-  categoryId?: string;
-  imgAtt?: string;
+  data: JSONValue;
 }
 
-const Card = ({
-  imageUrl,
-  altText,
-  title,
-  description,
-  date,
-  id,
-  categoryId,
-  imgAtt,
-}: CardPropsT) => {
-  const readingTime = useReadingTime(description); //reading time hook
+const Card = ({ data }: CardPropsT) => {
+  const { category, coverImage, title, exerpt, slug } = data.fields;
+  const { createdAt } = data.sys;
+
+  const readingTime = useReadingTime(exerpt); //reading time hook
 
   return (
     <div>
       <div className="relative h-[240px] min-w-full object-contain  shadow-lg bg-gray-200">
-        <Image src={imageUrl} alt={altText} fill />
-        {imgAtt && (
+        <Image
+          src={"https:" + coverImage.fields.file.url}
+          alt={coverImage.fields.title}
+          fill
+        />
+        {coverImage.fields.description && (
           <div
             className="bg-black bg-opacity-50 absolute top-0 right-0 p-2 text-white"
-            dangerouslySetInnerHTML={{ __html: imgAtt }}
+            dangerouslySetInnerHTML={{ __html: coverImage.fields.description }}
           />
         )}
       </div>
@@ -48,12 +40,9 @@ const Card = ({
             {title}
           </h5>
         </Link>
-
-        <p className="text-gray-500 text-[12px] lg:text-[16px]">
-          {description && description}
-        </p>
+        <p className="text-gray-500 text-[12px] lg:text-[16px]">{exerpt}</p>
         <p className="text-gray-500 flex items-center gap-2 text-[12px] lg:text-[16px]">
-          {date}
+          {createdAt}
           <span className="h-[5px] w-[5px] bg-gray-500 rounded-lg"></span>{" "}
           {readingTime} min read
         </p>
@@ -61,7 +50,7 @@ const Card = ({
         <Link
           href={{
             pathname: "/blogs/[category]/[blog_detail]",
-            query: { category: categoryId, blog_detail: id },
+            query: { category: category.fields.slug, blog_detail: slug },
           }}
           className="pt-2 inline-flex items-center text-md font-medium text-center text-black"
         >
