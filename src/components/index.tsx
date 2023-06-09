@@ -4,6 +4,6 @@ export { default as LatestPost } from "./LatestPost";
 export { default as FeaturedSection } from "./FeaturedSection";
 export { default as AllPosts } from "./AllPosts";
 export { default as ContentContainer } from "./ContentContainer";
-export { default as Card } from "./Card";
+export { default as PostCard } from "./PostCard";
 export { default as Category } from "./Category";
 export { default as Tag } from "./Tag";

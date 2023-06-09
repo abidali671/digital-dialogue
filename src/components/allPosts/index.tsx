@@ -1,7 +1,7 @@
 import Categories from "@/constants/categories";
 import Tags from "@/constants/tags";
 import React from "react";
-import Card from "../Card";
+import PostCard from "../PostCard";
 import Category from "../Category";
 import ContentContainer from "../ContentContainer";
 import Tag from "../Tag";
@@ -22,7 +22,7 @@ const AllPosts = ({ posts }: PropsT) => {
         <div className="grid-cols-10 grid py-10 gap-6">
           <div className="md:col-span-7 col-span-10 gap-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
             {posts.map((post) => (
-              <Card key={post.fields.slug} data={post} />
+              <PostCard key={post.fields.slug} data={post} />
             ))}
           </div>
           <div className="sm:col-span-3 hidden md:flex gap-2 flex-col">

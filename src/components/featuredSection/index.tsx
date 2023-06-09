@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../Card";
+import PostCard from "../PostCard";
 import ContentContainer from "../ContentContainer";
 import { JSONValue } from "@/types";
 
@@ -17,7 +17,7 @@ const FeaturedSection = ({ posts }: PropsT) => {
         </span>
         <div className="py-10 grid gap-6 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
           {posts.map((post) => (
-            <Card key={post.fields.slug} data={post} />
+            <PostCard key={post.fields.slug} data={post} />
           ))}
         </div>
       </ContentContainer>

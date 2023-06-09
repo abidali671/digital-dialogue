@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, ContentContainer } from "@/components";
+import { PostCard, ContentContainer } from "@/components";
 import { SearchIcon } from "@/assest/icon";
 
 const Blogs = () => {
@@ -28,28 +28,28 @@ const Blogs = () => {
       </div>
       <ContentContainer className="relative flex justify-center flex-col p-0">
         <div className="py-10 grid place-items-center gap-4  w-full sm:w-[70%] mx-auto grid-cols-[repeat(auto-fill,minmax(300px,1fr))] ">
-          <Card
+          <PostCard
             imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
             altText="shoes"
             title="How to Get Started With UI/UX in Figma"
             description=""
             date="March 25, 2021"
           />
-          <Card
+          <PostCard
             imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
             altText="shoes"
             title="How to Get Started With UI/UX in Figma"
             description=""
             date="March 25, 2021"
           />
-          <Card
+          <PostCard
             imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
             altText="shoes"
             title="How to Get Started With UI/UX in Figma"
             description=""
             date="March 25, 2021"
           />
-          <Card
+          <PostCard
             imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
             altText="shoes"
             title="How to Get Started With UI/UX in Figma"
