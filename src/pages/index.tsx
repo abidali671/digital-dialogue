@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  LatestPost,
-  Hero,
-  RecentPost,
-  FeaturedSection,
-  AllPosts,
-} from "@/components";
+import { LatestPost, Hero, FeaturedSection, AllPosts } from "@/components";
 import contentful_client from "@/lib/contentfull/client";
 import { JSONValue } from "@/types";
 
@@ -23,7 +17,6 @@ const Home = ({ posts, category, tag }: PropsT) => {
   return (
     <React.Fragment>
       <Hero />
-      <RecentPost posts={posts} />
       <LatestPost posts={posts} />
       <FeaturedSection />
       <AllPosts />
