@@ -19,7 +19,7 @@ const Home = ({ posts, category, tag }: PropsT) => {
       <Hero />
       <LatestPost posts={posts.slice(0, 3)} />
       <FeaturedSection posts={posts.slice(0, 3)} />
-      <AllPosts />
+      <AllPosts posts={posts} />
     </React.Fragment>
   );
 };
