@@ -17,8 +17,8 @@ const Home = ({ posts, category, tag }: PropsT) => {
   return (
     <React.Fragment>
       <Hero />
-      <LatestPost posts={posts} />
-      <FeaturedSection />
+      <LatestPost posts={posts.slice(0, 3)} />
+      <FeaturedSection posts={posts.slice(0, 3)} />
       <AllPosts />
     </React.Fragment>
   );
