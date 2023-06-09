@@ -11,11 +11,9 @@ interface CardPropsT {
   description: string;
   date: string;
   id?: string;
+  categoryId?: string;
 }
 
-export interface customizeWidthPropsT {
-  [key: string]: any;
-}
 const Card = ({
   imageUrl,
   altText,
@@ -23,6 +21,7 @@ const Card = ({
   description,
   date,
   id,
+  categoryId,
 }: CardPropsT) => {
   const readingTime = useReadingTime(description); //reading time hook
 
@@ -55,7 +54,10 @@ const Card = ({
         </p>
 
         <Link
-          href={`/blogs/${id}`}
+          href={{
+            pathname: "/blogs/[category]/[blog_detail]",
+            query: { category: categoryId, blog_detail: id },
+          }}
           className="pt-2 inline-flex items-center text-md font-medium text-center text-black"
         >
           Read Article
