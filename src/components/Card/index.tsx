@@ -12,6 +12,7 @@ interface CardPropsT {
   date: string;
   id?: string;
   categoryId?: string;
+  imgAtt?: string;
 }
 
 const Card = ({
@@ -22,17 +23,21 @@ const Card = ({
   date,
   id,
   categoryId,
+  imgAtt,
 }: CardPropsT) => {
   const readingTime = useReadingTime(description); //reading time hook
 
   return (
     <div>
-      {imageUrl && (
-        <div className="relative h-[240px] min-w-full object-contain  shadow-lg bg-gray-200">
-          <Image src={imageUrl} alt={altText} fill />
-        </div>
-      )}
-
+      <div className="relative h-[240px] min-w-full object-contain  shadow-lg bg-gray-200">
+        <Image src={imageUrl} alt={altText} fill />
+        {imgAtt && (
+          <div
+            className="bg-black bg-opacity-50 absolute top-0 right-0 p-2 text-white"
+            dangerouslySetInnerHTML={{ __html: imgAtt }}
+          />
+        )}
+      </div>
       <div className="p-4 gap-1 flex flex-col  text-left items-start border border-gray-200 shadow-gray-200 shadow-md border-t-0 bg-white sm:relative sm:w-[95%] sm:top-[-20px]">
         <span className="flex items-center gap-1">
           <hr className="w-10 h-[2px] border-0 rounded bg-orange-700" />
