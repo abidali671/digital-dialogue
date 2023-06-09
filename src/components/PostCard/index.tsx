@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import moment from "moment";
 import { useReadingTime } from "../../hooks/readingTime";
 import { Arrow } from "@/assest/icon";
 import { JSONValue } from "@/types";
@@ -33,7 +34,7 @@ const PostCard = ({ data }: CardPropsT) => {
       <div className="p-4 gap-1 flex flex-col  text-left items-start border border-gray-200 shadow-gray-200 shadow-md border-t-0 bg-white sm:relative sm:w-[95%] sm:top-[-20px]">
         <span className="flex items-center gap-1">
           <hr className="w-10 h-[2px] border-0 rounded bg-orange-700" />
-          <p>Interior</p>
+          <p>{category.fields.label}</p>
         </span>
         <Link href="#">
           <h5 className="text-[28px] font-bold tracking-tight text-gray-900 leading-[32px] font-PT">
@@ -42,7 +43,7 @@ const PostCard = ({ data }: CardPropsT) => {
         </Link>
         <p className="text-gray-500 text-[12px] lg:text-[16px]">{exerpt}</p>
         <p className="text-gray-500 flex items-center gap-2 text-[12px] lg:text-[16px]">
-          {createdAt}
+          {moment(createdAt).format("MMMM DD, YYYY")}
           <span className="h-[5px] w-[5px] bg-gray-500 rounded-lg"></span>{" "}
           {readingTime} min read
         </p>
