@@ -27,7 +27,7 @@ const Hero = () => {
       <div className="w-[60%]">
         <Image
           src={BlogImage}
-          alt="Blogy logo"
+          alt="digital-dialogue-logo"
           className="w-[100%] h-[100%] md:block hidden "
         />
       </div>

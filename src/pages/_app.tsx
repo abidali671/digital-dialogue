@@ -1,9 +1,8 @@
 import React from "react";
 import Layout from "@/components/layout";
-import Head from 'next/head'
+import Head from "next/head";
 import "../styles/global.css";
 import { AppInitialProps } from "next/app";
-
 
 interface AppPropsT {
   Component: React.FC<AppInitialProps>;
@@ -13,7 +12,9 @@ interface AppPropsT {
 export default function MyApp({ Component, pageProps }: AppPropsT) {
   return (
     <>
-      <Head><title>Blogy</title></Head>
+      <Head>
+        <title>Digital Dialogue</title>
+      </Head>
       <Layout>
         <Component {...pageProps} />
       </Layout>
