@@ -1,10 +1,10 @@
-import { ArrowLeft, ArrowRight } from "@/assets/icon";
 import Image from "next/image";
 import React, { useCallback, useMemo, useState } from "react";
-import BlogImage from "../../assets/BlogImage.png";
 import ContentContainer from "../ContentContainer";
-import { slideContent } from "./data";
+import { ArrowLeft, ArrowRight } from "@/assets/icon";
 import { IPostData } from "@/types";
+
+import moment from "moment";
 
 interface IProps {
   posts: IPostData[];
@@ -12,50 +12,45 @@ interface IProps {
 
 const Hero = ({ posts }: IProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const content = useMemo(() => slideContent[currentSlide], [currentSlide]);
+  const post = useMemo(() => posts[currentSlide], [currentSlide]);
 
   const handlePrevSlide = useCallback(() => {
-    setCurrentSlide(
-      currentSlide === 0 ? slideContent.length - 1 : currentSlide - 1
-    );
+    setCurrentSlide(currentSlide === 0 ? posts.length - 1 : currentSlide - 1);
   }, [currentSlide]);
 
   const handleNextSlide = useCallback(() => {
-    setCurrentSlide(
-      currentSlide === slideContent.length - 1 ? 0 : currentSlide + 1
-    );
+    setCurrentSlide(currentSlide === posts.length - 1 ? 0 : currentSlide + 1);
   }, [currentSlide]);
 
   return (
-    <div className="flex relative justify-center sm:h-[calc(100vh_-_64px)] h-[70vh] overflow-hidden">
-      <div className="w-[40%] relative md: bg-neutral-50 bg-none"></div>
-      <div className="w-[60%]">
+    <div className="flex relative justify-center md:h-[calc(100vh_-_64px)] h-[70vh] overflow-hidden">
+      <div className="w-[40%] max-md:hidden relative bg-neutral-100"></div>
+      <div className="md:w-[60%]">
         <Image
-          src={BlogImage}
-          alt="digital-dialogue-logo"
-          className="w-[100%] h-[100%] md:block hidden "
+          src={"https:" + post.fields.coverImage.fields.file.url}
+          alt={post.fields.coverImage.fields.title}
+          width={post.fields.coverImage.fields.file.details.image.width}
+          height={post.fields.coverImage.fields.file.details.image.height}
+          className="w-[100%] h-[100%] object-cover"
         />
       </div>
-      <ContentContainer className="!absolute top-0 lg:top-20 bottom-0 left-[50%]  sm:left-[55%] translate-x-[-50%]">
-        <div className="absolute left-0 top-[50%] translate-y-[-50%] flex flex-col gap-10 max-w-[650px] width-[90%]">
-          <div
-            key={content?.id}
-            className="bg-white z-0 shadow-none sm:shadow-lg w-[100%] sm:text-left text-center sm:items-start items-center p-6 flex flex-col gap-2"
-          >
+      <ContentContainer className="!absolute top-0 lg:top-20 bottom-0 left-[50%]  md:left-[55%] translate-x-[-50%]">
+        <div className="absolute left-0 top-[50%] translate-y-[-50%] flex flex-col gap-10 max-w-[650px] max-md:px-6">
+          <div className="bg-white z-0 shadow-none md:shadow-lg w-[100%] md:text-left text-center md:items-start items-center p-6 flex flex-col gap-2">
             <span className="flex items-center gap-1 ">
               <hr className="w-10 h-[2px] border-0 rounded bg-orange-700" />
-              <p>{content?.tag}</p>
+              <p>{post?.fields.category.fields.label}</p>
             </span>
             <h2 className="text-4xl lg:text-5xl font-bold  ">
-              {content?.title}
+              {post?.fields.title}
             </h2>
             <p className="text-gray-500 flex items-center gap-2 text-xs lg:text-base">
-              {content?.date}
+              {moment(post.sys.createdAt).format("MMMM DD, YYYY")}
               <span className="h-[5px] w-[5px] bg-gray-500 rounded-lg"></span> 4
               min read
             </p>
             <p className="text-gray-500 text-xs lg:text-base">
-              {content?.description}
+              {post.fields.exerpt}
             </p>
             <button className="p-2 bg-orange-500 rounded-sm w-[100px] lg:w-[130px] text-white">
               Read More
@@ -64,7 +59,8 @@ const Hero = ({ posts }: IProps) => {
           <SliderIndicator
             onPrevSlide={handlePrevSlide}
             onNextSlide={handleNextSlide}
-            id={content?.id}
+            posts={posts}
+            id={post.sys.id}
           />
         </div>
       </ContentContainer>
@@ -75,11 +71,13 @@ const Hero = ({ posts }: IProps) => {
 interface SliderIndicatorPropsT {
   onPrevSlide: React.MouseEventHandler<HTMLDivElement>;
   onNextSlide: React.MouseEventHandler<HTMLDivElement>;
+  posts: IPostData[];
   id: string;
 }
 const SliderIndicator = ({
   onPrevSlide,
   onNextSlide,
+  posts,
   id,
 }: SliderIndicatorPropsT) => (
   <div className="flex items-center gap-3">
@@ -90,11 +88,10 @@ const SliderIndicator = ({
       <ArrowLeft />
     </div>
     <div className="flex gap-1">
-      {slideContent.map((item) => (
+      {posts.map((post) => (
         <span
-          key={item.id}
           className={`h-2 w-2 rounded-full ${
-            item.id == id ? "bg-orange-200" : " bg-orange-400"
+            post.sys.id == id ? "bg-orange-200" : " bg-orange-400"
           }`}
         ></span>
       ))}
