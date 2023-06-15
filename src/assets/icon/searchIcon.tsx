@@ -1,4 +1,5 @@
 import React from "react";
+
 function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -7,7 +8,7 @@ function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-6 h-6"
+      className="w-4 h-4"
       {...props}
     >
       <path
@@ -18,4 +19,5 @@ function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
 export default SearchIcon;
