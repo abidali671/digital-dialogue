@@ -9,7 +9,7 @@ import {
 } from "@/assets/icon";
 import Link from "next/link";
 import React from "react";
-import contentful_client from "@/lib/contentfull/client";
+import contentful_client from "@/lib/contentful/client";
 import { useRouter } from "next/router";
 
 const BlogDetail = ({ post }: any) => {

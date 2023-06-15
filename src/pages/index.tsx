@@ -1,7 +1,7 @@
 import React from "react";
 import { Hero, AllPosts, FeaturedSection } from "@/components";
 import { ICategoryData, IPostData, ITagData } from "@/types";
-import contentful_client from "@/lib/contentfull/client";
+import contentful_client from "@/lib/contentful/client";
 
 interface PropsT {
   posts: IPostData[];

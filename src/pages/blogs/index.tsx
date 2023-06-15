@@ -1,7 +1,7 @@
 import React from "react";
 import { Category, ContentContainer, PostCard, Tag } from "@/components";
 import { SearchIcon } from "@/assets/icon";
-import contentful_client from "@/lib/contentfull/client";
+import contentful_client from "@/lib/contentful/client";
 import { ICategoryData, ITagData, JSONValue } from "@/types";
 
 interface PropsT {
