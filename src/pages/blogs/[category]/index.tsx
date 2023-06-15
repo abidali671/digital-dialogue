@@ -31,7 +31,7 @@ const Category = ({ posts, params }: ICategoryProps) => {
       </div>
       <ContentContainer className="relative flex justify-center flex-col p-0">
         <div className="md:col-span-7 col-span-10 gap-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] lg:grid-cols-[repeat(3,minmax(300px,1fr))]">
-          {posts.map((post: any) => (
+          {posts?.map((post: IPostData) => (
             <PostCard key={post.fields.slug} data={post} />
           ))}
         </div>
@@ -40,7 +40,11 @@ const Category = ({ posts, params }: ICategoryProps) => {
   );
 };
 
-export const getStaticProps = async ({ params }: any) => {
+export const getStaticProps = async ({
+  params,
+}: {
+  params: Record<string, string>;
+}) => {
   try {
     const { category } = params;
 

@@ -13,7 +13,7 @@ interface IProps {
 
 const Hero = ({ posts }: IProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const post = useMemo(() => posts[currentSlide], [currentSlide]);
+  const post = useMemo(() => posts[currentSlide], [currentSlide, posts]);
 
   const handlePrevSlide = useCallback(() => {
     setCurrentSlide(currentSlide === 0 ? posts.length - 1 : currentSlide - 1);
