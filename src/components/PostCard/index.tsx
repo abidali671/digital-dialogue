@@ -4,10 +4,9 @@ import Link from "next/link";
 import moment from "moment";
 import { useReadingTime } from "../../hooks/readingTime";
 import { Arrow } from "@/assest/icon";
-import { JSONValue } from "@/types";
 
 interface CardPropsT {
-  data: JSONValue;
+  data: any;
 }
 
 const PostCard = ({ data }: CardPropsT) => {
