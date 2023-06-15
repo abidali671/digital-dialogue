@@ -10,7 +10,7 @@ const Navbar = () => {
     <div className="container-root">
       <ContentContainer className="content-wrapper">
         <Link href="/">
-          <Logo className="md:h-12 h-10" />
+          <Logo className="md:h-12 h-10 w-auto" />
         </Link>
         <ul className="nav-list">
           <li>
