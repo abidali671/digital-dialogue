@@ -52,10 +52,7 @@ const Hero = () => {
             <p className="text-gray-500 text-[12px] lg:text-[16px]">
               {content?.description}
             </p>
-            <button
-              onClick={() => console.log(content?.id)}
-              className="p-2 bg-orange-500 rounded-sm w-[100px]  lg:w-[130px] text-white"
-            >
+            <button className="p-2 bg-orange-500 rounded-sm w-[100px]  lg:w-[130px] text-white">
               Read More
             </button>
           </div>

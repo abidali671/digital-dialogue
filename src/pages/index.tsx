@@ -11,10 +11,6 @@ interface PropsT {
 }
 
 const Home = ({ posts, category, tag }: PropsT) => {
-  console.log("posts", posts);
-  console.log("category", category);
-  console.log("tag", tag);
-
   return (
     <React.Fragment>
       <Hero />
