@@ -90,6 +90,7 @@ const SliderIndicator = ({
     <div className="flex gap-1">
       {posts.map((post) => (
         <span
+          key={post.sys.id}
           className={`h-2 w-2 rounded-full ${
             post.sys.id == id ? "bg-orange-200" : " bg-orange-400"
           }`}
