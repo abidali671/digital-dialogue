@@ -11,7 +11,6 @@ interface PropsT {
 }
 
 const Blogs = ({ posts, categories, tags }: PropsT) => {
-  console.log(posts[0].fields.content);
   return (
     <div className="relative">
       <div className="w-full bg-neutral-200 ">
