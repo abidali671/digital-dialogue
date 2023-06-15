@@ -11,18 +11,18 @@ const Footer = () => {
           <div className="flex  flex-col gap-5 items-start justify-start">
             <Logo className="h-12" stroke="white" />
             <p className="text-gray-400 text-md leading-6 ">
-              Phasellus porttitor sapien a purus venenatis condimentum. Nunc
-              lectus ipsum, laoreet ut efficitur.
+              Welcome to Digital Dialogue, your go-to blogging site for all
+              things freelancing, technology, design and creativity.
             </p>
           </div>
 
           <FooterLink
             title="Category"
-            links={["Technalogy", "Freelancing", "Design and Creativity"]}
+            links={["Technology", "Freelancing", "Design and Creativity"]}
           />
           <FooterLink
             title="Follow us"
-            links={["Technalogy", "Freelancing", "Design and Creativity"]}
+            links={["Technology", "Freelancing", "Design and Creativity"]}
           />
           <div className="flex flex-col gap-3 w-full md:col-span-2  lg:col-span-1 ">
             <h3 className="text-2xl pt-3 text-white ">Newsletter</h3>
@@ -40,7 +40,9 @@ const Footer = () => {
         </div>
         <hr className=" border-1 border-[#7F7F7F]" />
         <div className="text-white flex justify-between items-center">
-          <p className="text-md">@ 2023 - Digital Dialogue</p>
+          <p className="text-md">
+            © 2023 Digital-Dialogue.com - All rights reserved
+          </p>
           <p className="text-md">Develop by team Digital Dialogue</p>
         </div>
       </ContentContainer>
