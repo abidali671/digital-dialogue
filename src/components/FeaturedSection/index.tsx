@@ -7,12 +7,12 @@ interface PropsT {
   posts: JSONValue[];
 }
 
-const LatestPost = ({ posts }: PropsT) => {
+const FeaturedSection = ({ posts }: PropsT) => {
   return (
-    <div className=" bg-neutral-50 ">
+    <div className="bg-white ">
       <ContentContainer>
-        <span className="flex r gap-1 flex-col">
-          <h2 className="font-bold text-4xl ">Latest Post</h2>
+        <span>
+          <h2 className="font-bold text-4xl ">Featured Post</h2>
           <hr className="w-24 h-[4px]   border-1 rounded bg-orange-700" />
         </span>
         <div className="py-10 grid gap-6 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
@@ -24,4 +24,5 @@ const LatestPost = ({ posts }: PropsT) => {
     </div>
   );
 };
-export default LatestPost;
+
+export default FeaturedSection;
