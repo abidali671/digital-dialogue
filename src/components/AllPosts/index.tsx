@@ -9,9 +9,11 @@ import { JSONValue } from "@/types";
 
 interface PropsT {
   posts: JSONValue[];
+  categories: JSONValue[];
+  tags: JSONValue[];
 }
 
-const AllPosts = ({ posts }: PropsT) => {
+const AllPosts = ({ posts, categories, tags }: PropsT) => {
   return (
     <div className="bg-neutral-100">
       <ContentContainer>
@@ -28,8 +30,8 @@ const AllPosts = ({ posts }: PropsT) => {
           <div className="sm:col-span-3 hidden md:flex gap-2 flex-col">
             <div className="gap-2 flex flex-col sm:px-0 px-4 ">
               <h2 className="text-xl font-bold">Featured Category</h2>
-              {Categories.map(({ label, slug }, ind) => (
-                <Category key={ind} label={label} slug={slug} />
+              {categories.map((data, ind) => (
+                <Category key={ind} data={data} />
               ))}
             </div>
             <div>

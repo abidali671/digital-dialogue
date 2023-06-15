@@ -1,15 +1,22 @@
 import React from "react";
-import Categories from "@/constants/categories";
+import Link from "next/link";
 
 interface CategoryT {
-  slug: string;
-  label: string;
+  data: any;
 }
-const Category = ({ slug, label }: CategoryT) => {
+const Category = ({ data }: CategoryT) => {
+  const { label, slug } = data.fields;
+
   return (
-    <div className="w-full bg-[#C4C4C4] p-4">
-      <button className="bg-white font-medium p-2">{label}</button>
-    </div>
+    <Link
+      href={{
+        pathname: "/blogs/[category]",
+        query: { category: slug },
+      }}
+      className="w-full bg-[#C4C4C4] p-4"
+    >
+      <p className="bg-white font-medium p-2 w-fit">{label}</p>
+    </Link>
   );
 };
 
