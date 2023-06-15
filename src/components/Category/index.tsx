@@ -1,10 +1,11 @@
 import React from "react";
 import Link from "next/link";
+import { ICategoryData } from "@/types";
 
-interface CategoryT {
-  data: any;
+interface ICategoryProps {
+  data: ICategoryData;
 }
-const Category = ({ data }: CategoryT) => {
+const Category = ({ data }: ICategoryProps) => {
   const { label, slug } = data.fields;
 
   return (

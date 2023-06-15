@@ -1,13 +1,13 @@
 import React from "react";
 import { LatestPost, Hero, AllPosts } from "@/components";
 import contentful_client from "@/lib/contentfull/client";
-import { JSONValue } from "@/types";
+import { ICategoryData, ITagData, JSONValue } from "@/types";
 import FeaturedSection from "@/components/FeaturedSection";
 
 interface PropsT {
   posts: JSONValue[];
-  categories: JSONValue[];
-  tags: JSONValue[];
+  categories: ICategoryData[];
+  tags: ITagData[];
 }
 
 const Home = ({ posts, categories, tags }: PropsT) => {

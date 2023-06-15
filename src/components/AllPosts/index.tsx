@@ -1,16 +1,14 @@
-import Categories from "@/constants/categories";
-import Tags from "@/constants/tags";
 import React from "react";
 import PostCard from "../PostCard";
 import Category from "../Category";
 import ContentContainer from "../ContentContainer";
 import Tag from "../Tag";
-import { JSONValue } from "@/types";
+import { ICategoryData, ITagData, JSONValue } from "@/types";
 
 interface PropsT {
   posts: JSONValue[];
-  categories: JSONValue[];
-  tags: JSONValue[];
+  categories: ICategoryData[];
+  tags: ITagData[];
 }
 
 const AllPosts = ({ posts, categories, tags }: PropsT) => {
@@ -30,15 +28,15 @@ const AllPosts = ({ posts, categories, tags }: PropsT) => {
           <div className="sm:col-span-3 hidden md:flex gap-2 flex-col">
             <div className="gap-2 flex flex-col sm:px-0 px-4 ">
               <h2 className="text-xl font-bold">Featured Category</h2>
-              {categories.map((data, ind) => (
+              {categories.map((data: ICategoryData, ind) => (
                 <Category key={ind} data={data} />
               ))}
             </div>
             <div>
               <h2 className="text-xl font-bold">All Tags</h2>
               <div className="flex gap-2 flex-wrap my-3">
-                {Tags.map((tag, ind) => (
-                  <Tag key={ind} label={tag.label} />
+                {tags.map((data: ITagData, ind: number) => (
+                  <Tag key={ind} data={data} />
                 ))}
               </div>
             </div>
