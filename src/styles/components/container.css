@@ -3,7 +3,7 @@
 }
 
 .container-root > .content-wrapper {
-  @apply flex items-center justify-between h-16 relative;
+  @apply flex items-center justify-between relative;
 }
 
 .container-root > .content-wrapper > .nav-list {

@@ -7,7 +7,7 @@ const ContentContainer = ({ children, className }: PropsType) => {
   return (
     <div
       className={cx(
-        "max-w-7xl w-full  p-4 mx-auto relative",
+        "max-w-7xl w-full px-6 py-4 mx-auto relative",
         className && className
       )}
     >
