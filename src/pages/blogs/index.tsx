@@ -1,6 +1,6 @@
 import React from "react";
 import { ContentContainer } from "@/components";
-import { SearchIcon } from "@/assest/icon";
+import { SearchIcon } from "@/assets/icon";
 
 const Blogs = () => {
   return (

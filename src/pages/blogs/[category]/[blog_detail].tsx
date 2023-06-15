@@ -6,7 +6,7 @@ import {
   LinkIcon,
   Like,
   // Comment,
-} from "@/assest/icon";
+} from "@/assets/icon";
 import Link from "next/link";
 import React from "react";
 import contentful_client from "@/lib/contentfull/client";

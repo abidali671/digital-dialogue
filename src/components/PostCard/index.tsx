@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import moment from "moment";
 import { useReadingTime } from "../../hooks/readingTime";
-import { Arrow } from "@/assest/icon";
+import { Arrow } from "@/assets/icon";
 
 interface CardPropsT {
   data: any;
@@ -21,7 +21,9 @@ const PostCard = ({ data }: CardPropsT) => {
         <Image
           src={"https:" + coverImage.fields.file.url}
           alt={coverImage.fields.title}
-          fill
+          className="object-cover h-full w-full"
+          width={396}
+          height={240}
         />
         {coverImage.fields.description && (
           <div

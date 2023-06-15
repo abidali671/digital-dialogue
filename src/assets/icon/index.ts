@@ -1,0 +1,10 @@
+export { default as Facebook } from "@/assets/icon/facebook";
+export { default as Twitter } from "@/assets/icon/twitter";
+export { default as Pinterest } from "@/assets/icon/pinterest";
+export { default as LinkIcon } from "@/assets/icon/link";
+export { default as SearchIcon } from "@/assets/icon/searchIcon";
+export { default as Arrow } from "@/assets/icon/arrow";
+export { default as ArrowLeft } from "@/assets/icon/arrowLeft";
+export { default as ArrowRight } from "@/assets/icon/arrowRight";
+export { default as Like } from "@/assets/icon/like";
+export { default as Comment } from "@/assets/icon/comment";

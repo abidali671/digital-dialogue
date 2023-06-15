@@ -1,7 +1,7 @@
-import { ArrowLeft, ArrowRight } from "@/assest/icon";
+import { ArrowLeft, ArrowRight } from "@/assets/icon";
 import Image from "next/image";
 import React, { useCallback, useMemo, useState } from "react";
-import BlogImage from "../../assest/BlogImage.png";
+import BlogImage from "../../assets/BlogImage.png";
 import ContentContainer from "../ContentContainer";
 import { slideContent } from "./data";
 
