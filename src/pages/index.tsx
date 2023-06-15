@@ -1,7 +1,8 @@
 import React from "react";
-import { LatestPost, Hero, FeaturedSection, AllPosts } from "@/components";
+import { LatestPost, Hero, AllPosts } from "@/components";
 import contentful_client from "@/lib/contentfull/client";
 import { JSONValue } from "@/types";
+import FeaturedSection from "@/components/FeaturedSection";
 
 interface PropsT {
   posts: JSONValue[];

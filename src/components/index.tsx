@@ -1,7 +1,6 @@
 export { default as Navbar } from "./Container/Navbar";
 export { default as Hero } from "./HeroSection";
 export { default as LatestPost } from "./LatestPost";
-export { default as FeaturedSection } from "./FeaturedSection";
 export { default as AllPosts } from "./AllPosts";
 export { default as ContentContainer } from "./ContentContainer";
 export { default as PostCard } from "./PostCard";
