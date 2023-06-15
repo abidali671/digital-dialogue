@@ -3,10 +3,10 @@ import PostCard from "../PostCard";
 import Category from "../Category";
 import ContentContainer from "../ContentContainer";
 import Tag from "../Tag";
-import { ICategoryData, ITagData, JSONValue } from "@/types";
+import { ICategoryData, ITagData, IPostData } from "@/types";
 
 interface PropsT {
-  posts: JSONValue[];
+  posts: IPostData[];
   categories: ICategoryData[];
   tags: ITagData[];
 }
@@ -21,7 +21,7 @@ const AllPosts = ({ posts, categories, tags }: PropsT) => {
         </span>
         <div className="grid-cols-10 grid py-10 gap-6">
           <div className="md:col-span-7 col-span-10 gap-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
-            {posts.map((post: any) => (
+            {posts.map((post: IPostData) => (
               <PostCard key={post.fields.slug} data={post} />
             ))}
           </div>

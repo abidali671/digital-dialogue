@@ -4,8 +4,13 @@ import React, { useCallback, useMemo, useState } from "react";
 import BlogImage from "../../assets/BlogImage.png";
 import ContentContainer from "../ContentContainer";
 import { slideContent } from "./data";
+import { IPostData } from "@/types";
 
-const Hero = () => {
+interface IProps {
+  posts: IPostData[];
+}
+
+const Hero = ({ posts }: IProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const content = useMemo(() => slideContent[currentSlide], [currentSlide]);
 

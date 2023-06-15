@@ -1,11 +1,11 @@
 import React from "react";
 import { LatestPost, Hero, AllPosts } from "@/components";
 import contentful_client from "@/lib/contentfull/client";
-import { ICategoryData, ITagData, JSONValue } from "@/types";
+import { ICategoryData, IPostData, ITagData } from "@/types";
 import FeaturedSection from "@/components/FeaturedSection";
 
 interface PropsT {
-  posts: JSONValue[];
+  posts: IPostData[];
   categories: ICategoryData[];
   tags: ITagData[];
 }
@@ -13,7 +13,7 @@ interface PropsT {
 const Home = ({ posts, categories, tags }: PropsT) => {
   return (
     <React.Fragment>
-      <Hero />
+      <Hero posts={posts.slice(0, 3)} />
       <LatestPost posts={posts.slice(0, 3)} />
       <FeaturedSection posts={posts.slice(0, 3)} />
       <AllPosts posts={posts} categories={categories} tags={tags} />

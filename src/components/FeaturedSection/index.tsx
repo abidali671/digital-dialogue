@@ -1,10 +1,10 @@
 import React from "react";
 import PostCard from "../PostCard";
 import ContentContainer from "../ContentContainer";
-import { JSONValue } from "@/types";
+import { IPostData } from "@/types";
 
 interface PropsT {
-  posts: JSONValue[];
+  posts: IPostData[];
 }
 
 const FeaturedSection = ({ posts }: PropsT) => {
@@ -16,7 +16,7 @@ const FeaturedSection = ({ posts }: PropsT) => {
           <hr className="w-24 h-[4px]   border-1 rounded bg-orange-700" />
         </span>
         <div className="py-10 grid gap-6 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
-          {posts.map((post: any) => (
+          {posts.map((post: IPostData) => (
             <PostCard key={post.fields.slug} data={post} />
           ))}
         </div>
