@@ -1,8 +1,8 @@
 import React from "react";
-import Layout from "@/components/layout";
 import Head from "next/head";
-import "../styles/global.css";
+import Layout from "@/components/layout";
 import { AppInitialProps } from "next/app";
+import "../styles/global.css";
 
 interface AppPropsT {
   Component: React.FC<AppInitialProps>;
@@ -14,6 +14,7 @@ export default function MyApp({ Component, pageProps }: AppPropsT) {
     <>
       <Head>
         <title>Digital Dialogue</title>
+        <link rel="icon" href="/favicon.svg" sizes="any" />
       </Head>
       <Layout>
         <Component {...pageProps} />
