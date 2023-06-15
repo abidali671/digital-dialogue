@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import ContentContainer from "../ContentContainer";
 import { ArrowLeft, ArrowRight } from "@/assets/icon";
 import { IPostData } from "@/types";
@@ -52,9 +53,18 @@ const Hero = ({ posts }: IProps) => {
             <p className="text-gray-500 text-xs lg:text-base">
               {post.fields.exerpt}
             </p>
-            <button className="p-2 bg-orange-500 rounded-sm w-[100px] lg:w-[130px] text-white">
+            <Link
+              href={{
+                pathname: "/blogs/[category]/[blog_detail]",
+                query: {
+                  category: post.fields.category.fields.slug,
+                  blog_detail: post.fields.slug,
+                },
+              }}
+              className="p-2 bg-orange-500 rounded-sm w-[100px] lg:w-[130px] text-white text-center"
+            >
               Read More
-            </button>
+            </Link>
           </div>
           <SliderIndicator
             onPrevSlide={handlePrevSlide}
