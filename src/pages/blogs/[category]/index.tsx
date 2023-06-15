@@ -1,5 +1,5 @@
 import React from "react";
-import { PostCard, ContentContainer } from "@/components";
+import { ContentContainer } from "@/components";
 import { SearchIcon } from "@/assest/icon";
 
 const searchResult = () => {
@@ -8,7 +8,7 @@ const searchResult = () => {
       <div className="h-[50vh] w-full bg-neutral-200 ">
         <div className="flex flex-col h-full items-center  justify-center pt-10 gap-4 px-10 ">
           <h3 className="sm:text-[40px] text-3xl text-center font-bold">
-            ‘Travel’ here’s what we’ve got
+            Travel heres what weve got
           </h3>
 
           <div className="flex gap-2 justify-center items-center w-full sm:flex-row flex-col ">
@@ -27,36 +27,7 @@ const searchResult = () => {
         </div>
       </div>
       <ContentContainer className="relative flex justify-center flex-col p-0">
-        <div className="py-10 grid place-items-center gap-4  w-full sm:w-[70%] mx-auto grid-cols-[repeat(auto-fill,minmax(300px,1fr))] ">
-          <PostCard
-            imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
-            altText="shoes"
-            title="How to Get Started With UI/UX in Figma"
-            description=""
-            date="March 25, 2021"
-          />
-          <PostCard
-            imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
-            altText="shoes"
-            title="How to Get Started With UI/UX in Figma"
-            description=""
-            date="March 25, 2021"
-          />
-          <PostCard
-            imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
-            altText="shoes"
-            title="How to Get Started With UI/UX in Figma"
-            description=""
-            date="March 25, 2021"
-          />
-          <PostCard
-            imageUrl="https://media.cnn.com/api/v1/images/stellar/prod/allbirds-sneakers-review-wool-runnerjpg.jpg?q=h_1090,w_1938,x_0,y_0"
-            altText="shoes"
-            title="How to Get Started With UI/UX in Figma"
-            description=""
-            date="March 25, 2021"
-          />
-        </div>
+        <div className="py-10 grid place-items-center gap-4  w-full sm:w-[70%] mx-auto grid-cols-[repeat(auto-fill,minmax(300px,1fr))] "></div>
       </ContentContainer>
     </div>
   );
