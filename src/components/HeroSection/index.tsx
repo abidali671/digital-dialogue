@@ -13,7 +13,7 @@ const Hero = () => {
     setCurrentSlide(
       currentSlide === 0 ? slideContent.length - 1 : currentSlide - 1
     );
-  }, []);
+  }, [currentSlide]);
 
   const handleNextSlide = useCallback(() => {
     setCurrentSlide(

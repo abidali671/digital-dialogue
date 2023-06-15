@@ -12,7 +12,7 @@ import React from "react";
 import contentful_client from "@/lib/contentfull/client";
 import { useRouter } from "next/router";
 
-const BlogDetail = ({ post }) => {
+const BlogDetail = ({ post }: any) => {
   const router = useRouter();
 
   if (router.isFallback) return <div>loading...</div>;
@@ -66,18 +66,6 @@ const BlogDetail = ({ post }) => {
           // className="grid h-[100%] mx-auto lg:grid-cols-[200px_1fr] gap-y-6  grid-cols-[1fr] w-11/12  md:w-8/12"
           className="mx-auto  w-11/12  md:w-8/12"
         >
-          {/* Aside column start*/}
-          {/* <aside className="h-20 gap-8 grid py-2">
-            <div className="flex gap-3">
-              <Like stroke="#FB743E" />
-              <p className="font-medium">24 Likes</p>
-            </div>
-            <div className="flex gap-3">
-              <Comment />
-
-              <p className="font-medium">195 Comments</p>
-            </div>
-          </aside> */}
           {/* Aside column end*/}
           <article className=" ">
             <div className="flex flex-col gap-3">
@@ -85,8 +73,8 @@ const BlogDetail = ({ post }) => {
                 20 web designer skills to have
               </h1>
               <p className="blog-post-p ">
-                Here's a medley of 20 skills to help you become a design expert,
-                no matter where you're at in your career.
+                Here&apos;s a medley of 20 skills to help you become a design
+                expert, no matter where you&apos;re at in your career.
               </p>
               <p className="text-xl pl-4 py-2 border-l-4   border-[#FB743E]">
                 <span className="blog-post-p">
@@ -100,12 +88,12 @@ const BlogDetail = ({ post }) => {
               <h2 className="blog-post-h2">1. Know the principles of design</h2>
               <div className="bg-neutral-300 w-full h-30 sm:h-80"></div>
               <p className="blog-post-p">
-                You don’t need to know music theory to write a song, and if
-                you’ve never taken an art class, you can still draw. Some of us
-                might have an innate artistic ability, but knowing the basic
-                fundamentals can make the difference between recreating what you
-                see and being able to build a design that’s calculated and
-                unique.
+                You don&apos;t need to know music theory to write a song, and if
+                you&apos;ve never taken an art class, you can still draw. Some
+                of us might have an innate artistic ability, but knowing the
+                basic fundamentals can make the difference between recreating
+                what you see and being able to build a design that&apos;s
+                calculated and unique.
               </p>
               <p className="blog-post-p">
                 <span className="blog-post-link ">
@@ -113,9 +101,9 @@ const BlogDetail = ({ post }) => {
                 </span>{" "}
                 does a deeper dive into the principles of visual design rooted
                 in Gestalt psychology. These fundamentals are the foundation of
-                web and graphic design and important to know. Whether you’re
-                designing a portfolio or a print ad, these concepts can help
-                guide your work. Let’s do a quick recap.
+                web and graphic design and important to know. Whether
+                you&apos;re designing a portfolio or a print ad, these concepts
+                can help guide your work. Let&apos;s do a quick recap.
               </p>
               {/* sub heading  */}
               <div className="flex flex-col gap-2 py-2">
@@ -156,10 +144,10 @@ const BlogDetail = ({ post }) => {
               <h2 className="blog-post-h2">2. Typography</h2>
               <div className="bg-neutral-300 w-full h-80"></div>
               <p className="blog-post-p">
-                Typography shapes our perception of ideas. A type’s weight and
-                geometry communicates meaning, and as a designer, it’s important
-                to know the best way to deliver messaging with the appropriate
-                typographical choices.
+                Typography shapes our perception of ideas. A type&apos;s weight
+                and geometry communicates meaning, and as a designer, it&apos;s
+                important to know the best way to deliver messaging with the
+                appropriate typographical choices.
               </p>
               <p className="blog-post-p">
                 All the font options can make it hard for new designers to know
@@ -215,7 +203,7 @@ const BlogDetail = ({ post }) => {
   );
 };
 
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps = async ({ params }: any) => {
   try {
     const { category, blog_detail } = params;
 
@@ -242,7 +230,7 @@ export const getStaticProps = async ({ params }) => {
 
 export const getStaticPaths = async () => {
   const response = await contentful_client.getEntries({ content_type: "post" });
-  const paths = response.items.map((item) => ({
+  const paths = response.items.map((item: any) => ({
     params: {
       category: item.fields.category.fields.slug,
       blog_detail: item.fields.slug,

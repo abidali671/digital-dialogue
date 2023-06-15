@@ -3,7 +3,7 @@ import cx from "clsx";
 
 type PropsType = PropsWithChildren<{ className?: string }>;
 
-export default ({ children, className }: PropsType) => {
+const ContentContainer = ({ children, className }: PropsType) => {
   return (
     <div
       className={cx(
@@ -15,3 +15,5 @@ export default ({ children, className }: PropsType) => {
     </div>
   );
 };
+
+export default ContentContainer;

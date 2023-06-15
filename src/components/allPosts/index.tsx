@@ -21,7 +21,7 @@ const AllPosts = ({ posts }: PropsT) => {
         </span>
         <div className="grid-cols-10 grid py-10 gap-6">
           <div className="md:col-span-7 col-span-10 gap-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
-            {posts.map((post) => (
+            {posts.map((post: any) => (
               <PostCard key={post.fields.slug} data={post} />
             ))}
           </div>
