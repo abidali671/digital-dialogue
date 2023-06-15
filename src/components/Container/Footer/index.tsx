@@ -63,7 +63,9 @@ const FooterLink = ({ title, links }: FooterLinkPropsT) => {
       <ul className="flex-col flex text-white gap-2">
         {links.map((link, index) => (
           <li key={index} className="hover:text-white text-gray-400">
-            <Link href="">{link}</Link>
+            <Link className="text-gray-400" href="">
+              {link}
+            </Link>
           </li>
         ))}
       </ul>
