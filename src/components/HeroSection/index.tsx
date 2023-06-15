@@ -1,5 +1,5 @@
-import Image from "next/image";
 import React, { useCallback, useMemo, useState } from "react";
+import Image from "next/image";
 import ContentContainer from "../ContentContainer";
 import { ArrowLeft, ArrowRight } from "@/assets/icon";
 import { IPostData } from "@/types";
@@ -16,11 +16,11 @@ const Hero = ({ posts }: IProps) => {
 
   const handlePrevSlide = useCallback(() => {
     setCurrentSlide(currentSlide === 0 ? posts.length - 1 : currentSlide - 1);
-  }, [currentSlide]);
+  }, [currentSlide, posts.length]);
 
   const handleNextSlide = useCallback(() => {
     setCurrentSlide(currentSlide === posts.length - 1 ? 0 : currentSlide + 1);
-  }, [currentSlide]);
+  }, [currentSlide, posts.length]);
 
   return (
     <div className="flex relative justify-center md:h-[calc(100vh_-_64px)] h-[70vh] overflow-hidden">
