@@ -36,13 +36,13 @@ const Hero = ({ posts }: IProps) => {
         />
       </div>
       <ContentContainer className="!absolute top-0 lg:top-20 bottom-0 left-[50%]  md:left-[55%] translate-x-[-50%]">
-        <div className="absolute left-0 top-[50%] translate-y-[-50%] flex flex-col gap-10 max-w-[650px] max-md:px-6">
-          <div className="bg-white z-0 shadow-none md:shadow-lg w-[100%] md:text-left text-center md:items-start items-center p-6 flex flex-col gap-2">
+        <div className="absolute left-0 top-[50%] translate-y-[-50%] flex flex-col gap-10 max-w-[650px] max-md:px-4">
+          <div className="bg-white z-0 shadow-none md:shadow-lg w-[100%] md:text-left text-center md:items-start items-center p-4 md-p-6 flex flex-col gap-2">
             <span className="flex items-center gap-1 ">
               <hr className="w-10 h-[2px] border-0 rounded bg-orange-700" />
               <p>{post?.fields.category.fields.label}</p>
             </span>
-            <h2 className="text-4xl lg:text-5xl font-bold  ">
+            <h2 className="text-2xl md:text-5xl font-bold line-clamp-2">
               {post?.fields.title}
             </h2>
             <p className="text-gray-500 flex items-center gap-2 text-xs lg:text-base">
@@ -50,7 +50,7 @@ const Hero = ({ posts }: IProps) => {
               <span className="h-[5px] w-[5px] bg-gray-500 rounded-lg"></span> 4
               min read
             </p>
-            <p className="text-gray-500 text-xs lg:text-base">
+            <p className="text-gray-500 text-xs lg:text-base line-clamp-3">
               {post.fields.exerpt}
             </p>
             <Link

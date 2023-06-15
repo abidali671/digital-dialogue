@@ -26,11 +26,11 @@
 }
 
 .post-card-root .post-card-content-wrapper .post-card-title {
-  @apply text-3xl font-bold tracking-tight text-gray-900 leading-[32px] line-clamp-2 h-[64px] font-PT;
+  @apply text-2xl font-bold tracking-tight text-gray-900 leading-[32px] line-clamp-2 h-[64px] font-PT;
 }
 
 .post-card-root .post-card-content-wrapper .post-card-excerpt {
-  @apply text-gray-500 text-xs lg:text-base line-clamp-5 h-[92px];
+  @apply text-gray-500 text-xs lg:text-base line-clamp-3 h-[92px];
 }
 
 .post-card-root .post-card-content-wrapper .post-card-created-date {
