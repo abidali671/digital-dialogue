@@ -38,21 +38,21 @@ const Hero = () => {
             className="bg-white z-0 shadow-none sm:shadow-lg w-[100%] sm:text-left text-center sm:items-start items-center p-6 flex flex-col gap-2"
           >
             <span className="flex items-center gap-1 ">
-              <hr className="w-10 h-[2px]   border-0 rounded bg-orange-700" />
+              <hr className="w-10 h-[2px] border-0 rounded bg-orange-700" />
               <p>{content?.tag}</p>
             </span>
-            <h2 className="text-4xl lg:text-5xl  font-bold  ">
+            <h2 className="text-4xl lg:text-5xl font-bold  ">
               {content?.title}
             </h2>
-            <p className="text-gray-500 flex items-center gap-2 text-[12px] lg:text-[16px]">
+            <p className="text-gray-500 flex items-center gap-2 text-xs lg:text-base">
               {content?.date}
               <span className="h-[5px] w-[5px] bg-gray-500 rounded-lg"></span> 4
               min read
             </p>
-            <p className="text-gray-500 text-[12px] lg:text-[16px]">
+            <p className="text-gray-500 text-xs lg:text-base">
               {content?.description}
             </p>
-            <button className="p-2 bg-orange-500 rounded-sm w-[100px]  lg:w-[130px] text-white">
+            <button className="p-2 bg-orange-500 rounded-sm w-[100px] lg:w-[130px] text-white">
               Read More
             </button>
           </div>

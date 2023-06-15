@@ -7,7 +7,7 @@ const searchResult = () => {
     <div className="relative">
       <div className="h-[50vh] w-full bg-neutral-200 ">
         <div className="flex flex-col h-full items-center  justify-center pt-10 gap-4 px-10 ">
-          <h3 className="sm:text-[40px] text-3xl text-center font-bold">
+          <h3 className="sm:text-4xl text-3xl text-center font-bold">
             Travel heres what weve got
           </h3>
 

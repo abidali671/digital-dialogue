@@ -7,12 +7,12 @@ const Blogs = () => {
     <div className="relative">
       <div className="h-[50vh] w-full bg-neutral-200 ">
         <div className="flex flex-col h-full items-center  justify-center pt-10 gap-4 px-10 ">
-          <h3 className="sm:text-[40px] text-3xl text-center font-bold">
+          <h3 className="sm:text-4xl text-3xl text-center font-bold">
             Travel heres what weve got
           </h3>
 
           <div className="flex gap-2 justify-center items-center w-full sm:flex-row flex-col ">
-            <div className="flex gap-2 h-12   w-full sm:w-6/12 bg-white items-center shadow-md px-3">
+            <div className="flex gap-2 h-12 w-full sm:w-6/12 bg-white items-center shadow-md px-3">
               <SearchIcon />
               <input
                 type="text"

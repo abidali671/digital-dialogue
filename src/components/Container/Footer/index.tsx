@@ -40,10 +40,10 @@ const Footer = () => {
         </div>
         <hr className=" border-1 border-[#7F7F7F]" />
         <div className="text-white flex justify-between items-center">
-          <p className="text-md">
+          <p className="text-base">
             © 2023 Digital-Dialogue.com - All rights reserved
           </p>
-          <p className="text-md">Develop by team Digital Dialogue</p>
+          <p className="text-base">Develop by team Digital Dialogue</p>
         </div>
       </ContentContainer>
     </footer>

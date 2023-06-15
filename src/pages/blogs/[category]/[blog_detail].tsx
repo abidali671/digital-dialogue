@@ -27,7 +27,7 @@ const BlogDetail = ({ post }: any) => {
             <hr className="w-10 h-[2px] border-0 rounded bg-orange-700" />
             <p>Travel</p>
           </span>
-          <h1 className="md:text-[52px] text-[42px] font-bold tracking-tight text-gray-900 leading-[48px] font-PT">
+          <h1 className="md:text-5xl text-4xl font-bold tracking-tight text-gray-900 font-PT">
             20 essential skills for successful web designers
           </h1>
           <div className="flex justify-between w-full flex-wrap gap-y-3">
@@ -37,11 +37,11 @@ const BlogDetail = ({ post }: any) => {
                 <p className="font-medium">Kadin Dias</p>
               </div>
               <span className="flex h-[5px] w-[5px] bg-gray-500 rounded-lg"></span>
-              <p className="text-gray-500 flex items-center gap-2 text-[12px] lg:text-[16px]">
+              <p className="text-gray-500 flex items-center gap-2 text-xs lg:text-base">
                 March 25, 2021
               </p>
               <span className="h-[5px] w-[5px] bg-gray-500 rounded-lg"></span>
-              <p className="text-gray-500  flex items-center gap-2 text-[12px] lg:text-[16px]">
+              <p className="text-gray-500  flex items-center gap-2 text-xs lg:text-base">
                 4 min read
               </p>
             </div>
@@ -69,7 +69,7 @@ const BlogDetail = ({ post }: any) => {
           {/* Aside column end*/}
           <article className=" ">
             <div className="flex flex-col gap-3">
-              <h1 className=" text-[40px] font-bold  text-gray-800 leading-[48px] font-PT">
+              <h1 className=" text-4xl font-bold  text-gray-800 leading-[48px] font-PT">
                 20 web designer skills to have
               </h1>
               <p className="blog-post-p ">
