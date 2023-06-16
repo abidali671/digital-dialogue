@@ -25,3 +25,7 @@
 .container-root > .content-wrapper > .nav-list > li .search-box img {
   @apply w-[16px] h-[16px];
 }
+
+.container-body {
+  @apply min-h-[calc(100vh_-_80px)];
+}
