@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import moment from "moment";
-import { useReadingTime } from "../../hooks/readingTime";
 import { Arrow } from "@/assets/icon";
 import { IPostData } from "@/types";
 
@@ -13,8 +12,6 @@ interface CardPropsT {
 const PostCard = ({ data }: CardPropsT) => {
   const { category, coverImage, title, exerpt, slug } = data.fields;
   const { createdAt } = data.sys;
-
-  const readingTime = useReadingTime(exerpt); //reading time hook
 
   return (
     <div className="post-card-root">
@@ -33,15 +30,20 @@ const PostCard = ({ data }: CardPropsT) => {
         )}
       </div>
       <div className="post-card-content-wrapper">
-        <span className="post-card-label-wrapper">
+        <Link
+          href={{
+            pathname: "/blogs/[category]",
+            query: { category: category.fields.slug },
+          }}
+          className="post-card-label-wrapper"
+        >
           <hr className="post-card-label-line" />
           <p>{category.fields.label}</p>
-        </span>
+        </Link>
         <h5 className="post-card-title">{title}</h5>
         <p className="post-card-excerpt">{exerpt}</p>
         <p className="post-card-created-date">
           {moment(createdAt).format("MMMM DD, YYYY")}
-          <span className="post-card-dot"></span> {readingTime} min read
         </p>
 
         <Link

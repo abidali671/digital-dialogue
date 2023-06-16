@@ -47,8 +47,6 @@ const Hero = ({ posts }: IProps) => {
             </h2>
             <p className="text-gray-500 flex items-center gap-2 text-xs lg:text-base">
               {moment(post.sys.createdAt).format("MMMM DD, YYYY")}
-              <span className="h-[5px] w-[5px] bg-gray-500 rounded-lg"></span> 4
-              min read
             </p>
             <p className="text-gray-500 text-xs lg:text-base line-clamp-3">
               {post.fields.exerpt}

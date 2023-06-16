@@ -30,15 +30,11 @@
 }
 
 .post-card-root .post-card-content-wrapper .post-card-excerpt {
-  @apply text-gray-500 text-xs lg:text-base line-clamp-3 h-[92px];
+  @apply text-gray-500 text-xs md:text-base line-clamp-3 h-12 md:h-[72px];
 }
 
 .post-card-root .post-card-content-wrapper .post-card-created-date {
-  @apply text-gray-500 flex items-center gap-2 text-xs lg:text-base;
-}
-
-.post-card-root .post-card-content-wrapper .post-card-dot {
-  @apply h-1 w-1 bg-gray-500 rounded-lg;
+  @apply text-gray-500 flex items-center gap-2 text-xs md:text-base;
 }
 
 .post-card-root .post-card-content-wrapper .post-card-read-text {
