@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { ContentContainer } from "@/components";
 import { SearchIcon } from "@/assets/icon";
 import { IAuthor } from "@/types";
@@ -11,7 +11,23 @@ interface PropsT {
 }
 
 const Authors = ({ authors }: PropsT) => {
-  console.log(authors[0]);
+  const [searchText, setSearchText] = useState<string>("");
+
+  const filteredAuthors = useMemo(() => {
+    const filter_list = authors.filter(
+      (author) =>
+        author.fields.name.toLowerCase().includes(searchText.toLowerCase()) ||
+        author.fields.about.toLowerCase().includes(searchText.toLowerCase()) ||
+        author.fields.role.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+    return filter_list;
+  }, [authors, searchText]);
+
+  const handleSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(event.target.value);
+  };
+
   return (
     <div className="relative">
       <div className="w-full bg-neutral-200 ">
@@ -23,17 +39,16 @@ const Authors = ({ authors }: PropsT) => {
                 type="text"
                 className=" border-none outline-0 text-black bg-transparent w-full"
                 placeholder="Search Authors"
+                value={searchText}
+                onChange={handleSearchText}
               />
             </div>
-            <button className="bg-orange-500 h-12 p-3 text-white w-28">
-              Search
-            </button>
           </div>
         </div>
       </div>
       <ContentContainer className="relative flex justify-center flex-col p-0">
         <div className="md:col-span-7 col-span-10 gap-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] lg:grid-cols-[repeat(3,minmax(300px,1fr))]">
-          {authors.map((author: IAuthor) => (
+          {filteredAuthors.map((author: IAuthor) => (
             <Link
               key={author.sys.id}
               href={{
