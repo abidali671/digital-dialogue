@@ -13,7 +13,7 @@ const Category = ({ posts }: ICategoryProps) => {
   const [searchText, setSearchText] = useState<string>("");
 
   const filteredPosts = useMemo(() => {
-    const filter_list = posts.filter(
+    const filter_list = posts?.filter(
       (post) =>
         post.fields.title.toLowerCase().includes(searchText.toLowerCase()) ||
         post.fields.excerpt.toLowerCase().includes(searchText.toLowerCase())
