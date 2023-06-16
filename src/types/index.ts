@@ -51,7 +51,7 @@ export interface ICategoryData {
   };
 }
 
-export interface ICoverImageData {
+export interface IImage {
   sys: ISysData;
   fields: {
     title: string;
@@ -71,42 +71,27 @@ export interface ICoverImageData {
   };
 }
 
-export interface IAuthorData {
+export interface IAuthor {
   sys: ISysData;
   fields: {
     name: string;
-    picture: {
-      sys: ISysData;
-      fields: {
-        title: string;
-        description: string;
-        file: {
-          url: string;
-          details: {
-            size: number;
-            image: {
-              width: number;
-              height: number;
-            };
-          };
-          fileName: string;
-          contentType: string;
-        };
-      };
-    };
+    slug: string;
+    role: string;
+    about: string;
+    picture: IImage;
   };
 }
 
 export interface IPostData {
   sys: ISysData;
   fields: {
-    author: IAuthorData;
+    author: IAuthor;
     category: ICategoryData;
     tags: ITagData[];
-    coverImage: ICoverImageData;
+    coverImage: IImage;
     content: IContentDocument;
     slug: string;
-    exerpt: string;
+    excerpt: string;
     title: string;
   };
 }
