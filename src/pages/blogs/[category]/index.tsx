@@ -2,7 +2,7 @@ import React from "react";
 import { ContentContainer, PostCard } from "@/components";
 import { SearchIcon } from "@/assets/icon";
 import contentful_client from "@/lib/contentful/client";
-import { IPostData } from "@/types";
+import { ICategoryData, IPostData } from "@/types";
 
 interface ICategoryProps {
   posts: IPostData[];
@@ -69,10 +69,13 @@ export const getStaticProps = async ({
 };
 
 export const getStaticPaths = async () => {
-  const response = await contentful_client.getEntries({ content_type: "post" });
-  const paths = response.items.map((item: any) => ({
+  const response = await contentful_client.getEntries({
+    content_type: "category",
+  });
+
+  const paths = response.items.map((item: ICategoryData) => ({
     params: {
-      category: item.fields.category.fields.slug,
+      category: item.fields.slug,
     },
   }));
 
