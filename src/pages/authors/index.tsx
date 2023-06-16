@@ -35,16 +35,14 @@ const Authors = ({ authors }: PropsT) => {
         <div className="md:col-span-7 col-span-10 gap-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] lg:grid-cols-[repeat(3,minmax(300px,1fr))]">
           {authors.map((author: IAuthor) => (
             <Link
+              key={author.sys.id}
               href={{
                 pathname: "/authors/[author]",
                 query: { author: author.fields.slug },
               }}
               className="relative pt-16"
             >
-              <div
-                key={author.sys.id}
-                className="rounded-full border-solid border-4 border-neutral-400 h-32 w-32 overflow-hidden absolute top-0 left-1/2 -translate-x-1/2"
-              >
+              <div className="rounded-full border-solid border-4 border-neutral-400 h-32 w-32 overflow-hidden absolute top-0 left-1/2 -translate-x-1/2">
                 <Image
                   alt={author.fields.picture.fields.title}
                   src={"https:" + author.fields.picture.fields.file.url}
