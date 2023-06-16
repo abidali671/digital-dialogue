@@ -1,7 +1,5 @@
 import React from "react";
-import SearchIcon from "../../../assets/Search.png";
 import Logo from "../../../assets/icon/logo";
-import Image from "next/image";
 import Link from "next/link";
 import ContentContainer from "../../ContentContainer";
 
@@ -19,17 +17,11 @@ const Navbar = () => {
           <li>
             <Link href="/blogs">Blogs</Link>
           </li>
-          <li>
+          {/* <li>
             <Link href="">Categories</Link>
-          </li>
+          </li> */}
           <li>
             <Link href="/authors">Authors</Link>
-          </li>
-          <li>
-            <div className="search-box">
-              <Image src={SearchIcon} alt="search icon" />
-              <input type="text" placeholder="search here..." />
-            </div>
           </li>
         </ul>
       </ContentContainer>
