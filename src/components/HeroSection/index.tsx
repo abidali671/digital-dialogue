@@ -49,7 +49,7 @@ const Hero = ({ posts }: IProps) => {
               {moment(post.sys.createdAt).format("MMMM DD, YYYY")}
             </p>
             <p className="text-gray-500 text-xs lg:text-base line-clamp-3">
-              {post.fields.exerpt}
+              {post.fields.excerpt}
             </p>
             <Link
               href={{

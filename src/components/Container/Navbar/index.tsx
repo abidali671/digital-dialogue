@@ -23,7 +23,7 @@ const Navbar = () => {
             <Link href="">Categories</Link>
           </li>
           <li>
-            <Link href="/author">Authors</Link>
+            <Link href="/authors">Authors</Link>
           </li>
           <li>
             <div className="search-box">

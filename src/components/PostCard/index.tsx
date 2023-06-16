@@ -10,7 +10,7 @@ interface CardPropsT {
 }
 
 const PostCard = ({ data }: CardPropsT) => {
-  const { category, coverImage, title, exerpt, slug } = data.fields;
+  const { category, coverImage, title, excerpt, slug } = data.fields;
   const { createdAt } = data.sys;
 
   return (
@@ -41,7 +41,7 @@ const PostCard = ({ data }: CardPropsT) => {
           <p>{category.fields.label}</p>
         </Link>
         <h5 className="post-card-title">{title}</h5>
-        <p className="post-card-excerpt">{exerpt}</p>
+        <p className="post-card-excerpt">{excerpt}</p>
         <p className="post-card-created-date">
           {moment(createdAt).format("MMMM DD, YYYY")}
         </p>
