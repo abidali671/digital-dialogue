@@ -1,4 +1,4 @@
-import { IContentDocument } from "./ContentType";
+import { Document } from "@contentful/rich-text-types";
 
 export type JSONValue = {
   [key: string]: JSONValue | JSONValue[] | string | boolean | number;
@@ -89,7 +89,7 @@ export interface IPostData {
     category: ICategoryData;
     tags: ITagData[];
     coverImage: IImage;
-    content: IContentDocument;
+    content: Document;
     slug: string;
     excerpt: string;
     title: string;
