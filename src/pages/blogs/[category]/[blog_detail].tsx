@@ -26,7 +26,8 @@ const BlogDetail = ({ post }: IBlogDetailProps) => {
   const { coverImage, category, title, author, content } = post?.fields;
   const { createdAt } = post.sys;
 
-  if (router.isFallback) return <div>loading...</div>;
+  if (router.isFallback && post?.fields) return <div>loading...</div>;
+  if (!post?.fields) return <div>Some thing is wrong...</div>;
 
   return (
     <React.Fragment>
