@@ -11,38 +11,59 @@ import Link from "next/link";
 import React from "react";
 import contentful_client from "@/lib/contentful/client";
 import { useRouter } from "next/router";
+import { IPostData } from "@/types";
+import Image from "next/image";
+import moment from "moment";
 
-const BlogDetail = ({ post }: any) => {
+interface IBlogDetailProps {
+  post: IPostData;
+}
+
+const BlogDetail = ({ post }: IBlogDetailProps) => {
   const router = useRouter();
+
+  const { coverImage, category, title, author } = post.fields;
+  const { createdAt } = post.sys;
 
   if (router.isFallback) return <div>loading...</div>;
 
   return (
     <React.Fragment>
-      <div className="h-[40vh] sm:h-[70vh] w-full bg-neutral-300 relative"></div>
+      <div className="h-[40vh] sm:h-[70vh] w-full bg-neutral-300 relative">
+        <Image
+          src={"https:" + coverImage.fields.file.url}
+          alt={coverImage.fields.title}
+          height={coverImage.fields.file.details.image.height}
+          width={coverImage.fields.file.details.image.width}
+          className="object-cover h-full w-full"
+        />
+      </div>
       <ContentContainer>
         {/* Card start*/}
         <div className="p-5 gap-3 flex w-full sm:w-11/12 md:w-8/12 flex-col text-left items-start border border-gray-200 shadow-gray-200 shadow-sm border-t-0 bg-white relative bottom-32  mx-auto ">
           <span className="flex items-center gap-1">
             <hr className="w-10 h-[2px] border-0 rounded bg-orange-700" />
-            <p>Travel</p>
+            <p>{category.fields.label}</p>
           </span>
           <h1 className="md:text-5xl text-4xl font-bold tracking-tight text-gray-900 font-PT">
-            20 essential skills for successful web designers
+            {title}
           </h1>
           <div className="flex justify-between w-full flex-wrap gap-y-3">
-            <div className="flex items-center gap-5 pt-3">
+            <div className="flex items-center gap-3 pt-3">
               <div className="flex gap-2 items-center">
-                <span className="h-7 w-7 bg-gray-200 rounded-xl" />
-                <p className="font-medium">Kadin Dias</p>
+                <span className="h-10 w-10 bg-gray-200 rounded-full overflow-hidden">
+                  <Image
+                    alt={author.fields.name}
+                    src={"http:" + author.fields.picture.fields.file.url}
+                    width={40}
+                    height={40}
+                  />
+                </span>
+                <p className="font-medium text-lg">{author.fields.name}</p>
               </div>
               <span className="flex h-[5px] w-[5px] bg-gray-500 rounded-lg"></span>
               <p className="text-gray-500 flex items-center gap-2 text-xs lg:text-base">
-                March 25, 2021
-              </p>
-              <span className="h-[5px] w-[5px] bg-gray-500 rounded-lg"></span>
-              <p className="text-gray-500  flex items-center gap-2 text-xs lg:text-base">
-                4 min read
+                {moment(createdAt).format("MMMM DD, YYYY")}
               </p>
             </div>
             <div className="flex gap-3">
@@ -62,10 +83,7 @@ const BlogDetail = ({ post }: any) => {
           </div>
         </div>
         {/* Card end*/}
-        <main
-          // className="grid h-[100%] mx-auto lg:grid-cols-[200px_1fr] gap-y-6  grid-cols-[1fr] w-11/12  md:w-8/12"
-          className="mx-auto  w-11/12  md:w-8/12"
-        >
+        <main className="mx-auto w-11/12 md:w-8/12 -mt-16">
           {/* Aside column end*/}
           <article className=" ">
             <div className="flex flex-col gap-3">
