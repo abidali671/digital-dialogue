@@ -23,7 +23,7 @@ interface IBlogDetailProps {
 const BlogDetail = ({ post }: IBlogDetailProps) => {
   const router = useRouter();
 
-  const { coverImage, category, title, author, content } = post.fields;
+  const { coverImage, category, title, author, content } = post?.fields;
   const { createdAt } = post.sys;
 
   if (router.isFallback) return <div>loading...</div>;
