@@ -2,6 +2,8 @@ import React from "react";
 import Logo from "../../../assets/icon/logo";
 import Link from "next/link";
 import ContentContainer from "../../ContentContainer";
+import ChevronDown from "@/assets/icon/ChevronDown";
+import Menu from "@/components/Menu";
 
 const Navbar = () => {
   return (
@@ -17,9 +19,19 @@ const Navbar = () => {
           <li>
             <Link href="/blogs">Blogs</Link>
           </li>
-          {/* <li>
-            <Link href="">Categories</Link>
-          </li> */}
+          <li>
+            <Menu
+              list={[{ label: "text", onClick: () => {} }]}
+              button={({ open }) => (
+                <>
+                  Categories
+                  <ChevronDown
+                    className={`h-4 w-4 transition-all ${open && "rotate-180"}`}
+                  />
+                </>
+              )}
+            />
+          </li>
           <li>
             <Link href="/authors">Authors</Link>
           </li>

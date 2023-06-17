@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import Navbar from "./Container/Navbar";
 import Footer from "./Container/Footer";
+
 const Layout = ({ children }: PropsWithChildren) => {
   return (
     <>
@@ -10,4 +11,5 @@ const Layout = ({ children }: PropsWithChildren) => {
     </>
   );
 };
+
 export default Layout;
