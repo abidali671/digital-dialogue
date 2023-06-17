@@ -8,7 +8,6 @@ import {
   Like,
   // Comment,
 } from "@/assets/icon";
-import Link from "next/link";
 import React from "react";
 import contentful_client from "@/lib/contentful/client";
 import { useRouter } from "next/router";
@@ -23,11 +22,11 @@ interface IBlogDetailProps {
 const BlogDetail = ({ post }: IBlogDetailProps) => {
   const router = useRouter();
 
-  const { coverImage, category, title, author, content } = post?.fields;
-  const { createdAt } = post.sys;
-
-  if (router.isFallback && post?.fields) return <div>loading...</div>;
   if (!post?.fields) return <div>Some thing is wrong...</div>;
+  if (router.isFallback) return <div>loading...</div>;
+
+  const { coverImage, category, title, author, content } = post.fields;
+  const { createdAt } = post.sys;
 
   return (
     <React.Fragment>
