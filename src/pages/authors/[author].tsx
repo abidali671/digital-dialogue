@@ -65,10 +65,15 @@ export const getStaticProps = async ({
   try {
     const { author } = params;
 
-    const author_response = await contentful_client.getEntries({
-      content_type: "author",
-      "fields.slug": author,
-    });
+    const [author_response, categories_response] = await Promise.all([
+      contentful_client.getEntries({
+        content_type: "author",
+        "fields.slug": author,
+      }),
+      contentful_client.getEntries({
+        content_type: "category",
+      }),
+    ]);
 
     const response = await contentful_client.getEntries({
       content_type: "post",
@@ -79,7 +84,13 @@ export const getStaticProps = async ({
       throw "Error";
     }
 
-    return { props: { params, posts: response.items } };
+    return {
+      props: {
+        params,
+        posts: response.items,
+        categories: categories_response.items,
+      },
+    };
   } catch (error) {
     return { redirect: { destination: "/", permanent: false } };
   }

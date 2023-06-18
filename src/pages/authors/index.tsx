@@ -88,13 +88,19 @@ const Authors = ({ authors }: PropsT) => {
 };
 
 export const getStaticProps = async () => {
-  const response = await contentful_client.getEntries({
-    content_type: "author",
-  });
+  const responses = await Promise.all([
+    contentful_client.getEntries({
+      content_type: "author",
+    }),
+    contentful_client.getEntries({
+      content_type: "category",
+    }),
+  ]);
 
   return {
     props: {
-      authors: response.items,
+      authors: responses[0].items,
+      categories: responses[1].items,
     },
   };
 };
