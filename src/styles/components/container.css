@@ -7,7 +7,7 @@
 }
 
 .container-root > .content-wrapper > .nav-list {
-  @apply hidden gap-4 sm:flex items-center;
+  @apply hidden gap-4 sm:flex items-center list-none;
 }
 
 .container-root > .content-wrapper > .nav-list > li {

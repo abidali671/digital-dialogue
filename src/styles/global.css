@@ -11,6 +11,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+ul,
+ol {
+  list-style-type: disc;
+  margin-left: 20px;
+}
 
 h6,
 h5,
@@ -26,7 +31,7 @@ p {
 }
 
 h1 {
-  @apply md:text-5xl text-4xl;
+  @apply md:!text-5xl !text-4xl;
 }
 
 h2 {
