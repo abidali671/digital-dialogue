@@ -6,13 +6,12 @@ import { ICategoryData } from "@/types";
 type LayoutPropsT = PropsWithChildren<{ categories?: ICategoryData[] }>;
 
 const Layout = ({ children, categories }: LayoutPropsT) => {
-  console.log("categories", categories);
   return (
-    <>
-      <Navbar />
+    <React.Fragment>
+      <Navbar categories={categories} />
       <main className="container-body">{children}</main>
       <Footer />
-    </>
+    </React.Fragment>
   );
 };
 
