@@ -1,12 +1,16 @@
 import React, { PropsWithChildren } from "react";
 import Navbar from "./Container/Navbar";
 import Footer from "./Container/Footer";
+import { ICategoryData } from "@/types";
 
-const Layout = ({ children }: PropsWithChildren) => {
+type LayoutPropsT = PropsWithChildren<{ categories?: ICategoryData[] }>;
+
+const Layout = ({ children, categories }: LayoutPropsT) => {
+  console.log("categories", categories);
   return (
     <>
       <Navbar />
-      <div className="container-body">{children}</div>
+      <main className="container-body">{children}</main>
       <Footer />
     </>
   );
