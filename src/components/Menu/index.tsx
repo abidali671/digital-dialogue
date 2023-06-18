@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu as HeadlessMenu, MenuButtonProps } from "@headlessui/react";
+import { Menu as HeadlessMenu } from "@headlessui/react";
 
 interface IMenuProps {
   list: { label: string; onClick: () => void }[];
@@ -12,9 +12,17 @@ const Menu = ({ list, button }: IMenuProps) => {
       <HeadlessMenu.Button className="flex items-center gap-1">
         {(state) => button(state)}
       </HeadlessMenu.Button>
-      <HeadlessMenu.Items as="div" className="absolute right-0 top-full">
-        {list.map((item) => (
-          <HeadlessMenu.Item as="div" onClick={item.onClick}>
+      <HeadlessMenu.Items
+        as="div"
+        className="absolute right-0 top-[calc(100%_+_16px)] bg-white rounded shadow-md border "
+      >
+        {list.map((item, index) => (
+          <HeadlessMenu.Item
+            key={index}
+            as="div"
+            onClick={item.onClick}
+            className="p-3 cursor-pointer whitespace-nowrap hover:bg-neutral-300"
+          >
             {item.label}
           </HeadlessMenu.Item>
         ))}
