@@ -123,10 +123,13 @@ export const getStaticProps = async ({ params }: any) => {
   try {
     const { category, blog_detail } = params;
 
-    const category_response = await contentful_client.getEntries({
-      content_type: "category",
-      "fields.slug": category,
-    });
+    const [category_response, categories_response] = await Promise.all([
+      contentful_client.getEntries({
+        content_type: "category",
+        "fields.slug": category,
+      }),
+      contentful_client.getEntries({ content_type: "category" }),
+    ]);
 
     const response = await contentful_client.getEntries({
       content_type: "post",
@@ -138,7 +141,13 @@ export const getStaticProps = async ({ params }: any) => {
       throw "Error";
     }
 
-    return { props: { params, post: response.items[0] } };
+    return {
+      props: {
+        params,
+        post: response.items[0],
+        categories: categories_response.items,
+      },
+    };
   } catch (error) {
     return { redirect: { destination: "/", permanent: false } };
   }
