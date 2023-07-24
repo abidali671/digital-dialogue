@@ -40,11 +40,33 @@ const PostCard = ({ data }: CardPropsT) => {
           <hr className="post-card-label-line" />
           <p>{category.fields.label}</p>
         </Link>
-        <h5 className="post-card-title">{title}</h5>
-        <p className="post-card-excerpt">{excerpt}</p>
-        <p className="post-card-created-date">
+        <Link
+          href={{
+            pathname: "/blogs/[category]/[blog_detail]",
+            query: { category: category.fields.slug, blog_detail: slug },
+          }}
+          className="post-card-title"
+        >
+          {title}
+        </Link>
+        <Link
+          href={{
+            pathname: "/blogs/[category]/[blog_detail]",
+            query: { category: category.fields.slug, blog_detail: slug },
+          }}
+          className="post-card-excerpt"
+        >
+          {excerpt}
+        </Link>
+        <Link
+          href={{
+            pathname: "/blogs/[category]/[blog_detail]",
+            query: { category: category.fields.slug, blog_detail: slug },
+          }}
+          className="post-card-created-date"
+        >
           {moment(createdAt).format("MMMM DD, YYYY")}
-        </p>
+        </Link>
 
         <Link
           href={{
