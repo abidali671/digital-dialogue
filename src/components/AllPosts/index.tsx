@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useMemo } from "react";
 import PostCard from "../PostCard";
 import Category from "../Category";
 import ContentContainer from "../ContentContainer";
 import Tag from "../Tag";
 import { ICategoryData, ITagData, IPostData } from "@/types";
+import Pagination from "../Pagination";
 
 interface PropsT {
   posts: IPostData[];
@@ -12,6 +13,10 @@ interface PropsT {
 }
 
 const AllPosts = ({ posts, categories, tags }: PropsT) => {
+  const TotalPages = useMemo(() => {
+    return Math.ceil(posts.length / 3);
+  }, [posts]);
+
   return (
     <div className="bg-neutral-100">
       <ContentContainer>
@@ -20,10 +25,13 @@ const AllPosts = ({ posts, categories, tags }: PropsT) => {
           <hr className="w-24 h-[4px] border-1 rounded bg-orange-700" />
         </span>
         <div className="grid-cols-10 grid py-10 gap-6">
-          <div className="md:col-span-7 col-span-10 gap-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
-            {posts.map((post: IPostData) => (
-              <PostCard key={post.fields.slug} data={post} />
-            ))}
+          <div className="md:col-span-7 col-span-10">
+            <div className="gap-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
+              {posts.map((post: IPostData) => (
+                <PostCard key={post.fields.slug} data={post} />
+              ))}
+            </div>
+            <Pagination pages={10} currentPage={1} />
           </div>
           <div className="sm:col-span-3 hidden md:flex gap-2 flex-col">
             <div className="gap-2 flex flex-col sm:px-0 px-4 ">

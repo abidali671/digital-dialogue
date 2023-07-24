@@ -24,7 +24,6 @@ export const getStaticProps = async () => {
     contentful_client.getEntries({ content_type: "post" }),
     contentful_client.getEntries({ content_type: "category" }),
     contentful_client.getEntries({ content_type: "tag" }),
-    // contentful_client.getEntries({ links_to_entry: "1IKm8tMF5LiivwlkyebxMC" }),
   ]);
   return {
     props: {

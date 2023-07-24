@@ -1,11 +1,13 @@
 import React from "react";
+
 function Arrow(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       aria-hidden="true"
-      className="w-4 h-4 ml-2 -mr-1"
       fill="currentColor"
       viewBox="0 0 20 20"
+      height={16}
+      width={16}
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -17,4 +19,5 @@ function Arrow(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
 export default Arrow;
