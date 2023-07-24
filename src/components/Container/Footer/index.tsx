@@ -5,7 +5,7 @@ import Logo from "../../../assets/icon/logo";
 import config from "@/lib/config";
 import { ICategoryData } from "@/types";
 
-type IFooterProps = { categories: ICategoryData[] };
+type IFooterProps = { categories?: ICategoryData[] };
 
 const Footer = ({ categories }: IFooterProps) => {
   return (
@@ -19,13 +19,15 @@ const Footer = ({ categories }: IFooterProps) => {
               things freelancing, technology, design and creativity.
             </p>
           </div>
-          <FooterLink
-            title="Categories"
-            links={categories.map((category) => ({
-              label: category.fields.label,
-              href: "/blogs/" + category.fields.slug,
-            }))}
-          />
+          {categories && (
+            <FooterLink
+              title="Categories"
+              links={categories?.map((category) => ({
+                label: category.fields.label,
+                href: "/blogs/" + category.fields.slug,
+              }))}
+            />
+          )}
           <FooterLink title="Pages" links={config.FOOTER_LINKS} />
           <div className="flex flex-col gap-3 w-full">
             <h3 className="text-2xl pt-3 text-white ">Contact Info</h3>
