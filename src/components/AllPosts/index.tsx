@@ -1,10 +1,11 @@
-import React, { useMemo } from "react";
+import React from "react";
 import PostCard from "../PostCard";
 import Category from "../Category";
 import ContentContainer from "../ContentContainer";
 import Tag from "../Tag";
 import { ICategoryData, ITagData, IPostData } from "@/types";
-import Pagination from "../Pagination";
+import Link from "next/link";
+import { ArrowRight } from "@/assets/icon";
 
 interface PropsT {
   posts: IPostData[];
@@ -13,10 +14,6 @@ interface PropsT {
 }
 
 const AllPosts = ({ posts, categories, tags }: PropsT) => {
-  const TotalPages = useMemo(() => {
-    return Math.ceil(posts.length / 3);
-  }, [posts]);
-
   return (
     <div className="bg-neutral-100">
       <ContentContainer>
@@ -31,7 +28,14 @@ const AllPosts = ({ posts, categories, tags }: PropsT) => {
                 <PostCard key={post.fields.slug} data={post} />
               ))}
             </div>
-            <Pagination pages={10} currentPage={1} />
+            <Link
+              href="/blogs"
+              className="text-base font-medium text-center flex items-center justify-center"
+            >
+              Show More
+              <ArrowRight className="-mr-[10px] ml-1" height={16} width={16} />
+              <ArrowRight height={16} width={16} />
+            </Link>
           </div>
           <div className="sm:col-span-3 hidden md:flex gap-2 flex-col">
             <div className="gap-2 flex flex-col sm:px-0 px-4 ">

@@ -7,7 +7,8 @@ function ArrowRight(props: React.SVGProps<SVGSVGElement>) {
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="currentColor"
-      className="w-6 h-6"
+      height={24}
+      width={24}
       {...props}
     >
       <path

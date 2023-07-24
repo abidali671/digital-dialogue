@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { ContentContainer, PostCard } from "@/components";
+import { ContentContainer, PostCard, Pagination } from "@/components";
 import { SearchIcon } from "@/assets/icon";
 import contentful_client from "@/lib/contentful/client";
 import { ICategoryData, IPostData, ITagData } from "@/types";
@@ -12,6 +12,10 @@ interface PropsT {
 
 const Blogs = ({ posts }: PropsT) => {
   const [searchText, setSearchText] = useState<string>("");
+
+  const TotalPages = useMemo(() => {
+    return Math.ceil(posts.length / 3);
+  }, [posts]);
 
   const filteredPosts = useMemo(() => {
     const filter_list = posts.filter(
@@ -54,6 +58,7 @@ const Blogs = ({ posts }: PropsT) => {
             <PostCard key={post.fields.slug} data={post} />
           ))}
         </div>
+        <Pagination pages={TotalPages} currentPage={1} />
       </ContentContainer>
     </div>
   );

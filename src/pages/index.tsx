@@ -10,18 +10,22 @@ interface PropsT {
 }
 
 const Home = ({ posts, categories, tags }: PropsT) => {
+  const HeroPosts = posts.slice(0, 3);
+  const FeaturedPosts = posts.slice(3, 6);
+  const RemainPosts = posts.slice(6);
+
   return (
     <React.Fragment>
-      <Hero posts={posts.slice(0, 3)} />
-      <FeaturedSection posts={posts.slice(0, 3)} />
-      <AllPosts posts={posts} categories={categories} tags={tags} />
+      <Hero posts={HeroPosts} />
+      <FeaturedSection posts={FeaturedPosts} />
+      <AllPosts posts={RemainPosts} categories={categories} tags={tags} />
     </React.Fragment>
   );
 };
 
 export const getStaticProps = async () => {
   const responses = await Promise.all([
-    contentful_client.getEntries({ content_type: "post" }),
+    contentful_client.getEntries({ content_type: "post", limit: 16 }),
     contentful_client.getEntries({ content_type: "category" }),
     contentful_client.getEntries({ content_type: "tag" }),
   ]);
