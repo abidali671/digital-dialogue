@@ -1,19 +1,12 @@
-import { ContentContainer } from "@/components";
+import { ContentContainer, ShareButtons } from "@/components";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import {
-  Facebook,
-  Twitter,
-  Pinterest,
-  LinkIcon,
-  Like,
-  // Comment,
-} from "@/assets/icon";
 import React from "react";
 import contentful_client from "@/lib/contentful/client";
 import { useRouter } from "next/router";
 import { IPostData } from "@/types";
 import Image from "next/image";
 import moment from "moment";
+import config from "@/lib/config";
 
 interface IBlogDetailProps {
   post: IPostData;
@@ -25,8 +18,10 @@ const BlogDetail = ({ post }: IBlogDetailProps) => {
   if (!post?.fields) return <div>Some thing is wrong...</div>;
   if (router.isFallback) return <div>loading...</div>;
 
-  const { coverImage, category, title, author, content } = post.fields;
+  const { coverImage, category, title, author, content, excerpt } = post.fields;
   const { createdAt } = post.sys;
+
+  console.log("router", router);
 
   return (
     <React.Fragment>
@@ -66,20 +61,7 @@ const BlogDetail = ({ post }: IBlogDetailProps) => {
                 {moment(createdAt).format("MMMM DD, YYYY")}
               </p>
             </div>
-            <div className="flex gap-3">
-              <div className="flex h-10 w-10 rounded-full justify-center items-center bg-gray-100">
-                <Facebook className="fill-black" />
-              </div>
-              <div className="flex h-10 w-10 rounded-full justify-center items-center bg-gray-100">
-                <Twitter />
-              </div>
-              <div className="flex h-10 w-10 rounded-full justify-center items-center bg-gray-100">
-                <Pinterest />
-              </div>
-              <div className="flex h-10 w-10 rounded-full justify-center items-center bg-gray-100">
-                <LinkIcon />
-              </div>
-            </div>
+            <ShareButtons url={config.BASE_URL + router.asPath} />
           </div>
         </div>
         <main className="mx-auto w-11/12 md:w-8/12 -mt-16">
@@ -88,28 +70,9 @@ const BlogDetail = ({ post }: IBlogDetailProps) => {
           </article>
           <div className="py-10">
             <hr />
-            <div className="flex gap-3 flex-wrap  items-center sm:justify-normal justify-center py-10">
-              <button className="bg-orange-500 w-56 p-2 font-medium text-white flex gap-3 items-center justify-center">
-                <Like />
-                Like
-              </button>
-              <div className="flex  items-center gap-3">
-                <p>Share the post:</p>
-                <div className="flex gap-3">
-                  <div className="flex h-10 w-10 rounded-full justify-center items-center bg-gray-100">
-                    <Facebook className="fill-black" />
-                  </div>
-                  <div className="flex h-10 w-10 rounded-full justify-center items-center bg-gray-100">
-                    <Twitter />
-                  </div>
-                  <div className="flex h-10 w-10 rounded-full justify-center items-center bg-gray-100">
-                    <Pinterest />
-                  </div>
-                  <div className="flex h-10 w-10 rounded-full justify-center items-center bg-gray-100">
-                    <LinkIcon />
-                  </div>
-                </div>
-              </div>
+            <div className="flex items-center gap-3 py-4">
+              <p>Share the post:</p>
+              <ShareButtons url={config.BASE_URL + router.asPath} />
             </div>
             <hr />
           </div>
