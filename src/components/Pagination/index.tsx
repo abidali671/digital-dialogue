@@ -5,26 +5,31 @@ import cx from "clsx";
 interface PropsT {
   pages: number;
   currentPage: number;
+  onChange: (page_no: number) => void;
 }
 
-const Pagination = ({ pages, currentPage }: PropsT) => {
+const Pagination = ({ pages, currentPage, onChange }: PropsT) => {
   return (
     <div className="flex items-center justify-center py-10 lg:px-0 sm:px-6 px-4">
       <div className="w-full  flex items-center justify-between border-t border-gray-200">
-        <div className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer">
+        <div
+          onClick={() => onChange(currentPage - 1)}
+          className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer"
+        >
           <Arrow className="transform rotate-180" />
-          <p className="text-sm ml-3 font-medium leading-none ">Previous</p>
+          <p className="text-sm ml-3 font-medium leading-none">Previous</p>
         </div>
         <div className="sm:flex hidden">
-          <p className="text-sm font-medium leading-none cursor-pointer text-gray-600 hover:text-indigo-700 border-t border-transparent hover:border-indigo-400 pt-3 px-2">
+          {/* <p className="text-sm font-medium leading-none cursor-pointer text-gray-600 hover:text-indigo-700 border-t border-transparent hover:border-indigo-400 pt-3 px-2">
             1
           </p>
-          <Dots />
+          <Dots /> */}
           <div className="flex gap-2 px-2">
             {Array(pages)
               .fill("")
               .map((_, index) => (
                 <p
+                  onClick={() => onChange(1 + index)}
                   key={index}
                   className={cx(
                     "text-sm font-medium leading-none cursor-pointer text-gray-600 hover:text-indigo-700 border-t border-transparent hover:border-indigo-400 pt-3 px-2",
@@ -36,12 +41,15 @@ const Pagination = ({ pages, currentPage }: PropsT) => {
                 </p>
               ))}
           </div>
-          <Dots />
+          {/* <Dots />
           <p className="text-sm font-medium leading-none cursor-pointer text-gray-600 hover:text-indigo-700 border-t border-transparent hover:border-indigo-400 pt-3 px-2">
             {pages}
-          </p>
+          </p> */}
         </div>
-        <div className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer">
+        <div
+          onClick={() => onChange(currentPage + 1)}
+          className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer"
+        >
           <p className="text-sm font-medium leading-none mr-3">Next</p>
           <Arrow />
         </div>

@@ -1,24 +1,23 @@
 import React, { useMemo, useState } from "react";
-import { ContentContainer, PostCard, Pagination } from "@/components";
-import { SearchIcon } from "@/assets/icon";
-import contentful_client from "@/lib/contentful/client";
+import { ContentContainer, PostCard } from "@/components";
+import { ArrowRight, SearchIcon } from "@/assets/icon";
 import { ICategoryData, IPostData, ITagData } from "@/types";
+import contentful_client from "@/lib/contentful/client";
+import config from "@/lib/config";
 
 interface PropsT {
   posts: IPostData[];
   categories: ICategoryData[];
   tags: ITagData[];
+  totalPosts: number;
 }
 
-const Blogs = ({ posts }: PropsT) => {
+const Blogs = ({ posts, totalPosts }: PropsT) => {
   const [searchText, setSearchText] = useState<string>("");
-
-  const TotalPages = useMemo(() => {
-    return Math.ceil(posts.length / 3);
-  }, [posts]);
+  const [currentPagePosts, setCurrentPagePosts] = useState<IPostData[]>(posts);
 
   const filteredPosts = useMemo(() => {
-    const filter_list = posts.filter(
+    const filter_list = currentPagePosts.filter(
       (post) =>
         post.fields.title.toLowerCase().includes(searchText.toLowerCase()) ||
         post.fields.excerpt.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -28,10 +27,17 @@ const Blogs = ({ posts }: PropsT) => {
     );
 
     return filter_list;
-  }, [posts, searchText]);
+  }, [posts, currentPagePosts, searchText]);
 
   const handleSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
+  };
+
+  const handleLoadMore = async () => {
+    const response = await fetch(`/api/blogs?page=2`);
+    const { data } = await response.json();
+
+    setCurrentPagePosts((prev) => [...prev, ...data]);
   };
 
   return (
@@ -58,23 +64,44 @@ const Blogs = ({ posts }: PropsT) => {
             <PostCard key={post.fields.slug} data={post} />
           ))}
         </div>
-        <Pagination pages={TotalPages} currentPage={1} />
+        {currentPagePosts.length < totalPosts && (
+          <div
+            onClick={handleLoadMore}
+            className="text-base font-medium text-center flex items-center justify-center gap-2 cursor-pointer py-4"
+          >
+            Load More
+            <div className="flex flex-col">
+              <ArrowRight
+                className="rotate-90 -mb-[5px]"
+                height={16}
+                width={16}
+              />
+              <ArrowRight
+                className="rotate-90 -mt-[5px]"
+                height={16}
+                width={16}
+              />
+            </div>
+          </div>
+        )}
       </ContentContainer>
     </div>
   );
 };
 
-export const getStaticProps = async () => {
+export const getStaticProps = async (context: any) => {
   const responses = await Promise.all([
-    contentful_client.getEntries({ content_type: "post" }),
+    contentful_client.getEntries({
+      content_type: "post",
+      limit: config.BLOGS_PER_PAGE,
+    }),
     contentful_client.getEntries({ content_type: "category" }),
-    contentful_client.getEntries({ content_type: "tag" }),
   ]);
   return {
     props: {
       posts: responses[0].items,
       categories: responses[1].items,
-      tags: responses[2].items,
+      totalPosts: responses[0].total,
     },
   };
 };

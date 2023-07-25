@@ -16,6 +16,7 @@ const FOOTER_LINKS = [
 const config = {
   FOOTER_LINKS,
   BASE_URL: "https://digital-dialogue.vercel.app",
+  BLOGS_PER_PAGE: 9,
 };
 
 export default config;
