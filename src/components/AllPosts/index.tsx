@@ -2,7 +2,6 @@ import React from "react";
 import PostCard from "../PostCard";
 import Category from "../Category";
 import ContentContainer from "../ContentContainer";
-import Tag from "../Tag";
 import { ICategoryData, ITagData, IPostData } from "@/types";
 import Link from "next/link";
 import { ArrowRight } from "@/assets/icon";
@@ -13,7 +12,7 @@ interface PropsT {
   tags: ITagData[];
 }
 
-const AllPosts = ({ posts, categories, tags }: PropsT) => {
+const AllPosts = ({ posts, categories }: PropsT) => {
   return (
     <div className="bg-neutral-100">
       <ContentContainer>
@@ -43,14 +42,6 @@ const AllPosts = ({ posts, categories, tags }: PropsT) => {
               {categories.map((data: ICategoryData, ind) => (
                 <Category key={ind} data={data} />
               ))}
-            </div>
-            <div>
-              <h2 className="text-xl font-bold">All Tags</h2>
-              <div className="flex gap-2 flex-wrap my-3">
-                {tags.map((data: ITagData, ind: number) => (
-                  <Tag key={ind} data={data} />
-                ))}
-              </div>
             </div>
           </div>
         </div>
