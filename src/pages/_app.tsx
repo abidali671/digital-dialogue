@@ -20,7 +20,7 @@ export default function MyApp({ Component, pageProps }: AppPropsT) {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
  
-          gtag('config', 'GA_MEASUREMENT_ID');
+          gtag('config', 'G-LQYZDNMNFL');
         `}
         </Script>
         <title>Digital Dialogue</title>
