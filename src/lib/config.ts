@@ -1,4 +1,4 @@
-const FOOTER_LINKS = [
+const NAV_LINKS = [
   {
     label: "Home",
     href: "/",
@@ -14,7 +14,7 @@ const FOOTER_LINKS = [
 ];
 
 const config = {
-  FOOTER_LINKS,
+  NAV_LINKS,
   BASE_URL: "https://digital-dialogue.vercel.app",
   BLOGS_PER_PAGE: 9,
 };

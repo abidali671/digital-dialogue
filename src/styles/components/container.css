@@ -1,29 +1,51 @@
-.container-root {
+.navbar-root {
   @apply sticky top-0 z-10 shadow-lg bg-white;
 }
 
-.container-root > .content-wrapper {
+.navbar-root > .content-wrapper {
   @apply flex items-center justify-between relative;
 }
 
-.container-root > .content-wrapper > .nav-list {
-  @apply hidden gap-4 sm:flex items-center list-none;
+.navbar-root > .content-wrapper > .nav-list {
+  @apply hidden gap-4 md:flex items-center list-none;
 }
 
-.container-root > .content-wrapper > .nav-list > li {
+.navbar-root > .content-wrapper > .nav-list > li {
   @apply hover:border-orange-600 border-transparent border-b-[1px];
 }
 
-.container-root > .content-wrapper > .nav-list > li .search-box {
+.navbar-root > .content-wrapper > .nav-list > li .search-box {
   @apply flex gap-2 items-center py-2;
 }
 
-.container-root > .content-wrapper > .nav-list > li .search-box input {
+.navbar-root > .content-wrapper > .nav-list > li .search-box input {
   @apply focus:outline-none border-none;
 }
 
-.container-root > .content-wrapper > .nav-list > li .search-box img {
+.navbar-root > .content-wrapper > .nav-list > li .search-box img {
   @apply w-[16px] h-[16px];
+}
+.navbar-root > .content-wrapper > .mobile-nav-container .nav-list {
+  @apply py-10 m-0;
+}
+
+.navbar-root > .content-wrapper > .mobile-nav-container ul li {
+  @apply list-none text-center font-semibold tracking-wider;
+}
+.navbar-root > .content-wrapper > .mobile-nav-container .nav-list li a {
+  @apply w-full h-full p-6 block text-opacity-75 hover:bg-gray-100 hover:bg-opacity-75 text-lg;
+}
+
+.navbar-root > .content-wrapper > .mobile-nav-container .nav-list > li > ul {
+  @apply m-0;
+}
+
+.navbar-root .mobile-nav-container {
+  @apply md:hidden;
+}
+
+.navbar-root .mobile-nav-container .mobile-nav-menu {
+  @apply w-full h-full fixed bg-gray-200;
 }
 
 .container-body {

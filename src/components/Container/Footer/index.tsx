@@ -28,7 +28,7 @@ const Footer = ({ categories }: IFooterProps) => {
               }))}
             />
           )}
-          <FooterLink title="Pages" links={config.FOOTER_LINKS} />
+          <FooterLink title="Pages" links={config.NAV_LINKS} />
           <div className="flex flex-col gap-3 w-full">
             <h3 className="text-2xl pt-3 text-white ">Contact Info</h3>
             <div>
