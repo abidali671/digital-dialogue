@@ -12,14 +12,14 @@ interface AppPropsT extends AppProps {
 export default function MyApp({ Component, pageProps }: AppPropsT) {
   return (
     <React.Fragment>
-      <Script src="https://www.googletagmanager.com/gtag/js?id=G-LQYZDNMNFL" />
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-WTZCCLQ2FF" />
       <Script id="google-analytics">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
  
-          gtag('config', 'G-LQYZDNMNFL');
+          gtag('config', 'G-WTZCCLQ2FF');
         `}
       </Script>
       <Script
