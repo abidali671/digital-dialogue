@@ -11,6 +11,10 @@ const NAV_LINKS = [
     label: "Authors",
     href: "/authors",
   },
+  {
+    label: "Privacy Policy",
+    href: "/privacy-policy",
+  },
 ];
 
 const config = {
