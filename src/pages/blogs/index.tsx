@@ -28,7 +28,7 @@ const Blogs = ({ posts, totalPosts }: PropsT) => {
     );
 
     return filter_list;
-  }, [posts, currentPagePosts, searchText]);
+  }, [currentPagePosts, searchText]);
 
   const handleSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);

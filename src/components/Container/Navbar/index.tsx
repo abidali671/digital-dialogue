@@ -37,22 +37,26 @@ const Navbar = ({ categories }: INavbarProps) => {
               <Link href={item.href}>{item.label}</Link>
             </li>
           ))}
-          <li>
-            <Menu
-              list={categories.map((category) => ({
-                label: category.fields.label,
-                onClick: () => handleClickMenu(category.fields.slug),
-              }))}
-              button={({ open }) => (
-                <>
-                  Categories
-                  <ChevronDown
-                    className={`h-4 w-4 transition-all ${open && "rotate-180"}`}
-                  />
-                </>
-              )}
-            />
-          </li>
+          {categories && (
+            <li>
+              <Menu
+                list={categories?.map((category) => ({
+                  label: category.fields.label,
+                  onClick: () => handleClickMenu(category.fields.slug),
+                }))}
+                button={({ open }) => (
+                  <>
+                    Categories
+                    <ChevronDown
+                      className={`h-4 w-4 transition-all ${
+                        open && "rotate-180"
+                      }`}
+                    />
+                  </>
+                )}
+              />
+            </li>
+          )}
         </ul>
         <div className="mobile-nav-container">
           <Hamburger onClick={toggleMenu} className="cursor-pointer" />
@@ -76,18 +80,19 @@ const Navbar = ({ categories }: INavbarProps) => {
                 <li className="border-t-2 border-b-2 border-gray-100 mt-6 p-6">
                   Categories
                 </li>
-                {categories.map((category, index) => (
-                  <li onClick={toggleMenu} key={index}>
-                    <Link
-                      href={{
-                        pathname: "/blogs/[category]",
-                        query: { category: category.fields.slug },
-                      }}
-                    >
-                      {category.fields.label}
-                    </Link>
-                  </li>
-                ))}
+                {categories &&
+                  categories?.map((category, index) => (
+                    <li onClick={toggleMenu} key={index}>
+                      <Link
+                        href={{
+                          pathname: "/blogs/[category]",
+                          query: { category: category.fields.slug },
+                        }}
+                      >
+                        {category.fields.label}
+                      </Link>
+                    </li>
+                  ))}
               </ul>
             </div>
           </Transition>
