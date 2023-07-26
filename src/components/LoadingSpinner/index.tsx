@@ -1,8 +1,23 @@
 import React from "react";
+import cx from "clsx";
 
-const LoadingSpinner: React.FC<{ className?: string }> = ({ className }) => {
+interface ILoadingSpinnerProps {
+  className?: string;
+  variant?: "full" | "normal";
+}
+
+const LoadingSpinner: React.FC<ILoadingSpinnerProps> = ({
+  className,
+  variant = "normal",
+}) => {
   return (
-    <div className={className} role="status">
+    <div
+      className={cx(className && className, {
+        "w-full h-full fixed flex items-center justify-center top-0 left-0 bg-gray-100":
+          variant === "full",
+      })}
+      role="status"
+    >
       <svg
         aria-hidden="true"
         className="w-8 h-8 mr-2 text-gray-300 animate-spin fill-[#272343]"
