@@ -26,14 +26,14 @@
   @apply w-[16px] h-[16px];
 }
 .navbar-root > .content-wrapper > .mobile-nav-container .nav-list {
-  @apply py-10 m-0;
+  @apply m-0;
 }
 
 .navbar-root > .content-wrapper > .mobile-nav-container ul li {
   @apply list-none text-center font-semibold tracking-wider;
 }
 .navbar-root > .content-wrapper > .mobile-nav-container .nav-list li a {
-  @apply w-full h-full p-6 block text-opacity-75 hover:bg-gray-100 hover:bg-opacity-75 text-lg;
+  @apply w-full h-full p-4 block text-opacity-75 hover:bg-gray-100 hover:bg-opacity-75 text-lg;
 }
 
 .navbar-root > .content-wrapper > .mobile-nav-container .nav-list > li > ul {
