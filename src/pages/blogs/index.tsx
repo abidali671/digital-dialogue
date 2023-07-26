@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { ContentContainer, PostCard } from "@/components";
+import { ContentContainer, LoadingSpinner, PostCard } from "@/components";
 import { ArrowRight, SearchIcon } from "@/assets/icon";
 import { ICategoryData, IPostData, ITagData } from "@/types";
 import contentful_client from "@/lib/contentful/client";
@@ -15,6 +15,7 @@ interface PropsT {
 const Blogs = ({ posts, totalPosts }: PropsT) => {
   const [searchText, setSearchText] = useState<string>("");
   const [currentPagePosts, setCurrentPagePosts] = useState<IPostData[]>(posts);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const filteredPosts = useMemo(() => {
     const filter_list = currentPagePosts.filter(
@@ -34,10 +35,16 @@ const Blogs = ({ posts, totalPosts }: PropsT) => {
   };
 
   const handleLoadMore = async () => {
-    const response = await fetch(`/api/blogs?page=2`);
-    const { data } = await response.json();
-
-    setCurrentPagePosts((prev) => [...prev, ...data]);
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/blogs?page=2`);
+      const { data } = await response.json();
+      setCurrentPagePosts((prev) => [...prev, ...data]);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -64,7 +71,7 @@ const Blogs = ({ posts, totalPosts }: PropsT) => {
             <PostCard key={post.fields.slug} data={post} />
           ))}
         </div>
-        {currentPagePosts.length < totalPosts && (
+        {currentPagePosts.length < totalPosts && !loading && (
           <div
             onClick={handleLoadMore}
             className="text-base font-medium text-center flex items-center justify-center gap-2 cursor-pointer py-4"
@@ -84,6 +91,7 @@ const Blogs = ({ posts, totalPosts }: PropsT) => {
             </div>
           </div>
         )}
+        {loading && <LoadingSpinner className="mx-auto py-3" />}
       </ContentContainer>
     </div>
   );
