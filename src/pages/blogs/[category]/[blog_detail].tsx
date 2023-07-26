@@ -1,4 +1,4 @@
-import { ContentContainer, ShareButtons } from "@/components";
+import { ContentContainer, LoadingSpinner, ShareButtons } from "@/components";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import React from "react";
 import contentful_client from "@/lib/contentful/client";
@@ -15,13 +15,10 @@ interface IBlogDetailProps {
 const BlogDetail = ({ post }: IBlogDetailProps) => {
   const router = useRouter();
 
-  if (!post?.fields) return <div>Some thing is wrong...</div>;
-  if (router.isFallback) return <div>loading...</div>;
+  if (router.isFallback) return <LoadingSpinner variant="full" />;
 
-  const { coverImage, category, title, author, content, excerpt } = post.fields;
+  const { coverImage, category, title, author, content } = post.fields;
   const { createdAt } = post.sys;
-
-  console.log("router", router);
 
   return (
     <React.Fragment>

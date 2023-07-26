@@ -9,7 +9,7 @@ type IFooterProps = { categories?: ICategoryData[] };
 
 const Footer = ({ categories }: IFooterProps) => {
   return (
-    <footer className="bg-[#272343] ">
+    <footer className="bg-[#272343] relative">
       <ContentContainer className="pt-20 flex flex-col gap-6 absolute right-0 left-0 bottom-0">
         <div className="grid gap-y-5  place-content-start pb-4 mx-auto px-4 grid-cols-1 md:grid-cols-3 lg:grid-cols-5  gap-4">
           <div className="flex  flex-col gap-5 items-start justify-start md:col-span-3 lg:col-span-2">
