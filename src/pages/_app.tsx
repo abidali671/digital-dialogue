@@ -22,6 +22,11 @@ export default function MyApp({ Component, pageProps }: AppPropsT) {
           gtag('config', 'G-LQYZDNMNFL');
         `}
       </Script>
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6695195287407019"
+        crossOrigin="anonymous"
+      ></Script>
       <Head>
         <title>Digital Dialogue</title>
         <link rel="icon" href="/favicon.svg" sizes="any" />
