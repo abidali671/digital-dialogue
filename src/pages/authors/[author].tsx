@@ -3,6 +3,7 @@ import { ContentContainer, PostCard } from "@/components";
 import { SearchIcon } from "@/assets/icon";
 import contentful_client from "@/lib/contentful/client";
 import { IAuthor, IPostData } from "@/types";
+import config from "@/lib/config";
 
 interface ICategoryProps {
   posts: IPostData[];
@@ -89,6 +90,7 @@ export const getStaticProps = async ({
         params,
         posts: response.items,
         categories: categories_response.items,
+        title: `${author_response.items[0].fields.name} | Author | ${config.SITE_NAME}`,
       },
     };
   } catch (error) {

@@ -3,6 +3,7 @@ import { ContentContainer, PostCard } from "@/components";
 import { SearchIcon } from "@/assets/icon";
 import contentful_client from "@/lib/contentful/client";
 import { ICategoryData, IPostData } from "@/types";
+import config from "@/lib/config";
 
 interface ICategoryProps {
   posts: IPostData[];
@@ -79,12 +80,13 @@ export const getStaticProps = async ({
     if (!response?.items?.length || !category_response?.items?.length) {
       throw "Error";
     }
-
+    console.log("category_response.items[0]", category_response.items[0]);
     return {
       props: {
         params,
         posts: response.items,
         categories: categories_response.items,
+        title: `${category_response.items[0].fields.label} | Category | ${config.SITE_NAME}`,
       },
     };
   } catch (error) {

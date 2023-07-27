@@ -110,6 +110,7 @@ export const getStaticProps = async (context: any) => {
       posts: responses[0].items,
       categories: responses[1].items,
       totalPosts: responses[0].total,
+      title: `Blogs | ${config.SITE_NAME}`,
     },
   };
 };

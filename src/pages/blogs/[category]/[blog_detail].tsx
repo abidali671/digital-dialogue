@@ -108,7 +108,7 @@ export const getStaticProps = async ({ params }: any) => {
         params,
         post,
         categories: categories_response.items,
-        title: post.fields.title,
+        title: `${post.fields.title} | Blog | ${config.SITE_NAME}`,
         description: post.fields.excerpt,
       },
     };
