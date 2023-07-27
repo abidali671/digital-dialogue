@@ -19,8 +19,12 @@ const NAV_LINKS = [
 
 const config = {
   NAV_LINKS,
-  BASE_URL: "https://digital-dialogue.vercel.app",
+  BASE_URL: "https://www.digital-dialogue.co",
   BLOGS_PER_PAGE: 9,
+  SITE_NAME: "Digital Dialogue",
+  DEFAULT_TITLE: "Digital Dialogue | Technical Blogging Site",
+  DEFAULT_DESCRIPTION:
+    "Digital Dialogue is blogging site for all things freelancing, technology, design and creativity.",
 };
 
 export default config;

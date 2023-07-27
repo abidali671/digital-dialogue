@@ -1,3 +1,4 @@
+import config from "@/lib/config";
 import contentful_client from "@/lib/contentful/client";
 
 const PrivacyPolicy = () => {
@@ -6,10 +7,10 @@ const PrivacyPolicy = () => {
       <h1>Privacy Policy for Digital Dialogue</h1>
 
       <p>
-        At Digital Dialogue, accessible from https://www.digital-dialogue.co/,
-        one of our main priorities is the privacy of our visitors. This Privacy
-        Policy document contains types of information that is collected and
-        recorded by Digital Dialogue and how we use it.
+        At Digital Dialogue, accessible from <b>{config.BASE_URL}</b>, one of
+        our main priorities is the privacy of our visitors. This Privacy Policy
+        document contains types of information that is collected and recorded by
+        Digital Dialogue and how we use it.
       </p>
 
       <p>

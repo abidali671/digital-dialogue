@@ -101,11 +101,15 @@ export const getStaticProps = async ({ params }: any) => {
       throw "Error";
     }
 
+    const post: IPostData = response.items[0];
+
     return {
       props: {
         params,
-        post: response.items[0],
+        post,
         categories: categories_response.items,
+        title: post.fields.title,
+        description: post.fields.excerpt,
       },
     };
   } catch (error) {
