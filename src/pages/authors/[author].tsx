@@ -91,6 +91,7 @@ export const getStaticProps = async ({
         posts: response.items,
         categories: categories_response.items,
         title: `${author_response.items[0].fields.name} | Author | ${config.SITE_NAME}`,
+        description: author_response.items[0].fields.about,
       },
     };
   } catch (error) {
