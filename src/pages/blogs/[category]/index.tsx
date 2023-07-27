@@ -86,7 +86,7 @@ export const getStaticProps = async ({
         params,
         posts: response.items,
         categories: categories_response.items,
-        title: `${category_response.items[0].fields.label} | Category | ${config.SITE_NAME}`,
+        title: `${category_response.items[0].fields.label} | Category`,
       },
     };
   } catch (error) {

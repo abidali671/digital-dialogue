@@ -273,7 +273,7 @@ export const getStaticProps = async () => {
   return {
     props: {
       categories: response.items,
-      title: `Privacy Policy | ${config.SITE_NAME}`,
+      title: `Privacy Policy`,
     },
   };
 };

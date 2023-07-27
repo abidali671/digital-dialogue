@@ -34,6 +34,7 @@ export const getStaticProps = async () => {
       posts: responses[0].items,
       categories: responses[1].items,
       tags: responses[2].items,
+      title: "Home",
     },
   };
 };

@@ -102,7 +102,7 @@ export const getStaticProps = async () => {
     props: {
       authors: responses[0].items,
       categories: responses[1].items,
-      title: `Authors | ${config.SITE_NAME}`,
+      title: `Authors`,
     },
   };
 };

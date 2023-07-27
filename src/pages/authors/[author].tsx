@@ -90,7 +90,7 @@ export const getStaticProps = async ({
         params,
         posts: response.items,
         categories: categories_response.items,
-        title: `${author_response.items[0].fields.name} | Author | ${config.SITE_NAME}`,
+        title: `${author_response.items[0].fields.name} | Author`,
         description: author_response.items[0].fields.about,
       },
     };

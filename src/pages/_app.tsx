@@ -31,7 +31,8 @@ export default function MyApp({ Component, pageProps }: AppPropsT) {
       ></Script>
 
       <DefaultSeo
-        title={pageProps.title || config.DEFAULT_TITLE}
+        titleTemplate={`%s | ${config.DEFAULT_TITLE_TEMPLATE}`}
+        title={pageProps.title}
         description={pageProps.description || config.DEFAULT_DESCRIPTION}
         openGraph={{
           type: "website",
