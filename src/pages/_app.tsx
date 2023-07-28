@@ -47,6 +47,7 @@ export default function MyApp({ Component, pageProps }: AppPropsT) {
         }}
       />
       <Head>
+        <html lang="en" />
         <link rel="icon" href="/favicon.svg" sizes="any" />
       </Head>
       <Layout categories={pageProps.categories}>
