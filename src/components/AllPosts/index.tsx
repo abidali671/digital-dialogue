@@ -20,7 +20,7 @@ const AllPosts = ({ posts, categories }: PropsT) => {
           <h2 className="font-bold text-4xl">All Post</h2>
           <hr className="w-24 h-[4px] border-1 rounded bg-orange-700" />
         </span>
-        <div className="grid-cols-10 grid py-10 gap-6">
+        <div className="grid-cols-10 grid pt-10 gap-6">
           <div className="md:col-span-7 col-span-10">
             <div className="gap-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">
               {posts.map((post: IPostData) => (
@@ -29,7 +29,7 @@ const AllPosts = ({ posts, categories }: PropsT) => {
             </div>
             <Link
               href="/blogs"
-              className="text-base font-medium text-center flex items-center justify-center"
+              className="text-base font-medium text-center flex items-center justify-center max-md:pt-4"
             >
               Show More
               <ArrowRight className="-mr-[10px] ml-1" height={16} width={16} />
