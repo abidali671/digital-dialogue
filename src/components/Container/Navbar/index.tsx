@@ -29,7 +29,7 @@ const Navbar = ({ categories }: INavbarProps) => {
     <div className="navbar-root">
       <ContentContainer className="content-wrapper">
         <Link href="/">
-          <Logo className="md:h-12 h-10 w-auto" />
+          <Logo className="md:h-12 h-10 w-auto" aria-label="website logo" />
         </Link>
         <ul className="nav-list">
           {config.NAV_LINKS.map((item, index) => (
