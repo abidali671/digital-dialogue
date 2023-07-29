@@ -42,7 +42,7 @@ const Hero = ({ posts }: IProps) => {
               <hr className="w-10 h-[2px] border-0 rounded bg-orange-700" />
               <p>{post?.fields.category.fields.label}</p>
             </span>
-            <h2 className="text-2xl md:text-5xl font-bold line-clamp-2">
+            <h2 className="text-2xl md:text-4xl font-bold line-clamp-2">
               {post?.fields.title}
             </h2>
             <p className="text-gray-500 flex items-center gap-2 text-xs lg:text-base">
