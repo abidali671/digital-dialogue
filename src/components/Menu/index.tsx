@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu as HeadlessMenu } from "@headlessui/react";
+import { Menu as HeadlessMenu, Transition } from "@headlessui/react";
 
 interface IMenuProps {
   list: { label: string; onClick: () => void }[];
@@ -12,21 +12,32 @@ const Menu = ({ list, button }: IMenuProps) => {
       <HeadlessMenu.Button className="flex items-center gap-1">
         {(state) => button(state)}
       </HeadlessMenu.Button>
-      <HeadlessMenu.Items
-        as="div"
-        className="absolute right-0 top-[calc(100%_+_16px)] bg-white rounded shadow-md border "
+      <Transition
+        enter="transition duration-300 ease-out"
+        enterFrom="transform scale-95 opacity-0"
+        enterTo="transform scale-100 opacity-100"
+        leave="transition duration-150 ease-out"
+        leaveFrom="transform scale-100 opacity-100"
+        leaveTo="transform scale-95 opacity-0"
       >
-        {list.map((item, index) => (
-          <HeadlessMenu.Item
-            key={index}
-            as="div"
-            onClick={item.onClick}
-            className="p-3 cursor-pointer whitespace-nowrap hover:bg-neutral-300"
-          >
-            {item.label}
-          </HeadlessMenu.Item>
-        ))}
-      </HeadlessMenu.Items>
+        <HeadlessMenu.Items
+          as="div"
+          className="absolute right-0 top-[calc(100%_+_16px)] bg-white rounded shadow-md border "
+        >
+          {list.map((item, index) => (
+            <a>
+              <HeadlessMenu.Item
+                key={index}
+                as="div"
+                onClick={item.onClick}
+                className="p-3 cursor-pointer whitespace-nowrap hover:bg-neutral-100"
+              >
+                {item.label}
+              </HeadlessMenu.Item>
+            </a>
+          ))}
+        </HeadlessMenu.Items>
+      </Transition>
     </HeadlessMenu>
   );
 };

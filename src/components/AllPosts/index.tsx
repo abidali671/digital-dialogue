@@ -29,7 +29,7 @@ const AllPosts = ({ posts, categories }: PropsT) => {
             </div>
             <Link
               href="/blogs"
-              className="text-base font-medium text-center flex items-center justify-center max-md:pt-4"
+              className="text-base font-medium text-center flex items-center justify-center py-4"
             >
               Show More
               <ArrowRight className="-mr-[10px] ml-1" height={16} width={16} />
