@@ -62,7 +62,7 @@ const BlogDetail = ({ post }: IBlogDetailProps) => {
           </div>
         </div>
         <main className="mx-auto w-11/12 md:w-8/12 -mt-16">
-          <article className="flex flex-col gap-4">
+          <article className="article-wrapper">
             {documentToReactComponents(content)}
           </article>
           <div className="py-10">

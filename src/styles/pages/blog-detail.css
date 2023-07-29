@@ -1,0 +1,3 @@
+.article-wrapper {
+  @apply flex flex-col gap-4;
+}
