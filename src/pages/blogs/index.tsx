@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
-import { ContentContainer, LoadingSpinner, PostCard } from "@/components";
-import { ArrowRight, SearchIcon } from "@/assets/icon";
+import { ContentContainer, LoadMoreButton, PostCard } from "@/components";
+import { SearchIcon } from "@/assets/icon";
 import { ICategoryData, IPostData, ITagData } from "@/types";
 import contentful_client from "@/lib/contentful/client";
 import config from "@/lib/config";
@@ -71,27 +71,11 @@ const Blogs = ({ posts, totalPosts }: PropsT) => {
             <PostCard key={post.fields.slug} data={post} />
           ))}
         </div>
-        {currentPagePosts.length < totalPosts && !loading && (
-          <div
-            onClick={handleLoadMore}
-            className="text-base font-medium text-center flex items-center justify-center gap-2 cursor-pointer py-4"
-          >
-            Load More
-            <div className="flex flex-col">
-              <ArrowRight
-                className="rotate-90 -mb-[5px]"
-                height={16}
-                width={16}
-              />
-              <ArrowRight
-                className="rotate-90 -mt-[5px]"
-                height={16}
-                width={16}
-              />
-            </div>
-          </div>
-        )}
-        {loading && <LoadingSpinner className="mx-auto py-3" />}
+        <LoadMoreButton
+          onClick={handleLoadMore}
+          isLoading={loading}
+          isVisible={currentPagePosts.length < totalPosts}
+        />
       </ContentContainer>
     </div>
   );
