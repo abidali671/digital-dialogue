@@ -80,7 +80,6 @@ export const getStaticProps = async ({
     if (!response?.items?.length || !category_response?.items?.length) {
       throw "Error";
     }
-    console.log("category_response.items[0]", category_response.items[0]);
     return {
       props: {
         params,
