@@ -61,7 +61,7 @@ const Hero = ({ posts }: IProps) => {
               }}
               className="p-2 bg-[#272343] rounded-sm w-[100px] lg:w-[130px] text-white text-center"
             >
-              Click Here
+              Read Full Article
             </Link>
           </div>
           <SliderIndicator
