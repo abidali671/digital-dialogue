@@ -70,10 +70,10 @@ const Authors = ({ authors }: PropsT) => {
                 <h4 className="text-2xl font-medium text-center">
                   {author.fields.name}
                 </h4>
-                <p className="text-sm text-neutral-500 text-center">
+                <p className="text-sm text-neutral-700 text-center">
                   {author.fields.role}
                 </p>
-                <p className="text-sm text-neutral-400 text-center mt-2">
+                <p className="text-sm text-neutral-600 text-center mt-2">
                   About Me
                 </p>
                 <p className="text-base text-neutral-600 text-center">
