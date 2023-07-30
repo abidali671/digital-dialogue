@@ -3,7 +3,7 @@ import contentful_client from "@/lib/contentful/client";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="max-w-7xl w-full px-6 py-10 mx-auto flex flex-col gap-4">
+    <div className="max-w-7xl w-full px-4 md:px-6 py-10 mx-auto flex flex-col gap-4">
       <h1>Privacy Policy for Digital Dialogue</h1>
 
       <p>
@@ -252,10 +252,10 @@ const PrivacyPolicy = () => {
       </p>
 
       <div>
-        <p className="text-gray-800 text-xl whitespace-nowrap tracking-wide">
+        <p className="text-gray-800 text-lg whitespace-nowrap tracking-wide">
           Email: <b>abid.saeed.ali92@gmail.com</b>
         </p>
-        <p className="text-gray-700 text-xl whitespace-nowrap tracking-wide">
+        <p className="text-gray-700 text-lg whitespace-nowrap tracking-wide">
           Phone: <b>+92 3248218854</b>
         </p>
       </div>
