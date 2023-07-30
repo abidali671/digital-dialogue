@@ -25,9 +25,8 @@ const Menu = ({ list, button }: IMenuProps) => {
           className="absolute right-0 top-[calc(100%_+_16px)] bg-white rounded shadow-md border "
         >
           {list.map((item, index) => (
-            <a>
+            <a key={index}>
               <HeadlessMenu.Item
-                key={index}
                 as="div"
                 onClick={item.onClick}
                 className="p-3 cursor-pointer whitespace-nowrap hover:bg-neutral-100"
