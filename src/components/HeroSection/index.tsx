@@ -37,7 +37,7 @@ const Hero = ({ posts }: IProps) => {
       </div>
       <ContentContainer className="!absolute top-0 lg:top-20 bottom-0 left-[50%]  md:left-[55%] translate-x-[-50%]">
         <div className="absolute left-0 top-[50%] translate-y-[-50%] flex flex-col gap-10 max-w-[650px] max-md:px-4">
-          <div className="bg-white border border-gray-200 z-0 shadow-none md:shadow-lg w-[100%] md:text-left text-center md:items-start items-center p-4 md-p-6 flex flex-col gap-2">
+          <div className="bg-white border border-gray-200 z-0 shadow-none md:shadow-lg w-[100%] md:text-left text-center md:items-start items-center p-4 md-p-6 flex flex-col gap-4">
             <span className="flex items-center gap-1 ">
               <hr className="w-10 h-[2px] border-0 rounded bg-orange-700" />
               <p>{post?.fields.category.fields.label}</p>
@@ -59,7 +59,7 @@ const Hero = ({ posts }: IProps) => {
                   blog_detail: post.fields.slug,
                 },
               }}
-              className="p-2 bg-[#272343] rounded-sm w-[100px] lg:w-[130px] text-white text-center"
+              className="py-3 px-5 bg-[#272343] rounded-sm text-white text-center"
             >
               Read Full Article
             </Link>
