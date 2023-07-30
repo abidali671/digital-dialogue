@@ -59,9 +59,9 @@ const Hero = ({ posts }: IProps) => {
                   blog_detail: post.fields.slug,
                 },
               }}
-              className="p-2 bg-orange-500 rounded-sm w-[100px] lg:w-[130px] text-white text-center"
+              className="p-2 bg-[#272343] rounded-sm w-[100px] lg:w-[130px] text-white text-center"
             >
-              Read More
+              Click Here
             </Link>
           </div>
           <SliderIndicator
