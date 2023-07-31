@@ -13,8 +13,10 @@ interface ICategoryProps {
 
 const Author = ({ posts, totalPosts }: ICategoryProps) => {
   const [searchText, setSearchText] = useState<string>("");
+  const [pageNo, setPageNo] = useState<number>(1);
   const [currentPagePosts, setCurrentPagePosts] = useState<IPostData[]>(posts);
   const [loading, setLoading] = useState<boolean>(false);
+
   const filteredPosts = useMemo(() => {
     const filter_list = currentPagePosts?.filter(
       (post) =>
@@ -35,8 +37,9 @@ const Author = ({ posts, totalPosts }: ICategoryProps) => {
   const handleLoadMore = async () => {
     try {
       setLoading(true);
-      const { data } = await API.get(`/blogs?page=2`);
+      const { data } = await API.get(`/blogs?page=${pageNo + 1}`);
       setCurrentPagePosts((prev) => [...prev, ...data.items]);
+      setPageNo(pageNo + 1);
     } catch (err) {
       console.error(err);
     } finally {
