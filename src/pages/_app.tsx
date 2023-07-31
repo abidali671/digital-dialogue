@@ -37,7 +37,7 @@ export default function MyApp({ Component, pageProps }: AppPropsT) {
         openGraph={{
           type: "website",
           locale: "en_IE",
-          url: config.BASE_URL,
+          url: pageProps.url || config.BASE_URL,
           siteName: config.SITE_NAME,
         }}
         twitter={{
@@ -45,6 +45,7 @@ export default function MyApp({ Component, pageProps }: AppPropsT) {
           site: "@site",
           cardType: "summary_large_image",
         }}
+        canonical={pageProps.url}
       />
       <Head>
         <link rel="icon" href="/favicon.svg" sizes="any" />

@@ -110,6 +110,7 @@ export const getStaticProps = async ({ params }: any) => {
         categories: categories_response.items,
         title: `${post.fields.title} | Blog`,
         description: post.fields.excerpt,
+        url: `${config.BASE_URL}/blogs/${category}/${blog_detail}`,
       },
     };
   } catch (error) {
