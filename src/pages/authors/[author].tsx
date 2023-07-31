@@ -1,20 +1,22 @@
 import React, { useMemo, useState } from "react";
-import { ContentContainer, PostCard } from "@/components";
+import { ContentContainer, LoadMoreButton, PostCard } from "@/components";
 import { SearchIcon } from "@/assets/icon";
 import contentful_client from "@/lib/contentful/client";
 import { IAuthor, IPostData } from "@/types";
-import config from "@/lib/config";
+import API from "@/lib/api";
 
 interface ICategoryProps {
   posts: IPostData[];
+  totalPosts: number;
   params: Record<string, string>;
 }
 
-const Author = ({ posts }: ICategoryProps) => {
+const Author = ({ posts, totalPosts }: ICategoryProps) => {
   const [searchText, setSearchText] = useState<string>("");
-
+  const [currentPagePosts, setCurrentPagePosts] = useState<IPostData[]>(posts);
+  const [loading, setLoading] = useState<boolean>(false);
   const filteredPosts = useMemo(() => {
-    const filter_list = posts?.filter(
+    const filter_list = currentPagePosts?.filter(
       (post) =>
         post.fields.title.toLowerCase().includes(searchText.toLowerCase()) ||
         post.fields.excerpt.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -24,11 +26,24 @@ const Author = ({ posts }: ICategoryProps) => {
     );
 
     return filter_list;
-  }, [posts, searchText]);
+  }, [currentPagePosts, searchText]);
 
   const handleSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
   };
+
+  const handleLoadMore = async () => {
+    try {
+      setLoading(true);
+      const { data } = await API.get(`/blogs?page=2`);
+      setCurrentPagePosts((prev) => [...prev, ...data.items]);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="relative">
       <div className="w-full bg-neutral-200 ">
@@ -53,6 +68,11 @@ const Author = ({ posts }: ICategoryProps) => {
             <PostCard key={post.fields.slug} data={post} />
           ))}
         </div>
+        <LoadMoreButton
+          onClick={handleLoadMore}
+          isLoading={loading}
+          isVisible={currentPagePosts?.length < totalPosts}
+        />
       </ContentContainer>
     </div>
   );
@@ -76,25 +96,25 @@ export const getStaticProps = async ({
       }),
     ]);
 
-    const response = await contentful_client.getEntries({
-      content_type: "post",
-      links_to_entry: author_response.items[0].sys.id,
-    });
+    const { data } = await API.get(`/blogs`);
+    const { items: posts, total: totalPosts } = data;
 
-    if (!response?.items?.length || !author_response?.items?.length) {
+    if (!posts?.length || !author_response?.items?.length) {
       throw "Error";
     }
 
     return {
       props: {
         params,
-        posts: response.items,
+        posts,
+        totalPosts,
         categories: categories_response.items,
         title: `${author_response.items[0].fields.name} | Author`,
         description: author_response.items[0].fields.about,
       },
     };
   } catch (error) {
+    console.error(error);
     return { redirect: { destination: "/", permanent: false } };
   }
 };
