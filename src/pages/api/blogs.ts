@@ -3,13 +3,6 @@ import contentful_client from "@/lib/contentful/client";
 import config from "@/lib/config";
 
 const FetchBlogs = async (req: NextApiRequest, res: NextApiResponse) => {
-  const allowedOrigins = ["http://localhost", "https://digital-dialogue.co"];
-  const origin = req.headers.origin!;
-
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
-
   try {
     const page_no = Number(req.query.page) || 1;
     const links_to_entry = req.query.links_to_entry;

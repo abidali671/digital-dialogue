@@ -19,8 +19,7 @@ const NAV_LINKS = [
 
 const config = {
   NAV_LINKS,
-  BASE_URL:
-    process.env.NEXT_PUBLIC_BASE_URL || "https://www.digital-dialogue.co",
+  BASE_URL: "https://www.digital-dialogue.co",
   BLOGS_PER_PAGE: 9,
   SITE_NAME: "Digital Dialogue",
   DEFAULT_TITLE_TEMPLATE: "Digital Dialogue | Technical Blogging Site",
