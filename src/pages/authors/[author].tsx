@@ -118,7 +118,7 @@ export const getStaticProps = async ({
     };
   } catch (error) {
     console.error(error);
-    return { redirect: { destination: "/", permanent: false } };
+    return { redirect: { destination: "/", permanent: true } };
   }
 };
 
