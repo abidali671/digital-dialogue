@@ -99,18 +99,18 @@ export const getStaticProps = async ({
       }),
     ]);
 
-    const { data } = await API.get(`/blogs`);
-    const { items: posts, total: totalPosts } = data;
+    // const { data } = await API.get(`/blogs`);
+    // const { items: posts, total: totalPosts } = data;
 
-    if (!posts?.length || !author_response?.items?.length) {
-      throw "Error";
-    }
+    // if (!posts?.length || !author_response?.items?.length) {
+    //   throw "Error";
+    // }
 
     return {
       props: {
         params,
-        posts,
-        totalPosts,
+        posts: [],
+        totalPosts: 10,
         categories: categories_response.items,
         title: `${author_response.items[0].fields.name} | Author`,
         description: author_response.items[0].fields.about,
