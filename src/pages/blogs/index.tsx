@@ -4,6 +4,7 @@ import { SearchIcon } from "@/assets/icon";
 import { ICategoryData, IPostData, ITagData } from "@/types";
 import contentful_client from "@/lib/contentful/client";
 import config from "@/lib/config";
+import API from "@/lib/api";
 
 interface PropsT {
   posts: IPostData[];
@@ -14,6 +15,7 @@ interface PropsT {
 
 const Blogs = ({ posts, totalPosts }: PropsT) => {
   const [searchText, setSearchText] = useState<string>("");
+  const [pageNo, setPageNo] = useState<number>(1);
   const [currentPagePosts, setCurrentPagePosts] = useState<IPostData[]>(posts);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -37,9 +39,9 @@ const Blogs = ({ posts, totalPosts }: PropsT) => {
   const handleLoadMore = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/blogs?page=2`);
-      const { data } = await response.json();
-      setCurrentPagePosts((prev) => [...prev, ...data]);
+      const { data } = await API.get(`/blogs?page=${pageNo + 1}`);
+      setCurrentPagePosts((prev) => [...prev, ...data.items]);
+      setPageNo(pageNo + 1);
     } catch (err) {
       console.error(err);
     } finally {
@@ -89,6 +91,7 @@ export const getStaticProps = async (context: any) => {
     }),
     contentful_client.getEntries({ content_type: "category" }),
   ]);
+
   return {
     props: {
       posts: responses[0].items,
