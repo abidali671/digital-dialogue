@@ -42,7 +42,7 @@ const Footer = ({ categories }: IFooterProps) => {
           </div>
         </div>
         <hr className=" border-1 border-[#7F7F7F]" />
-        <div className="text-white flex justify-between items-center">
+        <div className="text-white flex justify-between items-center max-md:flex-col">
           <p className="text-base">
             © 2023 Digital-Dialogue.co - All rights reserved
           </p>
