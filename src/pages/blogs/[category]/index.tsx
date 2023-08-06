@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { ContentContainer, PostCard } from "@/components";
+import { ContentContainer, PostCard, Title } from "@/components";
 import { SearchIcon } from "@/assets/icon";
 import contentful_client from "@/lib/contentful/client";
 import { ICategoryData, IPostData } from "@/types";
@@ -46,7 +46,8 @@ const Category = ({ posts }: ICategoryProps) => {
         </div>
       </div>
       <ContentContainer className="relative flex justify-center flex-col p-0">
-        <div className="md:col-span-7 col-span-10 gap-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] lg:grid-cols-[repeat(3,minmax(300px,1fr))]">
+        <Title>Blogs</Title>
+        <div className="mt-6 md:col-span-7 col-span-10 gap-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] lg:grid-cols-[repeat(3,minmax(300px,1fr))]">
           {filteredPosts?.map((post: IPostData) => (
             <PostCard key={post.fields.slug} data={post} />
           ))}

@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { ContentContainer } from "@/components";
+import { ContentContainer, Title } from "@/components";
 import { SearchIcon } from "@/assets/icon";
 import { IAuthor } from "@/types";
 import contentful_client from "@/lib/contentful/client";
@@ -48,7 +48,8 @@ const Authors = ({ authors }: PropsT) => {
         </div>
       </div>
       <ContentContainer className="relative flex justify-center flex-col p-0">
-        <div className="md:col-span-7 col-span-10 gap-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] lg:grid-cols-[repeat(3,minmax(300px,1fr))]">
+        <Title>Authors</Title>
+        <div className="mt-6 md:col-span-7 col-span-10 gap-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] lg:grid-cols-[repeat(3,minmax(300px,1fr))]">
           {filteredAuthors.map((author: IAuthor) => (
             <Link
               key={author.sys.id}

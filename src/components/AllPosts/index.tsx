@@ -2,6 +2,7 @@ import React from "react";
 import PostCard from "../PostCard";
 import Category from "../Category";
 import ContentContainer from "../ContentContainer";
+import Title from "../Title";
 import { ICategoryData, ITagData, IPostData } from "@/types";
 import Link from "next/link";
 import { ArrowRight } from "@/assets/icon";
@@ -16,10 +17,7 @@ const AllPosts = ({ posts, categories }: PropsT) => {
   return (
     <div className="bg-neutral-100">
       <ContentContainer>
-        <span className="flex gap-1 flex-col">
-          <h2 className="font-bold text-4xl">All Post</h2>
-          <hr className="w-24 h-[4px] border-1 rounded bg-orange-700" />
-        </span>
+        <Title>All Post</Title>
         <div className="grid-cols-10 grid pt-10 gap-6">
           <div className="md:col-span-7 col-span-10">
             <div className="gap-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))]">

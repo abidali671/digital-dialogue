@@ -10,3 +10,4 @@ export { default as PostCard } from "./PostCard";
 export { default as Category } from "./Category";
 export { default as ShareButtons } from "./ShareButtons";
 export { default as Tag } from "./Tag";
+export { default as Title } from "./Title";
