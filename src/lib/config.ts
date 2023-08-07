@@ -22,7 +22,7 @@ const config = {
   BASE_URL: "https://www.digital-dialogue.co",
   BLOGS_PER_PAGE: 15,
   SITE_NAME: "Digital Dialogue",
-  DEFAULT_TITLE_TEMPLATE: "Digital Dialogue | Technical Blogging Site",
+  DEFAULT_TITLE_TEMPLATE: "Digital Dialogue",
   DEFAULT_DESCRIPTION:
     "Digital Dialogue is blogging site for all things freelancing, technology, design and creativity.",
 };
