@@ -81,12 +81,14 @@ export const getStaticProps = async ({
     if (!response?.items?.length || !category_response?.items?.length) {
       throw "Error";
     }
+
     return {
       props: {
         params,
         posts: response.items,
         categories: categories_response.items,
         title: `${category_response.items[0].fields.label} | Category`,
+        description: category_response.items[0].fields.description,
       },
     };
   } catch (error) {
