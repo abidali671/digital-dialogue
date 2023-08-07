@@ -2,6 +2,7 @@ import React from "react";
 import { Hero, AllPosts, FeaturedSection } from "@/components";
 import { ICategoryData, IPostData, ITagData } from "@/types";
 import contentful_client from "@/lib/contentful/client";
+import constants from "@/constants";
 
 interface PropsT {
   posts: IPostData[];
@@ -35,6 +36,7 @@ export const getStaticProps = async () => {
       categories: responses[1].items,
       tags: responses[2].items,
       title: "Home",
+      description: constants.descriptions.HOME,
     },
   };
 };

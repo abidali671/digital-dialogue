@@ -5,7 +5,7 @@ import { IAuthor } from "@/types";
 import contentful_client from "@/lib/contentful/client";
 import Image from "next/image";
 import Link from "next/link";
-import config from "@/lib/config";
+import constants from "@/constants";
 
 interface PropsT {
   authors: IAuthor[];
@@ -104,6 +104,7 @@ export const getStaticProps = async () => {
       authors: responses[0].items,
       categories: responses[1].items,
       title: `Authors`,
+      description: constants.descriptions.AUTHORS,
     },
   };
 };

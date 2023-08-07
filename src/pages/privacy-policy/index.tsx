@@ -1,3 +1,4 @@
+import constants from "@/constants";
 import config from "@/lib/config";
 import contentful_client from "@/lib/contentful/client";
 
@@ -274,6 +275,7 @@ export const getStaticProps = async () => {
     props: {
       categories: response.items,
       title: `Privacy Policy`,
+      description: constants.descriptions.AUTHORS,
     },
   };
 };

@@ -10,6 +10,7 @@ import { ICategoryData, IPostData, ITagData } from "@/types";
 import contentful_client from "@/lib/contentful/client";
 import config from "@/lib/config";
 import API from "@/lib/api";
+import constants from "@/constants";
 
 interface PropsT {
   posts: IPostData[];
@@ -89,7 +90,7 @@ const Blogs = ({ posts, totalPosts }: PropsT) => {
   );
 };
 
-export const getStaticProps = async (context: any) => {
+export const getStaticProps = async () => {
   const responses = await Promise.all([
     contentful_client.getEntries({
       content_type: "post",
@@ -104,6 +105,7 @@ export const getStaticProps = async (context: any) => {
       categories: responses[1].items,
       totalPosts: responses[0].total,
       title: `Blogs`,
+      description: constants.descriptions.BLOGS,
     },
   };
 };

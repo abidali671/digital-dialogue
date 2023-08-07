@@ -1,0 +1,11 @@
+const descriptions = {
+  HOME: "Welcome to Digital Dialogue - Your Hub for Freelancing, Technology, Design, and Creativity Insights. Explore a rich tapestry of articles, tips, and discussions on the ever-evolving world of freelancing, cutting-edge technology trends, innovative design concepts, and the boundless realms of creativity. Join the conversation and stay informed with our diverse range of topics, crafted to inspire, inform, and empower. Dive into the world where digital meets dialogue and discover a community passionate about shaping the future.",
+  BLOGS:
+    "Discover the Latest Insights in Freelancing, Technology, Design, and Creativity at Digital Dialogue. Explore a diverse collection of articles encompassing freelancing strategies, cutting-edge technology updates, design trends, and creative narratives. Immerse yourself in a wealth of valuable information, engaging discussions, and actionable tips meticulously curated to quench your curiosity and energize your interests. Embark on a digital odyssey where ideas foster and conversations flourish, all within a single dynamic platform.",
+  AUTHORS:
+    "Meet the Creative Minds Behind Digital Dialogue - Your Source for Freelancing, Technology, Design, and Creativity Insights. Explore the profiles of our accomplished authors, each contributing their expertise to our platform. From freelancing gurus and tech enthusiasts to design maestros and creative visionaries, our authors bring a wealth of knowledge and passion to the table. Discover their unique perspectives, expertise, and experiences that enrich our diverse range of articles. Immerse yourself in a collaborative space where ideas converge and expertise shines, all within the pages of Digital Dialogue.",
+  PRIVACY_POLICY:
+    "Your Privacy Matters at Digital Dialogue - Read Our Comprehensive Privacy Policy. Explore how we safeguard your personal information, ensuring transparency, security, and compliance. Learn about the data we collect, how it's used, and your rights in our commitment to maintaining your privacy. Discover our dedication to creating a trustworthy online environment where your data is respected and protected. Navigate our privacy policy to understand how we prioritize your confidentiality within the Digital Dialogue community.",
+};
+
+export default { descriptions };
