@@ -7,4 +7,3 @@ Host: https://www.digital-dialogue.co
 
 # Sitemaps
 Sitemap: https://www.digital-dialogue.co/sitemap.xml
-Sitemap: https://www.digital-dialogue.co/sitemap-0.xml
