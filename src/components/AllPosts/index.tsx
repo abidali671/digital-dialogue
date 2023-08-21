@@ -35,7 +35,7 @@ const AllPosts = ({ posts, categories }: PropsT) => {
             </Link>
           </div>
           <div className="sm:col-span-3 hidden md:flex gap-2 flex-col">
-            <div className="gap-2 flex flex-col sm:px-0 px-4 ">
+            <div className="gap-2 flex flex-col sm:px-0 px-4 sticky top-20">
               <h2 className="text-xl font-bold">Featured Category</h2>
               {categories.map((data: ICategoryData, ind) => (
                 <Category key={ind} data={data} />
