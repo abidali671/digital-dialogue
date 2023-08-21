@@ -32,21 +32,23 @@ const Footer = ({ categories }: IFooterProps) => {
           <div className="flex flex-col gap-3 w-full">
             <h3 className="text-2xl pt-3 text-white ">Contact Info</h3>
             <div>
-              <p className="text-gray-400 text-base whitespace-nowrap">
-                Email: abid.saeed.ali92@gmail.com
+              <p className="text-gray-400 text-sm whitespace-nowrap">
+                Email:abid.saeed.ali92@gmail.com
               </p>
-              <p className="text-gray-400 text-base whitespace-nowrap">
+              <p className="text-gray-400 text-sm whitespace-nowrap">
                 Phone: +92 3248218854
               </p>
             </div>
           </div>
         </div>
         <hr className=" border-1 border-[#7F7F7F]" />
-        <div className="text-white flex justify-between items-center max-md:flex-col">
-          <p className="text-base">
+        <div className="flex justify-between items-center max-md:flex-col">
+          <p className="text-base text-gray-200">
             © 2023 Digital-Dialogue.co - All rights reserved
           </p>
-          <p className="text-base">Develop by team Digital Dialogue</p>
+          <p className="text-base text-gray-200">
+            Develop by team Digital Dialogue
+          </p>
         </div>
       </ContentContainer>
     </footer>
