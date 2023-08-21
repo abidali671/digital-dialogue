@@ -1,18 +1,27 @@
-import { ContentContainer, LoadingSpinner, ShareButtons } from "@/components";
+import {
+  Category,
+  ContentContainer,
+  LoadingSpinner,
+  PostCard,
+  ShareButtons,
+  Title,
+} from "@/components";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import React from "react";
 import contentful_client from "@/lib/contentful/client";
 import { useRouter } from "next/router";
-import { IPostData } from "@/types";
+import { ICategoryData, IPostData } from "@/types";
 import Image from "next/image";
 import moment from "moment";
 import config from "@/lib/config";
+import Link from "next/link";
 
 interface IBlogDetailProps {
   post: IPostData;
+  categories: ICategoryData[];
 }
 
-const BlogDetail = ({ post }: IBlogDetailProps) => {
+const BlogDetail = ({ post, categories }: IBlogDetailProps) => {
   const router = useRouter();
 
   if (router.isFallback) return <LoadingSpinner variant="full" />;
@@ -31,8 +40,8 @@ const BlogDetail = ({ post }: IBlogDetailProps) => {
           className="object-cover h-full w-full"
         />
       </div>
-      <ContentContainer>
-        <div className="p-5 gap-3 flex w-full sm:w-11/12 md:w-8/12 flex-col text-left items-start border border-gray-200 shadow-gray-200 shadow-sm border-t-0 bg-white relative bottom-32  mx-auto ">
+      <ContentContainer className="md:px-20">
+        <div className="p-5 gap-3 flex md:w-full sm:w-11/12 flex-col text-left items-start border border-gray-200 shadow-gray-200 shadow-sm border-t-0 bg-white relative bottom-32  mx-auto ">
           <span className="flex items-center gap-1">
             <hr className="w-10 h-[2px] border-0 rounded bg-orange-700" />
             <p>{category.fields.label}</p>
@@ -61,19 +70,39 @@ const BlogDetail = ({ post }: IBlogDetailProps) => {
             <ShareButtons url={config.BASE_URL + router.asPath} />
           </div>
         </div>
-        <main className="mx-auto w-11/12 md:w-8/12 -mt-16">
-          <article className="article-wrapper">
-            {documentToReactComponents(content)}
-          </article>
-          <div className="py-10">
-            <hr />
-            <div className="flex items-center gap-3 py-4">
-              <p>Share the post:</p>
-              <ShareButtons url={config.BASE_URL + router.asPath} />
+        <main className="mx-auto w-full grid grid-cols-10 gap-5 -mt-16">
+          <div className="col-span-7 pr-10">
+            <article className="article-wrapper ">
+              {documentToReactComponents(content)}
+            </article>
+            <div className="py-10">
+              <hr />
+              <div className="flex items-center gap-3 py-4">
+                <p>Share the post:</p>
+                <ShareButtons url={config.BASE_URL + router.asPath} />
+              </div>
+              <hr />
             </div>
-            <hr />
+          </div>
+          <div className="col-span-3 flex-col">
+            <div className="gap-2 flex flex-col sm:px-0 px-4 sticky top-20">
+              <h2 className="text-xl font-bold">Featured Category</h2>
+              {categories.map((data: ICategoryData, ind: number) => (
+                <Category key={ind} data={data} />
+              ))}
+            </div>
           </div>
         </main>
+        <div className="">
+          <Title>Suggested Posts </Title>
+          <div className="overflow-auto w-full mt-6">
+            <div className="flex gap-6 min-w-[950px] ">
+              {[post, post, post].map((item: IPostData) => (
+                <PostCard key={item.fields.slug} data={item} />
+              ))}
+            </div>
+          </div>
+        </div>
       </ContentContainer>
     </React.Fragment>
   );
