@@ -14,16 +14,16 @@ import { ICategoryData, IPostData } from "@/types";
 import Image from "next/image";
 import moment from "moment";
 import config from "@/lib/config";
-import Link from "next/link";
+import { shuffleArray } from "@/helper";
 
 interface IBlogDetailProps {
   post: IPostData;
+  suggestedPost: IPostData[];
   categories: ICategoryData[];
 }
 
-const BlogDetail = ({ post, categories }: IBlogDetailProps) => {
+const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
   const router = useRouter();
-
   if (router.isFallback) return <LoadingSpinner variant="full" />;
 
   const { coverImage, category, title, author, content } = post.fields;
@@ -41,7 +41,7 @@ const BlogDetail = ({ post, categories }: IBlogDetailProps) => {
         />
       </div>
       <ContentContainer className="md:px-20">
-        <div className="p-5 gap-3 flex md:w-full sm:w-11/12 flex-col text-left items-start border border-gray-200 shadow-gray-200 shadow-sm border-t-0 bg-white relative bottom-32  mx-auto ">
+        <div className="p-5 gap-3 flex md:w-full sm:w-full flex-col text-left items-start border border-gray-200 shadow-gray-200 shadow-sm border-t-0 bg-white relative bottom-32  mx-auto ">
           <span className="flex items-center gap-1">
             <hr className="w-10 h-[2px] border-0 rounded bg-orange-700" />
             <p>{category.fields.label}</p>
@@ -71,7 +71,7 @@ const BlogDetail = ({ post, categories }: IBlogDetailProps) => {
           </div>
         </div>
         <main className="mx-auto w-full grid grid-cols-10 gap-5 -mt-16">
-          <div className="col-span-7 pr-10">
+          <div className="col-span-10 md:col-span-7 md:pr-10">
             <article className="article-wrapper ">
               {documentToReactComponents(content)}
             </article>
@@ -84,7 +84,7 @@ const BlogDetail = ({ post, categories }: IBlogDetailProps) => {
               <hr />
             </div>
           </div>
-          <div className="col-span-3 flex-col">
+          <div className="md:col-span-3 max-md:hidden col-span-10 flex-col">
             <div className="gap-2 flex flex-col sm:px-0 px-4 sticky top-20">
               <h2 className="text-xl font-bold">Featured Category</h2>
               {categories.map((data: ICategoryData, ind: number) => (
@@ -93,11 +93,11 @@ const BlogDetail = ({ post, categories }: IBlogDetailProps) => {
             </div>
           </div>
         </main>
-        <div className="">
+        <div>
           <Title>Suggested Posts </Title>
           <div className="overflow-auto w-full mt-6">
-            <div className="flex gap-6 min-w-[950px] ">
-              {[post, post, post].map((item: IPostData) => (
+            <div className="grid gap-6 min-w-[950px] grid-cols-3">
+              {suggestedPost.map((item: IPostData) => (
                 <PostCard key={item.fields.slug} data={item} />
               ))}
             </div>
@@ -126,16 +126,27 @@ export const getStaticProps = async ({ params }: any) => {
       links_to_entry: category_response.items[0].sys.id,
     });
 
+    const suggested_post_response = await contentful_client.getEntries({
+      content_type: "post",
+      limit: 20,
+      "sys.id[ne]": response.items[0].sys.id,
+    });
+
     if (!response?.items?.length || !category_response?.items?.length) {
       throw "Error";
     }
 
     const post: IPostData = response.items[0];
+    const suggestedPost = shuffleArray(suggested_post_response.items).slice(
+      0,
+      3
+    );
 
     return {
       props: {
         params,
         post,
+        suggestedPost,
         categories: categories_response.items,
         title: `${post.fields.title} | Blog`,
         description: post.fields.excerpt,

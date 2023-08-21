@@ -62,7 +62,7 @@ const Navbar = ({ categories }: INavbarProps) => {
           <Hamburger onClick={toggleMenu} className="cursor-pointer" />
           <Transition
             show={isMenu}
-            className="fixed transition-all duration-700 top-[72px] w-full h-full ease-in-out"
+            className="fixed transition-all duration-700 top-[64px] w-full h-full ease-in-out"
             enterFrom="opacity-0 right-full"
             enterTo="opacity-100 right-0"
             leaveFrom="opacity-100 right-0"
