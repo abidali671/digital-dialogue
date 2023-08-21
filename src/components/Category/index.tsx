@@ -14,9 +14,11 @@ const Category = ({ data }: ICategoryProps) => {
         pathname: "/blogs/[category]",
         query: { category: slug },
       }}
-      className="w-full bg-[#C4C4C4] p-4"
+      className="w-full bg-[#C4C4C4] p-2"
     >
-      <p className="bg-white font-medium p-2 w-fit">{label}</p>
+      <p className="bg-white font-semibold p-2 w-fit text-base leading-none">
+        {label}
+      </p>
     </Link>
   );
 };
