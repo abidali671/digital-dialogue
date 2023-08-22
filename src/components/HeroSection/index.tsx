@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ContentContainer from "../ContentContainer";
@@ -22,6 +22,14 @@ const Hero = ({ posts }: IProps) => {
   const handleNextSlide = useCallback(() => {
     setCurrentSlide(currentSlide === posts.length - 1 ? 0 : currentSlide + 1);
   }, [currentSlide, posts.length]);
+
+  useEffect(() => {
+    const timeout = setInterval(() => {
+      handleNextSlide();
+    }, 5000);
+
+    return () => clearInterval(timeout);
+  }, [currentSlide]);
 
   return (
     <div className="flex relative justify-center md:h-[calc(100vh_-_64px)] h-[70vh] overflow-hidden">
