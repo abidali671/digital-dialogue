@@ -1,6 +1,7 @@
 import constants from "@/constants";
 import config from "@/lib/config";
 import contentful_client from "@/lib/contentful/client";
+import Link from "next/link";
 
 const PrivacyPolicy = () => {
   return (
@@ -249,15 +250,19 @@ const PrivacyPolicy = () => {
 
       <p>
         If you have any questions or suggestions about our Privacy Policy, do
-        not hesitate to contact us.
+        not hesitate to{" "}
+        <Link href="/contact-us" className="underline">
+          contact us
+        </Link>
+        .
       </p>
 
       <div>
-        <p className="text-gray-800 text-lg whitespace-nowrap tracking-wide">
-          Email: <b>abid.saeed.ali92@gmail.com</b>
+        <p className="text-gray-800 whitespace-nowrap tracking-wide">
+          Email: <b>{config.EMAIL}</b>
         </p>
-        <p className="text-gray-700 text-lg whitespace-nowrap tracking-wide">
-          Phone: <b>+92 3248218854</b>
+        <p className="text-gray-700 whitespace-nowrap tracking-wide">
+          Phone: <b>{config.PHONE}</b>
         </p>
       </div>
     </div>

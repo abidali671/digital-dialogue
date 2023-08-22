@@ -15,10 +15,17 @@ const NAV_LINKS = [
     label: "Privacy Policy",
     href: "/privacy-policy",
   },
+  {
+    label: "Contact Us",
+    href: "/contact-us",
+  },
 ];
 
 const config = {
+  EMAIL: "digital.dialogue.co@gmail.com",
+  PHONE: "+92 3248218854",
   NAV_LINKS,
+  FORM_ACTION: "https://formspree.io/f/xoqoddgp",
   BASE_URL: "https://www.digital-dialogue.co",
   BLOGS_PER_PAGE: 15,
   SITE_NAME: "Digital Dialogue",
