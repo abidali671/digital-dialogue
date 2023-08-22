@@ -12,7 +12,7 @@ const ContactUs = () => {
           method="POST"
           className="grid gap-4 max-w-xl"
         >
-          <h5>Send us a message</h5>
+          <p className="font-semibold">Send us a message</p>
           <input
             type="text"
             placeholder="Name"
