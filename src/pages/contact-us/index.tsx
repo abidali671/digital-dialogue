@@ -62,7 +62,7 @@ export const getStaticProps = async () => {
     props: {
       categories: response.items,
       title: `Contact Us`,
-      description: constants.descriptions.AUTHORS,
+      description: constants.descriptions.CONTACT_US,
     },
   };
 };
