@@ -33,10 +33,10 @@ const Footer = ({ categories }: IFooterProps) => {
             <h3 className="text-2xl pt-3 text-white ">Contact Info</h3>
             <div>
               <p className="text-gray-400 text-sm whitespace-nowrap">
-                Email:abid.saeed.ali92@gmail.com
+                Email:{config.EMAIL}
               </p>
               <p className="text-gray-400 text-sm whitespace-nowrap">
-                Phone: +92 3248218854
+                Phone: {config.PHONE}
               </p>
             </div>
           </div>
