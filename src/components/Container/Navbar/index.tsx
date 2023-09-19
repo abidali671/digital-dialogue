@@ -37,7 +37,7 @@ const Navbar = ({ categories }: INavbarProps) => {
               <Link href={item.href}>{item.label}</Link>
             </li>
           ))}
-          {categories && (
+          {/* {categories && (
             <li>
               <Menu
                 list={categories?.map((category) => ({
@@ -56,7 +56,7 @@ const Navbar = ({ categories }: INavbarProps) => {
                 )}
               />
             </li>
-          )}
+          )} */}
         </ul>
         <div className="mobile-nav-container">
           <Hamburger onClick={toggleMenu} className="cursor-pointer" />

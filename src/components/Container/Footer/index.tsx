@@ -11,7 +11,7 @@ const Footer = ({ categories }: IFooterProps) => {
   return (
     <footer className="bg-[#272343] relative">
       <ContentContainer className="pt-20 flex flex-col gap-6 absolute right-0 left-0 bottom-0">
-        <div className="grid gap-y-5  place-content-start pb-4 mx-auto px-4 grid-cols-1 md:grid-cols-3 lg:grid-cols-5  gap-4">
+        <div className="grid gap-y-5  place-content-start pb-4 mx-auto px-4 grid-cols-1 md:grid-cols-3 lg:grid-cols-4  gap-4">
           <div className="flex  flex-col gap-5 items-start justify-start md:col-span-3 lg:col-span-2">
             <Logo className="h-12 w-auto stroke-white" />
             <p className="text-gray-400 text-md leading-6 max-w-md">
@@ -19,7 +19,7 @@ const Footer = ({ categories }: IFooterProps) => {
               things freelancing, technology, design and creativity.
             </p>
           </div>
-          {categories && (
+          {/* {categories && (
             <FooterLink
               title="Categories"
               links={categories?.map((category) => ({
@@ -27,7 +27,7 @@ const Footer = ({ categories }: IFooterProps) => {
                 href: "/blogs/" + category.fields.slug,
               }))}
             />
-          )}
+          )} */}
           <FooterLink title="Pages" links={config.NAV_LINKS} />
           <div className="flex flex-col gap-3 w-full">
             <h3 className="text-2xl pt-3 text-white ">Contact Info</h3>
