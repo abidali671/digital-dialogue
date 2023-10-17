@@ -15,6 +15,7 @@ import Image from "next/image";
 import moment from "moment";
 import config from "@/lib/config";
 import { shuffleArray } from "@/helper";
+import { ArticleJsonLd } from "next-seo";
 
 interface IBlogDetailProps {
   post: IPostData;
@@ -26,11 +27,24 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
   const router = useRouter();
   if (router.isFallback) return <LoadingSpinner variant="full" />;
 
-  const { coverImage, category, title, author, content } = post.fields;
-  const { createdAt } = post.sys;
+  const { coverImage, category, title, author, content, tags, excerpt } =
+    post.fields;
+  const { createdAt, updatedAt } = post.sys;
+  const keywords = tags?.map((tag) => tag.fields.label).join(", ");
 
   return (
     <React.Fragment>
+      <ArticleJsonLd
+        type="Blog"
+        title={title}
+        description={excerpt}
+        authorName={author.fields.name}
+        url={config.BASE_URL + router.asPath}
+        keywords={keywords}
+        datePublished={moment(createdAt).format("MMMM DD, YYYY")}
+        dateModified={moment(updatedAt).format("MMMM DD, YYYY")}
+        images={["https:" + coverImage.fields.file.url]}
+      />
       <div className="h-[40vh] sm:h-[70vh] w-full bg-neutral-300 relative">
         <Image
           src={"https:" + coverImage.fields.file.url}
