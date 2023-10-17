@@ -2,7 +2,6 @@ export { default as Navbar } from "./Container/Navbar";
 export { default as Hero } from "./HeroSection";
 export { default as AllPosts } from "./AllPosts";
 export { default as ContentContainer } from "./ContentContainer";
-export { default as FeaturedSection } from "./FeaturedSection";
 export { default as LoadingSpinner } from "./LoadingSpinner";
 export { default as LoadMoreButton } from "./LoadMoreButton";
 export { default as Pagination } from "./Pagination";
