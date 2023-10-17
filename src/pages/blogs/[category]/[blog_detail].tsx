@@ -34,7 +34,7 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
       <div className="h-[40vh] sm:h-[70vh] w-full bg-neutral-300 relative">
         <Image
           src={"https:" + coverImage.fields.file.url}
-          alt={coverImage.fields.title}
+          alt={coverImage.fields.description}
           height={coverImage.fields.file.details.image.height}
           width={coverImage.fields.file.details.image.width}
           className="object-cover h-full w-full"

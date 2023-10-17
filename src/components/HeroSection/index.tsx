@@ -37,7 +37,7 @@ const Hero = ({ posts }: IProps) => {
       <div className="md:w-[60%]">
         <Image
           src={"https:" + post.fields.coverImage.fields.file.url}
-          alt={post.fields.coverImage.fields.title}
+          alt={post.fields.coverImage.fields.description}
           width={post.fields.coverImage.fields.file.details.image.width}
           height={post.fields.coverImage.fields.file.details.image.height}
           className="w-[100%] h-[100%] object-cover"
