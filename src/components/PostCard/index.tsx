@@ -18,16 +18,10 @@ const PostCard = ({ data }: CardPropsT) => {
       <div className="post-card-cover-wrapper">
         <Image
           src={"https:" + coverImage.fields.file.url}
-          alt={coverImage.fields.title}
+          alt={coverImage.fields.description}
           width={396}
           height={240}
         />
-        {coverImage.fields.description && (
-          <div
-            className="post-card-description"
-            dangerouslySetInnerHTML={{ __html: coverImage.fields.description }}
-          />
-        )}
       </div>
       <div className="post-card-content-wrapper">
         <Link

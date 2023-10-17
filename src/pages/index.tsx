@@ -1,5 +1,5 @@
 import React from "react";
-import { Hero, AllPosts, FeaturedSection } from "@/components";
+import { Hero, AllPosts } from "@/components";
 import { ICategoryData, IPostData, ITagData } from "@/types";
 import contentful_client from "@/lib/contentful/client";
 import constants from "@/constants";
@@ -14,10 +14,10 @@ const Home = ({ posts, categories, tags }: PropsT) => {
   const HeroPosts = posts.slice(0, 3);
   const FeaturedPosts = posts.slice(3, 6);
   const RemainPosts = posts.length < 6 ? posts.slice(0) : posts.slice(6);
+
   return (
     <React.Fragment>
       <Hero posts={HeroPosts} />
-      {/* <FeaturedSection posts={FeaturedPosts} /> */}
       <AllPosts posts={RemainPosts} categories={categories} tags={tags} />
     </React.Fragment>
   );
