@@ -2,11 +2,10 @@ import React from "react";
 import Head from "next/head";
 import Script from "next/script";
 import Layout from "@/components/layout";
-import { DefaultSeo } from "next-seo";
 import { AppInitialProps, AppProps } from "next/app";
 import "../styles/global.css";
 import config from "@/lib/config";
-
+import { DefaultSeo } from "next-seo";
 interface AppPropsT extends AppProps {
   Component: React.FC<AppInitialProps>;
 }
