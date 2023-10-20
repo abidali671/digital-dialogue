@@ -5,6 +5,7 @@ import {
   PostCard,
   ShareButtons,
   Title,
+  TopPosts,
 } from "@/components";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import React from "react";
@@ -99,10 +100,10 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
             </div>
           </div>
           <div className="md:col-span-3 max-md:hidden col-span-10 flex-col">
-            <div className="gap-2 flex flex-col sm:px-0 px-4 sticky top-20">
-              <h2 className="text-xl font-bold">Featured Category</h2>
-              {categories.map((data: ICategoryData, ind: number) => (
-                <Category key={ind} data={data} />
+            <div className="gap-4 flex flex-col sm:px-0 px-4 sticky top-20">
+              <h2 className="text-xl font-bold">Top Posts</h2>
+              {suggestedPost.map((item: IPostData) => (
+                <TopPosts key={item.fields.slug} data={item} />
               ))}
             </div>
           </div>
