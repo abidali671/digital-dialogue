@@ -1,5 +1,5 @@
 import React from "react";
-import { Hero, AllPosts } from "@/components";
+import { Hero, AllPosts, SubscribeForm } from "@/components";
 import { ICategoryData, IPostData, ITagData } from "@/types";
 import contentful_client from "@/lib/contentful/client";
 import constants from "@/constants";
@@ -18,6 +18,7 @@ const Home = ({ posts, categories, tags }: PropsT) => {
   return (
     <React.Fragment>
       <Hero posts={HeroPosts} />
+      <SubscribeForm />
       <AllPosts posts={RemainPosts} categories={categories} tags={tags} />
     </React.Fragment>
   );
