@@ -14,7 +14,6 @@ interface PropsT {
 }
 
 const AllPosts = ({ posts, categories }: PropsT) => {
-  console.log(posts);
   return (
     <div className="bg-neutral-100">
       <ContentContainer>

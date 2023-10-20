@@ -12,8 +12,7 @@ interface PropsT {
 
 const Home = ({ posts, categories, tags }: PropsT) => {
   const HeroPosts = posts.slice(0, 3);
-  const FeaturedPosts = posts.slice(3, 6);
-  const RemainPosts = posts.length < 6 ? posts.slice(0) : posts.slice(6);
+  const RemainPosts = posts.length < 3 ? posts.slice(0) : posts.slice(3);
 
   return (
     <React.Fragment>
