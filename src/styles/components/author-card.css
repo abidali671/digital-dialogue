@@ -1,0 +1,15 @@
+.author-card {
+    @apply bg-gray-100 pt-3 w-full rounded-3xl overflow-hidden
+}
+
+.author-card .author-title {
+    @apply flex justify-between items-center px-5 py-3
+}
+
+.author-card .author-list {
+    @apply list-none border-t w-full m-0 py-3 px-3 flex items-center gap-5 hover:bg-[#E5E7EB] hover:cursor-pointer
+}
+
+.author-card .author-img {
+    @apply rounded-full h-[50px] w-[50px] object-cover
+}
