@@ -1,6 +1,6 @@
 import React from "react";
-import { Hero, AllPosts, SubscribeForm } from "@/components";
-import { ICategoryData, IPostData, ITagData } from "@/types";
+import { Hero, AllPosts, SubscribeForm, DiscoverAuthor } from "@/components";
+import { ICategoryData, IPostData, ITagData, IAuthor } from "@/types";
 import contentful_client from "@/lib/contentful/client";
 import constants from "@/constants";
 
@@ -8,6 +8,9 @@ interface PropsT {
   posts: IPostData[];
   categories: ICategoryData[];
   tags: ITagData[];
+}
+interface PropsT {
+  authors: IAuthor[];
 }
 
 const Home = ({ posts, categories, tags }: PropsT) => {
@@ -17,7 +20,9 @@ const Home = ({ posts, categories, tags }: PropsT) => {
   return (
     <React.Fragment>
       <Hero posts={HeroPosts} />
+
       <SubscribeForm />
+
       <AllPosts posts={RemainPosts} categories={categories} tags={tags} />
     </React.Fragment>
   );

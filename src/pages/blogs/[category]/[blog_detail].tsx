@@ -6,6 +6,7 @@ import {
   ShareButtons,
   Title,
   TopPosts,
+  DiscoverAuthor,
 } from "@/components";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import React from "react";
@@ -85,8 +86,8 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
             <ShareButtons url={config.BASE_URL + router.asPath} />
           </div>
         </div>
-        <main className="mx-auto w-full grid grid-cols-10 gap-5 -mt-16">
-          <div className="col-span-10 md:col-span-7 md:pr-10">
+        <main className="mx-auto w-full grid grid-cols-12 gap-5 -mt-16">
+          <div className="col-span-10 md:col-span-8 md:pr-10">
             <article className="article-wrapper ">
               {documentToReactComponents(content)}
             </article>
@@ -99,12 +100,17 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
               <hr />
             </div>
           </div>
-          <div className="md:col-span-3 max-md:hidden col-span-10 flex-col">
-            <div className="gap-4 flex flex-col sm:px-0 px-4 sticky top-20">
-              <h2 className="text-xl font-bold">Top Posts</h2>
-              {suggestedPost.map((item: IPostData) => (
-                <TopPosts key={item.fields.slug} data={item} />
-              ))}
+          <div className="col-span-10 md:col-span-4     my-10 flex-col">
+            <div className="sticky top-20 flex gap-10   flex-col">
+              <div className="gap-4 flex flex-col sm:px-0 px-4 ">
+                <h2 className="text-xl font-bold">Top Posts</h2>
+                {suggestedPost.map((item: IPostData) => (
+                  <TopPosts key={item.fields.slug} data={item} />
+                ))}
+              </div>
+              <div className="gap-4 flex flex-col sm:px-0 px-4  ">
+                <DiscoverAuthor />
+              </div>
             </div>
           </div>
         </main>
