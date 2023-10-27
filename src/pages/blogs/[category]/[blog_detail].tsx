@@ -101,13 +101,8 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
             </div>
           </div>
           <div className="col-span-10 md:col-span-4     my-10 flex-col">
-            <div className="sticky top-20 flex gap-10   flex-col">
-              <div className="gap-4 flex flex-col sm:px-0 px-4 ">
-                <h2 className="text-xl font-bold">Top Posts</h2>
-                {suggestedPost.map((item: IPostData) => (
-                  <TopPosts key={item.fields.slug} data={item} />
-                ))}
-              </div>
+            <div className="sticky top-20 flex gap-10 flex-col">
+              <TopPosts data={suggestedPost} />
               <div className="gap-4 flex flex-col sm:px-0 px-4  ">
                 <DiscoverAuthor />
               </div>
