@@ -2,7 +2,7 @@ import React from "react";
 
 const SubscribeForm = () => {
   return (
-    <div className="w-8/12 md:w-[500px] mx-auto my-20 relative">
+    <div className="w-8/12 md:w-[500px] mx-auto my-20   relative">
       <div className="flex justify-center items-center ">
         <div className="rounded-full h-16 w-16 bg-[#3C3EDE] p-3  absolute -top-10">
           <svg

@@ -18,7 +18,7 @@ const TopPosts = ({ data }: CardPropsT) => {
         query: { category: category.fields.slug, blog_detail: slug },
       }}
     >
-      <div className="flex gap-5 items-start  ">
+      <div className="flex gap-5 items-start  w-full">
         <Image
           src={"https:" + coverImage.fields.file.url}
           alt={coverImage.fields.description}
@@ -31,7 +31,6 @@ const TopPosts = ({ data }: CardPropsT) => {
           <h3 className="text-base ">{title}</h3>
           <div className="flex  gap-2 ">
             {moment(createdAt).format("MMM DD, YYYY")}
-            <p className="text-red-700">4,334 Views</p>
           </div>
         </div>
       </div>

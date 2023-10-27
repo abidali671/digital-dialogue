@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["media.cnn.com", "freepngimg.com", "images.ctfassets.net"],
+    domains: ["media.cnn.com", "freepngimg.com", "images.ctfassets.net", 'images.unsplash.com'],
   },
   i18n: {
     locales: ["en"],
