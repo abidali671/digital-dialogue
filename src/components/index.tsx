@@ -13,3 +13,4 @@ export { default as Title } from "./Title";
 export { default as SubscribeForm } from "./SubscribeForm";
 export { default as TopPosts } from "./TopPosts";
 export { default as DiscoverAuthor } from "./DiscoverAuthor";
+export { default as NewsletterForm } from "./SectionSubscribe";

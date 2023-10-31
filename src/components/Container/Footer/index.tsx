@@ -4,10 +4,14 @@ import React from "react";
 import Logo from "../../../assets/icon/logo";
 import config from "@/lib/config";
 import { ICategoryData } from "@/types";
-
+import MailchimpSubscribe from "react-mailchimp-subscribe";
+import NewsletterForm from "@/components/SectionSubscribe";
 type IFooterProps = { categories?: ICategoryData[] };
 
 const Footer = ({ categories }: IFooterProps) => {
+  const MAILCHIMP_URL = process.env.NEXT_PUBLIC_MAILCHIMP_KEY;
+  console.log(MAILCHIMP_URL);
+
   return (
     <footer className="bg-[#272343] relative">
       <ContentContainer className="pt-10 flex flex-col gap-6 absolute right-0 left-0 bottom-0">
@@ -32,30 +36,19 @@ const Footer = ({ categories }: IFooterProps) => {
               </p>
             </div>
           </div>
-          <div className="col-span-2 flex flex-col gap-2">
-            <h3 className="text-white text-2xl">Subscribe to Updates</h3>
-            <p className="text-gray-400 text-sm">
-              Get the latest blogs from Digital Dialogue about Freelancing,
-              Digital Marketing, Social Media Marketing
-            </p>
-            <div className="flex gap-1 h-10 w-full">
-              <input
-                type="text"
-                name=""
-                id=""
-                required
-                placeholder="Your Email Address..."
-                className="outline-none  border-none  p-1 flex-1"
-              />
-              <button type="submit" className="bg-red-700 text-white p-2">
-                SUBSCRIBE
-              </button>
-            </div>
-            <p className="text-gray-400 text-sm">
-              <input type="checkbox" name="" id="" /> By signing you agree to
-              the our terms and our Privacy Policy agreement
-            </p>
-          </div>
+          <MailchimpSubscribe
+            url={String(MAILCHIMP_URL)}
+            render={(props: any) => {
+              const { subscribe, status, message } = props || {};
+              return (
+                <NewsletterForm
+                  status={status}
+                  message={message}
+                  onValidated={(formData: any) => subscribe(formData)}
+                />
+              );
+            }}
+          />
         </div>
         <hr className=" border-1 border-[#7F7F7F]" />
         <div className="flex justify-between items-center max-md:flex-col">
