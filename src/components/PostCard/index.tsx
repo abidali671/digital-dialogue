@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import moment from "moment";
 import { IPostData } from "@/types";
+import { useRouter } from "next/navigation";
 
 interface CardPropsT {
   data: IPostData;
@@ -13,6 +14,8 @@ const PostCard = ({ data, size = "lg" }: CardPropsT) => {
   const { category, coverImage, title, excerpt, slug, author } = data.fields;
   const { createdAt } = data.sys;
   const { url } = author.fields.picture.fields.file;
+
+  const router = useRouter();
 
   if (size === "sm") {
     return (
@@ -37,10 +40,10 @@ const PostCard = ({ data, size = "lg" }: CardPropsT) => {
           <div className="flex flex-col h-16 justify-between">
             <h4 className="!text-sm line-clamp-2">{title}</h4>
             <div className="flex gap-1 items-center">
-              <Link
-                href={{
-                  pathname: "/blogs/[category]/[blog_detail]",
-                  query: { category: category.fields.slug, blog_detail: slug },
+              <div
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push("/authors/" + author.fields.slug);
                 }}
                 className="flex items-center gap-2"
               >
@@ -52,7 +55,7 @@ const PostCard = ({ data, size = "lg" }: CardPropsT) => {
                   className="rounded-full h-5 w-5 object-cover"
                 />
                 <p className="text-xs text-neutral-700">{author.fields.name}</p>
-              </Link>
+              </div>
               <span className="text-neutral-500 mx-0.5 font-medium">·</span>
               <p className="text-xs text-neutral-400">
                 {moment(createdAt).format("MMM DD, YYYY")}
