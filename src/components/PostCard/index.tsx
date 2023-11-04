@@ -6,12 +6,44 @@ import { IPostData } from "@/types";
 
 interface CardPropsT {
   data: IPostData;
+  size?: "lg" | "sm";
 }
 
-const PostCard = ({ data }: CardPropsT) => {
+const PostCard = ({ data, size = "lg" }: CardPropsT) => {
   const { category, coverImage, title, excerpt, slug, author } = data.fields;
   const { createdAt } = data.sys;
   const { url } = author.fields.picture.fields.file;
+
+  if (size === "sm") {
+    return (
+      <Link
+        href={{
+          pathname: "/blogs/[category]/[blog_detail]",
+          query: {
+            category: category.fields.slug,
+            blog_detail: slug,
+          },
+        }}
+      >
+        <div className="flex gap-5 items-start w-full p-3">
+          <Image
+            src={"https:" + coverImage.fields.file.url}
+            alt={coverImage.fields.description}
+            width={80}
+            height={64}
+            className="w-20 h-16 rounded-md object-cover shadow"
+          />
+
+          <div className="flex flex-col">
+            <h4 className="!text-sm line-clamp-2">{title}</h4>
+            <p className="text-xs text-gray-500">
+              {moment(createdAt).format("MMM DD, YYYY")}
+            </p>
+          </div>
+        </div>
+      </Link>
+    );
+  }
 
   return (
     <div className="max-w-sm flex flex-col flex-wrap overflow-hidden bg-white border border-gray-100  rounded-3xl  shadow ">
