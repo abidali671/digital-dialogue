@@ -280,7 +280,7 @@
   "resolved" "https://registry.npmjs.org/acorn-jsx/-/acorn-jsx-5.3.2.tgz"
   "version" "5.3.2"
 
-"acorn@^6.0.0 || ^7.0.0 || ^8.0.0", "acorn@^8.8.0":
+"acorn@^8.8.0":
   "integrity" "sha512-nc0Axzp/0FILLEVsm4fNwLCwMttvhEI263QtVPQcbpfZZ3ts0hLsZGOpE6czNlid7CJ9MlyH8reXkpsf3YUY4w=="
   "resolved" "https://registry.npmjs.org/acorn/-/acorn-8.11.2.tgz"
   "version" "8.11.2"
@@ -477,7 +477,7 @@
   dependencies:
     "fill-range" "^7.0.1"
 
-"browserslist@^4.21.5", "browserslist@>= 4.21.0":
+"browserslist@^4.21.5":
   "integrity" "sha512-BauCXrQ7I2ftSqd2mvKHGo85XR0u7Ru3C/Hxsy/0TkfCtjrmAbPdzLGasmoiBxplpDXlPvdjX9u7srIMfgasNA=="
   "resolved" "https://registry.npmjs.org/browserslist/-/browserslist-4.21.7.tgz"
   "version" "4.21.7"
@@ -909,7 +909,7 @@
   dependencies:
     "debug" "^3.2.7"
 
-"eslint-plugin-import@*", "eslint-plugin-import@^2.26.0":
+"eslint-plugin-import@^2.26.0":
   "integrity" "sha512-LmEt3GVofgiGuiE+ORpnvP+kAm3h6MLZJ4Q5HCyHADofsb4VzXFsRiWj3c0OFiV+3DWFh0qg3v9gcPlfc3zRow=="
   "resolved" "https://registry.npmjs.org/eslint-plugin-import/-/eslint-plugin-import-2.27.5.tgz"
   "version" "2.27.5"
@@ -991,7 +991,7 @@
   "resolved" "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-3.4.1.tgz"
   "version" "3.4.1"
 
-"eslint@*", "eslint@^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8", "eslint@^3 || ^4 || ^5 || ^6 || ^7 || ^8", "eslint@^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0", "eslint@^6.0.0 || ^7.0.0 || ^8.0.0", "eslint@^6.0.0 || ^7.0.0 || >=8.0.0", "eslint@^7.23.0 || ^8.0.0", "eslint@8.41.0":
+"eslint@8.41.0":
   "integrity" "sha512-WQDQpzGBOP5IrXPo4Hc0814r4/v2rrIsB0rhT7jtunIalgg6gYXWhRMOejVO8yH21T/FGaxjmFjBMNqcIlmH1Q=="
   "resolved" "https://registry.npmjs.org/eslint/-/eslint-8.41.0.tgz"
   "version" "8.41.0"
@@ -1873,7 +1873,7 @@
     "fast-glob" "^3.2.12"
     "minimist" "^1.2.8"
 
-"next@*", "next@^13.4.3", "next@^8.1.1-canary.54 || >=9.0.0":
+"next@^13.4.3":
   "integrity" "sha512-FV3pBrAAnAIfOclTvncw9dDohyeuEEXPe5KNcva91anT/rdycWbgtu3IjUj4n5yHnWK8YEPo0vrUecHmnmUNbA=="
   "resolved" "https://registry.npmjs.org/next/-/next-13.4.3.tgz"
   "version" "13.4.3"
@@ -2161,7 +2161,7 @@
   "resolved" "https://registry.npmjs.org/postcss-value-parser/-/postcss-value-parser-4.2.0.tgz"
   "version" "4.2.0"
 
-"postcss@^8.0.0", "postcss@^8.1.0", "postcss@^8.2.14", "postcss@^8.4.21", "postcss@^8.4.23", "postcss@>=8.0.9", "postcss@8.4.23":
+"postcss@^8.4.23", "postcss@8.4.23":
   "integrity" "sha512-bQ3qMcpF6A/YjR55xtoTr0jGOlnPOKAIMdOWiv0EIT6HVPEaJiJB4NLljSbiHoC2RX7DN5Uvjtpbg1NPdwv1oA=="
   "resolved" "https://registry.npmjs.org/postcss/-/postcss-8.4.23.tgz"
   "version" "8.4.23"
@@ -2208,7 +2208,7 @@
   "resolved" "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
   "version" "1.2.3"
 
-"react-dom@^16 || ^17 || ^18", "react-dom@^16.8.6 || ^17.0.0 || ^18.0.0", "react-dom@^18.2.0", "react-dom@>=16.0.0", "react-dom@18.2.0":
+"react-dom@18.2.0":
   "integrity" "sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   "version" "18.2.0"
@@ -2230,7 +2230,7 @@
     "prop-types" "^15.5.10"
     "to-querystring" "^1.0.4"
 
-"react@^16 || ^17 || ^18", "react@^16.8.6 || ^17.0.0 || ^18.0.0", "react@^18.2.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=15", "react@>=16.0.0", "react@>=17.0.2", "react@18.2.0":
+"react@18.2.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"
@@ -2631,7 +2631,7 @@
     "for-each" "^0.3.3"
     "is-typed-array" "^1.1.9"
 
-"typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta", "typescript@>=3.3.1", "typescript@5.0.4":
+"typescript@5.0.4":
   "integrity" "sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw=="
   "resolved" "https://registry.npmjs.org/typescript/-/typescript-5.0.4.tgz"
   "version" "5.0.4"

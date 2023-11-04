@@ -3,9 +3,10 @@
 @tailwind utilities;
 @import url("https://fonts.googleapis.com/css2?family=PT+Serif&display=swap");
 
+@import "./components/author-card.css";
 @import "./components/container.css";
 @import "./components/post-card.css";
-@import './components/author-card.css';
+@import "./components/sidebar-card.css";
 @import "./pages/blog-detail.css";
 
 * {
