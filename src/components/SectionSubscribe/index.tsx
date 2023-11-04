@@ -1,5 +1,7 @@
 import React, { useState, KeyboardEvent } from "react";
 import { decode } from "html-entities";
+import Link from "next/link";
+import config from "@/lib/config";
 
 interface NewsletterFormProps {
   status: string;
@@ -102,17 +104,24 @@ const NewsletterForm: React.FC<NewsletterFormProps> = ({
             />
           )}
         </div>
-        <p className="text-gray-400 text-sm">
+        <label className="text-gray-400 text-sm">
           <input
             type="checkbox"
             name="termsCheckbox"
             id="termsCheckbox"
-            className="mr-1"
+            className="mr-2 mt-1"
             checked={isCheckboxChecked}
             onChange={(e) => setIsCheckboxChecked(e.target.checked)}
           />
-          By signing you agree to the our terms and our Privacy Policy agreement
-        </p>
+          By signing you agree to the our{" "}
+          <Link
+            className="text-gray-300 font-semibold"
+            href={config.BASE_URL + "/privacy-policy"}
+          >
+            Privacy Policy
+          </Link>{" "}
+          agreement.
+        </label>
       </div>
     </>
   );
