@@ -34,11 +34,30 @@ const PostCard = ({ data, size = "lg" }: CardPropsT) => {
             className="w-20 h-16 rounded-md object-cover shadow"
           />
 
-          <div className="flex flex-col">
+          <div className="flex flex-col h-16 justify-between">
             <h4 className="!text-sm line-clamp-2">{title}</h4>
-            <p className="text-xs text-gray-500">
-              {moment(createdAt).format("MMM DD, YYYY")}
-            </p>
+            <div className="flex gap-1 items-center">
+              <Link
+                href={{
+                  pathname: "/blogs/[category]/[blog_detail]",
+                  query: { category: category.fields.slug, blog_detail: slug },
+                }}
+                className="flex items-center gap-2"
+              >
+                <Image
+                  src={"https:" + url}
+                  alt={coverImage.fields.description}
+                  width={20}
+                  height={20}
+                  className="rounded-full h-5 w-5 object-cover"
+                />
+                <p className="text-xs text-neutral-700">{author.fields.name}</p>
+              </Link>
+              <span className="text-neutral-500 mx-0.5 font-medium">·</span>
+              <p className="text-xs text-neutral-400">
+                {moment(createdAt).format("MMM DD, YYYY")}
+              </p>
+            </div>
           </div>
         </div>
       </Link>
@@ -73,7 +92,7 @@ const PostCard = ({ data, size = "lg" }: CardPropsT) => {
             />
             <p className="text-sm text-neutral-700">{author.fields.name}</p>
           </Link>
-          <span className="text-neutral-500   mx-[6px] font-medium">·</span>
+          <span className="text-neutral-500 mx-[6px] font-medium">·</span>
           <p className="text-sm text-neutral-400">
             {moment(createdAt).format("MMM DD, YYYY")}
           </p>
@@ -84,11 +103,11 @@ const PostCard = ({ data, size = "lg" }: CardPropsT) => {
             query: { category: category.fields.slug, blog_detail: slug },
           }}
         >
-          <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900  ">
+          <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900">
             {title}
           </h5>
 
-          <p className="mb-3 font-normal  text-sm text-gray-700 dark:text-gray-400">
+          <p className="mb-3 font-normal text-sm text-gray-700 dark:text-gray-400">
             {excerpt}
           </p>
         </Link>
