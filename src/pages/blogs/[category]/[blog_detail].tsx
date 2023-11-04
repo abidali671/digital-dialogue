@@ -114,7 +114,7 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
         </main>
         <div>
           <Title>Suggested Posts </Title>
-          <div className="overflow-auto w-full mt-6">
+          <div className="overflow-auto w-full py-6">
             <div className="grid gap-6 min-w-[950px] grid-cols-3">
               {suggestedPost.map((item: IPostData) => (
                 <PostCard key={item.fields.slug} data={item} />
