@@ -5,8 +5,8 @@ import {
   PostCard,
   ShareButtons,
   Title,
-  TopPosts,
   DiscoverAuthor,
+  SidebarCard,
 } from "@/components";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import React from "react";
@@ -100,9 +100,16 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
               <hr />
             </div>
           </div>
-          <div className="col-span-10 md:col-span-4     my-10 flex-col">
+          <div className="col-span-10 md:col-span-4 flex-col">
             <div className="sticky top-20 flex gap-10 flex-col">
-              <TopPosts data={suggestedPost} />
+              <SidebarCard
+                link={config.BASE_URL + "/blogs"}
+                title="Top Posts"
+                data={suggestedPost}
+                renderItem={(data) => (
+                  <PostCard data={data as IPostData} size="sm" />
+                )}
+              />
               <div className="gap-4 flex flex-col sm:px-0 px-4  ">
                 <DiscoverAuthor />
               </div>
