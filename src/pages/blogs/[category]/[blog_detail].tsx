@@ -5,7 +5,6 @@ import {
   PostCard,
   ShareButtons,
   Title,
-  DiscoverAuthor,
   SidebarCard,
 } from "@/components";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
@@ -110,9 +109,6 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
                   <PostCard data={data as IPostData} size="sm" />
                 )}
               />
-              <div className="gap-4 flex flex-col sm:px-0 px-4  ">
-                <DiscoverAuthor />
-              </div>
             </div>
           </div>
         </main>

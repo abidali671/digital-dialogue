@@ -1,5 +1,5 @@
 import React from "react";
-import { Hero, AllPosts, SubscribeForm, DiscoverAuthor } from "@/components";
+import { Hero, AllPosts, SubscribeForm } from "@/components";
 import { ICategoryData, IPostData, ITagData, IAuthor } from "@/types";
 import contentful_client from "@/lib/contentful/client";
 import constants from "@/constants";

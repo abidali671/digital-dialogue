@@ -12,5 +12,4 @@ export { default as Tag } from "./Tag";
 export { default as Title } from "./Title";
 export { default as SidebarCard } from "./SidebarCard";
 export { default as SubscribeForm } from "./SubscribeForm";
-export { default as DiscoverAuthor } from "./DiscoverAuthor";
 export { default as NewsletterForm } from "./SectionSubscribe";
