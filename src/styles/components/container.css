@@ -33,7 +33,7 @@
   @apply list-none text-center font-semibold tracking-wider;
 }
 .navbar-root > .content-wrapper > .mobile-nav-container .nav-list li a {
-  @apply w-full h-full p-4 block text-opacity-75 hover:bg-gray-100 hover:bg-opacity-75 text-lg;
+  @apply w-full h-full p-4 block text-opacity-75 hover:bg-gray-100 hover:bg-opacity-75 text-base;
 }
 
 .navbar-root > .content-wrapper > .mobile-nav-container .nav-list > li > ul {

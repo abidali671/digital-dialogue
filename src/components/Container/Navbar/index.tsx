@@ -32,12 +32,12 @@ const Navbar = ({ categories }: INavbarProps) => {
           <Logo className="md:h-9 h-8 w-auto" aria-label="website logo" />
         </Link>
         <ul className="nav-list">
-          {config.NAV_LINKS.map((item, index) => (
+          {config.NAV_LINKS.slice(0, 3).map((item, index) => (
             <li key={index}>
               <Link href={item.href}>{item.label}</Link>
             </li>
           ))}
-          {/* {categories && (
+          {categories && (
             <li>
               <Menu
                 list={categories?.map((category) => ({
@@ -56,7 +56,12 @@ const Navbar = ({ categories }: INavbarProps) => {
                 )}
               />
             </li>
-          )} */}
+          )}
+          {config.NAV_LINKS.slice(3).map((item, index) => (
+            <li key={index}>
+              <Link href={item.href}>{item.label}</Link>
+            </li>
+          ))}
         </ul>
         <div className="mobile-nav-container">
           <Hamburger onClick={toggleMenu} className="cursor-pointer" />
