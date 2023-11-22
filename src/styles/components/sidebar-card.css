@@ -1,0 +1,15 @@
+.sidebar-card {
+  @apply bg-gray-100 w-full rounded-lg overflow-hidden;
+}
+
+.sidebar-card .sidebar-card-title {
+  @apply flex justify-between items-center px-4 py-2;
+}
+
+.sidebar-card .sidebar-card-list {
+  @apply flex flex-col m-0;
+}
+
+.sidebar-card .sidebar-card-list .sidebar-card-item {
+  @apply hover:bg-[#E5E7EB] hover:cursor-pointer border-t;
+}

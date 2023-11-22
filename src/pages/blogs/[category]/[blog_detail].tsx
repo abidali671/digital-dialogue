@@ -5,6 +5,7 @@ import {
   PostCard,
   ShareButtons,
   Title,
+  SidebarCard,
 } from "@/components";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import React from "react";
@@ -84,8 +85,8 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
             <ShareButtons url={config.BASE_URL + router.asPath} />
           </div>
         </div>
-        <main className="mx-auto w-full grid grid-cols-10 gap-5 -mt-16">
-          <div className="col-span-10 md:col-span-7 md:pr-10">
+        <main className="mx-auto w-full grid grid-cols-12 gap-5 -mt-16">
+          <div className="col-span-10 md:col-span-8 md:pr-10">
             <article className="article-wrapper ">
               {documentToReactComponents(content)}
             </article>
@@ -98,18 +99,22 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
               <hr />
             </div>
           </div>
-          <div className="md:col-span-3 max-md:hidden col-span-10 flex-col">
-            <div className="gap-2 flex flex-col sm:px-0 px-4 sticky top-20">
-              <h2 className="text-xl font-bold">Featured Category</h2>
-              {categories.map((data: ICategoryData, ind: number) => (
-                <Category key={ind} data={data} />
-              ))}
+          <div className="col-span-10 md:col-span-4 flex-col">
+            <div className="sticky top-20 flex gap-10 flex-col">
+              <SidebarCard
+                link={config.BASE_URL + "/blogs"}
+                title="Top Posts"
+                data={suggestedPost}
+                renderItem={(data) => (
+                  <PostCard data={data as IPostData} size="sm" />
+                )}
+              />
             </div>
           </div>
         </main>
         <div>
           <Title>Suggested Posts </Title>
-          <div className="overflow-auto w-full mt-6">
+          <div className="overflow-auto w-full py-6">
             <div className="grid gap-6 min-w-[950px] grid-cols-3">
               {suggestedPost.map((item: IPostData) => (
                 <PostCard key={item.fields.slug} data={item} />
