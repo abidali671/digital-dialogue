@@ -18,9 +18,9 @@ const AllPosts = ({ posts, categories }: PropsT) => {
     <div className="bg-neutral-100">
       <ContentContainer>
         <Title>All Post</Title>
-        <div className="grid-cols-10 grid pt-10 gap-6">
-          <div className="md:col-span-7 col-span-10">
-            <div className="gap-6 grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
+        <div className="md:grid-cols-[1fr_240px] grid pt-10 gap-6">
+          <div>
+            <div className="gap-6 grid md:grid-cols-2 xl:grid-cols-3">
               {posts.map((post: IPostData) => (
                 <PostCard key={post.fields.slug} data={post} />
               ))}
@@ -43,14 +43,14 @@ const AllPosts = ({ posts, categories }: PropsT) => {
               </Link>
             )}
           </div>
-          {/* <div className="sm:col-span-3 hidden md:flex gap-2 flex-col">
+          <div className="hidden md:flex gap-2 flex-col">
             <div className="gap-2 flex flex-col sm:px-0 px-4 sticky top-20">
               <h2 className="text-xl font-bold">Featured Category</h2>
               {categories.map((data: ICategoryData, ind) => (
                 <Category key={ind} data={data} />
               ))}
             </div>
-          </div> */}
+          </div>
         </div>
       </ContentContainer>
     </div>

@@ -32,7 +32,7 @@ const Hero = ({ posts }: IProps) => {
   }, [currentSlide]);
 
   return (
-    <div className="flex relative justify-center md:h-[calc(100vh_-_64px)] h-[70vh] overflow-hidden">
+    <div className="flex relative justify-center md:h-[540px] h-[70vh] overflow-hidden">
       <div className="w-[40%] max-md:hidden relative bg-neutral-100"></div>
       <div className="md:w-[60%]">
         <Image
