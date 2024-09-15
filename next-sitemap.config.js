@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 
 module.exports = {
-  siteUrl: "https://www.digital-dialogue.co",
+  siteUrl: "https://digitaldialogue.abidali.xyz",
   generateRobotsTxt: true,
 };
