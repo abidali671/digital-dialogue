@@ -4,6 +4,7 @@ import React from "react";
 import Logo from "../../../assets/icon/logo";
 import config from "@/lib/config";
 import { ICategoryData } from "@/types";
+import { BannerAd320x50 } from "@/components/AdsBanner";
 
 type IFooterProps = { categories?: ICategoryData[] };
 
@@ -18,6 +19,7 @@ const Footer = ({ categories }: IFooterProps) => {
               Welcome to Digital Dialogue, your go-to blogging site for all
               things freelancing, technology, design and creativity.
             </p>
+            <BannerAd320x50 />
           </div>
           {/* {categories && (
             <FooterLink
@@ -39,6 +41,7 @@ const Footer = ({ categories }: IFooterProps) => {
                 Phone: {config.PHONE}
               </p>
             </div>
+            <BannerAd320x50 />
           </div>
         </div>
         <hr className=" border-1 border-[#7F7F7F]" />
@@ -46,6 +49,7 @@ const Footer = ({ categories }: IFooterProps) => {
           <p className="text-base text-gray-200">
             © 2023 Digital-Dialogue.co - All rights reserved
           </p>
+
           <p className="text-base text-gray-200">
             Develop by team Digital Dialogue
           </p>

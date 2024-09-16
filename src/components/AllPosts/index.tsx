@@ -6,6 +6,7 @@ import Title from "../Title";
 import { ICategoryData, ITagData, IPostData } from "@/types";
 import Link from "next/link";
 import { ArrowRight } from "@/assets/icon";
+import { BannerAd160x300, BannerAd160x600 } from "../../components";
 
 interface PropsT {
   posts: IPostData[];
@@ -49,6 +50,8 @@ const AllPosts = ({ posts, categories }: PropsT) => {
               {categories.map((data: ICategoryData, ind) => (
                 <Category key={ind} data={data} />
               ))}
+              <BannerAd160x300 />
+              <BannerAd160x600 />
             </div>
           </div>
         </div>
