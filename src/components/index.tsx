@@ -1,3 +1,4 @@
+export * from "./AdsBanner";
 export { default as Navbar } from "./Container/Navbar";
 export { default as Hero } from "./HeroSection";
 export { default as AllPosts } from "./AllPosts";
