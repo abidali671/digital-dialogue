@@ -32,6 +32,8 @@ const config = {
   DEFAULT_TITLE_TEMPLATE: "Digital Dialogue",
   DEFAULT_DESCRIPTION:
     "Digital Dialogue is blogging site for all things freelancing, technology, design and creativity.",
+  AD_DIRECT_LINK:
+    "https://humilityslammedslowing.com/zie7wze1e?key=820a7fe3530000440ceae2f821c59634",
 };
 
 export default config;
