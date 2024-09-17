@@ -1,9 +1,15 @@
-import React from "react";
+import React, { ElementType } from "react";
 
-const Title = ({ children }: { children: string }) => {
+const Title = ({
+  children,
+  as: Tag = "h1",
+}: {
+  children: string;
+  as?: ElementType;
+}) => {
   return (
     <span className="flex gap-1 flex-col">
-      <h1 className="font-bold">{children}</h1>
+      <Tag className="font-bold">{children}</Tag>
       <hr className="w-24 h-[4px] border-1 rounded bg-orange-700" />
     </span>
   );

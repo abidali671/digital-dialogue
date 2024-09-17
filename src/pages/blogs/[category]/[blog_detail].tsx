@@ -112,7 +112,7 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
           </div>
         </main>
         <div>
-          <Title>Suggested Posts </Title>
+          <Title as="h2">Suggested Posts </Title>
           <div className="overflow-auto w-full mt-6">
             <div className="grid gap-6 min-w-[950px] grid-cols-3">
               {suggestedPost.map((item: IPostData) => (
