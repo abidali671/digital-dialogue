@@ -6,6 +6,7 @@ import {
   LoadingSpinner,
   PostCard,
   ShareButtons,
+  Tag,
   Title,
 } from "@/components";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
@@ -29,10 +30,19 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
   const router = useRouter();
   if (router.isFallback) return <LoadingSpinner variant="full" />;
 
-  const { coverImage, category, title, author, content, tags, excerpt } =
-    post.fields;
+  const {
+    coverImage,
+    category,
+    title,
+    author,
+    content,
+    tags,
+    excerpt,
+    keywords,
+  } = post.fields;
   const { createdAt, updatedAt } = post.sys;
-  const keywords = tags?.map((tag) => tag.fields.label).join(", ");
+  const formattedTags = tags?.map((tag) => tag.fields.label).join(", ");
+  const blogKeywords = keywords ?? formattedTags;
 
   return (
     <React.Fragment>
@@ -42,7 +52,7 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
         description={excerpt}
         authorName={author.fields.name}
         url={config.BASE_URL + router.asPath}
-        keywords={keywords}
+        keywords={keywords || formattedTags}
         datePublished={moment(createdAt).format("MMMM DD, YYYY")}
         dateModified={moment(updatedAt).format("MMMM DD, YYYY")}
         images={["https:" + coverImage.fields.file.url]}
@@ -91,6 +101,11 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
             <article className="article-wrapper ">
               {documentToReactComponents(content)}
             </article>
+            <div className="flex flex-wrap gap-2 mt-10">
+              {blogKeywords.split(",").map((keyword) => (
+                <Tag>{keyword}</Tag>
+              ))}
+            </div>
             <div className="py-10">
               <hr />
               <div className="flex items-center gap-3 py-4">

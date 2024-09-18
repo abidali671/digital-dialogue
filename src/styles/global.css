@@ -65,7 +65,7 @@ a {
 
 @layer components {
   .tag-span {
-    @apply px-2 py-1 w-auto text-center bg-gray-200;
+    @apply px-4 py-1.5 rounded-full font-medium w-auto text-center bg-gray-200 text-gray-700 capitalize;
   }
   .btn-primary {
     @apply active:bg-blue-600 hover:shadow-lg focus:outline-none px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear bg-[#272343] rounded shadow outline-none;

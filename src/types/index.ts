@@ -93,5 +93,6 @@ export interface IPostData {
     slug: string;
     excerpt: string;
     title: string;
+    keywords: string;
   };
 }

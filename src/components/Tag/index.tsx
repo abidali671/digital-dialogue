@@ -1,12 +1,7 @@
-import { ITagData } from "@/types";
 import React from "react";
 
-interface ITagProps {
-  data: ITagData;
-}
-
-const Tag = ({ data }: ITagProps) => {
-  return <span className="tag-span">{data.fields.label}</span>;
+const Tag = ({ children }: { children: React.ReactNode }) => {
+  return <span className="tag-span">{children}</span>;
 };
 
 export default Tag;
