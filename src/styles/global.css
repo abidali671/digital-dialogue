@@ -8,6 +8,12 @@
 
 @import "./pages/blog-detail.css";
 
+html,
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 * {
   margin: 0;
   padding: 0;
