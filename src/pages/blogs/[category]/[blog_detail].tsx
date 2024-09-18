@@ -96,7 +96,7 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
             <ShareButtons url={config.BASE_URL + router.asPath} />
           </div>
         </div>
-        <main className="mx-auto w-full grid grid-cols-[1fr_240px] gap-5 -mt-16">
+        <main className="mx-auto w-full grid md:grid-cols-[1fr_240px] gap-5 -mt-16">
           <div className="md:pr-10">
             <article className="article-wrapper ">
               {documentToReactComponents(content)}
