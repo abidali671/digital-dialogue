@@ -4,7 +4,7 @@ const Title = ({
   children,
   as: Tag = "h1",
 }: {
-  children: string;
+  children: React.ReactNode;
   as?: ElementType;
 }) => {
   return (
