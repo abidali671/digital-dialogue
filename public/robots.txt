@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://digitaldialogue.abidali.xyz
+Host: https://www.digitaldialogue.abidali.xyz
 
 # Sitemaps
-Sitemap: https://digitaldialogue.abidali.xyz/sitemap.xml
+Sitemap: https://www.digitaldialogue.abidali.xyz/sitemap.xml
