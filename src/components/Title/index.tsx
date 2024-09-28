@@ -1,12 +1,12 @@
 import React, { ElementType } from "react";
 
-const Title = ({
-  children,
-  as: Tag = "h1",
-}: {
+interface TitleProps {
   children: React.ReactNode;
-  as?: ElementType;
-}) => {
+  as?: keyof JSX.IntrinsicElements | ElementType;
+}
+
+const Title = (props: TitleProps) => {
+  const { children, as: Tag = "h1" } = props;
   return (
     <span className="flex gap-1 flex-col">
       <Tag className="font-bold">{children}</Tag>
