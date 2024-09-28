@@ -102,8 +102,8 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
               {documentToReactComponents(content)}
             </article>
             <div className="flex flex-wrap gap-2 mt-10">
-              {blogKeywords.split(",").map((keyword) => (
-                <Tag>{keyword}</Tag>
+              {blogKeywords.split(",").map((keyword, index) => (
+                <Tag key={index}>{keyword}</Tag>
               ))}
             </div>
             <div className="py-10">
