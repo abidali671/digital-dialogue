@@ -4,7 +4,6 @@ import Link from "next/link";
 import moment from "moment";
 import { Arrow } from "@/assets/icon";
 import { IPostData } from "@/types";
-import directLink from "@/lib/directLink";
 
 interface CardPropsT {
   data: IPostData;
@@ -20,7 +19,6 @@ const PostCard = ({ data }: CardPropsT) => {
         pathname: "/blogs/[category]/[blog_detail]",
         query: { category: category.fields.slug, blog_detail: slug },
       }}
-      onClick={directLink}
       className="post-card-root"
     >
       <div className="post-card-cover-wrapper">

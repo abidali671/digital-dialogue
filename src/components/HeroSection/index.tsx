@@ -4,9 +4,7 @@ import Link from "next/link";
 import ContentContainer from "../ContentContainer";
 import { ArrowLeft, ArrowRight } from "@/assets/icon";
 import { IPostData } from "@/types";
-
 import moment from "moment";
-import directLink from "@/lib/directLink";
 
 interface IProps {
   posts: IPostData[];
@@ -61,7 +59,6 @@ const Hero = ({ posts }: IProps) => {
               {post.fields.excerpt}
             </p>
             <Link
-              onClick={directLink}
               href={{
                 pathname: "/blogs/[category]/[blog_detail]",
                 query: {
