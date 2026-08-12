@@ -1,4 +1,3 @@
-/** Browser API helper — server-side Contentful responses are cached for 1 week. */
 const API = {
   async get(path: string) {
     const res = await fetch(`/api${path}`);

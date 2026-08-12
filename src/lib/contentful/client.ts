@@ -1,5 +1,4 @@
-/** 1 week — used by Next.js Data Cache for Contentful fetches */
-export const CONTENTFUL_REVALIDATE = 60 * 60 * 24 * 7;
+export const CONTENTFUL_REVALIDATE = 60 * 60 * 24 * 30;
 
 type ContentfulLink = {
   sys: {
