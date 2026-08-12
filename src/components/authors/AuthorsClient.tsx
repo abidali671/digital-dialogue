@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { ContentContainer, Title } from "@/components";
+import ContentContainer from "@/components/ContentContainer";
+import Title from "@/components/Title";
 import SearchIcon from "@/assets/icon/searchIcon";
 import { IAuthor } from "@/types";
 import Image from "next/image";

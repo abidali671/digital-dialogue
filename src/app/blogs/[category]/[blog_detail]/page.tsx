@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import {
-  ContentContainer,
-  PostCard,
-  ShareButtons,
-  Tag,
-  Title,
-} from "@/components";
+import ContentContainer from "@/components/ContentContainer";
+import PostCard from "@/components/PostCard";
+import ShareButtons from "@/components/ShareButtons";
+import Tag from "@/components/Tag";
+import Title from "@/components/Title";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import contentful_client, {
   REVALIDATE_DETAIL,

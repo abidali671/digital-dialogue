@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import { Hero, TopPicks, AllPosts, Newsletter } from "@/components";
+import Hero from "@/components/HeroSection";
+import TopPicks from "@/components/TopPicks";
+import AllPosts from "@/components/AllPosts";
+import Newsletter from "@/components/Newsletter";
 import contentful_client, {
   REVALIDATE_LISTING,
 } from "@/lib/contentful/client";

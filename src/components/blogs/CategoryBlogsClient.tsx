@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { ContentContainer, PostCard, Title } from "@/components";
+import ContentContainer from "@/components/ContentContainer";
+import PostCard from "@/components/PostCard";
+import Title from "@/components/Title";
 import SearchIcon from "@/assets/icon/searchIcon";
 import { IPostData } from "@/types";
 
