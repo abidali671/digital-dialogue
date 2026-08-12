@@ -1,3 +1,26 @@
 .article-wrapper {
-  @apply flex flex-col gap-4;
+  @apply flex flex-col gap-5 font-body text-ink-soft;
+}
+
+.article-wrapper h1,
+.article-wrapper h2,
+.article-wrapper h3,
+.article-wrapper h4 {
+  @apply font-display text-ink;
+}
+
+.article-wrapper a {
+  @apply text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent;
+}
+
+.article-wrapper p {
+  @apply text-base leading-8 text-ink-soft md:text-lg;
+}
+
+.article-wrapper code {
+  @apply rounded bg-mist px-1.5 py-0.5 font-mono text-sm text-ink;
+}
+
+.article-wrapper pre {
+  @apply overflow-x-auto rounded-lg border border-line bg-ink p-4 font-mono text-sm text-white;
 }

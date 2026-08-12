@@ -1,53 +1,77 @@
 import constants from "@/constants";
 import config from "@/lib/config";
 import contentful_client from "@/lib/contentful/client";
+import ContentContainer from "@/components/ContentContainer";
+import Title from "@/components/Title";
 
 const ContactUs = () => {
   return (
-    <div className="grid grid-cols-10 max-w-7xl mx-auto mt-20 min-h-[calc(100vh_-_80px)]">
-      <div className="col-span-10 md:col-span-7 flex flex-col gap-10 p-4">
-        <h1 className="text-5xl">Contact Us</h1>
+    <ContentContainer className="py-16 md:py-20">
+      <div className="grid max-w-2xl gap-8">
+        <Title>Contact us</Title>
+        <p className="text-mute">
+          Questions, partnerships, or feedback — send a message and we’ll get
+          back to you.
+        </p>
         <form
           action={config.FORM_ACTION}
           method="POST"
-          className="grid gap-4 max-w-xl"
+          className="grid gap-4"
         >
-          <p className="font-semibold">Send us a message</p>
-          <input
-            type="text"
-            placeholder="Name"
-            name="name"
-            className="form-input"
-            required
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            className="form-input"
-            required
-          />
-          <input
-            type="subject"
-            placeholder="Subject"
-            name="subject"
-            className="form-input"
-            required
-          />
-          <textarea
-            placeholder="Enter Your Message"
-            name="message"
-            className="form-input"
-            rows={4}
-            required
-          />
+          <label className="grid gap-2">
+            <span className="font-mono text-xs uppercase tracking-wide text-mute">
+              Name
+            </span>
+            <input
+              type="text"
+              placeholder="Your name"
+              name="name"
+              className="form-input"
+              required
+            />
+          </label>
+          <label className="grid gap-2">
+            <span className="font-mono text-xs uppercase tracking-wide text-mute">
+              Email
+            </span>
+            <input
+              type="email"
+              placeholder="you@example.com"
+              name="email"
+              className="form-input"
+              required
+            />
+          </label>
+          <label className="grid gap-2">
+            <span className="font-mono text-xs uppercase tracking-wide text-mute">
+              Subject
+            </span>
+            <input
+              type="text"
+              placeholder="Subject"
+              name="subject"
+              className="form-input"
+              required
+            />
+          </label>
+          <label className="grid gap-2">
+            <span className="font-mono text-xs uppercase tracking-wide text-mute">
+              Message
+            </span>
+            <textarea
+              placeholder="Write your message"
+              name="message"
+              className="form-input"
+              rows={5}
+              required
+            />
+          </label>
           <button className="btn-primary w-fit" type="submit">
-            Send
+            Send message
           </button>
         </form>
       </div>
-      <div className="col-span-3 w-full h-full max-md:hidden"></div>
-    </div>
+    </ContentContainer>
   );
 };
 

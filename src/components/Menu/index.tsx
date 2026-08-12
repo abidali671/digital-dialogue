@@ -22,14 +22,14 @@ const Menu = ({ list, button }: IMenuProps) => {
       >
         <HeadlessMenu.Items
           as="div"
-          className="absolute right-0 top-[calc(100%_+_16px)] bg-white rounded shadow-md border "
+          className="absolute right-0 top-[calc(100%_+_12px)] overflow-hidden rounded-lg border border-line bg-white"
         >
           {list.map((item, index) => (
             <a key={index}>
               <HeadlessMenu.Item
                 as="div"
                 onClick={item.onClick}
-                className="p-3 cursor-pointer whitespace-nowrap hover:bg-neutral-100"
+                className="cursor-pointer whitespace-nowrap px-4 py-3 text-sm font-semibold text-ink hover:bg-mist hover:text-accent"
               >
                 {item.label}
               </HeadlessMenu.Item>

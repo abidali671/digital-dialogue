@@ -55,83 +55,86 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
         dateModified={moment(updatedAt).format("MMMM DD, YYYY")}
         images={["https:" + coverImage.fields.file.url]}
       />
-      <div className="h-[40vh] sm:h-[70vh] w-full bg-neutral-300 relative">
+      <div className="relative h-[42vh] w-full bg-ink sm:h-[58vh]">
         <Image
           src={"https:" + coverImage.fields.file.url}
-          alt={coverImage.fields.description}
-          height={coverImage.fields.file.details.image.height}
-          width={coverImage.fields.file.details.image.width}
-          className="object-cover h-full w-full"
+          alt={coverImage.fields.description || title}
+          fill
+          priority
+          className="object-cover"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-mist via-mist/20 to-transparent" />
       </div>
-      <ContentContainer className="md:px-20">
-        <div className="p-5 gap-3 flex md:w-full sm:w-full flex-col text-left items-start border border-gray-200 shadow-gray-200 shadow-sm border-t-0 bg-white relative bottom-32  mx-auto ">
-          <span className="flex items-center gap-1">
-            <hr className="w-10 h-[2px] border-0 rounded bg-orange-700" />
-            <p>{category.fields.label}</p>
-          </span>
-          <h1 className="md:text-5xl text-4xl font-bold tracking-tight text-gray-900 font-PT">
+      <ContentContainer className="relative z-10 -mt-28 md:px-16">
+        <header className="mb-10 flex flex-col gap-4 border-b border-line bg-white px-5 py-8 md:px-10">
+          <p className="font-mono text-xs uppercase tracking-[0.1em] text-accent">
+            {category.fields.label}
+          </p>
+          <h1 className="font-display text-4xl font-bold tracking-tight text-ink md:text-5xl">
             {title}
           </h1>
-          <div className="flex justify-between w-full flex-wrap gap-y-3">
-            <div className="flex items-center gap-3 pt-3">
-              <div className="flex gap-2 items-center">
-                <span className="h-10 w-10 bg-gray-200 rounded-full overflow-hidden">
-                  <Image
-                    alt={author.fields.name}
-                    src={"http:" + author.fields.picture.fields.file.url}
-                    width={40}
-                    height={40}
-                  />
-                </span>
-                <p className="font-medium text-lg">{author.fields.name}</p>
-              </div>
-              <span className="flex h-[5px] w-[5px] bg-gray-500 rounded-lg"></span>
-              <p className="text-gray-500 flex items-center gap-2 text-xs lg:text-base">
+          <div className="flex w-full flex-wrap items-center justify-between gap-y-3">
+            <div className="flex items-center gap-3 pt-1">
+              <span className="h-10 w-10 overflow-hidden rounded-full bg-mist">
+                <Image
+                  alt={author.fields.name}
+                  src={"https:" + author.fields.picture.fields.file.url}
+                  width={40}
+                  height={40}
+                  className="h-full w-full object-cover"
+                />
+              </span>
+              <p className="text-base font-semibold text-ink">
+                {author.fields.name}
+              </p>
+              <span className="h-1 w-1 rounded-full bg-mute-soft" />
+              <p className="font-mono text-xs text-mute md:text-sm">
                 {moment(createdAt).format("MMMM DD, YYYY")}
               </p>
             </div>
             <ShareButtons url={config.BASE_URL + router.asPath} />
           </div>
-        </div>
-        <main className="mx-auto w-full grid md:grid-cols-[1fr_240px] gap-5 -mt-16">
-          <div className="md:pr-10">
-            <article className="article-wrapper ">
+        </header>
+        <main className="mx-auto grid w-full gap-10 md:grid-cols-[1fr_220px]">
+          <div className="md:pr-6">
+            <article className="article-wrapper">
               {documentToReactComponents(content)}
             </article>
-            <div className="flex flex-wrap gap-2 mt-10">
+            <div className="mt-10 flex flex-wrap gap-2">
               {blogKeywords.split(",").map((keyword, index) => (
                 <Tag key={index}>{keyword}</Tag>
               ))}
             </div>
             <div className="py-10">
-              <hr />
+              <hr className="border-line" />
               <div className="flex items-center gap-3 py-4">
-                <p>Share the post:</p>
+                <p className="text-sm font-semibold text-ink">Share</p>
                 <ShareButtons url={config.BASE_URL + router.asPath} />
               </div>
-              <hr />
+              <hr className="border-line" />
             </div>
           </div>
-          <div className="max-md:hidden flex-col">
-            <div className="gap-2 flex flex-col sm:px-0 px-4 sticky top-20">
-              <h2 className="text-xl font-bold">Featured Category</h2>
-              {categories.map((data: ICategoryData, ind: number) => (
-                <Category key={ind} data={data} />
-              ))}
+          <aside className="hidden md:block">
+            <div className="sticky top-24 flex flex-col gap-3">
+              <h2 className="font-display text-lg font-bold text-ink">
+                Categories
+              </h2>
+              <div className="flex flex-col gap-1 border-t border-line pt-2">
+                {categories.map((data: ICategoryData) => (
+                  <Category key={data.fields.slug} data={data} />
+                ))}
+              </div>
             </div>
-          </div>
+          </aside>
         </main>
-        <div>
-          <Title as="h2">Suggested Posts </Title>
-          <div className="overflow-auto w-full mt-6">
-            <div className="grid gap-6 min-w-[950px] grid-cols-3">
-              {suggestedPost.map((item: IPostData) => (
-                <PostCard key={item.fields.slug} data={item} />
-              ))}
-            </div>
+        <section className="pb-16 pt-4">
+          <Title as="h2">Suggested posts</Title>
+          <div className="mt-8 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+            {suggestedPost.map((item: IPostData) => (
+              <PostCard key={item.fields.slug} data={item} />
+            ))}
           </div>
-        </div>
+        </section>
       </ContentContainer>
     </React.Fragment>
   );

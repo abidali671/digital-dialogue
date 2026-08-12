@@ -8,9 +8,13 @@ interface TitleProps {
 const Title = (props: TitleProps) => {
   const { children, as: Tag = "h1" } = props;
   return (
-    <span className="flex gap-1 flex-col">
-      {React.createElement(Tag, { className: "font-bold" }, children)}
-      <hr className="w-24 h-[4px] border-1 rounded bg-orange-700" />
+    <span className="flex flex-col gap-3">
+      {React.createElement(
+        Tag,
+        { className: "font-display font-bold tracking-tight text-ink" },
+        children
+      )}
+      <hr className="m-0 h-1 w-14 rounded-none border-0 bg-accent" />
     </span>
   );
 };

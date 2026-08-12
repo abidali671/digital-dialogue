@@ -5,7 +5,6 @@ import ContentContainer from "../ContentContainer";
 import Title from "../Title";
 import { ICategoryData, ITagData, IPostData } from "@/types";
 import Link from "next/link";
-import { ArrowRight } from "@/assets/icon";
 
 interface PropsT {
   posts: IPostData[];
@@ -15,45 +14,44 @@ interface PropsT {
 
 const AllPosts = ({ posts, categories }: PropsT) => {
   return (
-    <div className="bg-neutral-100">
+    <section className="bg-mist py-14 md:py-20">
       <ContentContainer>
-        <Title>All Post</Title>
-        <div className="md:grid-cols-[1fr_240px] grid pt-10 gap-6">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <Title>Latest posts</Title>
+          <Link href="/blogs" className="link-underline text-sm">
+            View all posts
+          </Link>
+        </div>
+        <div className="mt-10 grid gap-10 md:grid-cols-[1fr_220px]">
           <div>
-            <div className="gap-6 grid md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid gap-10 md:grid-cols-2 xl:grid-cols-3">
               {posts.map((post: IPostData) => (
                 <PostCard key={post.fields.slug} data={post} />
               ))}
             </div>
-
-            {posts.length > 0 ? (
-              ""
-            ) : (
-              <Link
-                href="/blogs"
-                className="text-base font-medium text-center flex items-center justify-center py-4"
-              >
-                Show More
-                <ArrowRight
-                  className="-mr-[10px] ml-1"
-                  height={16}
-                  width={16}
-                />
-                <ArrowRight height={16} width={16} />
-              </Link>
+            {posts.length > 0 && (
+              <div className="mt-12 flex justify-center">
+                <Link href="/blogs" className="btn-primary">
+                  Browse all articles
+                </Link>
+              </div>
             )}
           </div>
-          <div className="hidden md:flex gap-2 flex-col">
-            <div className="gap-2 flex flex-col sm:px-0 px-4 sticky top-20">
-              <h2 className="text-xl font-bold">Featured Category</h2>
-              {categories.map((data: ICategoryData, ind) => (
-                <Category key={ind} data={data} />
-              ))}
+          <aside className="hidden md:block">
+            <div className="sticky top-24 flex flex-col gap-3">
+              <h2 className="font-display text-lg font-bold text-ink">
+                Categories
+              </h2>
+              <div className="flex flex-col gap-2 border-t border-line pt-3">
+                {categories.map((data: ICategoryData) => (
+                  <Category key={data.fields.slug} data={data} />
+                ))}
+              </div>
             </div>
-          </div>
+          </aside>
         </div>
       </ContentContainer>
-    </div>
+    </section>
   );
 };
 

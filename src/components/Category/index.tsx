@@ -5,6 +5,7 @@ import { ICategoryData } from "@/types";
 interface ICategoryProps {
   data: ICategoryData;
 }
+
 const Category = ({ data }: ICategoryProps) => {
   const { label, slug } = data.fields;
 
@@ -14,11 +15,9 @@ const Category = ({ data }: ICategoryProps) => {
         pathname: "/blogs/[category]",
         query: { category: slug },
       }}
-      className="w-full bg-[#C4C4C4] p-2"
+      className="block border-b border-line py-3 font-body text-sm font-semibold text-ink transition-colors hover:text-accent"
     >
-      <p className="bg-white font-semibold p-2 w-fit text-base leading-none">
-        {label}
-      </p>
+      {label}
     </Link>
   );
 };

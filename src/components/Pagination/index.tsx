@@ -11,10 +11,10 @@ interface PropsT {
 const Pagination = ({ pages, currentPage, onChange }: PropsT) => {
   return (
     <div className="flex items-center justify-center py-10 lg:px-0 sm:px-6 px-4">
-      <div className="w-full  flex items-center justify-between border-t border-gray-200">
+      <div className="flex w-full items-center justify-between border-t border-line">
         <div
           onClick={() => onChange(currentPage - 1)}
-          className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer"
+          className="flex cursor-pointer items-center pt-3 text-mute hover:text-accent"
         >
           <Arrow className="transform rotate-180" />
           <p className="text-sm ml-3 font-medium leading-none">Previous</p>
@@ -32,9 +32,8 @@ const Pagination = ({ pages, currentPage, onChange }: PropsT) => {
                   onClick={() => onChange(1 + index)}
                   key={index}
                   className={cx(
-                    "text-sm font-medium leading-none cursor-pointer text-gray-600 hover:text-indigo-700 border-t border-transparent hover:border-indigo-400 pt-3 px-2",
-                    1 + index === currentPage &&
-                      "text-indigo-700 border-indigo-400"
+                    "cursor-pointer border-t border-transparent px-2 pt-3 text-sm font-medium leading-none text-mute hover:border-accent hover:text-accent",
+                    1 + index === currentPage && "border-accent text-accent"
                   )}
                 >
                   {1 + index}
@@ -48,7 +47,7 @@ const Pagination = ({ pages, currentPage, onChange }: PropsT) => {
         </div>
         <div
           onClick={() => onChange(currentPage + 1)}
-          className="flex items-center pt-3 text-gray-600 hover:text-indigo-700 cursor-pointer"
+          className="flex cursor-pointer items-center pt-3 text-mute hover:text-accent"
         >
           <p className="text-sm font-medium leading-none mr-3">Next</p>
           <Arrow />

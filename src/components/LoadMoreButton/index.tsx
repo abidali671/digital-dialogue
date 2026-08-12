@@ -18,7 +18,7 @@ const LoadMoreButton: React.FC<ILoadMoreButtonProps> = ({
       {!isLoading && isVisible && (
         <div
           onClick={onClick}
-          className="text-base font-medium text-center flex items-center justify-center gap-2 cursor-pointer py-4"
+          className="link-underline mx-auto flex cursor-pointer items-center justify-center gap-2 py-6 text-base"
         >
           Load More
           <div className="flex flex-col">

@@ -13,14 +13,14 @@ const LoadingSpinner: React.FC<ILoadingSpinnerProps> = ({
   return (
     <div
       className={cx(className && className, {
-        "w-full h-full fixed flex items-center justify-center top-0 left-0 bg-gray-100":
+        "fixed left-0 top-0 flex h-full w-full items-center justify-center bg-mist":
           variant === "full",
       })}
       role="status"
     >
       <svg
         aria-hidden="true"
-        className="w-8 h-8 mr-2 text-gray-300 animate-spin fill-[#272343]"
+        className="mr-2 h-8 w-8 animate-spin fill-accent text-line"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

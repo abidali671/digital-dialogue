@@ -1,39 +1,34 @@
 .navbar-root {
-  @apply sticky top-0 z-10 shadow-lg bg-white;
+  @apply sticky top-0 z-20 border-b border-line bg-white/90 backdrop-blur-md;
 }
 
 .navbar-root > .content-wrapper {
-  @apply flex items-center justify-between relative;
+  @apply relative flex items-center justify-between py-3;
 }
 
 .navbar-root > .content-wrapper > .nav-list {
-  @apply hidden gap-4 md:flex items-center list-none;
+  @apply hidden list-none items-center gap-1 md:flex;
 }
 
 .navbar-root > .content-wrapper > .nav-list > li {
-  @apply hover:border-orange-600 border-transparent border-b-[1px] m-0;
+  @apply m-0 border-b-0;
 }
 
-.navbar-root > .content-wrapper > .nav-list > li .search-box {
-  @apply flex gap-2 items-center py-2;
+.navbar-root > .content-wrapper > .nav-list > li > a,
+.navbar-root > .content-wrapper > .nav-list > li > button {
+  @apply rounded-md px-3 py-2 font-body text-sm font-semibold text-mute transition-colors hover:bg-mist hover:text-ink;
 }
 
-.navbar-root > .content-wrapper > .nav-list > li .search-box input {
-  @apply focus:outline-none border-none;
-}
-
-.navbar-root > .content-wrapper > .nav-list > li .search-box img {
-  @apply w-[16px] h-[16px];
-}
 .navbar-root > .content-wrapper > .mobile-nav-container .nav-list {
   @apply m-0;
 }
 
 .navbar-root > .content-wrapper > .mobile-nav-container ul li {
-  @apply list-none text-center font-semibold tracking-wider;
+  @apply list-none text-center font-semibold tracking-wide;
 }
+
 .navbar-root > .content-wrapper > .mobile-nav-container .nav-list li a {
-  @apply w-full h-full p-4 block text-opacity-75 hover:bg-gray-100 hover:bg-opacity-75 text-base;
+  @apply block h-full w-full p-4 text-base text-ink hover:bg-mist;
 }
 
 .navbar-root > .content-wrapper > .mobile-nav-container .nav-list > li > ul {
@@ -45,9 +40,9 @@
 }
 
 .navbar-root .mobile-nav-container .mobile-nav-menu {
-  @apply w-full h-full fixed bg-gray-200;
+  @apply fixed h-full w-full border-t border-line bg-white;
 }
 
 .container-body {
-  @apply min-h-[calc(100vh_-_80px)];
+  @apply min-h-[calc(100vh_-_72px)] bg-mist;
 }

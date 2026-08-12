@@ -1,17 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=PT+Serif&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap");
 
 @import "./components/container.css";
 @import "./components/post-card.css";
-
 @import "./pages/blog-detail.css";
+
+:root {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --accent: #0d9488;
+  --accent-hover: #0f766e;
+  --border: #e2e8f0;
+}
 
 html,
 body {
   overflow-x: hidden;
   overflow-y: auto;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Source Sans 3", system-ui, sans-serif;
 }
 
 * {
@@ -19,11 +32,13 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+
 ul,
 ol {
   list-style-type: disc;
   margin-left: 20px;
 }
+
 li {
   margin: 16px 0;
 }
@@ -34,67 +49,82 @@ h4,
 h3,
 h2,
 h1 {
-  @apply font-Montserrat leading-[1.3] font-bold tracking-wide text-[#333];
+  @apply font-display font-bold leading-[1.2] tracking-tight text-ink;
 }
 
 p {
-  @apply leading-[1.5] font-Montserrat md:text-lg text-base tracking-wide text-[#5b5b5b];
+  @apply font-body text-base leading-relaxed text-mute md:text-lg;
 }
 
 h1 {
-  @apply md:text-4xl text-3xl;
+  @apply text-3xl md:text-5xl;
 }
 
 h2 {
-  @apply md:text-3xl text-2xl;
+  @apply text-2xl md:text-4xl;
 }
 
 h3 {
-  @apply md:text-2xl text-xl;
+  @apply text-xl md:text-2xl;
 }
 
 h4 {
-  @apply md:text-xl text-lg;
+  @apply text-lg md:text-xl;
 }
 
 h5 {
-  @apply md:text-lg text-base;
+  @apply text-base md:text-lg;
 }
 
 h6 {
-  @apply md:text-base text-sm;
+  @apply text-sm md:text-base;
 }
 
 a {
-  @apply hover:text-blue-400 text-black;
+  @apply text-ink transition-colors duration-200 hover:text-accent;
 }
 
 @layer components {
   .tag-span {
-    @apply px-4 py-1.5 rounded-full font-medium w-auto text-center bg-gray-200 text-gray-700 capitalize;
+    @apply w-auto rounded-md bg-mist px-3 py-1.5 text-center font-mono text-xs font-medium uppercase tracking-wide text-ink;
   }
+
   .btn-primary {
-    @apply active:bg-blue-600 hover:shadow-lg focus:outline-none px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear bg-[#272343] rounded shadow outline-none;
+    @apply rounded-lg bg-accent px-6 py-3 text-sm font-bold text-white outline-none transition-colors duration-200 hover:bg-accent-hover focus:outline-none active:bg-accent-hover;
   }
+
   .form-input {
-    @apply focus:outline-none focus:border-blue-500 placeholder:text-gray-500  w-full p-2 text-base text-gray-600 border-[1px] border-black/50 rounded;
+    @apply w-full rounded-lg border border-line bg-white p-3 text-base text-ink placeholder:text-mute-soft focus:border-accent focus:outline-none;
+  }
+
+  .link-underline {
+    @apply relative inline-flex items-center font-semibold text-accent transition-colors hover:text-accent-hover;
+  }
+
+  .link-underline::after {
+    content: "";
+    @apply absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-current transition-transform duration-300;
+  }
+
+  .link-underline:hover::after {
+    @apply scale-x-100;
   }
 }
 
 @layer BlogPost {
   .blog-post-p {
-    @apply text-gray-800 leading-7 !text-lg;
+    @apply !text-lg leading-8 text-ink-soft;
   }
 
   .blog-post-link {
-    @apply text-[#0A81D8] font-normal;
+    @apply font-normal text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent;
   }
 
   .blog-post-h2 {
-    @apply text-gray-800 !text-3xl !font-bold;
+    @apply !text-3xl !font-bold text-ink;
   }
 
   .blog-post-h5 {
-    @apply text-gray-800 !text-2xl font-medium;
+    @apply !text-2xl font-medium text-ink;
   }
 }

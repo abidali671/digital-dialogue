@@ -30,26 +30,24 @@ const Authors = ({ authors }: PropsT) => {
   };
 
   return (
-    <div className="relative">
-      <div className="w-full bg-neutral-200 ">
-        <div className="flex flex-col h-full items-center  justify-center py-10 gap-4 px-10 ">
-          <div className="flex gap-2 justify-center items-center w-full sm:flex-row flex-col ">
-            <div className="flex gap-2 h-12 w-full sm:w-6/12 bg-white items-center shadow-md px-3">
-              <SearchIcon className="w-6 h-6" />
-              <input
-                type="text"
-                className=" border-none outline-0 text-black bg-transparent w-full"
-                placeholder="Search Authors"
-                value={searchText}
-                onChange={handleSearchText}
-              />
-            </div>
+    <div className="relative pb-16">
+      <div className="w-full border-b border-line bg-white">
+        <div className="flex flex-col items-center justify-center gap-4 px-6 py-12">
+          <div className="flex h-12 w-full max-w-xl items-center gap-3 rounded-lg border border-line bg-mist px-4">
+            <SearchIcon className="h-5 w-5 text-mute" />
+            <input
+              type="text"
+              className="w-full border-none bg-transparent text-ink outline-0 placeholder:text-mute-soft"
+              placeholder="Search authors"
+              value={searchText}
+              onChange={handleSearchText}
+            />
           </div>
         </div>
       </div>
-      <ContentContainer className="relative flex justify-center flex-col p-0">
+      <ContentContainer className="relative flex flex-col justify-center pt-10">
         <Title>Authors</Title>
-        <div className="mt-6 md:col-span-7 col-span-10 gap-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] lg:grid-cols-[repeat(3,minmax(300px,1fr))]">
+        <div className="mt-8 grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-10 lg:grid-cols-3">
           {filteredAuthors.map((author: IAuthor) => (
             <Link
               key={author.sys.id}
@@ -57,27 +55,28 @@ const Authors = ({ authors }: PropsT) => {
                 pathname: "/authors/[author]",
                 query: { author: author.fields.slug },
               }}
-              className="relative pt-16"
+              className="group relative pt-16"
             >
-              <div className="rounded-full border-solid border-4 border-neutral-400 h-32 w-32 overflow-hidden absolute top-0 left-1/2 -translate-x-1/2">
+              <div className="absolute left-1/2 top-0 h-32 w-32 -translate-x-1/2 overflow-hidden rounded-full border-4 border-accent/30">
                 <Image
                   alt={author.fields.picture.fields.title}
                   src={"https:" + author.fields.picture.fields.file.url}
                   height={128}
                   width={128}
+                  className="h-full w-full object-cover"
                 />
               </div>
-              <div className="p-4 pt-16 border border-gray-200 shadow-gray-200 shadow-md bg-white">
-                <h4 className="text-2xl font-medium text-center">
+              <div className="border border-line bg-white p-4 pt-16 transition-colors group-hover:border-accent/40">
+                <h4 className="text-center font-display text-2xl font-bold text-ink">
                   {author.fields.name}
                 </h4>
-                <p className="text-sm text-neutral-700 text-center">
+                <p className="text-center font-mono text-xs uppercase tracking-wide text-accent">
                   {author.fields.role}
                 </p>
-                <p className="text-sm text-neutral-600 text-center mt-2">
-                  About Me
+                <p className="mt-3 text-center text-sm font-semibold text-ink">
+                  About
                 </p>
-                <p className="text-base text-neutral-600 text-center">
+                <p className="text-center text-base text-mute">
                   {author.fields.about}
                 </p>
               </div>

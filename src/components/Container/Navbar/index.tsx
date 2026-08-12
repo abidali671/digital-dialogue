@@ -28,12 +28,12 @@ const Navbar = ({ categories }: INavbarProps) => {
   return (
     <div className="navbar-root">
       <ContentContainer className="content-wrapper">
-        <Link href="/">
-          <Logo className="md:h-9 h-8 w-auto" aria-label="website logo" />
+        <Link href="/" className="inline-flex items-center" aria-label={config.SITE_NAME}>
+          <Logo className="h-8 w-auto md:h-9" />
         </Link>
         <ul className="nav-list">
-          {config.NAV_LINKS.slice(0, 3).map((item, index) => (
-            <li key={index}>
+          {config.NAV_LINKS.slice(0, 3).map((item) => (
+            <li key={item.href}>
               <Link href={item.href}>{item.label}</Link>
             </li>
           ))}
@@ -48,8 +48,8 @@ const Navbar = ({ categories }: INavbarProps) => {
                   <>
                     Categories
                     <ChevronDown
-                      className={`h-4 w-4 transition-all ${
-                        open && "rotate-180"
+                      className={`h-4 w-4 transition-transform ${
+                        open ? "rotate-180" : ""
                       }`}
                     />
                   </>
@@ -57,47 +57,48 @@ const Navbar = ({ categories }: INavbarProps) => {
               />
             </li>
           )}
-          {config.NAV_LINKS.slice(3).map((item, index) => (
-            <li key={index}>
+          {config.NAV_LINKS.slice(3).map((item) => (
+            <li key={item.href}>
               <Link href={item.href}>{item.label}</Link>
             </li>
           ))}
         </ul>
         <div className="mobile-nav-container">
-          <Hamburger onClick={toggleMenu} className="cursor-pointer" />
+          <Hamburger onClick={toggleMenu} className="cursor-pointer text-ink" />
           <Transition
             show={isMenu}
-            className="fixed transition-all duration-700 top-[64px] w-full h-full ease-in-out"
-            enterFrom="opacity-0 right-full"
-            enterTo="opacity-100 right-0"
-            leaveFrom="opacity-100 right-0"
-            leaveTo="opacity-0 right-full"
+            className="fixed top-[64px] h-full w-full transition-all duration-500 ease-in-out"
+            enterFrom="opacity-0 translate-x-full"
+            enterTo="opacity-100 translate-x-0"
+            leaveFrom="opacity-100 translate-x-0"
+            leaveTo="opacity-0 translate-x-full"
           >
             <div className="mobile-nav-menu">
               <ul className="nav-list">
-                {config.NAV_LINKS.map((item, index) => (
-                  <li key={index} onClick={toggleMenu}>
+                {config.NAV_LINKS.map((item) => (
+                  <li key={item.href} onClick={toggleMenu} className="m-0">
                     <Link href={item.href}>{item.label}</Link>
                   </li>
                 ))}
-                <hr />
-                <hr />
-                <li className="border-t-2 border-b-2 border-gray-100 mt-6 p-6">
+                <li className="m-0 border-y border-line px-6 py-4 font-mono text-xs uppercase tracking-[0.12em] text-mute">
                   Categories
                 </li>
-                {categories &&
-                  categories?.map((category, index) => (
-                    <li onClick={toggleMenu} key={index}>
-                      <Link
-                        href={{
-                          pathname: "/blogs/[category]",
-                          query: { category: category.fields.slug },
-                        }}
-                      >
-                        {category.fields.label}
-                      </Link>
-                    </li>
-                  ))}
+                {categories?.map((category) => (
+                  <li
+                    onClick={toggleMenu}
+                    key={category.fields.slug}
+                    className="m-0"
+                  >
+                    <Link
+                      href={{
+                        pathname: "/blogs/[category]",
+                        query: { category: category.fields.slug },
+                      }}
+                    >
+                      {category.fields.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </Transition>

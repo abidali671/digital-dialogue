@@ -2,15 +2,12 @@ import React from "react";
 import Head from "next/head";
 import Script from "next/script";
 import Layout from "@/components/layout";
-import { AppInitialProps, AppProps } from "next/app";
+import { AppProps } from "next/app";
 import "../styles/global.css";
 import config from "@/lib/config";
 import { DefaultSeo } from "next-seo";
-interface AppPropsT extends AppProps {
-  Component: React.FC<AppInitialProps>;
-}
 
-export default function MyApp({ Component, pageProps }: AppPropsT) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <React.Fragment>
       <Script src="https://www.googletagmanager.com/gtag/js?id=G-WTZCCLQ2FF" />

@@ -1,42 +1,51 @@
+.post-card-root {
+  @apply flex flex-col gap-4 transition-opacity duration-300 hover:opacity-95;
+}
+
 .post-card-root .post-card-cover-wrapper {
-  @apply relative h-[240px] min-w-full object-contain  shadow-lg bg-gray-200;
+  @apply relative h-[220px] min-w-full overflow-hidden rounded-lg bg-mist-soft;
 }
 
 .post-card-root .post-card-cover-wrapper img {
-  @apply object-cover h-full w-full;
+  @apply h-full w-full object-cover transition-transform duration-500 ease-out;
 }
 
-.post-card-root .post-card-cover-wrapper .post-card-description {
-  @apply bg-black bg-opacity-50 absolute top-0 right-0 p-2 text-white text-right;
-}
-.post-card-root .post-card-cover-wrapper .post-card-description a {
-  @apply text-white;
+.post-card-root:hover .post-card-cover-wrapper img {
+  transform: scale(1.03);
 }
 
 .post-card-root .post-card-content-wrapper {
-  @apply p-4 gap-2 flex flex-col  text-left items-start border border-gray-200 shadow-gray-200 shadow-md border-t-0 bg-white sm:relative sm:w-[95%] sm:top-[-20px];
+  @apply flex flex-col items-start gap-2 border-0 bg-transparent p-0 shadow-none;
 }
 
 .post-card-root .post-card-content-wrapper .post-card-label-wrapper {
-  @apply flex items-center gap-1;
+  @apply flex items-center gap-2;
 }
 
 .post-card-root .post-card-content-wrapper .post-card-label-line {
-  @apply w-10 h-[2px] border-0 rounded bg-orange-700;
+  @apply m-0 h-[2px] w-6 rounded-none border-0 bg-accent;
+}
+
+.post-card-root .post-card-content-wrapper .post-card-label-wrapper p {
+  @apply font-mono text-xs font-medium uppercase tracking-[0.08em] text-accent;
 }
 
 .post-card-root .post-card-content-wrapper .post-card-title {
-  @apply text-2xl font-bold tracking-tight text-gray-900 leading-[32px] line-clamp-2 h-[64px] font-PT;
+  @apply h-auto font-display text-2xl font-bold leading-snug tracking-tight text-ink line-clamp-2 transition-colors;
+}
+
+.post-card-root:hover .post-card-content-wrapper .post-card-title {
+  @apply text-accent;
 }
 
 .post-card-root .post-card-content-wrapper .post-card-excerpt {
-  @apply text-gray-500 text-xs md:text-base line-clamp-3 h-12 md:h-[72px];
+  @apply h-auto text-sm text-mute line-clamp-3 md:text-base;
 }
 
 .post-card-root .post-card-content-wrapper .post-card-created-date {
-  @apply text-gray-500 flex items-center gap-2 text-xs md:text-base;
+  @apply flex items-center gap-2 font-mono text-xs text-mute-soft md:text-sm;
 }
 
 .post-card-root .post-card-content-wrapper .post-card-read-text {
-  @apply pt-2 gap-2 inline-flex items-center text-base font-medium text-center whitespace-nowrap;
+  @apply inline-flex items-center gap-2 pt-1 text-sm font-semibold text-accent transition-colors hover:text-accent-hover;
 }
