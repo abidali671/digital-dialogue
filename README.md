@@ -1,34 +1,113 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Digital Dialogue
 
-## Getting Started
+Next.js App Router blog powered by Contentful. Practical writing on freelancing, technology, and building things that ship.
 
-First, run the development server:
+## Getting started
 
 ```bash
+npm install
+cp .env.example .env
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Copy `.env.example` and fill in:
 
-## Learn More
+| Variable | Purpose |
+|---|---|
+| `CONTENTFUL_DELIVERY_ACCESS_TOKEN` | Contentful Delivery API token |
+| `CONTENTFUL_SPACE_ID` | Contentful space ID |
+| `CONTENTFUL_ENVIRONMENT` | Usually `master` |
+| `REVALIDATE_SECRET` | Secret for on-demand cache clear (`/api/revalidate`) |
 
-To learn more about Next.js, take a look at the following resources:
+Also set these in the Vercel project for production.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+npm run dev       # local development
+npm run build     # production build
+npm run start     # serve production build
+npm run analyze   # build + open bundle analyzer
+npm run lint      # ESLint
+```
 
-## Deploy on Vercel
+## Caching
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Route type | Cache |
+|---|---|
+| Listing pages (home, blogs, authors, categories) | 1 day |
+| Blog detail pages | 1 month |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Blog detail Contentful responses are tagged as `blog` and `blog:{slug}` so you can clear them on demand without waiting for the TTL.
+
+## Clear blog cache (`/api/revalidate`)
+
+Protected by `REVALIDATE_SECRET`. Use the same secret in the query string or as `Authorization: Bearer …`.
+
+Replace:
+
+- `YOUR_DOMAIN` → `http://localhost:3000` locally, or your production URL
+- `YOUR_SECRET` → value of `REVALIDATE_SECRET`
+- paths/slugs with real post values
+
+### Clear one post
+
+```bash
+# By path
+curl "https://YOUR_DOMAIN/api/revalidate?secret=YOUR_SECRET&path=/blogs/technology/my-post-slug"
+
+# By slug (cache tag)
+curl "https://YOUR_DOMAIN/api/revalidate?secret=YOUR_SECRET&slug=my-post-slug"
+
+# By category + slug
+curl "https://YOUR_DOMAIN/api/revalidate?secret=YOUR_SECRET&category=technology&slug=my-post-slug"
+```
+
+POST example:
+
+```bash
+curl -X POST "https://YOUR_DOMAIN/api/revalidate" \
+  -H "Authorization: Bearer YOUR_SECRET" \
+  -H "Content-Type: application/json" \
+  -d "{\"slug\":\"my-post-slug\"}"
+```
+
+### Clear all blog detail caches
+
+```bash
+curl "https://YOUR_DOMAIN/api/revalidate?secret=YOUR_SECRET&allBlogs=1"
+```
+
+POST example:
+
+```bash
+curl -X POST "https://YOUR_DOMAIN/api/revalidate" \
+  -H "Authorization: Bearer YOUR_SECRET" \
+  -H "Content-Type: application/json" \
+  -d "{\"allBlogs\":true}"
+```
+
+Successful responses look like:
+
+```json
+{
+  "revalidated": true,
+  "now": 1710000000000,
+  "targets": ["tag:blog:my-post-slug"]
+}
+```
+
+## Content prompts
+
+See [`prompts.md`](./prompts.md) for rewrite / new-article prompts that return title, category, short description, keywords, and body for Contentful.
+
+## Stack
+
+- Next.js (App Router)
+- Contentful CMS
+- Tailwind CSS
+- Vercel hosting
