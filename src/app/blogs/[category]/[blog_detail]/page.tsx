@@ -184,6 +184,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 alt={coverImage.fields.description || title}
                 fill
                 priority
+                sizes="(min-width: 768px) 768px, 100vw"
                 className="object-cover"
               />
             </div>
