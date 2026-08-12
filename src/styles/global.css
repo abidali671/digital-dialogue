@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap");
-
 @import "./components/container.css";
 @import "./components/post-card.css";
 @import "./pages/blog-detail.css";
@@ -24,7 +22,7 @@ body {
   overflow-y: auto;
   background: var(--bg);
   color: var(--text);
-  font-family: "Source Sans 3", system-ui, sans-serif;
+  font-family: var(--font-body), system-ui, sans-serif;
 }
 
 * {

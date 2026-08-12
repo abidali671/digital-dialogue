@@ -37,11 +37,11 @@ module.exports = {
         },
       },
       fontFamily: {
-        display: ['"Fraunces"', "Georgia", "serif"],
-        body: ['"Source Sans 3"', "system-ui", "sans-serif"],
-        mono: ['"IBM Plex Mono"', "ui-monospace", "monospace"],
-        Montserrat: ['"Source Sans 3"', "system-ui", "sans-serif"],
-        PT: ['"Fraunces"', "Georgia", "serif"],
+        display: ["var(--font-display)", "Georgia", "serif"],
+        body: ["var(--font-body)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
+        Montserrat: ["var(--font-body)", "system-ui", "sans-serif"],
+        PT: ["var(--font-display)", "Georgia", "serif"],
       },
       keyframes: {
         "fade-up": {
