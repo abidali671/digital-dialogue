@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import moment from "moment";
-import { Arrow } from "@/assets/icon";
+import Arrow from "@/assets/icon/arrow";
 import { IPostData } from "@/types";
 
 interface CardPropsT {

@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import { ContentContainer, Title } from "@/components";
-import { SearchIcon } from "@/assets/icon";
+import SearchIcon from "@/assets/icon/searchIcon";
 import { IAuthor } from "@/types";
 import Image from "next/image";
 import Link from "next/link";

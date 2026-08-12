@@ -1,6 +1,6 @@
 "use client";
 
-import { LinkIcon } from "@/assets/icon";
+import LinkIcon from "@/assets/icon/link";
 import {
   FacebookIcon,
   FacebookShareButton,

@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Arrow } from "@/assets/icon";
+import Arrow from "@/assets/icon/arrow";
 import cx from "clsx";
 
 interface PropsT {

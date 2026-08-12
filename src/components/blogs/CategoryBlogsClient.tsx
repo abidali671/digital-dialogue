@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from "react";
 import { ContentContainer, PostCard, Title } from "@/components";
-import { SearchIcon } from "@/assets/icon";
+import SearchIcon from "@/assets/icon/searchIcon";
 import { IPostData } from "@/types";
 
 interface PropsT {
