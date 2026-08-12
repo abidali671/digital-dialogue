@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import moment from "moment";
 import ContentContainer from "../ContentContainer";
 import { IPostData } from "@/types";
+import { formatShortDate } from "@/helper";
 
 interface IProps {
   posts: IPostData[];
@@ -37,7 +37,7 @@ const TopPicks = ({ posts }: IProps) => {
                   {post.fields.title}
                 </h3>
                 <p className="font-mono text-xs text-mute-soft">
-                  {moment.utc(post.sys.createdAt).format("MMM DD, YYYY")}
+                  {formatShortDate(post.sys.createdAt)}
                 </p>
               </div>
               <div className="relative hidden h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-mist-soft sm:block">

@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import moment from "moment";
 import ContentContainer from "../ContentContainer";
 import { IPostData } from "@/types";
 import config from "@/lib/config";
+import { formatLongDate } from "@/helper";
 
 interface IProps {
   posts: IPostData[];
@@ -72,7 +72,7 @@ const Hero = ({ posts }: IProps) => {
                 {post.fields.excerpt}
               </p>
               <p className="font-mono text-xs text-white/40">
-                {moment.utc(post.sys.createdAt).format("MMMM DD, YYYY")}
+                {formatLongDate(post.sys.createdAt)}
               </p>
             </div>
           </Link>

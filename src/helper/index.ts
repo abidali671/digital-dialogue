@@ -3,7 +3,7 @@ import type { Document } from "@contentful/rich-text-types";
 function shuffleArray(array: any[]) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
 }
@@ -14,13 +14,41 @@ function getReadingTime(document?: Document) {
 
   const collectText = (node: any): string => {
     if (typeof node?.value === "string") return node.value;
-    if (Array.isArray(node?.content)) return node.content.map(collectText).join(" ");
+    if (Array.isArray(node?.content))
+      return node.content.map(collectText).join(" ");
     return "";
   };
 
-  const words = collectText(document).trim().split(/\s+/).filter(Boolean).length;
+  const words = collectText(document).trim().split(/\s+/).filter(Boolean)
+    .length;
 
   return Math.max(1, Math.round(words / 200));
 }
 
-export { shuffleArray, getReadingTime };
+/** Format ISO dates in UTC so server and client render the same string. */
+function formatDate(iso: string, options: Intl.DateTimeFormatOptions) {
+  return new Intl.DateTimeFormat("en-US", {
+    timeZone: "UTC",
+    ...options,
+  }).format(new Date(iso));
+}
+
+/** e.g. September 16, 2024 */
+function formatLongDate(iso: string) {
+  return formatDate(iso, {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+/** e.g. Sep 16, 2024 */
+function formatShortDate(iso: string) {
+  return formatDate(iso, {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+export { shuffleArray, getReadingTime, formatLongDate, formatShortDate };

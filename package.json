@@ -21,7 +21,6 @@
     "clsx": "^1.2.1",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
-    "moment": "^2.29.4",
     "next": "^13.4.3",
     "next-seo": "^6.1.0",
     "next-share": "^0.24.0",

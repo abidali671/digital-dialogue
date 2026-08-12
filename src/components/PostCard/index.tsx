@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import moment from "moment";
 import Arrow from "@/assets/icon/arrow";
 import { IPostData } from "@/types";
+import { formatLongDate } from "@/helper";
 
 interface CardPropsT {
   data: IPostData;
@@ -36,7 +36,7 @@ const PostCard = ({ data, priority = false }: CardPropsT) => {
         <p className="post-card-title">{title}</p>
         <p className="post-card-excerpt">{excerpt}</p>
         <p className="post-card-created-date">
-          {moment.utc(createdAt).format("MMMM DD, YYYY")}
+          {formatLongDate(createdAt)}
         </p>
 
         <p className="post-card-read-text">

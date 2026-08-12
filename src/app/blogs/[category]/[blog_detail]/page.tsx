@@ -14,9 +14,8 @@ import contentful_client, {
 import { ICategoryData, IPostData } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import moment from "moment";
 import config from "@/lib/config";
-import { getReadingTime, shuffleArray } from "@/helper";
+import { formatLongDate, getReadingTime, shuffleArray } from "@/helper";
 import { ArticleJsonLd } from "next-seo";
 
 export const revalidate = REVALIDATE_DETAIL;
@@ -135,8 +134,8 @@ export default async function BlogDetailPage({ params }: PageProps) {
           authorName={author.fields.name}
           url={shareUrl}
           keywords={keywords || formattedTags}
-          datePublished={moment.utc(createdAt).format("MMMM DD, YYYY")}
-          dateModified={moment.utc(updatedAt).format("MMMM DD, YYYY")}
+          datePublished={formatLongDate(createdAt)}
+          dateModified={formatLongDate(updatedAt)}
           images={["https:" + coverImage.fields.file.url]}
           useAppDir
         />
@@ -183,7 +182,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
                       {author.fields.name}
                     </Link>
                     <p className="font-mono text-xs text-mute-soft">
-                      {moment.utc(createdAt).format("MMMM DD, YYYY")} ·{" "}
+                      {formatLongDate(createdAt)} ·{" "}
                       {readingTime} min read
                     </p>
                   </div>
