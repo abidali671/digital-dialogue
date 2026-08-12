@@ -9,7 +9,7 @@ import {
 } from "@/components";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import contentful_client, {
-  CONTENTFUL_REVALIDATE,
+  REVALIDATE_DETAIL,
 } from "@/lib/contentful/client";
 import { ICategoryData, IPostData } from "@/types";
 import Image from "next/image";
@@ -19,7 +19,7 @@ import config from "@/lib/config";
 import { getReadingTime, shuffleArray } from "@/helper";
 import { ArticleJsonLd } from "next-seo";
 
-export const revalidate = CONTENTFUL_REVALIDATE;
+export const revalidate = REVALIDATE_DETAIL;
 
 type PageProps = {
   params: { category: string; blog_detail: string };
@@ -29,15 +29,21 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   try {
-    const category_response = await contentful_client.getEntries({
-      content_type: "category",
-      "fields.slug": params.category,
-    });
-    const response = await contentful_client.getEntries({
-      content_type: "post",
-      "fields.slug": params.blog_detail,
-      links_to_entry: category_response.items[0].sys.id,
-    });
+    const category_response = await contentful_client.getEntries(
+      {
+        content_type: "category",
+        "fields.slug": params.category,
+      },
+      { revalidate: REVALIDATE_DETAIL }
+    );
+    const response = await contentful_client.getEntries(
+      {
+        content_type: "post",
+        "fields.slug": params.blog_detail,
+        links_to_entry: category_response.items[0].sys.id,
+      },
+      { revalidate: REVALIDATE_DETAIL }
+    );
     const post = response.items[0] as unknown as IPostData;
     const url = `${config.BASE_URL}/blogs/${params.category}/${params.blog_detail}`;
 
@@ -63,24 +69,36 @@ export default async function BlogDetailPage({ params }: PageProps) {
     const { category, blog_detail } = params;
 
     const [category_response, categories_response] = await Promise.all([
-      contentful_client.getEntries({
-        content_type: "category",
-        "fields.slug": category,
-      }),
-      contentful_client.getEntries({ content_type: "category" }),
+      contentful_client.getEntries(
+        {
+          content_type: "category",
+          "fields.slug": category,
+        },
+        { revalidate: REVALIDATE_DETAIL }
+      ),
+      contentful_client.getEntries(
+        { content_type: "category" },
+        { revalidate: REVALIDATE_DETAIL }
+      ),
     ]);
 
-    const response = await contentful_client.getEntries({
-      content_type: "post",
-      "fields.slug": blog_detail,
-      links_to_entry: category_response.items[0].sys.id,
-    });
+    const response = await contentful_client.getEntries(
+      {
+        content_type: "post",
+        "fields.slug": blog_detail,
+        links_to_entry: category_response.items[0].sys.id,
+      },
+      { revalidate: REVALIDATE_DETAIL }
+    );
 
-    const suggested_post_response = await contentful_client.getEntries({
-      content_type: "post",
-      limit: 20,
-      "sys.id[ne]": response.items[0].sys.id,
-    });
+    const suggested_post_response = await contentful_client.getEntries(
+      {
+        content_type: "post",
+        limit: 20,
+        "sys.id[ne]": response.items[0].sys.id,
+      },
+      { revalidate: REVALIDATE_DETAIL }
+    );
 
     if (!response?.items?.length || !category_response?.items?.length) {
       throw new Error("Not found");

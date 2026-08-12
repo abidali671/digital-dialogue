@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import contentful_client, {
-  CONTENTFUL_REVALIDATE,
+  REVALIDATE_LISTING,
 } from "@/lib/contentful/client";
 import CategoryBlogsClient from "@/components/blogs/CategoryBlogsClient";
 import { ICategoryData, IPostData } from "@/types";
 
-export const revalidate = CONTENTFUL_REVALIDATE;
+export const revalidate = REVALIDATE_LISTING;
 
 type PageProps = {
   params: { category: string };

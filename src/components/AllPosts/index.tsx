@@ -17,7 +17,7 @@ const AllPosts = ({ posts, categories }: PropsT) => {
     <section className="bg-mist py-14 md:py-20">
       <ContentContainer>
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <Title>Latest articles</Title>
+          <Title as="h2">Latest articles</Title>
           <Link href="/blogs" className="link-underline text-sm">
             View all posts
           </Link>

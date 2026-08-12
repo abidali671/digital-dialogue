@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import contentful_client, {
-  CONTENTFUL_REVALIDATE,
+  REVALIDATE_LISTING,
 } from "@/lib/contentful/client";
 import config from "@/lib/config";
 import AuthorPostsClient from "@/components/authors/AuthorPostsClient";
 import { IAuthor, IPostData } from "@/types";
 
-export const revalidate = CONTENTFUL_REVALIDATE;
+export const revalidate = REVALIDATE_LISTING;
 
 type PageProps = {
   params: { author: string };
@@ -51,6 +51,7 @@ export default async function AuthorPage({ params }: PageProps) {
         initialPosts={posts_response.items as unknown as IPostData[]}
         totalPosts={posts_response.total}
         authorName={author.fields.name}
+        authorId={author.sys.id}
       />
     );
   } catch {

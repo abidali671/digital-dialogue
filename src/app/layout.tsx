@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, IBM_Plex_Mono, Source_Sans_3 } from "next/font/google";
 import contentful_client, {
-  CONTENTFUL_REVALIDATE,
+  REVALIDATE_LISTING,
 } from "@/lib/contentful/client";
 import Layout from "@/components/layout";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -9,7 +9,7 @@ import config from "@/lib/config";
 import { ICategoryData } from "@/types";
 import "@/styles/global.css";
 
-export const revalidate = CONTENTFUL_REVALIDATE;
+export const revalidate = REVALIDATE_LISTING;
 
 const bodyFont = Source_Sans_3({
   subsets: ["latin"],

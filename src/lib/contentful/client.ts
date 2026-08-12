@@ -1,4 +1,11 @@
-export const CONTENTFUL_REVALIDATE = 60 * 60 * 24 * 30;
+/** Listing pages (home, blogs, authors, categories) — 1 day */
+export const REVALIDATE_LISTING = 60 * 60 * 24;
+
+/** Blog detail pages — 1 month */
+export const REVALIDATE_DETAIL = 60 * 60 * 24 * 30;
+
+/** @deprecated Use REVALIDATE_LISTING or REVALIDATE_DETAIL */
+export const CONTENTFUL_REVALIDATE = REVALIDATE_LISTING;
 
 type ContentfulLink = {
   sys: {
@@ -99,7 +106,10 @@ function resolveResponse(data: ContentfulResponse) {
   };
 }
 
-async function getEntries(query: GetEntriesQuery = {}) {
+async function getEntries(
+  query: GetEntriesQuery = {},
+  options?: { revalidate?: number }
+) {
   const space = process.env.CONTENTFUL_SPACE_ID;
   const environment = process.env.CONTENTFUL_ENVIRONMENT || "master";
   const accessToken = process.env.CONTENTFUL_DELIVERY_ACCESS_TOKEN;
@@ -121,9 +131,10 @@ async function getEntries(query: GetEntriesQuery = {}) {
   }
 
   const url = `https://cdn.contentful.com/spaces/${space}/environments/${environment}/entries?${params.toString()}`;
+  const revalidate = options?.revalidate ?? REVALIDATE_LISTING;
 
   const res = await fetch(url, {
-    next: { revalidate: CONTENTFUL_REVALIDATE },
+    next: { revalidate },
   });
 
   if (!res.ok) {

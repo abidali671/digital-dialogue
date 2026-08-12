@@ -22,6 +22,7 @@ const AuthorPostsClient = ({
   initialPosts,
   totalPosts,
   authorName,
+  authorId,
 }: PropsT) => {
   const [searchText, setSearchText] = useState("");
   const [pageNo, setPageNo] = useState(1);
@@ -43,7 +44,12 @@ const AuthorPostsClient = ({
   const handleLoadMore = async () => {
     try {
       setLoading(true);
-      const { data } = await API.get(`/blogs?page=${pageNo + 1}`);
+      const authorQuery = authorId
+        ? `&links_to_entry=${encodeURIComponent(authorId)}`
+        : "";
+      const { data } = await API.get(
+        `/blogs?page=${pageNo + 1}${authorQuery}`
+      );
       setCurrentPagePosts((prev) => [...prev, ...data.items]);
       setPageNo(pageNo + 1);
     } catch (err) {

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import contentful_client, {
-  CONTENTFUL_REVALIDATE,
+  REVALIDATE_LISTING,
 } from "@/lib/contentful/client";
 import constants from "@/constants";
 import AuthorsClient from "@/components/authors/AuthorsClient";
 import { IAuthor } from "@/types";
 
-export const revalidate = CONTENTFUL_REVALIDATE;
+export const revalidate = REVALIDATE_LISTING;
 
 export const metadata: Metadata = {
   title: "Authors",
