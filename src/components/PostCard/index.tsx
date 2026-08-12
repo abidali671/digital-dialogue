@@ -7,9 +7,10 @@ import { IPostData } from "@/types";
 
 interface CardPropsT {
   data: IPostData;
+  priority?: boolean;
 }
 
-const PostCard = ({ data }: CardPropsT) => {
+const PostCard = ({ data, priority = false }: CardPropsT) => {
   const { category, coverImage, title, excerpt, slug } = data.fields;
   const { createdAt } = data.sys;
 
@@ -23,6 +24,7 @@ const PostCard = ({ data }: CardPropsT) => {
           src={"https:" + coverImage.fields.file.url}
           alt={coverImage.fields.description || title}
           fill
+          priority={priority}
           sizes="(min-width: 1280px) 400px, (min-width: 640px) 45vw, 100vw"
         />
       </div>

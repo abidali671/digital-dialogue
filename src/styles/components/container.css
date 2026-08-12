@@ -13,9 +13,8 @@
 .navbar-root > .content-wrapper > .nav-list > li {
   @apply m-0 border-b-0;
 }
-
 .navbar-root > .content-wrapper > .nav-list > li > a,
-.navbar-root > .content-wrapper > .nav-list > li > button {
+.navbar-root > .content-wrapper > .nav-list > li button {
   @apply rounded-md px-3 py-2 font-body text-sm font-semibold text-mute transition-colors hover:bg-mist hover:text-ink;
 }
 

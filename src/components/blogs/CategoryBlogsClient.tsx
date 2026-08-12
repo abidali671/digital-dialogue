@@ -40,8 +40,12 @@ const CategoryBlogsClient = ({ posts, categoryLabel }: PropsT) => {
       <ContentContainer className="relative flex flex-col justify-center pt-10">
         <Title>{categoryLabel}</Title>
         <div className="mt-8 grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-10 lg:grid-cols-3">
-          {filteredPosts?.map((post) => (
-            <PostCard key={post.fields.slug} data={post} />
+          {filteredPosts?.map((post, index) => (
+            <PostCard
+              key={post.fields.slug}
+              data={post}
+              priority={index === 0}
+            />
           ))}
         </div>
       </ContentContainer>

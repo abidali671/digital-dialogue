@@ -21,9 +21,9 @@ const Footer = ({ categories: _categories }: IFooterProps) => {
           </div>
           <FooterLink title="Pages" links={config.NAV_LINKS} />
           <div className="flex w-full flex-col gap-3">
-            <h3 className="font-display text-lg font-bold text-white">
+            <h2 className="font-display text-lg font-bold text-white">
               Contact
-            </h3>
+            </h2>
             <p className="text-sm text-mute-soft">{config.EMAIL}</p>
             <p className="text-sm text-mute-soft">{config.PHONE}</p>
           </div>
@@ -52,7 +52,7 @@ interface FooterLinkPropsT {
 const FooterLink = ({ title, links }: FooterLinkPropsT) => {
   return (
     <div className="flex flex-col gap-3">
-      <h3 className="font-display text-lg font-bold text-white">{title}</h3>
+      <h2 className="font-display text-lg font-bold text-white">{title}</h2>
       <ul className="m-0 flex list-none flex-col gap-2">
         {links.map((link) => (
           <li key={link.href} className="m-0 list-none">
