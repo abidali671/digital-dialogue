@@ -57,6 +57,7 @@ const Hero = ({ posts }: IProps) => {
                 }
                 fill
                 priority
+                sizes="(min-width: 1100px) 600px, 100vw"
                 className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
               />
             </div>

@@ -21,9 +21,9 @@ const PostCard = ({ data }: CardPropsT) => {
       <div className="post-card-cover-wrapper">
         <Image
           src={"https:" + coverImage.fields.file.url}
-          alt={coverImage.fields.description}
-          width={396}
-          height={240}
+          alt={coverImage.fields.description || title}
+          fill
+          sizes="(min-width: 1280px) 400px, (min-width: 640px) 45vw, 100vw"
         />
       </div>
       <div className="post-card-content-wrapper">
