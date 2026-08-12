@@ -11,7 +11,13 @@ export const revalidate = REVALIDATE_LISTING;
 
 type PageProps = {
   params: { author: string };
+  searchParams: { page?: string };
 };
+
+function parsePage(page?: string) {
+  const value = Number(page) || 1;
+  return value < 1 ? 1 : value;
+}
 
 export async function generateMetadata({
   params,
@@ -29,8 +35,10 @@ export async function generateMetadata({
   };
 }
 
-export default async function AuthorPage({ params }: PageProps) {
+export default async function AuthorPage({ params, searchParams }: PageProps) {
   try {
+    const currentPage = parsePage(searchParams.page);
+
     const author_response = await contentful_client.getEntries({
       content_type: "author",
       "fields.slug": params.author,
@@ -43,15 +51,22 @@ export default async function AuthorPage({ params }: PageProps) {
     const posts_response = await contentful_client.getEntries({
       content_type: "post",
       limit: config.BLOGS_PER_PAGE,
+      skip: (currentPage - 1) * config.BLOGS_PER_PAGE,
       links_to_entry: author.sys.id,
     });
 
+    const totalPages = Math.max(
+      1,
+      Math.ceil(posts_response.total / config.BLOGS_PER_PAGE)
+    );
+
     return (
       <AuthorPostsClient
-        initialPosts={posts_response.items as unknown as IPostData[]}
-        totalPosts={posts_response.total}
+        posts={posts_response.items as unknown as IPostData[]}
+        currentPage={Math.min(currentPage, totalPages)}
+        totalPages={totalPages}
         authorName={author.fields.name}
-        authorId={author.sys.id}
+        authorSlug={author.fields.slug}
       />
     );
   } catch {

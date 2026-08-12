@@ -5,7 +5,6 @@ export { default as Newsletter } from "./Newsletter";
 export { default as AllPosts } from "./AllPosts";
 export { default as ContentContainer } from "./ContentContainer";
 export { default as LoadingSpinner } from "./LoadingSpinner";
-export { default as LoadMoreButton } from "./LoadMoreButton";
 export { default as Pagination } from "./Pagination";
 export { default as PostCard } from "./PostCard";
 export { default as Category } from "./Category";

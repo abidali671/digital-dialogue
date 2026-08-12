@@ -3,35 +3,32 @@
 import React, { useMemo, useState } from "react";
 import {
   ContentContainer,
-  LoadMoreButton,
+  Pagination,
   PostCard,
   Title,
 } from "@/components";
 import { SearchIcon } from "@/assets/icon";
 import { IPostData } from "@/types";
-import API from "@/lib/api";
 
 interface PropsT {
-  initialPosts: IPostData[];
-  totalPosts: number;
+  posts: IPostData[];
+  currentPage: number;
+  totalPages: number;
   authorName: string;
-  authorId?: string;
+  authorSlug: string;
 }
 
 const AuthorPostsClient = ({
-  initialPosts,
-  totalPosts,
+  posts,
+  currentPage,
+  totalPages,
   authorName,
-  authorId,
+  authorSlug,
 }: PropsT) => {
   const [searchText, setSearchText] = useState("");
-  const [pageNo, setPageNo] = useState(1);
-  const [currentPagePosts, setCurrentPagePosts] =
-    useState<IPostData[]>(initialPosts);
-  const [loading, setLoading] = useState(false);
 
   const filteredPosts = useMemo(() => {
-    return currentPagePosts?.filter(
+    return posts.filter(
       (post) =>
         post.fields.title.toLowerCase().includes(searchText.toLowerCase()) ||
         post.fields.excerpt.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -39,25 +36,7 @@ const AuthorPostsClient = ({
           .toLowerCase()
           .includes(searchText.toLowerCase())
     );
-  }, [currentPagePosts, searchText]);
-
-  const handleLoadMore = async () => {
-    try {
-      setLoading(true);
-      const authorQuery = authorId
-        ? `&links_to_entry=${encodeURIComponent(authorId)}`
-        : "";
-      const { data } = await API.get(
-        `/blogs?page=${pageNo + 1}${authorQuery}`
-      );
-      setCurrentPagePosts((prev) => [...prev, ...data.items]);
-      setPageNo(pageNo + 1);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [posts, searchText]);
 
   return (
     <div className="relative pb-16">
@@ -78,7 +57,7 @@ const AuthorPostsClient = ({
       <ContentContainer className="relative flex flex-col justify-center pt-10">
         <Title>{authorName}</Title>
         <div className="mt-8 grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-10 lg:grid-cols-3">
-          {filteredPosts?.map((post, index) => (
+          {filteredPosts.map((post, index) => (
             <PostCard
               key={post.fields.slug}
               data={post}
@@ -86,10 +65,10 @@ const AuthorPostsClient = ({
             />
           ))}
         </div>
-        <LoadMoreButton
-          onClick={handleLoadMore}
-          isLoading={loading}
-          isVisible={currentPagePosts?.length < totalPosts}
+        <Pagination
+          basePath={`/authors/${authorSlug}`}
+          currentPage={currentPage}
+          pages={totalPages}
         />
       </ContentContainer>
     </div>
