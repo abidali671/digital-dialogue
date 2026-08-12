@@ -3,13 +3,12 @@ import PostCard from "../PostCard";
 import Category from "../Category";
 import ContentContainer from "../ContentContainer";
 import Title from "../Title";
-import { ICategoryData, ITagData, IPostData } from "@/types";
+import { ICategoryData, IPostData } from "@/types";
 import Link from "next/link";
 
 interface PropsT {
   posts: IPostData[];
   categories: ICategoryData[];
-  tags: ITagData[];
 }
 
 const AllPosts = ({ posts, categories }: PropsT) => {

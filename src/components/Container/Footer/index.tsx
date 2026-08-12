@@ -3,11 +3,8 @@ import Link from "next/link";
 import React from "react";
 import Logo from "../../../assets/icon/logo";
 import config from "@/lib/config";
-import { ICategoryData } from "@/types";
 
-type IFooterProps = { categories?: ICategoryData[] };
-
-const Footer = ({ categories: _categories }: IFooterProps) => {
+const Footer = () => {
   return (
     <footer className="border-t border-ink-soft bg-ink">
       <ContentContainer className="flex flex-col gap-10 py-14">

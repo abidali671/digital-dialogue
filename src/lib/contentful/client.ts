@@ -4,9 +4,6 @@ export const REVALIDATE_LISTING = 60 * 60 * 24;
 /** Blog detail pages — 1 month */
 export const REVALIDATE_DETAIL = 60 * 60 * 24 * 30;
 
-/** @deprecated Use REVALIDATE_LISTING or REVALIDATE_DETAIL */
-export const CONTENTFUL_REVALIDATE = REVALIDATE_LISTING;
-
 type ContentfulLink = {
   sys: {
     type: "Link";

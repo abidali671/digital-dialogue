@@ -10,7 +10,7 @@ const Layout = ({ children, categories }: LayoutPropsT) => {
     <React.Fragment>
       <Navbar categories={categories} />
       <main className="container-body">{children}</main>
-      <Footer categories={categories} />
+      <Footer />
     </React.Fragment>
   );
 };

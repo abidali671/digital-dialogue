@@ -1,9 +1,5 @@
 import { Document } from "@contentful/rich-text-types";
 
-export type JSONValue = {
-  [key: string]: JSONValue | JSONValue[] | string | boolean | number;
-};
-
 export interface ISysData {
   space: {
     sys: {
