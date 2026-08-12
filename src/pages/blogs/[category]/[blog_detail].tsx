@@ -1,6 +1,4 @@
 import {
-  BannerAd160x300,
-  BannerAd160x600,
   Category,
   ContentContainer,
   LoadingSpinner,
@@ -121,8 +119,6 @@ const BlogDetail = ({ post, categories, suggestedPost }: IBlogDetailProps) => {
               {categories.map((data: ICategoryData, ind: number) => (
                 <Category key={ind} data={data} />
               ))}
-              <BannerAd160x300 />
-              <BannerAd160x600 />
             </div>
           </div>
         </main>
