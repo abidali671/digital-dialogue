@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["media.cnn.com", "freepngimg.com", "images.ctfassets.net"],
-  },
-  i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
+    remotePatterns: [
+      { protocol: "https", hostname: "images.ctfassets.net" },
+      { protocol: "https", hostname: "media.cnn.com" },
+      { protocol: "https", hostname: "freepngimg.com" },
+    ],
   },
   async headers() {
     return [
@@ -13,7 +13,7 @@ const nextConfig = {
         source: "/api/:path*",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
-          { key: "Access-Control-Allow-Origin", value: "*" }, // replace this your actual origin
+          { key: "Access-Control-Allow-Origin", value: "*" },
           {
             key: "Access-Control-Allow-Methods",
             value: "GET,DELETE,PATCH,POST,PUT",

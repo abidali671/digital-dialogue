@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { ICategoryData } from "@/types";
 import { Transition } from "@headlessui/react";
 
@@ -20,7 +22,7 @@ const Navbar = ({ categories }: INavbarProps) => {
   const router = useRouter();
 
   const handleClickMenu = (slug: string) => {
-    router.push({ pathname: "/blogs/[category]", query: { category: slug } });
+    router.push(`/blogs/${slug}`);
   };
 
   const toggleMenu = () => setIsMenu(!isMenu);
@@ -28,7 +30,11 @@ const Navbar = ({ categories }: INavbarProps) => {
   return (
     <div className="navbar-root">
       <ContentContainer className="content-wrapper">
-        <Link href="/" className="inline-flex items-center" aria-label={config.SITE_NAME}>
+        <Link
+          href="/"
+          className="inline-flex items-center"
+          aria-label={config.SITE_NAME}
+        >
           <Logo className="h-8 w-auto md:h-9" />
         </Link>
         <ul className="nav-list">
@@ -89,12 +95,7 @@ const Navbar = ({ categories }: INavbarProps) => {
                     key={category.fields.slug}
                     className="m-0"
                   >
-                    <Link
-                      href={{
-                        pathname: "/blogs/[category]",
-                        query: { category: category.fields.slug },
-                      }}
-                    >
+                    <Link href={`/blogs/${category.fields.slug}`}>
                       {category.fields.label}
                     </Link>
                   </li>

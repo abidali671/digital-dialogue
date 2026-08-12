@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Arrow } from "@/assets/icon";
 import cx from "clsx";

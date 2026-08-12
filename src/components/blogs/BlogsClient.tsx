@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useMemo, useState } from "react";
 import {
   ContentContainer,
@@ -6,27 +8,23 @@ import {
   Title,
 } from "@/components";
 import { SearchIcon } from "@/assets/icon";
-import { ICategoryData, IPostData, ITagData } from "@/types";
-import contentful_client from "@/lib/contentful/client";
-import config from "@/lib/config";
+import { IPostData } from "@/types";
 import API from "@/lib/api";
-import constants from "@/constants";
 
 interface PropsT {
-  posts: IPostData[];
-  categories: ICategoryData[];
-  tags: ITagData[];
+  initialPosts: IPostData[];
   totalPosts: number;
 }
 
-const Blogs = ({ posts, totalPosts }: PropsT) => {
-  const [searchText, setSearchText] = useState<string>("");
-  const [pageNo, setPageNo] = useState<number>(1);
-  const [currentPagePosts, setCurrentPagePosts] = useState<IPostData[]>(posts);
-  const [loading, setLoading] = useState<boolean>(false);
+const BlogsClient = ({ initialPosts, totalPosts }: PropsT) => {
+  const [searchText, setSearchText] = useState("");
+  const [pageNo, setPageNo] = useState(1);
+  const [currentPagePosts, setCurrentPagePosts] =
+    useState<IPostData[]>(initialPosts);
+  const [loading, setLoading] = useState(false);
 
   const filteredPosts = useMemo(() => {
-    const filter_list = currentPagePosts.filter(
+    return currentPagePosts.filter(
       (post) =>
         post.fields.title.toLowerCase().includes(searchText.toLowerCase()) ||
         post.fields.excerpt.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -34,13 +32,7 @@ const Blogs = ({ posts, totalPosts }: PropsT) => {
           .toLowerCase()
           .includes(searchText.toLowerCase())
     );
-
-    return filter_list;
   }, [currentPagePosts, searchText]);
-
-  const handleSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(event.target.value);
-  };
 
   const handleLoadMore = async () => {
     try {
@@ -65,7 +57,7 @@ const Blogs = ({ posts, totalPosts }: PropsT) => {
               type="text"
               className="w-full border-none bg-transparent text-ink outline-0 placeholder:text-mute-soft"
               placeholder="Search posts"
-              onChange={handleSearchText}
+              onChange={(e) => setSearchText(e.target.value)}
               value={searchText}
             />
           </div>
@@ -74,7 +66,7 @@ const Blogs = ({ posts, totalPosts }: PropsT) => {
       <ContentContainer className="relative flex flex-col justify-center pt-10">
         <Title>Blogs</Title>
         <div className="mt-8 grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-10 lg:grid-cols-3">
-          {filteredPosts.map((post: IPostData) => (
+          {filteredPosts.map((post) => (
             <PostCard key={post.fields.slug} data={post} />
           ))}
         </div>
@@ -88,24 +80,4 @@ const Blogs = ({ posts, totalPosts }: PropsT) => {
   );
 };
 
-export const getStaticProps = async () => {
-  const responses = await Promise.all([
-    contentful_client.getEntries({
-      content_type: "post",
-      limit: config.BLOGS_PER_PAGE,
-    }),
-    contentful_client.getEntries({ content_type: "category" }),
-  ]);
-
-  return {
-    props: {
-      posts: responses[0].items,
-      categories: responses[1].items,
-      totalPosts: responses[0].total,
-      title: `Blogs`,
-      description: constants.descriptions.BLOGS,
-    },
-  };
-};
-
-export default Blogs;
+export default BlogsClient;

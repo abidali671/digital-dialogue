@@ -11,10 +11,7 @@ const Category = ({ data }: ICategoryProps) => {
 
   return (
     <Link
-      href={{
-        pathname: "/blogs/[category]",
-        query: { category: slug },
-      }}
+      href={`/blogs/${slug}`}
       className="block border-b border-line py-3 font-body text-sm font-semibold text-ink transition-colors hover:text-accent"
     >
       {label}

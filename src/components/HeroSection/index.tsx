@@ -46,13 +46,7 @@ const Hero = ({ posts }: IProps) => {
 
         {post && (
           <Link
-            href={{
-              pathname: "/blogs/[category]/[blog_detail]",
-              query: {
-                category: post.fields.category.fields.slug,
-                blog_detail: post.fields.slug,
-              },
-            }}
+            href={`/blogs/${post.fields.category.fields.slug}/${post.fields.slug}`}
             className="group block animate-fade-in overflow-hidden rounded-xl border border-white/10 bg-white/5"
           >
             <div className="relative h-56 w-full overflow-hidden md:h-64">

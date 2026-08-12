@@ -15,10 +15,7 @@ const PostCard = ({ data }: CardPropsT) => {
 
   return (
     <Link
-      href={{
-        pathname: "/blogs/[category]/[blog_detail]",
-        query: { category: category.fields.slug, blog_detail: slug },
-      }}
+      href={`/blogs/${category.fields.slug}/${slug}`}
       className="post-card-root"
     >
       <div className="post-card-cover-wrapper">

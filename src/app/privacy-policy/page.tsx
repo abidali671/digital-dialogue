@@ -1,9 +1,14 @@
+﻿import type { Metadata } from "next";
 import constants from "@/constants";
 import config from "@/lib/config";
-import contentful_client from "@/lib/contentful/client";
 import Link from "next/link";
 
-const PrivacyPolicy = () => {
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: constants.descriptions.PRIVACY_POLICY,
+};
+
+export default function PrivacyPolicyPage() {
   return (
     <div className="max-w-7xl w-full px-4 md:px-6 py-10 mx-auto flex flex-col gap-4">
       <h1>Privacy Policy for Digital Dialogue</h1>
@@ -106,7 +111,7 @@ const PrivacyPolicy = () => {
         known as DART cookies, to serve ads to our site visitors based upon
         their visit to www.website.com and other sites on the internet. However,
         visitors may choose to decline the use of DART cookies by visiting the
-        Google ad and content network Privacy Policy at the following URL –{" "}
+        Google ad and content network Privacy Policy at the following URL â€“{" "}
         <a href="https://policies.google.com/technologies/ads">
           https://policies.google.com/technologies/ads
         </a>
@@ -182,29 +187,29 @@ const PrivacyPolicy = () => {
         protection rights. Every user is entitled to the following:
       </p>
       <p>
-        The right to access – You have the right to request copies of your
+        The right to access â€“ You have the right to request copies of your
         personal data. We may charge you a small fee for this service.
       </p>
       <p>
-        The right to rectification – You have the right to request that we
+        The right to rectification â€“ You have the right to request that we
         correct any information you believe is inaccurate. You also have the
         right to request that we complete the information you believe is
         incomplete.
       </p>
       <p>
-        The right to erasure – You have the right to request that we erase your
+        The right to erasure â€“ You have the right to request that we erase your
         personal data, under certain conditions.
       </p>
       <p>
-        The right to restrict processing – You have the right to request that we
+        The right to restrict processing â€“ You have the right to request that we
         restrict the processing of your personal data, under certain conditions.
       </p>
       <p>
-        The right to object to processing – You have the right to object to our
+        The right to object to processing â€“ You have the right to object to our
         processing of your personal data, under certain conditions.
       </p>
       <p>
-        The right to data portability – You have the right to request that we
+        The right to data portability â€“ You have the right to request that we
         transfer the data that we have collected to another organization, or
         directly to you, under certain conditions.
       </p>
@@ -267,20 +272,4 @@ const PrivacyPolicy = () => {
       </div>
     </div>
   );
-};
-
-export default PrivacyPolicy;
-
-export const getStaticProps = async () => {
-  const response = await contentful_client.getEntries({
-    content_type: "category",
-  });
-
-  return {
-    props: {
-      categories: response.items,
-      title: `Privacy Policy`,
-      description: constants.descriptions.AUTHORS,
-    },
-  };
-};
+}

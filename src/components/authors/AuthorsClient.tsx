@@ -1,33 +1,27 @@
+"use client";
+
 import React, { useMemo, useState } from "react";
 import { ContentContainer, Title } from "@/components";
 import { SearchIcon } from "@/assets/icon";
 import { IAuthor } from "@/types";
-import contentful_client from "@/lib/contentful/client";
 import Image from "next/image";
 import Link from "next/link";
-import constants from "@/constants";
 
 interface PropsT {
   authors: IAuthor[];
 }
 
-const Authors = ({ authors }: PropsT) => {
-  const [searchText, setSearchText] = useState<string>("");
+const AuthorsClient = ({ authors }: PropsT) => {
+  const [searchText, setSearchText] = useState("");
 
   const filteredAuthors = useMemo(() => {
-    const filter_list = authors.filter(
+    return authors.filter(
       (author) =>
         author.fields.name.toLowerCase().includes(searchText.toLowerCase()) ||
         author.fields.about.toLowerCase().includes(searchText.toLowerCase()) ||
         author.fields.role.toLowerCase().includes(searchText.toLowerCase())
     );
-
-    return filter_list;
   }, [authors, searchText]);
-
-  const handleSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(event.target.value);
-  };
 
   return (
     <div className="relative pb-16">
@@ -40,7 +34,7 @@ const Authors = ({ authors }: PropsT) => {
               className="w-full border-none bg-transparent text-ink outline-0 placeholder:text-mute-soft"
               placeholder="Search authors"
               value={searchText}
-              onChange={handleSearchText}
+              onChange={(e) => setSearchText(e.target.value)}
             />
           </div>
         </div>
@@ -48,13 +42,10 @@ const Authors = ({ authors }: PropsT) => {
       <ContentContainer className="relative flex flex-col justify-center pt-10">
         <Title>Authors</Title>
         <div className="mt-8 grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-10 lg:grid-cols-3">
-          {filteredAuthors.map((author: IAuthor) => (
+          {filteredAuthors.map((author) => (
             <Link
               key={author.sys.id}
-              href={{
-                pathname: "/authors/[author]",
-                query: { author: author.fields.slug },
-              }}
+              href={`/authors/${author.fields.slug}`}
               className="group relative pt-16"
             >
               <div className="absolute left-1/2 top-0 h-32 w-32 -translate-x-1/2 overflow-hidden rounded-full border-4 border-accent/30">
@@ -88,24 +79,4 @@ const Authors = ({ authors }: PropsT) => {
   );
 };
 
-export const getStaticProps = async () => {
-  const responses = await Promise.all([
-    contentful_client.getEntries({
-      content_type: "author",
-    }),
-    contentful_client.getEntries({
-      content_type: "category",
-    }),
-  ]);
-
-  return {
-    props: {
-      authors: responses[0].items,
-      categories: responses[1].items,
-      title: `Authors`,
-      description: constants.descriptions.AUTHORS,
-    },
-  };
-};
-
-export default Authors;
+export default AuthorsClient;

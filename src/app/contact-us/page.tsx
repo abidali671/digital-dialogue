@@ -1,10 +1,15 @@
+import type { Metadata } from "next";
 import constants from "@/constants";
 import config from "@/lib/config";
-import contentful_client from "@/lib/contentful/client";
 import ContentContainer from "@/components/ContentContainer";
 import Title from "@/components/Title";
 
-const ContactUs = () => {
+export const metadata: Metadata = {
+  title: "Contact Us",
+  description: constants.descriptions.CONTACT_US,
+};
+
+export default function ContactUsPage() {
   return (
     <ContentContainer className="py-16 md:py-20">
       <div className="grid max-w-2xl gap-8">
@@ -73,20 +78,4 @@ const ContactUs = () => {
       </div>
     </ContentContainer>
   );
-};
-
-export default ContactUs;
-
-export const getStaticProps = async () => {
-  const response = await contentful_client.getEntries({
-    content_type: "category",
-  });
-
-  return {
-    props: {
-      categories: response.items,
-      title: `Contact Us`,
-      description: constants.descriptions.CONTACT_US,
-    },
-  };
-};
+}

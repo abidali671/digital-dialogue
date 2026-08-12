@@ -23,13 +23,7 @@ const TopPicks = ({ posts }: IProps) => {
           {posts.map((post, index) => (
             <Link
               key={post.fields.slug}
-              href={{
-                pathname: "/blogs/[category]/[blog_detail]",
-                query: {
-                  category: post.fields.category.fields.slug,
-                  blog_detail: post.fields.slug,
-                },
-              }}
+              href={`/blogs/${post.fields.category.fields.slug}/${post.fields.slug}`}
               className="group flex gap-4 border-t border-line pt-5"
             >
               <span className="font-mono text-sm text-accent">

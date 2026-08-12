@@ -1,8 +1,8 @@
 import axios from "axios";
-import config from "./config";
 
+/** Browser-relative API client so load-more works on localhost and production. */
 const API = axios.create({
-  baseURL: config.BASE_URL + "/api",
+  baseURL: "/api",
   headers: {
     "Content-Type": "application/json",
   },
