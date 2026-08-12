@@ -37,7 +37,7 @@ const TopPicks = ({ posts }: IProps) => {
                   {post.fields.title}
                 </h3>
                 <p className="font-mono text-xs text-mute-soft">
-                  {moment(post.sys.createdAt).format("MMM DD, YYYY")}
+                  {moment.utc(post.sys.createdAt).format("MMM DD, YYYY")}
                 </p>
               </div>
               <div className="relative hidden h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-mist-soft sm:block">

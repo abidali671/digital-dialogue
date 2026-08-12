@@ -36,7 +36,7 @@ const PostCard = ({ data, priority = false }: CardPropsT) => {
         <p className="post-card-title">{title}</p>
         <p className="post-card-excerpt">{excerpt}</p>
         <p className="post-card-created-date">
-          {moment(createdAt).format("MMMM DD, YYYY")}
+          {moment.utc(createdAt).format("MMMM DD, YYYY")}
         </p>
 
         <p className="post-card-read-text">

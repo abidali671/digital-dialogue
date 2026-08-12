@@ -72,7 +72,7 @@ const Hero = ({ posts }: IProps) => {
                 {post.fields.excerpt}
               </p>
               <p className="font-mono text-xs text-white/40">
-                {moment(post.sys.createdAt).format("MMMM DD, YYYY")}
+                {moment.utc(post.sys.createdAt).format("MMMM DD, YYYY")}
               </p>
             </div>
           </Link>

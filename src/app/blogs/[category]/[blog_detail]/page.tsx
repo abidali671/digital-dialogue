@@ -117,8 +117,8 @@ export default async function BlogDetailPage({ params }: PageProps) {
           authorName={author.fields.name}
           url={shareUrl}
           keywords={keywords || formattedTags}
-          datePublished={moment(createdAt).format("MMMM DD, YYYY")}
-          dateModified={moment(updatedAt).format("MMMM DD, YYYY")}
+          datePublished={moment.utc(createdAt).format("MMMM DD, YYYY")}
+          dateModified={moment.utc(updatedAt).format("MMMM DD, YYYY")}
           images={["https:" + coverImage.fields.file.url]}
           useAppDir
         />
@@ -165,7 +165,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
                       {author.fields.name}
                     </Link>
                     <p className="font-mono text-xs text-mute-soft">
-                      {moment(createdAt).format("MMMM DD, YYYY")} ·{" "}
+                      {moment.utc(createdAt).format("MMMM DD, YYYY")} ·{" "}
                       {readingTime} min read
                     </p>
                   </div>
