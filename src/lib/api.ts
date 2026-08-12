@@ -1,4 +1,3 @@
-/** Browser API helper for load-more — listing API is cached for 1 day. */
 const API = {
   async get(path: string) {
     const res = await fetch(`/api${path}`);
