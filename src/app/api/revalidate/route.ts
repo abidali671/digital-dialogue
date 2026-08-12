@@ -1,4 +1,4 @@
-import { revalidatePath, revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -18,16 +18,12 @@ function isAuthorized(request: NextRequest) {
 }
 
 /**
- * Clear cached blog detail pages (and optional paths).
+ * Clear cached page by path only.
  *
- * Examples:
  * GET  /api/revalidate?secret=...&path=/blogs/technology/my-post
- * GET  /api/revalidate?secret=...&slug=my-post
- * GET  /api/revalidate?secret=...&allBlogs=1
- * POST /api/revalidate  Authorization: Bearer ...
+ * POST /api/revalidate
+ *      Authorization: Bearer ...
  *      { "path": "/blogs/technology/my-post" }
- *      { "slug": "my-post" }
- *      { "allBlogs": true }
  */
 async function handleRevalidate(request: NextRequest) {
   if (!process.env.REVALIDATE_SECRET) {
@@ -41,12 +37,7 @@ async function handleRevalidate(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  let body: {
-    path?: string;
-    slug?: string;
-    category?: string;
-    allBlogs?: boolean;
-  } = {};
+  let body: { path?: string } = {};
 
   if (request.method === "POST") {
     try {
@@ -56,50 +47,21 @@ async function handleRevalidate(request: NextRequest) {
     }
   }
 
-  const searchParams = request.nextUrl.searchParams;
-  const path = body.path || searchParams.get("path") || undefined;
-  const slug = body.slug || searchParams.get("slug") || undefined;
-  const category = body.category || searchParams.get("category") || undefined;
-  const allBlogs =
-    body.allBlogs === true ||
-    searchParams.get("allBlogs") === "1" ||
-    searchParams.get("allBlogs") === "true";
+  const path = body.path || request.nextUrl.searchParams.get("path") || "";
 
-  const revalidated: string[] = [];
-
-  if (allBlogs) {
-    revalidateTag("blog");
-    revalidated.push("tag:blog");
-  }
-
-  if (slug) {
-    revalidateTag(`blog:${slug}`);
-    revalidated.push(`tag:blog:${slug}`);
-  }
-
-  if (path) {
-    revalidatePath(path);
-    revalidated.push(`path:${path}`);
-  } else if (category && slug) {
-    const blogPath = `/blogs/${category}/${slug}`;
-    revalidatePath(blogPath);
-    revalidated.push(`path:${blogPath}`);
-  }
-
-  if (!revalidated.length) {
+  if (!path.startsWith("/")) {
     return NextResponse.json(
-      {
-        error:
-          "Provide path, slug, category+slug, or allBlogs=1 to clear cache",
-      },
+      { error: "Provide a path starting with / (e.g. /blogs/technology/my-post)" },
       { status: 400 }
     );
   }
 
+  revalidatePath(path);
+
   return NextResponse.json({
     revalidated: true,
     now: Date.now(),
-    targets: revalidated,
+    path,
   });
 }
 

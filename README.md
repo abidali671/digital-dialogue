@@ -42,29 +42,20 @@ npm run lint      # ESLint
 | Listing pages (home, blogs, authors, categories) | 1 day |
 | Blog detail pages | 1 month |
 
-Blog detail Contentful responses are tagged as `blog` and `blog:{slug}` so you can clear them on demand without waiting for the TTL.
+## Clear cache by path (`/api/revalidate`)
 
-## Clear blog cache (`/api/revalidate`)
-
-Protected by `REVALIDATE_SECRET`. Use the same secret in the query string or as `Authorization: Bearer …`.
+Protected by `REVALIDATE_SECRET`. Pass the secret in the query string or as `Authorization: Bearer …`.
 
 Replace:
 
 - `YOUR_DOMAIN` → `http://localhost:3000` locally, or your production URL
 - `YOUR_SECRET` → value of `REVALIDATE_SECRET`
-- paths/slugs with real post values
+- `path` → the page path to clear (must start with `/`)
 
-### Clear one post
+### Clear one blog post
 
 ```bash
-# By path
 curl "https://YOUR_DOMAIN/api/revalidate?secret=YOUR_SECRET&path=/blogs/technology/my-post-slug"
-
-# By slug (cache tag)
-curl "https://YOUR_DOMAIN/api/revalidate?secret=YOUR_SECRET&slug=my-post-slug"
-
-# By category + slug
-curl "https://YOUR_DOMAIN/api/revalidate?secret=YOUR_SECRET&category=technology&slug=my-post-slug"
 ```
 
 POST example:
@@ -73,31 +64,26 @@ POST example:
 curl -X POST "https://YOUR_DOMAIN/api/revalidate" \
   -H "Authorization: Bearer YOUR_SECRET" \
   -H "Content-Type: application/json" \
-  -d "{\"slug\":\"my-post-slug\"}"
+  -d "{\"path\":\"/blogs/technology/my-post-slug\"}"
 ```
 
-### Clear all blog detail caches
+### Clear other pages (same API)
 
 ```bash
-curl "https://YOUR_DOMAIN/api/revalidate?secret=YOUR_SECRET&allBlogs=1"
+# Home
+curl "https://YOUR_DOMAIN/api/revalidate?secret=YOUR_SECRET&path=/"
+
+# Blogs listing
+curl "https://YOUR_DOMAIN/api/revalidate?secret=YOUR_SECRET&path=/blogs"
 ```
 
-POST example:
-
-```bash
-curl -X POST "https://YOUR_DOMAIN/api/revalidate" \
-  -H "Authorization: Bearer YOUR_SECRET" \
-  -H "Content-Type: application/json" \
-  -d "{\"allBlogs\":true}"
-```
-
-Successful responses look like:
+Successful response:
 
 ```json
 {
   "revalidated": true,
   "now": 1710000000000,
-  "targets": ["tag:blog:my-post-slug"]
+  "path": "/blogs/technology/my-post-slug"
 }
 ```
 
