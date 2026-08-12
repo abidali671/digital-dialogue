@@ -1,5 +1,7 @@
 export { default as Navbar } from "./Container/Navbar";
 export { default as Hero } from "./HeroSection";
+export { default as TopPicks } from "./TopPicks";
+export { default as Newsletter } from "./Newsletter";
 export { default as AllPosts } from "./AllPosts";
 export { default as ContentContainer } from "./ContentContainer";
 export { default as LoadingSpinner } from "./LoadingSpinner";

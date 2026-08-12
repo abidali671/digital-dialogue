@@ -1,5 +1,5 @@
 import React from "react";
-import { Hero, AllPosts } from "@/components";
+import { Hero, TopPicks, AllPosts, Newsletter } from "@/components";
 import { ICategoryData, IPostData, ITagData } from "@/types";
 import contentful_client from "@/lib/contentful/client";
 import constants from "@/constants";
@@ -11,13 +11,16 @@ interface PropsT {
 }
 
 const Home = ({ posts, categories, tags }: PropsT) => {
-  const HeroPosts = posts.slice(0, 3);
-  const RemainPosts = posts.length < 3 ? posts.slice(0) : posts.slice(3);
+  const featuredPost = posts.slice(0, 1);
+  const pickedPosts = posts.slice(1, 4);
+  const latestPosts = posts.length > 4 ? posts.slice(4) : posts;
 
   return (
     <React.Fragment>
-      <Hero posts={HeroPosts} />
-      <AllPosts posts={RemainPosts} categories={categories} tags={tags} />
+      <Hero posts={featuredPost} />
+      <TopPicks posts={pickedPosts} />
+      <AllPosts posts={latestPosts} categories={categories} tags={tags} />
+      <Newsletter />
     </React.Fragment>
   );
 };
