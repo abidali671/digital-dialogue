@@ -97,6 +97,11 @@ a {
     @apply w-full rounded-lg border border-line bg-white p-3 text-base text-ink placeholder:text-mute-soft focus:border-accent focus:outline-none;
   }
 
+  /** Shared measure for article header, cover and prose so their edges align. */
+  .reading-column {
+    @apply mx-auto w-full max-w-3xl;
+  }
+
   .link-underline {
     @apply relative inline-flex items-center font-semibold text-accent transition-colors hover:text-accent-hover;
   }

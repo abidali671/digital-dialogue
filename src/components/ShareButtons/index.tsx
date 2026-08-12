@@ -38,17 +38,19 @@ const ShareButtons = ({ url }: { url: string }) => {
         <WhatsappIcon size={32} round />
       </WhatsappShareButton>
 
-      <div
+      <button
+        type="button"
         onClick={handleCopy}
-        className="flex h-8 w-8 rounded-full justify-center items-center bg-gray-200 relative cursor-pointer"
+        aria-label="Copy link"
+        className="relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-mist text-ink transition-colors hover:bg-accent-soft"
       >
         <LinkIcon />
         {copied && (
-          <div className="absolute top-full w-28 p-1 bg-white shadow-xl border border-gray-200 text-center text-sm text-green-500 font-medium rounded mt-2">
-            Text copied to clipboard!
+          <div className="absolute top-full z-10 mt-2 w-28 rounded border border-line bg-white p-1 text-center text-xs font-medium text-accent">
+            Link copied!
           </div>
         )}
-      </div>
+      </button>
     </div>
   );
 };
