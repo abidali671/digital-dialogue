@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import contentful_client from "@/lib/contentful/client";
+import contentful_client, {
+  CONTENTFUL_REVALIDATE,
+} from "@/lib/contentful/client";
 import config from "@/lib/config";
+
+export const revalidate = CONTENTFUL_REVALIDATE;
 
 export async function GET(request: NextRequest) {
   try {
@@ -15,7 +19,14 @@ export async function GET(request: NextRequest) {
       links_to_entry,
     });
 
-    return NextResponse.json({ items: response.items, total: response.total });
+    return NextResponse.json(
+      { items: response.items, total: response.total },
+      {
+        headers: {
+          "Cache-Control": `s-maxage=${CONTENTFUL_REVALIDATE}, stale-while-revalidate`,
+        },
+      }
+    );
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }

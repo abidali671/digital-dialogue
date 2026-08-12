@@ -8,7 +8,9 @@ import {
   Title,
 } from "@/components";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import contentful_client from "@/lib/contentful/client";
+import contentful_client, {
+  CONTENTFUL_REVALIDATE,
+} from "@/lib/contentful/client";
 import { ICategoryData, IPostData } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +19,7 @@ import config from "@/lib/config";
 import { getReadingTime, shuffleArray } from "@/helper";
 import { ArticleJsonLd } from "next-seo";
 
-export const dynamic = "force-dynamic";
+export const revalidate = CONTENTFUL_REVALIDATE;
 
 type PageProps = {
   params: { category: string; blog_detail: string };

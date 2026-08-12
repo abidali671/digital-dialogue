@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import contentful_client from "@/lib/contentful/client";
+import contentful_client, {
+  CONTENTFUL_REVALIDATE,
+} from "@/lib/contentful/client";
 import CategoryBlogsClient from "@/components/blogs/CategoryBlogsClient";
 import { ICategoryData, IPostData } from "@/types";
 
-export const dynamic = "force-dynamic";
+export const revalidate = CONTENTFUL_REVALIDATE;
 
 type PageProps = {
   params: { category: string };

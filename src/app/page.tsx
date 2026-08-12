@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Hero, TopPicks, AllPosts, Newsletter } from "@/components";
-import contentful_client from "@/lib/contentful/client";
+import contentful_client, {
+  CONTENTFUL_REVALIDATE,
+} from "@/lib/contentful/client";
 import constants from "@/constants";
 import { ICategoryData, IPostData, ITagData } from "@/types";
 
-export const dynamic = "force-dynamic";
+export const revalidate = CONTENTFUL_REVALIDATE;
 
 export const metadata: Metadata = {
   title: "Home",

@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import contentful_client from "@/lib/contentful/client";
+import contentful_client, {
+  CONTENTFUL_REVALIDATE,
+} from "@/lib/contentful/client";
 import config from "@/lib/config";
 import constants from "@/constants";
 import BlogsClient from "@/components/blogs/BlogsClient";
 import { IPostData } from "@/types";
 
-export const dynamic = "force-dynamic";
+export const revalidate = CONTENTFUL_REVALIDATE;
 
 export const metadata: Metadata = {
   title: "Blogs",

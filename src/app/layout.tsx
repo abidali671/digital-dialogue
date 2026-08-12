@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
-import contentful_client from "@/lib/contentful/client";
+import contentful_client, {
+  CONTENTFUL_REVALIDATE,
+} from "@/lib/contentful/client";
 import Layout from "@/components/layout";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import config from "@/lib/config";
 import { ICategoryData } from "@/types";
 import "@/styles/global.css";
+
+export const revalidate = CONTENTFUL_REVALIDATE;
 
 export const metadata: Metadata = {
   title: {

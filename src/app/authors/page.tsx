@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import contentful_client from "@/lib/contentful/client";
+import contentful_client, {
+  CONTENTFUL_REVALIDATE,
+} from "@/lib/contentful/client";
 import constants from "@/constants";
 import AuthorsClient from "@/components/authors/AuthorsClient";
 import { IAuthor } from "@/types";
 
-export const dynamic = "force-dynamic";
+export const revalidate = CONTENTFUL_REVALIDATE;
 
 export const metadata: Metadata = {
   title: "Authors",
