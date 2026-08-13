@@ -1,8 +1,8 @@
-/** Listing pages (home, blogs, authors, categories) — 1 day */
-export const REVALIDATE_LISTING = 60 * 60 * 24;
+/** Default cache for all pages and Contentful fetches — 1 minute */
+export const REVALIDATE_LISTING = 60;
 
-/** Blog detail pages — 1 month */
-export const REVALIDATE_DETAIL = 60 * 60 * 24 * 30;
+/** Same as listing for now (1 minute) */
+export const REVALIDATE_DETAIL = REVALIDATE_LISTING;
 
 type ContentfulLink = {
   sys: {

@@ -39,8 +39,7 @@ npm run lint      # ESLint
 
 | Route type | Cache |
 |---|---|
-| Listing pages (home, blogs, authors, categories) | 1 day |
-| Blog detail pages | 1 month |
+| All pages (home, listings, blog detail) | 1 minute |
 
 ## Clear cache by path (`/api/revalidate`)
 
