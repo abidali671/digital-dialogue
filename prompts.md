@@ -5,7 +5,7 @@ Prompts for rewriting existing posts and drafting new articles for Digital Dialo
 
 **How to use:** copy one prompt block, fill the bracketed fields, paste into your model.
 
-**Expected output (both prompts):** every response must include title, category, short description, keywords, and full blog content — ready to paste into Contentful / the blog detail page.
+**Expected output (both prompts):** every response must include title, slug, category, short description, keywords, and full blog content — ready to paste into Contentful / the blog detail page.
 
 ---
 
@@ -49,6 +49,9 @@ REMOVE / AVOID
 
 METADATA RULES
 - TITLE: clear, specific, matches search intent. Not clickbait. Max ~60 characters when possible.
+- SLUG: URL slug derived from TITLE. Lowercase, words separated by hyphens only.
+  Rules: strip punctuation; replace spaces with `-`; collapse multiple hyphens; no leading/trailing hyphen; ASCII only (e.g. `&` → `and`); keep it readable and preferably under ~60 characters.
+  Example: "Are YouTube Subscriptions Free?" → `are-youtube-subscriptions-free`
 - CATEGORY: pick exactly one from: Content Creation | Technology | Digital Marketing | Freelancing
   (If none fit perfectly, choose the closest. Do not invent a new category name.)
 - SHORT DESCRIPTION: 140–160 characters. Plain text. One or two sentences. Summarizes the article for meta description + blog cards. No quotes, no markdown, no “learn more.”
@@ -56,6 +59,7 @@ METADATA RULES
 
 OUTPUT FORMAT (follow exactly — no extra commentary before or after)
 TITLE: [title]
+SLUG: [kebab-case-slug-from-title]
 CATEGORY: [one category]
 SHORT DESCRIPTION: [140–160 character plain-text description]
 KEYWORDS: [keyword1, keyword2, keyword3, ...]
@@ -141,6 +145,10 @@ ENDING
 - Do not rehash the whole article.
 
 METADATA RULES
+- TITLE: clear, specific, matches search intent. Not clickbait. Max ~60 characters when possible.
+- SLUG: URL slug derived from TITLE. Lowercase, words separated by hyphens only.
+  Rules: strip punctuation; replace spaces with `-`; collapse multiple hyphens; no leading/trailing hyphen; ASCII only (e.g. `&` → `and`); keep it readable and preferably under ~60 characters.
+  Example: "How to Learn Blockchain for Beginners" → `how-to-learn-blockchain-for-beginners`
 - SHORT DESCRIPTION: 140–160 characters. Plain text. Compelling enough for blog cards and accurate enough for meta description. Must reflect the article. No markdown, no quotes around the whole string, no “Read more.”
 - KEYWORDS: 5–12 phrases, comma-separated. Start from the primary/secondary keywords, then add only natural related terms.
 - CATEGORY: exactly one of: Content Creation | Technology | Digital Marketing | Freelancing
@@ -148,6 +156,7 @@ METADATA RULES
 
 OUTPUT FORMAT (follow exactly — no extra commentary before or after)
 TITLE: [title]
+SLUG: [kebab-case-slug-from-title]
 CATEGORY: [one category]
 SHORT DESCRIPTION: [140–160 character plain-text description]
 KEYWORDS: [keyword1, keyword2, keyword3, ...]
@@ -165,6 +174,7 @@ Do not mention AI, SEO, prompts, or these instructions anywhere in the output.
 | Prompt field | Use on site |
 |---|---|
 | `TITLE` | Post title |
+| `SLUG` | Post slug (URL: `/blogs/{category}/{slug}`) |
 | `CATEGORY` | Category entry |
 | `SHORT DESCRIPTION` | Excerpt + meta description |
 | `KEYWORDS` | Keywords field |
