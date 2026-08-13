@@ -1,7 +1,7 @@
 /** @type {import('next-sitemap').IConfig} */
 
 module.exports = {
-  siteUrl: "https://digitaldialogue.pk",
+  siteUrl: "https://www.digitaldialogue.pk",
   generateRobotsTxt: true,
   generateIndexSitemap: false,
 };

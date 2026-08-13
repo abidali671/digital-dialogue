@@ -26,7 +26,7 @@ const config = {
   PHONE: "+92 3248218854",
   NAV_LINKS,
   FORM_ACTION: "https://formspree.io/f/xoqoddgp",
-  BASE_URL: "https://digitaldialogue.pk",
+  BASE_URL: "https://www.digitaldialogue.pk",
   BLOGS_PER_PAGE: 15,
   SITE_NAME: "Digital Dialogue",
   DEFAULT_TITLE_TEMPLATE: "Digital Dialogue",

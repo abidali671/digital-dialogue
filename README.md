@@ -48,20 +48,20 @@ Protected by `REVALIDATE_SECRET`. Pass the secret in the query string or as `Aut
 
 Replace:
 
-- `YOUR_DOMAIN` → `http://localhost:3000` locally, or `https://digitaldialogue.pk` in production
+- `YOUR_DOMAIN` → `http://localhost:3000` locally, or `https://www.digitaldialogue.pk` in production
 - `YOUR_SECRET` → value of `REVALIDATE_SECRET`
 - `path` → the page path to clear (must start with `/`)
 
 ### Clear one blog post
 
 ```bash
-curl "https://digitaldialogue.pk/api/revalidate?secret=YOUR_SECRET&path=/blogs/technology/my-post-slug"
+curl "https://www.digitaldialogue.pk/api/revalidate?secret=YOUR_SECRET&path=/blogs/technology/my-post-slug"
 ```
 
 POST example:
 
 ```bash
-curl -X POST "https://digitaldialogue.pk/api/revalidate" \
+curl -X POST "https://www.digitaldialogue.pk/api/revalidate" \
   -H "Authorization: Bearer YOUR_SECRET" \
   -H "Content-Type: application/json" \
   -d "{\"path\":\"/blogs/technology/my-post-slug\"}"
@@ -71,10 +71,10 @@ curl -X POST "https://digitaldialogue.pk/api/revalidate" \
 
 ```bash
 # Home
-curl "https://digitaldialogue.pk/api/revalidate?secret=YOUR_SECRET&path=/"
+curl "https://www.digitaldialogue.pk/api/revalidate?secret=YOUR_SECRET&path=/"
 
 # Blogs listing
-curl "https://digitaldialogue.pk/api/revalidate?secret=YOUR_SECRET&path=/blogs"
+curl "https://www.digitaldialogue.pk/api/revalidate?secret=YOUR_SECRET&path=/blogs"
 ```
 
 Successful response:
