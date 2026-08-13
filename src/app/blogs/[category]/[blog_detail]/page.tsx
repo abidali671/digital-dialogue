@@ -13,7 +13,7 @@ import { ICategoryData, IPostData } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import config from "@/lib/config";
-import { formatLongDate, getReadingTime, shuffleArray } from "@/helper";
+import { formatLongDate, getPublishedDate, getReadingTime, shuffleArray } from "@/helper";
 import { ArticleJsonLd } from "next-seo";
 
 export const revalidate = REVALIDATE_DETAIL;
@@ -118,6 +118,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
       keywords,
     } = post.fields;
     const { createdAt, updatedAt } = post.sys;
+    const publishedAt = getPublishedDate(post.sys);
     const formattedTags = tags?.map((tag) => tag.fields.label).join(", ");
     const blogKeywords = keywords ?? formattedTags;
     const keywordList = Array.from(
@@ -188,7 +189,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
                       {author.fields.name}
                     </Link>
                     <p className="font-mono text-xs text-mute-soft">
-                      {formatLongDate(createdAt)} ·{" "}
+                      {formatLongDate(publishedAt)} ·{" "}
                       {readingTime} min read
                     </p>
                   </div>

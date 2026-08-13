@@ -43,6 +43,7 @@ export default async function CategoryPage({ params }: PageProps) {
     const response = await contentful_client.getEntries({
       content_type: "post",
       links_to_entry: category.sys.id,
+      order: "-sys.updatedAt",
     });
 
     return (

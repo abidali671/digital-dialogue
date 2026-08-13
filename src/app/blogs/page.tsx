@@ -30,6 +30,7 @@ export default async function BlogsPage({ searchParams }: PageProps) {
     content_type: "post",
     limit: config.BLOGS_PER_PAGE,
     skip: (currentPage - 1) * config.BLOGS_PER_PAGE,
+    order: "-sys.updatedAt",
   });
 
   const totalPages = Math.max(

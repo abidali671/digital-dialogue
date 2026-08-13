@@ -18,7 +18,11 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const [postsRes, categoriesRes] = await Promise.all([
-    contentful_client.getEntries({ content_type: "post", limit: 16 }),
+    contentful_client.getEntries({
+      content_type: "post",
+      limit: 16,
+      order: "-sys.updatedAt",
+    }),
     contentful_client.getEntries({ content_type: "category" }),
   ]);
 

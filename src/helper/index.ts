@@ -51,4 +51,14 @@ function formatShortDate(iso: string) {
   });
 }
 
-export { shuffleArray, getReadingTime, formatLongDate, formatShortDate };
+function getPublishedDate(sys: { createdAt: string; updatedAt: string }) {
+  return sys.updatedAt || sys.createdAt;
+}
+
+export {
+  shuffleArray,
+  getReadingTime,
+  formatLongDate,
+  formatShortDate,
+  getPublishedDate,
+};

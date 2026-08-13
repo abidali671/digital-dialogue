@@ -53,6 +53,7 @@ export default async function AuthorPage({ params, searchParams }: PageProps) {
       limit: config.BLOGS_PER_PAGE,
       skip: (currentPage - 1) * config.BLOGS_PER_PAGE,
       links_to_entry: author.sys.id,
+      order: "-sys.updatedAt",
     });
 
     const totalPages = Math.max(

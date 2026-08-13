@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ContentContainer from "../ContentContainer";
 import { IPostData } from "@/types";
-import { formatShortDate } from "@/helper";
+import { formatShortDate, getPublishedDate } from "@/helper";
 
 interface IProps {
   posts: IPostData[];
@@ -37,7 +37,7 @@ const TopPicks = ({ posts }: IProps) => {
                   {post.fields.title}
                 </h3>
                 <p className="font-mono text-xs text-mute-soft">
-                  {formatShortDate(post.sys.createdAt)}
+                  {formatShortDate(getPublishedDate(post.sys))}
                 </p>
               </div>
               <div className="relative hidden h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-mist-soft sm:block">

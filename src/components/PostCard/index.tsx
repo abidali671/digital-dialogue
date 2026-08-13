@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Arrow from "@/assets/icon/arrow";
 import { IPostData } from "@/types";
-import { formatLongDate } from "@/helper";
+import { formatLongDate, getPublishedDate } from "@/helper";
 
 interface CardPropsT {
   data: IPostData;
@@ -12,7 +12,7 @@ interface CardPropsT {
 
 const PostCard = ({ data, priority = false }: CardPropsT) => {
   const { category, coverImage, title, excerpt, slug } = data.fields;
-  const { createdAt } = data.sys;
+  const publishedAt = getPublishedDate(data.sys);
 
   return (
     <Link
@@ -36,7 +36,7 @@ const PostCard = ({ data, priority = false }: CardPropsT) => {
         <p className="post-card-title">{title}</p>
         <p className="post-card-excerpt">{excerpt}</p>
         <p className="post-card-created-date">
-          {formatLongDate(createdAt)}
+          {formatLongDate(publishedAt)}
         </p>
 
         <p className="post-card-read-text">

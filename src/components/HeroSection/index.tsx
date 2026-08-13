@@ -4,7 +4,7 @@ import Link from "next/link";
 import ContentContainer from "../ContentContainer";
 import { IPostData } from "@/types";
 import config from "@/lib/config";
-import { formatLongDate } from "@/helper";
+import { formatLongDate, getPublishedDate } from "@/helper";
 
 interface IProps {
   posts: IPostData[];
@@ -72,7 +72,7 @@ const Hero = ({ posts }: IProps) => {
                 {post.fields.excerpt}
               </p>
               <p className="font-mono text-xs text-white/40">
-                {formatLongDate(post.sys.createdAt)}
+                {formatLongDate(getPublishedDate(post.sys))}
               </p>
             </div>
           </Link>
