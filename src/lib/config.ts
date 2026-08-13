@@ -22,7 +22,7 @@ const NAV_LINKS = [
 ];
 
 const config = {
-  EMAIL: "digital.dialogue.co@gmail.com",
+  EMAIL: "abid.saeed.ali92@gmail.com",
   PHONE: "+92 3248218854",
   NAV_LINKS,
   FORM_ACTION: "https://formspree.io/f/xoqoddgp",
