@@ -30,8 +30,16 @@ const Footer = () => {
             © {new Date().getFullYear()} {config.SITE_NAME}. All rights
             reserved.
           </p>
-          <p className="font-mono text-xs uppercase tracking-wide text-mute-soft">
-            Built for builders
+          <p className="font-mono text-xs tracking-wide text-mute-soft">
+            Built by{" "}
+            <a
+              href={config.LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-mute-soft underline decoration-white/20 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
+            >
+              {config.AUTHOR_NAME}
+            </a>
           </p>
         </div>
       </ContentContainer>

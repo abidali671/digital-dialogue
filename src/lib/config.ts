@@ -32,6 +32,8 @@ const config = {
   DEFAULT_TITLE_TEMPLATE: "Digital Dialogue",
   DEFAULT_DESCRIPTION:
     "Digital Dialogue is blogging site for all things freelancing, technology, design and creativity.",
+  AUTHOR_NAME: "Abid Ali",
+  LINKEDIN_URL: "https://www.linkedin.com/in/abid-ali-89ab4a1bb/",
 };
 
 export default config;
