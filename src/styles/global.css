@@ -83,8 +83,9 @@ a {
 }
 
 @layer components {
+  /** Border keeps the chip readable on both the white and mist backgrounds. */
   .tag-span {
-    @apply w-auto rounded-md bg-mist px-3 py-1.5 text-center font-mono text-xs font-medium uppercase tracking-wide text-ink;
+    @apply inline-flex w-auto items-center rounded-md border border-line bg-white px-3 py-1.5 text-center font-mono text-xs font-medium uppercase tracking-wide text-mute;
   }
 
   .btn-primary {

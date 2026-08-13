@@ -120,6 +120,14 @@ export default async function BlogDetailPage({ params }: PageProps) {
     const { createdAt, updatedAt } = post.sys;
     const formattedTags = tags?.map((tag) => tag.fields.label).join(", ");
     const blogKeywords = keywords ?? formattedTags;
+    const keywordList = Array.from(
+      new Set(
+        (blogKeywords ?? "")
+          .split(",")
+          .map((keyword) => keyword.trim())
+          .filter(Boolean)
+      )
+    );
     const shareUrl = `${config.BASE_URL}/blogs/${category}/${blog_detail}`;
     const readingTime = getReadingTime(content);
 
@@ -217,10 +225,10 @@ export default async function BlogDetailPage({ params }: PageProps) {
               {documentToReactComponents(content)}
             </article>
 
-            {blogKeywords && (
+            {keywordList.length > 0 && (
               <div className="mt-12 flex flex-wrap gap-2">
-                {blogKeywords.split(",").map((keyword, index) => (
-                  <Tag key={index}>{keyword}</Tag>
+                {keywordList.map((keyword) => (
+                  <Tag key={keyword}>{keyword}</Tag>
                 ))}
               </div>
             )}
