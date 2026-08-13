@@ -66,8 +66,8 @@ KEYWORDS: [keyword1, keyword2, keyword3, ...]
 
 CONTENT:
 [Full rewritten article in Markdown]
-- Start with a single H1 that matches TITLE (or is a natural variant).
-- Then H2/H3 body.
+- Do not include an H1 — the site already shows TITLE above the article.
+- Start with the intro paragraph, then H2/H3 body.
 - Do not unnecessarily increase word count. Shorter and clearer beats longer and fluffier.
 - If the source is missing a clear takeaway, end with a short, useful closing—not a summary of every section.
 
@@ -113,7 +113,7 @@ Title & intro
 - Explain who this is for (and who it is not for) when helpful.
 
 Structure
-- Use Markdown with one H1 (matching the title), then H2/H3.
+- Use Markdown with H2/H3 only — do not include an H1 (the site already shows TITLE).
 - Each H2 should earn its place (a real question or decision).
 - Use short paragraphs, bullets, and numbered steps when they improve clarity.
 - Include a short FAQ (3–6 questions) only if it adds new value—not recycled section summaries.
@@ -162,7 +162,7 @@ SHORT DESCRIPTION: [140–160 character plain-text description]
 KEYWORDS: [keyword1, keyword2, keyword3, ...]
 
 CONTENT:
-[Full article in Markdown with H1 + body]
+[Full article in Markdown — intro + H2/H3 body, no H1]
 
 Do not mention AI, SEO, prompts, or these instructions anywhere in the output.
 ```
