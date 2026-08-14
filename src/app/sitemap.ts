@@ -19,7 +19,7 @@ async function getAllEntries(query: GetEntriesQuery) {
   while (skip < total) {
     const page = await contentful_client.getEntries(
       { ...query, limit, skip },
-      { revalidate: REVALIDATE_LISTING }
+      { revalidate: REVALIDATE_LISTING },
     );
     items.push(...page.items);
     total = page.total;
@@ -31,21 +31,29 @@ async function getAllEntries(query: GetEntriesQuery) {
 
 function entry(
   path: string,
-  lastModified?: string | Date
-): MetadataRoute.Sitemap[number] {
+  options: {
+    lastModified?: string | Date;
+    changeFrequency?: string;
+    priority?: number;
+  } = {},
+) {
   return {
     url: path === "/" ? config.BASE_URL : `${config.BASE_URL}${path}`,
-    lastModified: lastModified ? new Date(lastModified) : new Date(),
+    lastModified: options.lastModified
+      ? new Date(options.lastModified)
+      : new Date(),
+    changeFrequency: options.changeFrequency ?? "weekly",
+    priority: options.priority ?? 0.5,
   };
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
-    entry("/"),
-    entry("/blogs"),
-    entry("/authors"),
-    entry("/contact-us"),
-    entry("/privacy-policy"),
+    entry("/", { changeFrequency: "daily", priority: 1 }),
+    entry("/blogs", { changeFrequency: "daily", priority: 0.9 }),
+    entry("/authors", { changeFrequency: "weekly", priority: 0.6 }),
+    entry("/contact-us", { changeFrequency: "yearly", priority: 0.3 }),
+    entry("/privacy-policy", { changeFrequency: "yearly", priority: 0.3 }),
   ];
 
   try {
@@ -57,22 +65,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const categoryRoutes = (categories as unknown as ICategoryData[]).map(
       (category) =>
-        entry(`/blogs/${category.fields.slug}`, category.sys.updatedAt)
+        entry(`/blogs/${category.fields.slug}`, {
+          lastModified: category.sys.updatedAt,
+          changeFrequency: "weekly",
+          priority: 0.7,
+        }),
     );
 
     const postRoutes = (posts as unknown as IPostData[])
       .filter(
-        (post) => post.fields?.slug && post.fields?.category?.fields?.slug
+        (post) => post.fields?.slug && post.fields?.category?.fields?.slug,
       )
       .map((post) =>
         entry(
           `/blogs/${post.fields.category.fields.slug}/${post.fields.slug}`,
-          post.sys.updatedAt
-        )
+          {
+            lastModified: post.sys.updatedAt,
+            changeFrequency: "weekly",
+            priority: 0.8,
+          },
+        ),
       );
 
     const authorRoutes = (authors as unknown as IAuthor[]).map((author) =>
-      entry(`/authors/${author.fields.slug}`, author.sys.updatedAt)
+      entry(`/authors/${author.fields.slug}`, {
+        lastModified: author.sys.updatedAt,
+        changeFrequency: "monthly",
+        priority: 0.5,
+      }),
     );
 
     return [...staticRoutes, ...categoryRoutes, ...postRoutes, ...authorRoutes];
