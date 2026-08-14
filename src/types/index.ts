@@ -78,6 +78,11 @@ export interface IAuthor {
   };
 }
 
+export interface IFaq {
+  question: string;
+  answer: string;
+}
+
 export interface IPostData {
   sys: ISysData;
   fields: {
@@ -90,5 +95,6 @@ export interface IPostData {
     excerpt: string;
     title: string;
     keywords: string;
+    faqs?: IFaq[];
   };
 }

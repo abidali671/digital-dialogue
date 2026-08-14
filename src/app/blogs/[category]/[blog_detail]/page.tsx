@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import ContentContainer from "@/components/ContentContainer";
 import PostCard from "@/components/PostCard";
+import PostFaqs from "@/components/PostFaqs";
 import ShareButtons from "@/components/ShareButtons";
 import Tag from "@/components/Tag";
 import Title from "@/components/Title";
@@ -9,12 +10,12 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import contentful_client, {
   REVALIDATE_DETAIL,
 } from "@/lib/contentful/client";
-import { ICategoryData, IPostData } from "@/types";
+import { ICategoryData, IFaq, IPostData } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import config from "@/lib/config";
 import { formatLongDate, getPublishedDate, getReadingTime, shuffleArray } from "@/helper";
-import { ArticleJsonLd } from "next-seo";
+import { ArticleJsonLd, FAQPageJsonLd } from "next-seo";
 
 export const revalidate = REVALIDATE_DETAIL;
 
@@ -116,6 +117,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
       tags,
       excerpt,
       keywords,
+      faqs,
     } = post.fields;
     const { createdAt, updatedAt } = post.sys;
     const publishedAt = getPublishedDate(post.sys);
@@ -128,6 +130,10 @@ export default async function BlogDetailPage({ params }: PageProps) {
           .map((keyword) => keyword.trim())
           .filter(Boolean)
       )
+    );
+    const faqList = (faqs ?? []).filter(
+      (faq): faq is IFaq =>
+        Boolean(faq?.question?.trim() && faq?.answer?.trim())
     );
     const shareUrl = `${config.BASE_URL}/blogs/${category}/${blog_detail}`;
     const readingTime = getReadingTime(content);
@@ -146,6 +152,15 @@ export default async function BlogDetailPage({ params }: PageProps) {
           images={["https:" + coverImage.fields.file.url]}
           useAppDir
         />
+        {faqList.length > 0 && (
+          <FAQPageJsonLd
+            useAppDir
+            mainEntity={faqList.map((faq) => ({
+              questionName: faq.question,
+              acceptedAnswerText: faq.answer,
+            }))}
+          />
+        )}
 
         <header className="border-b border-line bg-white">
           <ContentContainer className="py-12 md:py-16">
@@ -225,6 +240,8 @@ export default async function BlogDetailPage({ params }: PageProps) {
             <article className="article-wrapper">
               {documentToReactComponents(content)}
             </article>
+
+            <PostFaqs faqs={faqList} />
 
             {keywordList.length > 0 && (
               <div className="mt-12 flex flex-wrap gap-2">
