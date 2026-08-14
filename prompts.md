@@ -46,6 +46,7 @@ REMOVE / AVOID
 - AI filler: “in today’s digital world,” “delve into,” “comprehensive guide,” “unlock,” “elevate,” “landscape,” “robust,” “seamless,” “whether you’re a beginner or a pro,” “it’s important to note,” “in conclusion.”
 - Empty transitions: “Moreover,” “Furthermore,” “Additionally” stacked repeatedly.
 - Buzzword salads and motivational fluff with no practical takeaway.
+- Em dash (—) anywhere in TITLE, SHORT DESCRIPTION, KEYWORDS, or CONTENT. Use a comma, period, colon, parentheses, or a regular hyphen (-) instead.
 
 METADATA RULES
 - TITLE: clear, specific, matches search intent. Not clickbait. Max ~60 characters when possible.
@@ -58,10 +59,17 @@ METADATA RULES
 - KEYWORDS: 5–12 relevant keywords/phrases, comma-separated. Include the main topic naturally. No stuffing, no duplicates.
 
 OUTPUT FORMAT (follow exactly — no extra commentary before or after)
+- Put each field on its own line. Never combine two fields on the same line.
+- Keep one blank line between each field, and a blank line before CONTENT.
+
 TITLE: [title]
+
 SLUG: [kebab-case-slug-from-title]
+
 CATEGORY: [one category]
+
 SHORT DESCRIPTION: [140–160 character plain-text description]
+
 KEYWORDS: [keyword1, keyword2, keyword3, ...]
 
 CONTENT:
@@ -139,6 +147,7 @@ Trust & accuracy
 
 STYLE BAN LIST
 Avoid: “in today’s fast-paced world,” “delve into,” “comprehensive guide,” “unlock your potential,” “ever-evolving landscape,” “robust solution,” “seamless experience,” “whether you’re a beginner or an expert,” “in conclusion,” stacked “Moreover/Furthermore/Additionally,” and other AI filler.
+- Never use an em dash (—) in TITLE, SHORT DESCRIPTION, KEYWORDS, or CONTENT. Prefer a comma, period, colon, parentheses, or a regular hyphen (-).
 
 ENDING
 - Close with a concrete takeaway or next step.
@@ -155,10 +164,17 @@ METADATA RULES
   (Use PREFERRED CATEGORY if provided and valid; otherwise pick the best fit.)
 
 OUTPUT FORMAT (follow exactly — no extra commentary before or after)
+- Put each field on its own line. Never combine two fields on the same line.
+- Keep one blank line between each field, and a blank line before CONTENT.
+
 TITLE: [title]
+
 SLUG: [kebab-case-slug-from-title]
+
 CATEGORY: [one category]
+
 SHORT DESCRIPTION: [140–160 character plain-text description]
+
 KEYWORDS: [keyword1, keyword2, keyword3, ...]
 
 CONTENT:
