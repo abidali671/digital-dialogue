@@ -8,8 +8,7 @@
     "build": "next build",
     "analyze": "cross-env ANALYZE=true next build",
     "start": "next start",
-    "lint": "next lint",
-    "postbuild": "next-sitemap"
+    "lint": "next lint"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.17.0",
@@ -24,7 +23,6 @@
     "next": "^13.4.3",
     "next-seo": "^6.1.0",
     "next-share": "^0.24.0",
-    "next-sitemap": "^4.1.8",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
