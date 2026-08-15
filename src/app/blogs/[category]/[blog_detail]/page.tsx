@@ -7,6 +7,7 @@ import ShareButtons from "@/components/ShareButtons";
 import Tag from "@/components/Tag";
 import Title from "@/components/Title";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { richTextOptions } from "@/lib/richText";
 import contentful_client, {
   REVALIDATE_DETAIL,
 } from "@/lib/contentful/client";
@@ -277,7 +278,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
         <ContentContainer className="pb-4 pt-10">
           <div className="reading-column">
             <article className="article-wrapper">
-              {documentToReactComponents(content)}
+              {documentToReactComponents(content, richTextOptions)}
             </article>
 
             <PostFaqs faqs={faqList} />
