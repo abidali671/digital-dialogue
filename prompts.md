@@ -1,7 +1,7 @@
 # Content prompts
 
 Prompts for rewriting existing posts and drafting new articles for Digital Dialogue  
-(freelancing, technology, design, and shipping real work).
+(freelancing, technology, web development, digital marketing, content creation, and design).
 
 **How to use:** copy one prompt block, fill the bracketed fields, paste into your model.
 
@@ -53,7 +53,7 @@ METADATA RULES
 - SLUG: URL slug derived from TITLE. Lowercase, words separated by hyphens only.
   Rules: strip punctuation; replace spaces with `-`; collapse multiple hyphens; no leading/trailing hyphen; ASCII only (e.g. `&` → `and`); keep it readable and preferably under ~60 characters.
   Example: "Are YouTube Subscriptions Free?" → `are-youtube-subscriptions-free`
-- CATEGORY: pick exactly one from: Content Creation | Technology | Digital Marketing | Freelancing
+- CATEGORY: pick exactly one from: Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity
   (If none fit perfectly, choose the closest. Do not invent a new category name.)
 - SHORT DESCRIPTION: 140–160 characters. Plain text. One or two sentences. Summarizes the article for meta description + blog cards. No quotes, no markdown, no “learn more.”
 - KEYWORDS: 5–12 relevant keywords/phrases, comma-separated. Include the main topic naturally. No stuffing, no duplicates.
@@ -97,7 +97,7 @@ Use when starting from a topic + keyword brief. Fill every field before running.
 ### Prompt
 
 ```text
-You are a senior writer for Digital Dialogue—a practical blog on freelancing, technology, and building things that ship. Write one original article for humans first, search engines second.
+You are a senior writer for Digital Dialogue—a practical blog on freelancing, technology, web development, marketing, content, and design. Write one original article for humans first, search engines second.
 
 BRIEF
 TOPIC: [TOPIC]
@@ -106,7 +106,7 @@ SECONDARY KEYWORDS: [COMMA-SEPARATED KEYWORDS]
 TARGET AUDIENCE: [e.g. beginner freelancers / MERN juniors / content creators]
 SEARCH INTENT: [informational / comparison / how-to / transactional]
 ANGLE (optional): [what unique point of view or constraint—e.g. “for Pakistan freelancers”, “no-code vs custom”, “beginner mistakes”]
-PREFERRED CATEGORY (optional): [Content Creation | Technology | Digital Marketing | Freelancing]
+PREFERRED CATEGORY (optional): [Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity]
 WORD COUNT TARGET: [e.g. 1200–1800] (stay useful; do not pad to hit a number)
 MUST INCLUDE: [optional: specific points, tools, FAQs]
 MUST AVOID: [optional: competitors, off-topic tangents]
@@ -165,7 +165,7 @@ METADATA RULES
   Example: "How to Learn Blockchain for Beginners" → `how-to-learn-blockchain-for-beginners`
 - SHORT DESCRIPTION: 140–160 characters. Plain text. Compelling enough for blog cards and accurate enough for meta description. Must reflect the article. No markdown, no quotes around the whole string, no “Read more.”
 - KEYWORDS: 5–12 phrases, comma-separated. Start from the primary/secondary keywords, then add only natural related terms.
-- CATEGORY: exactly one of: Content Creation | Technology | Digital Marketing | Freelancing
+- CATEGORY: exactly one of: Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity
   (Use PREFERRED CATEGORY if provided and valid; otherwise pick the best fit.)
 - FAQS (optional): include only when a short FAQ adds new value (typically 3–6 items). Otherwise omit the FAQS field entirely. Never invent filler FAQs. Do not put an FAQ section inside CONTENT.
 
