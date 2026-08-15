@@ -15,18 +15,39 @@ type PageProps = {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const category_response = await contentful_client.getEntries({
-    content_type: "category",
-    "fields.slug": params.category,
-  });
+  try {
+    const category_response = await contentful_client.getEntries({
+      content_type: "category",
+      "fields.slug": params.category,
+    });
+    const category = category_response.items[0] as unknown as
+      | ICategoryData
+      | undefined;
 
-  const category = category_response.items[0] as unknown as ICategoryData | undefined;
-  if (!category) return { title: "Category" };
+    if (!category) {
+      return {
+        title: "Blog Category",
+        description: "Browse practical articles by topic on Digital Dialogue.",
+      };
+    }
 
-  return {
-    title: `${category.fields.label} | Category`,
-    description: (category.fields as any).description || category.fields.label,
-  };
+    const label = String(category.fields.label);
+    const title = `${label} Articles`;
+    const description = `Browse practical ${label.toLowerCase()} articles, guides, and tips from Digital Dialogue for freelancers, developers, creators, and online business builders.`;
+    const canonical = `/blogs/${params.category}`;
+
+    return {
+      title,
+      description,
+      alternates: { canonical },
+      openGraph: { title, description, url: canonical },
+    };
+  } catch {
+    return {
+      title: "Blog Category",
+      description: "Browse practical articles by topic on Digital Dialogue.",
+    };
+  }
 }
 
 export default async function CategoryPage({ params }: PageProps) {

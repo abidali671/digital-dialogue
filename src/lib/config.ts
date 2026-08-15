@@ -29,9 +29,8 @@ const config = {
   BASE_URL: "https://www.digitaldialogue.pk",
   BLOGS_PER_PAGE: 15,
   SITE_NAME: "Digital Dialogue",
-  DEFAULT_TITLE_TEMPLATE: "Digital Dialogue",
   DEFAULT_DESCRIPTION:
-    "Digital Dialogue is blogging site for all things freelancing, technology, design and creativity.",
+    "Practical guides on freelancing, technology, digital marketing, content creation, and design for people building skills and careers online.",
   AUTHOR_NAME: "Abid Ali",
   LINKEDIN_URL: "https://www.linkedin.com/in/abid-ali-89ab4a1bb/",
 };

@@ -7,6 +7,12 @@ import Title from "@/components/Title";
 export const metadata: Metadata = {
   title: "Contact Us",
   description: constants.descriptions.CONTACT_US,
+  alternates: { canonical: "/contact-us" },
+  openGraph: {
+    title: "Contact Us",
+    description: constants.descriptions.CONTACT_US,
+    url: "/contact-us",
+  },
 };
 
 export default function ContactUsPage() {

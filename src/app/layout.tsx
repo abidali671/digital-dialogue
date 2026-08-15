@@ -34,7 +34,7 @@ const monoFont = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: {
     default: config.SITE_NAME,
-    template: `%s | ${config.DEFAULT_TITLE_TEMPLATE}`,
+    template: `%s | ${config.SITE_NAME}`,
   },
   description: config.DEFAULT_DESCRIPTION,
   metadataBase: new URL(config.BASE_URL),
@@ -42,10 +42,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: config.SITE_NAME,
-    url: config.BASE_URL,
+    title: config.SITE_NAME,
+    description: config.DEFAULT_DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
+    title: config.SITE_NAME,
+    description: config.DEFAULT_DESCRIPTION,
   },
   icons: {
     icon: "/favicon.svg",

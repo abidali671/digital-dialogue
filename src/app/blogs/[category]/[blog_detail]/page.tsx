@@ -23,6 +23,13 @@ type PageProps = {
   params: { category: string; blog_detail: string };
 };
 
+function toMetaDescription(value: string | undefined, fallback: string) {
+  const description = (value || fallback).replace(/\s+/g, " ").trim();
+  return description.length > 160
+    ? `${description.slice(0, 157).trimEnd()}...`
+    : description;
+}
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -34,31 +41,68 @@ export async function generateMetadata({
       },
       { revalidate: REVALIDATE_DETAIL }
     );
+    const category = category_response.items[0];
+    if (!category) {
+      return {
+        title: "Article Not Found",
+        description: "The requested Digital Dialogue article could not be found.",
+      };
+    }
+
     const response = await contentful_client.getEntries(
       {
         content_type: "post",
         "fields.slug": params.blog_detail,
-        links_to_entry: category_response.items[0].sys.id,
+        links_to_entry: category.sys.id,
       },
       { revalidate: REVALIDATE_DETAIL }
     );
-    const post = response.items[0] as unknown as IPostData;
+    const post = response.items[0] as unknown as IPostData | undefined;
+    if (!post) {
+      return {
+        title: "Article Not Found",
+        description: "The requested Digital Dialogue article could not be found.",
+      };
+    }
+
     const url = `${config.BASE_URL}/blogs/${params.category}/${params.blog_detail}`;
+    const title = String(post.fields.title);
+    const description = toMetaDescription(
+      post.fields.excerpt,
+      `Read ${title} on Digital Dialogue.`
+    );
+    const imagePath = post.fields.coverImage?.fields?.file?.url;
+    const imageUrl = imagePath
+      ? imagePath.startsWith("//")
+        ? `https:${imagePath}`
+        : imagePath
+      : undefined;
+    const images = imageUrl ? [imageUrl] : undefined;
 
     return {
-      title: `${post.fields.title} | Blog`,
-      description: post.fields.excerpt,
+      title,
+      description,
+      keywords: post.fields.keywords,
       alternates: { canonical: url },
       openGraph: {
-        title: post.fields.title,
-        description: post.fields.excerpt,
+        title,
+        description,
         url,
         type: "article",
-        images: ["https:" + post.fields.coverImage.fields.file.url],
+        images,
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images,
       },
     };
   } catch {
-    return { title: "Blog" };
+    return {
+      title: "Digital Dialogue Article",
+      description: "Read practical articles and guides from Digital Dialogue.",
+    };
   }
 }
 

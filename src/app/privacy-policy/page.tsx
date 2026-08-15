@@ -6,6 +6,12 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: constants.descriptions.PRIVACY_POLICY,
+  alternates: { canonical: "/privacy-policy" },
+  openGraph: {
+    title: "Privacy Policy",
+    description: constants.descriptions.PRIVACY_POLICY,
+    url: "/privacy-policy",
+  },
 };
 
 export default function PrivacyPolicyPage() {

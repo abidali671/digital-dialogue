@@ -6,14 +6,21 @@ import Newsletter from "@/components/Newsletter";
 import contentful_client, {
   REVALIDATE_LISTING,
 } from "@/lib/contentful/client";
+import config from "@/lib/config";
 import constants from "@/constants";
 import { ICategoryData, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
 
 export const metadata: Metadata = {
-  title: "Home",
+  title: { absolute: `${config.SITE_NAME} | Freelancing and Technology Guides` },
   description: constants.descriptions.HOME,
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: `${config.SITE_NAME} | Freelancing and Technology Guides`,
+    description: constants.descriptions.HOME,
+    url: "/",
+  },
 };
 
 export default async function HomePage() {

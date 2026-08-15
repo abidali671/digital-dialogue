@@ -9,8 +9,14 @@ import { IAuthor } from "@/types";
 export const revalidate = REVALIDATE_LISTING;
 
 export const metadata: Metadata = {
-  title: "Authors",
+  title: "Meet Our Authors",
   description: constants.descriptions.AUTHORS,
+  alternates: { canonical: "/authors" },
+  openGraph: {
+    title: "Meet Our Authors",
+    description: constants.descriptions.AUTHORS,
+    url: "/authors",
+  },
 };
 
 export default async function AuthorsPage() {

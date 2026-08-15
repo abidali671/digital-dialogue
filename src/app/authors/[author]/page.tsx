@@ -21,18 +21,44 @@ function parsePage(page?: string) {
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: PageProps): Promise<Metadata> {
-  const author_response = await contentful_client.getEntries({
-    content_type: "author",
-    "fields.slug": params.author,
-  });
-  const author = author_response.items[0] as unknown as IAuthor | undefined;
-  if (!author) return { title: "Author" };
+  try {
+    const author_response = await contentful_client.getEntries({
+      content_type: "author",
+      "fields.slug": params.author,
+    });
+    const author = author_response.items[0] as unknown as IAuthor | undefined;
+    if (!author) {
+      return {
+        title: "Author Not Found",
+        description: "The requested Digital Dialogue author could not be found.",
+      };
+    }
 
-  return {
-    title: `${author.fields.name} | Author`,
-    description: author.fields.about,
-  };
+    const currentPage = parsePage(searchParams.page);
+    const pageSuffix = currentPage > 1 ? `, Page ${currentPage}` : "";
+    const title = `${author.fields.name}'s Articles${pageSuffix}`;
+    const about = author.fields.about.replace(/\s+/g, " ").trim();
+    const description =
+      about.length > 160 ? `${about.slice(0, 157).trimEnd()}...` : about;
+    const canonical =
+      currentPage > 1
+        ? `/authors/${params.author}?page=${currentPage}`
+        : `/authors/${params.author}`;
+
+    return {
+      title,
+      description,
+      alternates: { canonical },
+      openGraph: { title, description, url: canonical },
+    };
+  } catch {
+    return {
+      title: "Digital Dialogue Author",
+      description: "Browse articles by a Digital Dialogue author.",
+    };
+  }
 }
 
 export default async function AuthorPage({ params, searchParams }: PageProps) {
