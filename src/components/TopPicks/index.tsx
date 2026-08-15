@@ -43,10 +43,7 @@ const TopPicks = ({ posts }: IProps) => {
               <div className="relative hidden h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-mist-soft sm:block">
                 <Image
                   src={"https:" + post.fields.coverImage.fields.file.url}
-                  alt={
-                    post.fields.coverImage.fields.description ||
-                    post.fields.title
-                  }
+                  alt={post.fields.title}
                   fill
                   sizes="80px"
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"

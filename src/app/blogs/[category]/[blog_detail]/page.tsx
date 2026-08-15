@@ -265,7 +265,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
             <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl border border-line bg-mist-soft">
               <Image
                 src={"https:" + coverImage.fields.file.url}
-                alt={coverImage.fields.description || title}
+                alt={title}
                 fill
                 priority
                 sizes="(min-width: 768px) 768px, 100vw"

@@ -52,9 +52,7 @@ const Hero = ({ posts }: IProps) => {
             <div className="relative h-56 w-full overflow-hidden md:h-64">
               <Image
                 src={"https:" + post.fields.coverImage.fields.file.url}
-                alt={
-                  post.fields.coverImage.fields.description || post.fields.title
-                }
+                alt={post.fields.title}
                 fill
                 priority
                 sizes="(min-width: 1100px) 600px, 100vw"

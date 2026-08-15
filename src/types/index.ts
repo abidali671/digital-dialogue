@@ -52,7 +52,6 @@ export interface IImage {
   sys: ISysData;
   fields: {
     title: string;
-    description: string;
     file: {
       url: string;
       details: {
