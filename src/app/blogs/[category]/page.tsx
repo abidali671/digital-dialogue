@@ -33,7 +33,14 @@ export async function generateMetadata({
 
     const label = String(category.fields.label);
     const title = `${label} Articles`;
-    const description = `Browse practical ${label.toLowerCase()} articles, guides, and tips from Digital Dialogue for freelancers, developers, creators, and online business builders.`;
+    const fallback = `Browse practical ${label.toLowerCase()} articles, guides, and tips from Digital Dialogue.`;
+    const rawDescription = (category.fields.description || fallback)
+      .replace(/\s+/g, " ")
+      .trim();
+    const description =
+      rawDescription.length > 160
+        ? `${rawDescription.slice(0, 157).trimEnd()}...`
+        : rawDescription;
     const canonical = `/blogs/${params.category}`;
 
     return {

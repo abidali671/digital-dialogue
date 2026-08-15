@@ -44,6 +44,7 @@ export interface ICategoryData {
   fields: {
     label: string;
     slug: string;
+    description?: string;
   };
 }
 
