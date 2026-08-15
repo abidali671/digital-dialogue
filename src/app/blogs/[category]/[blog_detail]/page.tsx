@@ -227,11 +227,6 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 className="object-cover"
               />
             </div>
-            {coverImage.fields.description && (
-              <figcaption className="mt-3 text-center font-mono text-xs text-mute-soft">
-                {coverImage.fields.description}
-              </figcaption>
-            )}
           </figure>
         </ContentContainer>
 
