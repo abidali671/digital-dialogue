@@ -54,7 +54,7 @@
 }
 
 .article-wrapper table {
-  @apply w-full border-collapse overflow-hidden rounded-lg border border-line text-left;
+  @apply w-full border-collapse rounded-lg border border-line text-left;
 }
 
 .article-wrapper th,
