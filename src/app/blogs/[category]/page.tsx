@@ -4,12 +4,14 @@ import contentful_client, {
   REVALIDATE_LISTING,
 } from "@/lib/contentful/client";
 import CategoryBlogsClient from "@/components/blogs/CategoryBlogsClient";
+import { parseSearchQuery } from "@/lib/listing";
 import { ICategoryData, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
 
 type PageProps = {
   params: { category: string };
+  searchParams: { q?: string };
 };
 
 export async function generateMetadata({
@@ -57,8 +59,10 @@ export async function generateMetadata({
   }
 }
 
-export default async function CategoryPage({ params }: PageProps) {
+export default async function CategoryPage({ params, searchParams }: PageProps) {
   try {
+    const searchQuery = parseSearchQuery(searchParams.q);
+
     const category_response = await contentful_client.getEntries({
       content_type: "category",
       "fields.slug": params.category,
@@ -72,12 +76,15 @@ export default async function CategoryPage({ params }: PageProps) {
       content_type: "post",
       links_to_entry: category.sys.id,
       order: "-sys.updatedAt",
+      ...(searchQuery ? { query: searchQuery } : {}),
     });
 
     return (
       <CategoryBlogsClient
         posts={response.items as unknown as IPostData[]}
         categoryLabel={String(category.fields.label)}
+        categorySlug={params.category}
+        searchQuery={searchQuery}
       />
     );
   } catch {

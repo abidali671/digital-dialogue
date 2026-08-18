@@ -35,6 +35,8 @@ export type GetEntriesQuery = {
   skip?: number;
   include?: number;
   links_to_entry?: string;
+  /** Full-text search across text, symbol, and rich text fields */
+  query?: string;
   [key: string]: string | number | undefined;
 };
 

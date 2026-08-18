@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Arrow from "@/assets/icon/arrow";
+import { listingHref } from "@/lib/listing";
 import cx from "clsx";
 
 interface PropsT {
@@ -8,13 +9,19 @@ interface PropsT {
   currentPage: number;
   /** Path without query, e.g. `/blogs` or `/authors/jane` */
   basePath: string;
+  searchQuery?: string;
 }
 
-function pageHref(basePath: string, page: number) {
-  return page <= 1 ? basePath : `${basePath}?page=${page}`;
+function pageHref(basePath: string, page: number, searchQuery?: string) {
+  return listingHref(basePath, { page, q: searchQuery });
 }
 
-const Pagination = ({ pages, currentPage, basePath }: PropsT) => {
+const Pagination = ({
+  pages,
+  currentPage,
+  basePath,
+  searchQuery,
+}: PropsT) => {
   if (pages <= 1) return null;
 
   const prevPage = currentPage - 1;
@@ -25,7 +32,7 @@ const Pagination = ({ pages, currentPage, basePath }: PropsT) => {
       <div className="flex w-full items-center justify-between border-t border-line">
         {prevPage >= 1 ? (
           <Link
-            href={pageHref(basePath, prevPage)}
+            href={pageHref(basePath, prevPage, searchQuery)}
             className="flex items-center pt-3 text-mute hover:text-accent"
           >
             <Arrow className="rotate-180 transform" />
@@ -44,7 +51,7 @@ const Pagination = ({ pages, currentPage, basePath }: PropsT) => {
             return (
               <Link
                 key={page}
-                href={pageHref(basePath, page)}
+                href={pageHref(basePath, page, searchQuery)}
                 className={cx(
                   "border-t border-transparent px-2 pt-3 text-sm font-medium leading-none text-mute hover:border-accent hover:text-accent",
                   page === currentPage && "border-accent text-accent"
@@ -59,7 +66,7 @@ const Pagination = ({ pages, currentPage, basePath }: PropsT) => {
 
         {nextPage <= pages ? (
           <Link
-            href={pageHref(basePath, nextPage)}
+            href={pageHref(basePath, nextPage, searchQuery)}
             className="flex items-center pt-3 text-mute hover:text-accent"
           >
             <p className="mr-3 text-sm font-medium leading-none">Next</p>

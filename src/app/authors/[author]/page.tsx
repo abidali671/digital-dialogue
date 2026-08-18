@@ -5,13 +5,14 @@ import contentful_client, {
 } from "@/lib/contentful/client";
 import config from "@/lib/config";
 import AuthorPostsClient from "@/components/authors/AuthorPostsClient";
+import { parseSearchQuery } from "@/lib/listing";
 import { IAuthor, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
 
 type PageProps = {
   params: { author: string };
-  searchParams: { page?: string };
+  searchParams: { page?: string; q?: string };
 };
 
 function parsePage(page?: string) {
@@ -64,6 +65,7 @@ export async function generateMetadata({
 export default async function AuthorPage({ params, searchParams }: PageProps) {
   try {
     const currentPage = parsePage(searchParams.page);
+    const searchQuery = parseSearchQuery(searchParams.q);
 
     const author_response = await contentful_client.getEntries({
       content_type: "author",
@@ -80,6 +82,7 @@ export default async function AuthorPage({ params, searchParams }: PageProps) {
       skip: (currentPage - 1) * config.BLOGS_PER_PAGE,
       links_to_entry: author.sys.id,
       order: "-sys.updatedAt",
+      ...(searchQuery ? { query: searchQuery } : {}),
     });
 
     const totalPages = Math.max(
@@ -94,6 +97,7 @@ export default async function AuthorPage({ params, searchParams }: PageProps) {
         totalPages={totalPages}
         authorName={author.fields.name}
         authorSlug={author.fields.slug}
+        searchQuery={searchQuery}
       />
     );
   } catch (error) {

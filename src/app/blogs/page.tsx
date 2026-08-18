@@ -5,12 +5,13 @@ import contentful_client, {
 import config from "@/lib/config";
 import constants from "@/constants";
 import BlogsClient from "@/components/blogs/BlogsClient";
+import { parseSearchQuery } from "@/lib/listing";
 import { IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
 
 type PageProps = {
-  searchParams: { page?: string };
+  searchParams: { page?: string; q?: string };
 };
 
 function parsePage(page?: string) {
@@ -38,12 +39,14 @@ export function generateMetadata({ searchParams }: PageProps): Metadata {
 
 export default async function BlogsPage({ searchParams }: PageProps) {
   const currentPage = parsePage(searchParams.page);
+  const searchQuery = parseSearchQuery(searchParams.q);
 
   const response = await contentful_client.getEntries({
     content_type: "post",
     limit: config.BLOGS_PER_PAGE,
     skip: (currentPage - 1) * config.BLOGS_PER_PAGE,
     order: "-sys.updatedAt",
+    ...(searchQuery ? { query: searchQuery } : {}),
   });
 
   const totalPages = Math.max(
@@ -56,6 +59,7 @@ export default async function BlogsPage({ searchParams }: PageProps) {
       posts={response.items as unknown as IPostData[]}
       currentPage={Math.min(currentPage, totalPages)}
       totalPages={totalPages}
+      searchQuery={searchQuery}
     />
   );
 }
