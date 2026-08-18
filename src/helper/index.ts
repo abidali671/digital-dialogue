@@ -51,8 +51,14 @@ function formatShortDate(iso: string) {
   });
 }
 
+/** Prefer updatedAt until a dedicated publish-date field exists in Contentful. */
 function getPublishedDate(sys: { createdAt: string; updatedAt: string }) {
   return sys.updatedAt || sys.createdAt;
+}
+
+/** ISO-8601 timestamp for structured data (e.g. 2024-09-16T12:00:00.000Z). */
+function toIsoTimestamp(iso: string) {
+  return new Date(iso).toISOString();
 }
 
 export {
@@ -61,4 +67,5 @@ export {
   formatLongDate,
   formatShortDate,
   getPublishedDate,
+  toIsoTimestamp,
 };

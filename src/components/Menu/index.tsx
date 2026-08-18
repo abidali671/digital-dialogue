@@ -1,17 +1,22 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { Menu as HeadlessMenu, Transition } from "@headlessui/react";
 
 interface IMenuProps {
-  list: { label: string; onClick: () => void }[];
+  list: { label: string; href: string }[];
   button: ({ open }: { open: boolean }) => JSX.Element;
+  buttonLabel: string;
 }
 
-const Menu = ({ list, button }: IMenuProps) => {
+const Menu = ({ list, button, buttonLabel }: IMenuProps) => {
   return (
     <HeadlessMenu as="div" className="relative">
-      <HeadlessMenu.Button className="flex items-center gap-1">
+      <HeadlessMenu.Button
+        className="flex items-center gap-1"
+        aria-label={buttonLabel}
+      >
         {(state) => button(state)}
       </HeadlessMenu.Button>
       <Transition
@@ -26,16 +31,19 @@ const Menu = ({ list, button }: IMenuProps) => {
           as="div"
           className="absolute right-0 top-[calc(100%_+_12px)] overflow-hidden rounded-lg border border-line bg-white"
         >
-          {list.map((item, index) => (
-            <a key={index}>
-              <HeadlessMenu.Item
-                as="div"
-                onClick={item.onClick}
-                className="cursor-pointer whitespace-nowrap px-4 py-3 text-sm font-semibold text-ink hover:bg-mist hover:text-accent"
-              >
-                {item.label}
-              </HeadlessMenu.Item>
-            </a>
+          {list.map((item) => (
+            <HeadlessMenu.Item key={item.href}>
+              {({ active }) => (
+                <Link
+                  href={item.href}
+                  className={`block whitespace-nowrap px-4 py-3 text-sm font-semibold hover:bg-mist hover:text-accent ${
+                    active ? "bg-mist text-accent" : "text-ink"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              )}
+            </HeadlessMenu.Item>
           ))}
         </HeadlessMenu.Items>
       </Transition>

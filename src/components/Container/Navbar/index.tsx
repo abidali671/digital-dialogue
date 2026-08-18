@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import { ICategoryData } from "@/types";
 import { Transition } from "@headlessui/react";
 
@@ -17,13 +16,10 @@ interface INavbarProps {
   categories: ICategoryData[];
 }
 
+const MOBILE_NAV_ID = "mobile-navigation";
+
 const Navbar = ({ categories }: INavbarProps) => {
   const [isMenu, setIsMenu] = useState(false);
-  const router = useRouter();
-
-  const handleClickMenu = (slug: string) => {
-    router.push(`/blogs/${slug}`);
-  };
 
   const toggleMenu = () => setIsMenu(!isMenu);
 
@@ -46,9 +42,10 @@ const Navbar = ({ categories }: INavbarProps) => {
           {categories && (
             <li>
               <Menu
-                list={categories?.map((category) => ({
+                buttonLabel="Categories"
+                list={categories.map((category) => ({
                   label: category.fields.label,
-                  onClick: () => handleClickMenu(category.fields.slug),
+                  href: `/blogs/${category.fields.slug}`,
                 }))}
                 button={({ open }) => (
                   <>
@@ -70,7 +67,16 @@ const Navbar = ({ categories }: INavbarProps) => {
           ))}
         </ul>
         <div className="mobile-nav-container">
-          <Hamburger onClick={toggleMenu} className="cursor-pointer text-ink" />
+          <button
+            type="button"
+            className="cursor-pointer text-ink"
+            aria-label={isMenu ? "Close menu" : "Open menu"}
+            aria-expanded={isMenu}
+            aria-controls={MOBILE_NAV_ID}
+            onClick={toggleMenu}
+          >
+            <Hamburger aria-hidden="true" />
+          </button>
           <Transition
             show={isMenu}
             className="fixed top-[64px] h-full w-full transition-all duration-500 ease-in-out"
@@ -79,7 +85,7 @@ const Navbar = ({ categories }: INavbarProps) => {
             leaveFrom="opacity-100 translate-x-0"
             leaveTo="opacity-0 translate-x-full"
           >
-            <div className="mobile-nav-menu">
+            <div id={MOBILE_NAV_ID} className="mobile-nav-menu">
               <ul className="nav-list">
                 {config.NAV_LINKS.map((item) => (
                   <li key={item.href} onClick={toggleMenu} className="m-0">

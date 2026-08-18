@@ -15,7 +15,7 @@ import { ICategoryData, IFaq, IPostData } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import config from "@/lib/config";
-import { formatLongDate, getPublishedDate, getReadingTime, shuffleArray } from "@/helper";
+import { formatLongDate, getPublishedDate, getReadingTime, shuffleArray, toIsoTimestamp } from "@/helper";
 import { ArticleJsonLd, FAQPageJsonLd } from "next-seo";
 
 export const revalidate = REVALIDATE_DETAIL;
@@ -164,7 +164,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
       keywords,
       faqs,
     } = post.fields;
-    const { createdAt, updatedAt } = post.sys;
+    const { updatedAt } = post.sys;
     const publishedAt = getPublishedDate(post.sys);
     const formattedTags = tags?.map((tag) => tag.fields.label).join(", ");
     const blogKeywords = keywords ?? formattedTags;
@@ -192,8 +192,8 @@ export default async function BlogDetailPage({ params }: PageProps) {
           authorName={author.fields.name}
           url={shareUrl}
           keywords={keywords || formattedTags}
-          datePublished={formatLongDate(createdAt)}
-          dateModified={formatLongDate(updatedAt)}
+          datePublished={toIsoTimestamp(publishedAt)}
+          dateModified={toIsoTimestamp(updatedAt)}
           images={["https:" + coverImage.fields.file.url]}
           useAppDir
         />
