@@ -1,11 +1,13 @@
 # Content prompts
 
-Prompts for rewriting existing posts and drafting new articles for Digital Dialogue  
+Prompts for rewriting existing posts, drafting new articles, and generating cover images for Digital Dialogue  
 (freelancing, technology, web development, digital marketing, content creation, and design).
 
 **How to use:** copy one prompt block, fill the bracketed fields, paste into your model.
 
-**Expected output (both prompts):** every response must include title, slug, category, short description, keywords, and full blog content. FAQS is optional. Ready to paste into Contentful / the blog detail page.
+**Expected output (prompts 1 and 2):** every response must include title, slug, category, short description, keywords, and full blog content. FAQS is optional. Ready to paste into Contentful / the blog detail page.
+
+**Expected output (prompt 3):** one cover image, exported as WebP, 1000 x 667. Ready to upload to Contentful as `coverImage`.
 
 ---
 
@@ -194,6 +196,59 @@ Do not mention AI, SEO, prompts, or these instructions anywhere in the output.
 
 ---
 
+## 3. Generate a blog cover image
+
+Use when a post needs a `coverImage` for Contentful. Match the Digital Dialogue cover style (dark split workspace: code/editor on the left, browser/result on the right). Reference look: `rewrites/css-in-2026-cover-b.jpg`.
+
+### Prompt
+
+```text
+Generate one blog cover image for Digital Dialogue (digitaldialogue.pk).
+
+BRIEF
+TITLE: [POST TITLE]
+SLUG: [kebab-case-slug]
+CATEGORY: [Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity]
+SUBJECT ON SCREEN: [what the editor and browser should show, e.g. CSS + landing page, HTML outline + webpage, JS console + UI]
+OUTPUT PATH: [e.g. rewrites/css-in-2026-what-still-matters.webp]
+
+STYLE (match this exactly)
+- Photorealistic close-up of a dark-mode developer workspace filling the frame.
+- Split screen: left pane is a code editor (VS Code style, dark charcoal, teal/amber syntax highlighting). Right pane is a dark browser showing the related result (localhost URL, rendered page, or relevant UI).
+- Optional faint teal grid overlay on the browser pane.
+- Teal / cyan accents on charcoal and black. Clean sans-serif UI chrome.
+- Eye-level, sharp, cinematic, professional tech-publication look.
+- Soft film grain is OK. Shallow depth of field only at the monitor edges.
+
+HARD CONSTRAINTS
+- Final file: WebP only.
+- Final size: exactly 1000 x 667 pixels (3:2).
+- Generate at a close landscape ratio (4:3 is fine), then center-crop and resize to 1000 x 667.
+- Export quality: high, optimized WebP (visually sharp, typically 80-90 quality).
+- Filename: [SLUG].webp (unless OUTPUT PATH is provided).
+- No people, no faces, no hands.
+- No brand logos except generic editor/browser chrome.
+- No watermarks, no stock-photo look, no fake Unsplash feel.
+- No giant headline overlay on the image. Small UI text inside the mock editor/browser is OK if readable; do not invent stats.
+- Do not include the article title as a poster-style caption on top of the photo.
+
+CATEGORY HINTS (adapt the on-screen content, keep the same split-workspace style)
+- Web Development: editor + browser preview of HTML/CSS/JS.
+- Technology: editor, terminal, or technical diagram in the browser pane.
+- Freelancing: profile/dashboard or proposal UI in the browser pane, related notes in the editor.
+- Digital Marketing: analytics or campaign UI in the browser pane.
+- Design & Creativity: design file or UI kit in the editor, polished mock in the browser.
+- Content Creation: draft/script in the editor, published post or video UI in the browser.
+
+AFTER GENERATING
+1) Center-crop to 3:2 if needed.
+2) Resize to 1000 x 667.
+3) Save as WebP at OUTPUT PATH (or rewrites/[SLUG].webp).
+4) Confirm width, height, and format in one short line. Do not add extra commentary.
+```
+
+---
+
 ## Field mapping (Contentful / site)
 
 | Prompt field | Use on site |
@@ -205,6 +260,7 @@ Do not mention AI, SEO, prompts, or these instructions anywhere in the output.
 | `KEYWORDS` | Keywords field |
 | `FAQS` (optional) | Post `faqs` JSON field (`[{ "question", "answer" }, ...]`) |
 | `CONTENT` | Rich text / Markdown body |
+| Cover image (WebP, 1000 x 667) | Post `coverImage` asset |
 
 ---
 
