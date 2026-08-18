@@ -159,18 +159,15 @@ export default async function BlogDetailPage({ params }: PageProps) {
       title,
       author,
       content,
-      tags,
       excerpt,
       keywords,
       faqs,
     } = post.fields;
     const { updatedAt } = post.sys;
     const publishedAt = getPublishedDate(post.sys);
-    const formattedTags = tags?.map((tag) => tag.fields.label).join(", ");
-    const blogKeywords = keywords ?? formattedTags;
     const keywordList = Array.from(
       new Set(
-        (blogKeywords ?? "")
+        (keywords ?? "")
           .split(",")
           .map((keyword) => keyword.trim())
           .filter(Boolean)
@@ -191,7 +188,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
           description={excerpt}
           authorName={author.fields.name}
           url={shareUrl}
-          keywords={keywords || formattedTags}
+          keywords={keywords}
           datePublished={toIsoTimestamp(publishedAt)}
           dateModified={toIsoTimestamp(updatedAt)}
           images={["https:" + coverImage.fields.file.url]}

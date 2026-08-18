@@ -30,15 +30,6 @@ export interface ISysData {
   locale: string;
 }
 
-export interface ITagData {
-  sys: ISysData;
-  fields: {
-    label: string;
-    slug: string;
-    category: ICategoryData;
-  };
-}
-
 export interface ICategoryData {
   sys: ISysData;
   fields: {
@@ -88,7 +79,6 @@ export interface IPostData {
   fields: {
     author: IAuthor;
     category: ICategoryData;
-    tags: ITagData[];
     coverImage: IImage;
     content: Document;
     slug: string;
