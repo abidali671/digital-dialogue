@@ -82,8 +82,8 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
     return (
       <CategoryBlogsClient
         posts={response.items as unknown as IPostData[]}
-        categoryLabel={String(category.fields.label)}
-        categorySlug={params.category}
+        title={String(category.fields.label)}
+        basePath={`/blogs/${params.category}`}
         searchQuery={searchQuery}
       />
     );

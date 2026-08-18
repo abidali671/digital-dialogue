@@ -69,6 +69,11 @@ export interface IAuthor {
   };
 }
 
+export interface IKeywordTag {
+  label: string;
+  slug: string;
+}
+
 export interface IFaq {
   question: string;
   answer: string;

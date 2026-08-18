@@ -4,6 +4,7 @@ import contentful_client, {
   type GetEntriesQuery,
 } from "@/lib/contentful/client";
 import config from "@/lib/config";
+import { toKeywordTags } from "@/lib/keywords";
 import type { IAuthor, ICategoryData, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
@@ -97,7 +98,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }),
     );
 
-    return [...staticRoutes, ...categoryRoutes, ...postRoutes, ...authorRoutes];
+    const seenTagSlugs: Record<string, true> = {};
+    const tagSlugs: string[] = [];
+    for (const post of posts as unknown as IPostData[]) {
+      for (const tag of toKeywordTags(post.fields.keywords)) {
+        if (seenTagSlugs[tag.slug]) continue;
+        seenTagSlugs[tag.slug] = true;
+        tagSlugs.push(tag.slug);
+      }
+    }
+    const tagRoutes = tagSlugs.map((slug) =>
+      entry(`/tags/${slug}`, {
+        changeFrequency: "weekly",
+        priority: 0.6,
+      }),
+    );
+
+    return [
+      ...staticRoutes,
+      ...categoryRoutes,
+      ...postRoutes,
+      ...authorRoutes,
+      ...tagRoutes,
+    ];
   } catch (error) {
     console.error("Sitemap: failed to load Contentful entries", error);
     return staticRoutes;

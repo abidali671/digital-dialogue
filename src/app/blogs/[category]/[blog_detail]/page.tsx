@@ -15,7 +15,8 @@ import { ICategoryData, IFaq, IPostData } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import config from "@/lib/config";
-import { formatLongDate, getPublishedDate, getReadingTime, shuffleArray, toIsoTimestamp } from "@/helper";
+import { formatLongDate, getPublishedDate, getReadingTime, toIsoTimestamp } from "@/helper";
+import { pickRelatedPosts, toKeywordTags } from "@/lib/keywords";
 import { ArticleJsonLd, FAQPageJsonLd } from "next-seo";
 
 export const revalidate = REVALIDATE_DETAIL;
@@ -138,19 +139,36 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
     if (!response.items.length) notFound();
 
-    const suggested_post_response = await contentful_client.getEntries(
-      {
-        content_type: "post",
-        limit: 20,
-        "sys.id[ne]": response.items[0].sys.id,
-      },
-      { revalidate: REVALIDATE_DETAIL }
-    );
-
     const post = response.items[0] as unknown as IPostData;
-    const suggestedPost = shuffleArray([
-      ...suggested_post_response.items,
-    ]).slice(0, 3) as unknown as IPostData[];
+
+    const [sameCategoryResponse, relatedPoolResponse] = await Promise.all([
+      contentful_client.getEntries(
+        {
+          content_type: "post",
+          links_to_entry: category_response.items[0].sys.id,
+          "sys.id[ne]": post.sys.id,
+          limit: 10,
+          order: "-sys.updatedAt",
+        },
+        { revalidate: REVALIDATE_DETAIL }
+      ),
+      contentful_client.getEntries(
+        {
+          content_type: "post",
+          "sys.id[ne]": post.sys.id,
+          limit: 40,
+          order: "-sys.updatedAt",
+        },
+        { revalidate: REVALIDATE_DETAIL }
+      ),
+    ]);
+
+    const relatedPosts = pickRelatedPosts(
+      post,
+      sameCategoryResponse.items as unknown as IPostData[],
+      relatedPoolResponse.items as unknown as IPostData[],
+      3
+    );
     const categories = categories_response.items as unknown as ICategoryData[];
 
     const {
@@ -165,14 +183,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
     } = post.fields;
     const { updatedAt } = post.sys;
     const publishedAt = getPublishedDate(post.sys);
-    const keywordList = Array.from(
-      new Set(
-        (keywords ?? "")
-          .split(",")
-          .map((keyword) => keyword.trim())
-          .filter(Boolean)
-      )
-    );
+    const keywordTags = toKeywordTags(keywords);
     const faqList = (faqs ?? []).filter(
       (faq): faq is IFaq =>
         Boolean(faq?.question?.trim() && faq?.answer?.trim())
@@ -280,10 +291,12 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
             <PostFaqs faqs={faqList} />
 
-            {keywordList.length > 0 && (
+            {keywordTags.length > 0 && (
               <div className="mt-12 flex flex-wrap gap-2">
-                {keywordList.map((keyword) => (
-                  <Tag key={keyword}>{keyword}</Tag>
+                {keywordTags.map((tag) => (
+                  <Tag key={tag.slug} href={`/tags/${tag.slug}`}>
+                    {tag.label}
+                  </Tag>
                 ))}
               </div>
             )}
@@ -321,12 +334,16 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
         <section className="mt-14 border-t border-line bg-white py-14 md:py-16">
           <ContentContainer>
-            <Title as="h2">Keep reading</Title>
-            <div className="mt-10 grid gap-10 sm:grid-cols-2 xl:grid-cols-3">
-              {suggestedPost.map((item) => (
-                <PostCard key={item.fields.slug} data={item} />
-              ))}
-            </div>
+            {relatedPosts.length > 0 && (
+              <>
+                <Title as="h2">Keep reading</Title>
+                <div className="mt-10 grid gap-10 sm:grid-cols-2 xl:grid-cols-3">
+                  {relatedPosts.map((item) => (
+                    <PostCard key={item.fields.slug} data={item} />
+                  ))}
+                </div>
+              </>
+            )}
 
             <div className="mt-14 border-t border-line pt-8">
               <p className="mb-4 font-mono text-xs uppercase tracking-[0.14em] text-mute">

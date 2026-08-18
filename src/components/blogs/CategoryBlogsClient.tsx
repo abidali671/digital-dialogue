@@ -9,25 +9,22 @@ import { IPostData } from "@/types";
 
 interface PropsT {
   posts: IPostData[];
-  categoryLabel: string;
-  categorySlug: string;
+  title: string;
+  basePath: string;
   searchQuery: string;
 }
 
 const CategoryBlogsClient = ({
   posts,
-  categoryLabel,
-  categorySlug,
+  title,
+  basePath,
   searchQuery,
 }: PropsT) => {
   return (
     <div className="relative pb-16">
-      <PostSearch
-        searchQuery={searchQuery}
-        basePath={`/blogs/${categorySlug}`}
-      />
+      <PostSearch searchQuery={searchQuery} basePath={basePath} />
       <ContentContainer className="relative flex flex-col justify-center pt-10">
-        <Title>{categoryLabel}</Title>
+        <Title>{title}</Title>
         {searchQuery && (
           <p className="mt-4 text-sm text-mute">
             Showing results for “{searchQuery}”
