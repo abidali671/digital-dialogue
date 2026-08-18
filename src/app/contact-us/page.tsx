@@ -21,9 +21,23 @@ export default function ContactUsPage() {
       <div className="grid max-w-2xl gap-8">
         <Title>Contact us</Title>
         <p className="text-mute">
-          Questions, partnerships, or feedback — send a message and we’ll get
-          back to you.
+          Questions, partnerships, or feedback. Send a message and we will get
+          back to you. You can also reach {config.AUTHOR_NAME} on LinkedIn,
+          Upwork, or Fiverr.
         </p>
+        <div className="flex flex-wrap gap-x-5 gap-y-2">
+          {config.SOCIAL_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-semibold text-accent transition-colors hover:text-accent-hover"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
         <form
           action={config.FORM_ACTION}
           method="POST"

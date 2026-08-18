@@ -36,8 +36,31 @@ const Footer = () => {
             <h2 className="font-display text-lg font-bold text-white">
               Contact
             </h2>
-            <p className="text-sm text-mute-soft">{config.EMAIL}</p>
-            <p className="text-sm text-mute-soft">{config.PHONE}</p>
+            <a
+              href={`mailto:${config.EMAIL}`}
+              className="text-sm text-mute-soft transition-colors hover:text-accent"
+            >
+              {config.EMAIL}
+            </a>
+            <a
+              href={`tel:${config.PHONE.replace(/\s+/g, "")}`}
+              className="text-sm text-mute-soft transition-colors hover:text-accent"
+            >
+              {config.PHONE}
+            </a>
+            <div className="mt-1 flex flex-col gap-2">
+              {config.SOCIAL_LINKS.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-mute-soft transition-colors hover:text-accent"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
         <div className="flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-6 md:flex-row md:items-center">
