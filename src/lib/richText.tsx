@@ -1,4 +1,5 @@
 import type { Options } from "@contentful/rich-text-react-renderer";
+import type { ReactNode } from "react";
 import {
   BLOCKS,
   MARKS,
@@ -6,6 +7,7 @@ import {
   type Inline,
   type Text,
 } from "@contentful/rich-text-types";
+import { headingPlainText, uniqueHeadingId } from "@/lib/toc";
 
 function isText(node: Block | Inline | Text): node is Text {
   return node.nodeType === "text";
@@ -32,21 +34,41 @@ function isCodeBlockParagraph(node: Block | Inline) {
   return hasCode && onlyCode;
 }
 
-export const richTextOptions: Options = {
-  renderNode: {
-    [BLOCKS.PARAGRAPH]: (node, children) => {
-      if (!isCodeBlockParagraph(node)) return <p>{children}</p>;
+function renderHeading(
+  tag: "h2" | "h3",
+  node: Block | Inline,
+  children: ReactNode,
+  used: Record<string, number>
+) {
+  const text = headingPlainText(node);
+  const id = text ? uniqueHeadingId(text, used) : undefined;
+  const HeadingTag = tag;
+  return <HeadingTag id={id}>{children}</HeadingTag>;
+}
 
-      const code = (node.content as Text[])
-        .map((text) => text.value)
-        .join("")
-        .replace(/^\n+|\n+$/g, "");
+export function createRichTextOptions(): Options {
+  const usedHeadingIds: Record<string, number> = {};
 
-      return (
-        <pre>
-          <code>{code}</code>
-        </pre>
-      );
+  return {
+    renderNode: {
+      [BLOCKS.PARAGRAPH]: (node, children) => {
+        if (!isCodeBlockParagraph(node)) return <p>{children}</p>;
+
+        const code = (node.content as Text[])
+          .map((text) => text.value)
+          .join("")
+          .replace(/^\n+|\n+$/g, "");
+
+        return (
+          <pre>
+            <code>{code}</code>
+          </pre>
+        );
+      },
+      [BLOCKS.HEADING_2]: (node, children) =>
+        renderHeading("h2", node, children, usedHeadingIds),
+      [BLOCKS.HEADING_3]: (node, children) =>
+        renderHeading("h3", node, children, usedHeadingIds),
     },
-  },
-};
+  };
+}

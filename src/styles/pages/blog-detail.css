@@ -1,11 +1,27 @@
 .article-wrapper {
-  @apply flex flex-col gap-6 font-body text-ink-soft;
+  @apply flow-root font-body text-ink-soft;
+}
+
+.article-wrapper > * + * {
+  @apply mt-6;
+}
+
+.article-wrapper > .article-toc + * {
+  @apply mt-6 md:mt-0;
+}
+
+.article-toc {
+  @apply w-full rounded-lg border border-line bg-white p-4 md:float-right md:mb-6 md:ml-8 md:mt-0 md:w-[16.5rem];
+}
+
+.article-wrapper .article-toc-title {
+  @apply mb-0 text-xs font-mono font-medium uppercase leading-snug tracking-[0.14em] text-mute;
 }
 
 .article-wrapper h2,
 .article-wrapper h3,
 .article-wrapper h4 {
-  @apply mt-4 font-display text-ink;
+  @apply mt-4 scroll-mt-24 font-display text-ink;
 }
 
 .article-wrapper h2 {
@@ -35,6 +51,22 @@
 
 .article-wrapper li p {
   @apply my-0;
+}
+
+.article-wrapper .article-toc ol {
+  @apply ml-5 mt-2 flex-none list-decimal gap-0;
+}
+
+.article-wrapper .article-toc ul {
+  @apply ml-4 mt-1 flex-none list-[circle] gap-0;
+}
+
+.article-wrapper .article-toc li {
+  @apply my-1 text-xs leading-snug text-ink;
+}
+
+.article-wrapper .article-toc a {
+  @apply text-xs font-normal leading-snug text-accent no-underline hover:underline;
 }
 
 .article-wrapper blockquote {

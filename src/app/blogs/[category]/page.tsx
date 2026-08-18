@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import contentful_client, {
   REVALIDATE_LISTING,
 } from "@/lib/contentful/client";
+import config from "@/lib/config";
 import CategoryBlogsClient from "@/components/blogs/CategoryBlogsClient";
 import { parseSearchQuery } from "@/lib/listing";
 import { ICategoryData, IPostData } from "@/types";
@@ -11,11 +12,17 @@ export const revalidate = REVALIDATE_LISTING;
 
 type PageProps = {
   params: { category: string };
-  searchParams: { q?: string };
+  searchParams: { q?: string; page?: string };
 };
+
+function parsePage(page?: string) {
+  const value = Number(page) || 1;
+  return value < 1 ? 1 : value;
+}
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: PageProps): Promise<Metadata> {
   try {
     const category_response = await contentful_client.getEntries({
@@ -33,8 +40,10 @@ export async function generateMetadata({
       };
     }
 
+    const currentPage = parsePage(searchParams.page);
+    const pageSuffix = currentPage > 1 ? `, Page ${currentPage}` : "";
     const label = String(category.fields.label);
-    const title = `${label} Articles`;
+    const title = `${label} Articles${pageSuffix}`;
     const fallback = `Browse practical ${label.toLowerCase()} articles, guides, and tips from Digital Dialogue.`;
     const rawDescription = (category.fields.description || fallback)
       .replace(/\s+/g, " ")
@@ -43,7 +52,10 @@ export async function generateMetadata({
       rawDescription.length > 160
         ? `${rawDescription.slice(0, 157).trimEnd()}...`
         : rawDescription;
-    const canonical = `/blogs/${params.category}`;
+    const canonical =
+      currentPage > 1
+        ? `/blogs/${params.category}?page=${currentPage}`
+        : `/blogs/${params.category}`;
 
     return {
       title,
@@ -62,6 +74,7 @@ export async function generateMetadata({
 export default async function CategoryPage({ params, searchParams }: PageProps) {
   try {
     const searchQuery = parseSearchQuery(searchParams.q);
+    const currentPage = parsePage(searchParams.page);
 
     const category_response = await contentful_client.getEntries({
       content_type: "category",
@@ -76,8 +89,15 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
       content_type: "post",
       links_to_entry: category.sys.id,
       order: "-sys.updatedAt",
+      limit: config.BLOGS_PER_PAGE,
+      skip: (currentPage - 1) * config.BLOGS_PER_PAGE,
       ...(searchQuery ? { query: searchQuery } : {}),
     });
+
+    const totalPages = Math.max(
+      1,
+      Math.ceil(response.total / config.BLOGS_PER_PAGE)
+    );
 
     return (
       <CategoryBlogsClient
@@ -85,6 +105,8 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
         title={String(category.fields.label)}
         basePath={`/blogs/${params.category}`}
         searchQuery={searchQuery}
+        currentPage={Math.min(currentPage, totalPages)}
+        totalPages={totalPages}
       />
     );
   } catch {

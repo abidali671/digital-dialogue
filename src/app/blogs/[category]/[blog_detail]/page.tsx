@@ -7,7 +7,7 @@ import ShareButtons from "@/components/ShareButtons";
 import Tag from "@/components/Tag";
 import Title from "@/components/Title";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { richTextOptions } from "@/lib/richText";
+import { createRichTextOptions } from "@/lib/richText";
 import contentful_client, {
   REVALIDATE_DETAIL,
 } from "@/lib/contentful/client";
@@ -17,6 +17,8 @@ import Link from "next/link";
 import config from "@/lib/config";
 import { formatLongDate, getPublishedDate, getReadingTime, toIsoTimestamp } from "@/helper";
 import { pickRelatedPosts, toKeywordTags } from "@/lib/keywords";
+import { extractToc, shouldShowToc } from "@/lib/toc";
+import TableOfContents from "@/components/TableOfContents";
 import { ArticleJsonLd, FAQPageJsonLd } from "next-seo";
 
 export const revalidate = REVALIDATE_DETAIL;
@@ -190,6 +192,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
     );
     const shareUrl = `${config.BASE_URL}/blogs/${category}/${blog_detail}`;
     const readingTime = getReadingTime(content);
+    const tocHeadings = extractToc(content);
 
     return (
       <>
@@ -286,7 +289,10 @@ export default async function BlogDetailPage({ params }: PageProps) {
         <ContentContainer className="pb-4 pt-10">
           <div className="reading-column">
             <article className="article-wrapper">
-              {documentToReactComponents(content, richTextOptions)}
+              {shouldShowToc(tocHeadings) && (
+                <TableOfContents headings={tocHeadings} />
+              )}
+              {documentToReactComponents(content, createRichTextOptions())}
             </article>
 
             <PostFaqs faqs={faqList} />

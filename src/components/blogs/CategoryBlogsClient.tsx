@@ -2,6 +2,7 @@
 
 import React from "react";
 import ContentContainer from "@/components/ContentContainer";
+import Pagination from "@/components/Pagination";
 import PostCard from "@/components/PostCard";
 import PostSearch from "@/components/PostSearch";
 import Title from "@/components/Title";
@@ -12,6 +13,8 @@ interface PropsT {
   title: string;
   basePath: string;
   searchQuery: string;
+  currentPage?: number;
+  totalPages?: number;
 }
 
 const CategoryBlogsClient = ({
@@ -19,6 +22,8 @@ const CategoryBlogsClient = ({
   title,
   basePath,
   searchQuery,
+  currentPage,
+  totalPages,
 }: PropsT) => {
   return (
     <div className="relative pb-16">
@@ -46,6 +51,14 @@ const CategoryBlogsClient = ({
               />
             ))}
           </div>
+        )}
+        {currentPage != null && totalPages != null && (
+          <Pagination
+            basePath={basePath}
+            currentPage={currentPage}
+            pages={totalPages}
+            searchQuery={searchQuery}
+          />
         )}
       </ContentContainer>
     </div>
