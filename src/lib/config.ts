@@ -25,13 +25,9 @@ const NAV_LINKS = [
   },
 ];
 
-const FOOTER_LINKS = [
-  ...NAV_LINKS,
-  {
-    label: "Disclaimer",
-    href: "/disclaimer",
-  },
-];
+const FOOTER_LINKS = NAV_LINKS.filter(
+  (link) => link.href !== "/privacy-policy"
+);
 
 const config = {
   EMAIL: "abid.saeed.ali92@gmail.com",

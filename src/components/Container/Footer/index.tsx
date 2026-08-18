@@ -12,9 +12,24 @@ const Footer = () => {
           <div className="flex flex-col items-start gap-5 md:col-span-2">
             <Logo className="h-10 w-auto brightness-0 invert" />
             <p className="max-w-md text-base leading-relaxed text-mute-soft">
-              {config.SITE_NAME} — freelancing, technology, design, and
-              creativity for builders who ship.
+              Practical guides on freelancing, web development, technology,
+              marketing, and design. Written for people who need a clear next
+              step, not another theory dump.
             </p>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+              <Link
+                href="/privacy-policy"
+                className="text-sm text-white/80 transition-colors hover:text-accent"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="/disclaimer"
+                className="text-sm text-white/80 transition-colors hover:text-accent"
+              >
+                Disclaimer
+              </Link>
+            </div>
           </div>
           <FooterLink title="Pages" links={config.FOOTER_LINKS} />
           <div className="flex w-full flex-col gap-3">
