@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import ContentContainer from "@/components/ContentContainer";
 import PostCard from "@/components/PostCard";
 import PostFaqs from "@/components/PostFaqs";
@@ -125,6 +125,8 @@ export default async function BlogDetailPage({ params }: PageProps) {
       ),
     ]);
 
+    if (!category_response.items.length) notFound();
+
     const response = await contentful_client.getEntries(
       {
         content_type: "post",
@@ -134,6 +136,8 @@ export default async function BlogDetailPage({ params }: PageProps) {
       { revalidate: REVALIDATE_DETAIL }
     );
 
+    if (!response.items.length) notFound();
+
     const suggested_post_response = await contentful_client.getEntries(
       {
         content_type: "post",
@@ -142,10 +146,6 @@ export default async function BlogDetailPage({ params }: PageProps) {
       },
       { revalidate: REVALIDATE_DETAIL }
     );
-
-    if (!response?.items?.length || !category_response?.items?.length) {
-      throw new Error("Not found");
-    }
 
     const post = response.items[0] as unknown as IPostData;
     const suggestedPost = shuffleArray([
@@ -351,7 +351,15 @@ export default async function BlogDetailPage({ params }: PageProps) {
         </section>
       </>
     );
-  } catch {
+  } catch (error) {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "digest" in error &&
+      (error as { digest?: string }).digest === "NEXT_NOT_FOUND"
+    ) {
+      throw error;
+    }
     redirect("/");
   }
 }

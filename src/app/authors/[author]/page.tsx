@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import contentful_client, {
   REVALIDATE_LISTING,
 } from "@/lib/contentful/client";
@@ -70,7 +70,7 @@ export default async function AuthorPage({ params, searchParams }: PageProps) {
       "fields.slug": params.author,
     });
 
-    if (!author_response.items.length) redirect("/");
+    if (!author_response.items.length) notFound();
 
     const author = author_response.items[0] as unknown as IAuthor;
 
@@ -96,7 +96,15 @@ export default async function AuthorPage({ params, searchParams }: PageProps) {
         authorSlug={author.fields.slug}
       />
     );
-  } catch {
+  } catch (error) {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "digest" in error &&
+      (error as { digest?: string }).digest === "NEXT_NOT_FOUND"
+    ) {
+      throw error;
+    }
     redirect("/");
   }
 }
