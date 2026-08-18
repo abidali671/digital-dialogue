@@ -12,6 +12,10 @@ const NAV_LINKS = [
     href: "/authors",
   },
   {
+    label: "About",
+    href: "/about",
+  },
+  {
     label: "Privacy Policy",
     href: "/privacy-policy",
   },
@@ -21,10 +25,19 @@ const NAV_LINKS = [
   },
 ];
 
+const FOOTER_LINKS = [
+  ...NAV_LINKS,
+  {
+    label: "Disclaimer",
+    href: "/disclaimer",
+  },
+];
+
 const config = {
   EMAIL: "abid.saeed.ali92@gmail.com",
   PHONE: "+92 3248218854",
   NAV_LINKS,
+  FOOTER_LINKS,
   FORM_ACTION: "https://formspree.io/f/xoqoddgp",
   BASE_URL: "https://www.digitaldialogue.pk",
   BLOGS_PER_PAGE: 15,

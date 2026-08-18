@@ -16,7 +16,7 @@ const Footer = () => {
               creativity for builders who ship.
             </p>
           </div>
-          <FooterLink title="Pages" links={config.NAV_LINKS} />
+          <FooterLink title="Pages" links={config.FOOTER_LINKS} />
           <div className="flex w-full flex-col gap-3">
             <h2 className="font-display text-lg font-bold text-white">
               Contact

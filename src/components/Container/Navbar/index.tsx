@@ -38,7 +38,7 @@ const Navbar = ({ categories }: INavbarProps) => {
           <Logo className="h-8 w-auto md:h-9" />
         </Link>
         <ul className="nav-list">
-          {config.NAV_LINKS.slice(0, 3).map((item) => (
+          {config.NAV_LINKS.slice(0, 4).map((item) => (
             <li key={item.href}>
               <Link href={item.href}>{item.label}</Link>
             </li>
@@ -63,7 +63,7 @@ const Navbar = ({ categories }: INavbarProps) => {
               />
             </li>
           )}
-          {config.NAV_LINKS.slice(3).map((item) => (
+          {config.NAV_LINKS.slice(4).map((item) => (
             <li key={item.href}>
               <Link href={item.href}>{item.label}</Link>
             </li>
