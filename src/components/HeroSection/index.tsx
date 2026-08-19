@@ -70,7 +70,7 @@ const Hero = ({ posts }: IProps) => {
                 {post.fields.excerpt}
               </p>
               <p className="font-mono text-xs text-white/40">
-                {formatLongDate(getPublishedDate(post.sys))}
+                {formatLongDate(getPublishedDate(post))}
               </p>
             </div>
           </Link>

@@ -12,6 +12,7 @@ export interface ISysData {
   type: string;
   createdAt: string;
   updatedAt: string;
+  publishedAt?: string;
   environment: {
     sys: {
       id: string;
@@ -90,6 +91,7 @@ export interface IPostData {
     excerpt: string;
     title: string;
     keywords: string;
+    publishDate?: string;
     faqs?: IFaq[];
   };
 }

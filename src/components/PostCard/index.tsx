@@ -12,7 +12,7 @@ interface CardPropsT {
 
 const PostCard = ({ data, priority = false }: CardPropsT) => {
   const { category, coverImage, title, excerpt, slug } = data.fields;
-  const publishedAt = getPublishedDate(data.sys);
+  const publishedAt = getPublishedDate(data);
 
   return (
     <Link

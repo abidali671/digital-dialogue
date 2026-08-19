@@ -184,7 +184,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
       faqs,
     } = post.fields;
     const { updatedAt } = post.sys;
-    const publishedAt = getPublishedDate(post.sys);
+    const publishedAt = getPublishedDate(post);
     const keywordTags = toKeywordTags(keywords);
     const faqList = (faqs ?? []).filter(
       (faq): faq is IFaq =>
