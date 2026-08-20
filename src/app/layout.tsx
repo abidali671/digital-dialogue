@@ -31,6 +31,13 @@ const monoFont = IBM_Plex_Mono({
   variable: "--font-mono",
 });
 
+const DEFAULT_OG_IMAGE = {
+  url: "/og-default.webp",
+  width: 1200,
+  height: 630,
+  alt: `${config.SITE_NAME} — practical guides on freelancing and technology`,
+};
+
 export const metadata: Metadata = {
   title: {
     default: config.SITE_NAME,
@@ -38,17 +45,24 @@ export const metadata: Metadata = {
   },
   description: config.DEFAULT_DESCRIPTION,
   metadataBase: new URL(config.BASE_URL),
+  alternates: {
+    types: {
+      "application/rss+xml": `${config.BASE_URL}/feed.xml`,
+    },
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
     siteName: config.SITE_NAME,
     title: config.SITE_NAME,
     description: config.DEFAULT_DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: config.SITE_NAME,
     description: config.DEFAULT_DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE.url],
   },
   icons: {
     icon: "/favicon.svg",

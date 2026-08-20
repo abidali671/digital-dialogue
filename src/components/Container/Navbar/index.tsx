@@ -5,11 +5,11 @@ import { ICategoryData } from "@/types";
 import { Transition } from "@headlessui/react";
 
 import Link from "next/link";
+import Image from "next/image";
 import ChevronDown from "@/assets/icon/ChevronDown";
 import Menu from "@/components/Menu";
 import Hamburger from "@/assets/icon/Hamburger";
 import ContentContainer from "../../ContentContainer";
-import Logo from "../../../assets/icon/logo";
 import config from "@/lib/config";
 
 interface INavbarProps {
@@ -31,7 +31,14 @@ const Navbar = ({ categories }: INavbarProps) => {
           className="inline-flex items-center"
           aria-label={config.SITE_NAME}
         >
-          <Logo className="h-8 w-auto md:h-9" />
+          <Image
+            src="/logo.webp"
+            alt={config.SITE_NAME}
+            width={200}
+            height={39}
+            className="h-8 w-auto md:h-9"
+            priority
+          />
         </Link>
         <ul className="nav-list">
           {config.NAV_LINKS.slice(0, 4).map((item) => (

@@ -17,6 +17,7 @@ import Link from "next/link";
 import config from "@/lib/config";
 import { formatLongDate, getPublishedDate, getReadingTime, toIsoTimestamp } from "@/helper";
 import { pickRelatedPosts, toKeywordTags } from "@/lib/keywords";
+import { breadcrumbSchema, JsonLdScript } from "@/lib/schema";
 import { extractToc, shouldShowToc } from "@/lib/toc";
 import TableOfContents from "@/components/TableOfContents";
 import { ArticleJsonLd, FAQPageJsonLd } from "next-seo";
@@ -208,6 +209,19 @@ export default async function BlogDetailPage({ params }: PageProps) {
           images={["https:" + coverImage.fields.file.url]}
           useAppDir
         />
+        <JsonLdScript
+          data={breadcrumbSchema([
+            { name: "Blogs", path: "/blogs" },
+            {
+              name: postCategory.fields.label,
+              path: `/blogs/${postCategory.fields.slug}`,
+            },
+            {
+              name: title,
+              path: `/blogs/${category}/${blog_detail}`,
+            },
+          ])}
+        />
         {faqList.length > 0 && (
           <FAQPageJsonLd
             useAppDir
@@ -221,7 +235,10 @@ export default async function BlogDetailPage({ params }: PageProps) {
         <header className="border-b border-line bg-white">
           <ContentContainer className="py-12 md:py-16">
             <div className="reading-column">
-              <nav className="mb-6 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-mute">
+              <nav
+                aria-label="Breadcrumb"
+                className="mb-6 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-mute"
+              >
                 <Link href="/blogs" className="hover:text-accent">
                   Blogs
                 </Link>

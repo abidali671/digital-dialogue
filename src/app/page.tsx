@@ -8,6 +8,11 @@ import contentful_client, {
 } from "@/lib/contentful/client";
 import config from "@/lib/config";
 import constants from "@/constants";
+import {
+  JsonLdScript,
+  organizationSchema,
+  websiteSchema,
+} from "@/lib/schema";
 import { ICategoryData, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
@@ -42,6 +47,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <JsonLdScript data={[organizationSchema(), websiteSchema()]} />
       <Hero posts={featuredPost} />
       <TopPicks posts={pickedPosts} />
       <AllPosts posts={latestPosts} categories={categories} />

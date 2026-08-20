@@ -1,7 +1,7 @@
 import ContentContainer from "@/components/ContentContainer";
 import Link from "next/link";
+import Image from "next/image";
 import React from "react";
-import Logo from "../../../assets/icon/logo";
 import config from "@/lib/config";
 
 const Footer = () => {
@@ -10,7 +10,19 @@ const Footer = () => {
       <ContentContainer className="flex flex-col gap-10 py-14">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3 lg:grid-cols-4">
           <div className="flex flex-col items-start gap-5 md:col-span-2">
-            <Logo className="h-10 w-auto brightness-0 invert" />
+            <Link
+              href="/"
+              className="inline-flex items-center"
+              aria-label={config.SITE_NAME}
+            >
+              <Image
+                src="/logo-footer.webp"
+                alt={config.SITE_NAME}
+                width={200}
+                height={39}
+                className="h-10 w-auto"
+              />
+            </Link>
             <p className="max-w-md text-base leading-relaxed text-mute-soft">
               Practical guides on freelancing, web development, technology,
               marketing, and design. Written for people who need a clear next
@@ -28,6 +40,18 @@ const Footer = () => {
                 className="text-sm text-white/80 transition-colors hover:text-accent"
               >
                 Disclaimer
+              </Link>
+              <Link
+                href="/sitemap.xml"
+                className="text-sm text-white/80 transition-colors hover:text-accent"
+              >
+                Sitemap
+              </Link>
+              <Link
+                href="/feed.xml"
+                className="text-sm text-white/80 transition-colors hover:text-accent"
+              >
+                RSS
               </Link>
             </div>
           </div>
