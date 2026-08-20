@@ -1,8 +1,8 @@
-/** Default cache for all pages and Contentful fetches — 1 minute */
-export const REVALIDATE_LISTING = 60;
+const HOUR = 60 * 60;
+const WEEK = 7 * 24 * HOUR;
 
-/** Same as listing for now (1 minute) */
-export const REVALIDATE_DETAIL = REVALIDATE_LISTING;
+export const REVALIDATE_LISTING = HOUR;
+export const REVALIDATE_DETAIL = WEEK;
 
 type ContentfulLink = {
   sys: {
