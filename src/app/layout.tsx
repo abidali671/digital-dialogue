@@ -4,7 +4,6 @@ import contentful_client, {
   REVALIDATE_LISTING,
 } from "@/lib/contentful/client";
 import Layout from "@/components/layout";
-import GoogleAnalytics from "@/components/GoogleAnalytics";
 import config from "@/lib/config";
 import { ICategoryData } from "@/types";
 import "@/styles/global.css";
@@ -89,7 +88,6 @@ export default async function RootLayout({
       className={`${bodyFont.variable} ${displayFont.variable} ${monoFont.variable}`}
     >
       <body>
-        <GoogleAnalytics />
         <Layout categories={categories}>{children}</Layout>
       </body>
     </html>
