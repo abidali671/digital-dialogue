@@ -57,10 +57,6 @@
   @apply ml-5 mt-2 flex-none list-decimal gap-0;
 }
 
-.article-wrapper .article-toc ul {
-  @apply ml-4 mt-1 flex-none list-[circle] gap-0;
-}
-
 .article-wrapper .article-toc li {
   @apply my-1 text-xs leading-snug text-ink;
 }
