@@ -7,7 +7,7 @@ Prompts for rewriting existing posts, drafting new articles, and generating cove
 
 **Expected output (prompts 1 and 2):** every response must include title, slug, category, short description, keywords, and full blog content. FAQS is optional. Ready to paste into Contentful / the blog detail page.
 
-**Expected output (prompt 3):** one cover image, exported as WebP, 1000 x 667. Ready to upload to Contentful as `coverImage`.
+**Expected output (prompt 3):** one cover image, exported as WebP, 1000 x 667. The model randomly picks one style (A/B/C) from the post category pool, then saves a Contentful-ready `coverImage`.
 
 ---
 
@@ -198,7 +198,7 @@ Do not mention AI, SEO, prompts, or these instructions anywhere in the output.
 
 ## 3. Generate a blog cover image
 
-Use when a post needs a `coverImage` for Contentful. Match the Digital Dialogue cover style (dark split workspace: code/editor on the left, browser/result on the right). Reference look: `rewrites/css-in-2026-cover-b.jpg`.
+Use when a post needs a `coverImage` for Contentful. Pick a style from the category pool below (do not force the old code-editor look on every category). Shared brand accents: charcoal / black base, teal-cyan highlights, cinematic lighting.
 
 ### Prompt
 
@@ -209,42 +209,71 @@ BRIEF
 TITLE: [POST TITLE]
 SLUG: [kebab-case-slug]
 CATEGORY: [Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity]
-SUBJECT ON SCREEN: [what the editor and browser should show, e.g. CSS + landing page, HTML outline + webpage, JS console + UI]
-OUTPUT PATH: [e.g. rewrites/css-in-2026-what-still-matters.webp]
+SCENE FOCUS: [1 short line on what the image should communicate, e.g. YouTube Premium comparison, CSS layout fundamentals, freelance proposal workflow]
+OUTPUT PATH: [e.g. rewrites/youtube-premium-vs-free-is-it-worth-it.webp]
 
-STYLE (match this exactly)
-- Photorealistic close-up of a dark-mode developer workspace filling the frame.
-- Split screen: left pane is a code editor (VS Code style, dark charcoal, teal/amber syntax highlighting). Right pane is a dark browser showing the related result (localhost URL, rendered page, or relevant UI).
-- Optional faint teal grid overlay on the browser pane.
-- Teal / cyan accents on charcoal and black. Clean sans-serif UI chrome.
-- Eye-level, sharp, cinematic, professional tech-publication look.
-- Soft film grain is OK. Shallow depth of field only at the monitor edges.
+STYLE SELECTION (required)
+1) Look at CATEGORY.
+2) From that category's STYLE POOL below, randomly pick ONE style (A, B, or C).
+3) In your first output line before the image, write: STYLE PICKED: [Category] / [A|B|C] - [style name]
+4) Generate using only that picked style. Do not blend multiple styles.
+5) If regenerating the same post, pick a different style letter than last time when possible.
+
+SHARED LOOK (all styles)
+- Photorealistic or high-end editorial CGI. Sharp, cinematic, professional publication quality.
+- Palette: charcoal, near-black, soft mist gray, teal/cyan accents. Warm amber highlight optional.
+- Soft film grain OK. Shallow depth of field OK at edges only.
+- Fill the frame with one strong composition. No collage of many tiny cards.
+- No people, faces, or hands.
+- No real brand logos (no YouTube, Google, Meta, Figma wordmarks/icons). Use generic UI chrome only.
+- No watermarks, no stock-photo cliches, no giant poster title of the article on top of the image.
+- Small readable UI text inside a mock screen is OK. Do not invent fake stats or follower counts.
+
+CATEGORY STYLE POOLS
+
+CONTENT CREATION (pick A, B, or C at random)
+- A) Creator desk still life: desk-top camera or mic silhouette in soft side light, open notebook or script pages, muted LED accent; product-photo feel, not a gaming RGB desk.
+- B) Video workspace: large monitor showing a generic dark video player + simple sidebar (no logos); beside it a script or shot-list document; moody cinematic night grading.
+- C) Publish board: wall or desk with printed thumbnail drafts, sticky notes for titles/hooks, one tablet showing a clean channel-style dashboard mock (generic).
+
+WEB DEVELOPMENT (pick A, B, or C at random)
+- A) Split monitor: left dark code editor (generic), right browser preview of the topic UI; teal accents; faint grid on preview.
+- B) Single ultrawide IDE close-up: readable code for the topic (HTML/CSS/JS), soft bokeh desk edge.
+- C) Browser-first layout: full-bleed dark browser with a clean local app/page for the topic; subtle editor peek at the side.
+
+TECHNOLOGY (pick A, B, or C at random)
+- A) Abstract tech object: layered glass panels, circuit-like light paths, teal glow; conceptual not sci-fi chaos.
+- B) Terminal + diagram: dark terminal window with simple commands next to a clean architecture/flowchart panel.
+- C) Device still life: phone + laptop showing a related tech UI mock, desk top-down or 3/4 angle.
+
+FREELANCING (pick A, B, or C at random)
+- A) Proposal desk: laptop with a clean proposal/doc UI, notebook with rate notes, coffee cup; calm morning light.
+- B) Profile mock: browser showing a generic freelancer profile/dashboard (no marketplace logos), portfolio tiles visible.
+- C) Client workflow board: kanban-style cards (Brief / Draft / Delivery) on a dark desk with a tablet calendar.
+
+DIGITAL MARKETING (pick A, B, or C at random)
+- A) Analytics wall: dark dashboard with simple charts and funnel blocks (no brand logos), teal highlights.
+- B) Campaign desk: moodboard printouts, ad-creative drafts on tablet, sticky notes for audience/offer.
+- C) Growth map: clean whiteboard or digital board with channel arrows (Search / Social / Email) and a laptop showing a landing page mock.
+
+DESIGN & CREATIVITY (pick A, B, or C at random)
+- A) Design canvas: dark design-tool style artboard with color swatches, type samples, and a polished component mock (no Figma logo).
+- B) Material desk: paper samples, printed palette chips, ruler, tablet with UI mock; soft studio light.
+- C) Before/after frame: two side-by-side phone or browser frames showing weak vs refined layout for the topic.
 
 HARD CONSTRAINTS
 - Final file: WebP only.
 - Final size: exactly 1000 x 667 pixels (3:2).
 - Generate at a close landscape ratio (4:3 is fine), then center-crop and resize to 1000 x 667.
-- Export quality: high, optimized WebP (visually sharp, typically 80-90 quality).
+- Export quality: high, optimized WebP (typically 80-90 quality).
 - Filename: [SLUG].webp (unless OUTPUT PATH is provided).
-- No people, no faces, no hands.
-- No brand logos except generic editor/browser chrome.
-- No watermarks, no stock-photo look, no fake Unsplash feel.
-- No giant headline overlay on the image. Small UI text inside the mock editor/browser is OK if readable; do not invent stats.
-- Do not include the article title as a poster-style caption on top of the photo.
-
-CATEGORY HINTS (adapt the on-screen content, keep the same split-workspace style)
-- Web Development: editor + browser preview of HTML/CSS/JS.
-- Technology: editor, terminal, or technical diagram in the browser pane.
-- Freelancing: profile/dashboard or proposal UI in the browser pane, related notes in the editor.
-- Digital Marketing: analytics or campaign UI in the browser pane.
-- Design & Creativity: design file or UI kit in the editor, polished mock in the browser.
-- Content Creation: draft/script in the editor, published post or video UI in the browser.
+- Match SCENE FOCUS to the picked style so the subject fits the category.
 
 AFTER GENERATING
 1) Center-crop to 3:2 if needed.
 2) Resize to 1000 x 667.
 3) Save as WebP at OUTPUT PATH (or rewrites/[SLUG].webp).
-4) Confirm width, height, and format in one short line. Do not add extra commentary.
+4) Confirm in one short line: STYLE PICKED, width, height, format. No extra commentary.
 ```
 
 ---
