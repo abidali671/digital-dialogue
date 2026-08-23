@@ -35,11 +35,11 @@
 }
 
 .navbar-root .mobile-nav-container {
-  @apply md:hidden;
+  @apply md:hidden h-[28px];
 }
 
 .navbar-root .mobile-nav-container .mobile-nav-menu {
-  @apply fixed h-full w-full border-t border-line bg-white;
+  @apply w-full border-t border-line;
 }
 
 .container-body {

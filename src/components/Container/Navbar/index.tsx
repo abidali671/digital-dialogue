@@ -86,7 +86,7 @@ const Navbar = ({ categories }: INavbarProps) => {
           </button>
           <Transition
             show={isMenu}
-            className="fixed top-[64px] h-full w-full transition-all duration-500 ease-in-out"
+            className="fixed left-0 top-[56px] bg-white w-full transition-all duration-500 ease-in-out"
             enterFrom="opacity-0 translate-x-full"
             enterTo="opacity-100 translate-x-0"
             leaveFrom="opacity-100 translate-x-0"
