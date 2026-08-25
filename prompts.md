@@ -7,7 +7,7 @@ Prompts for rewriting existing posts, drafting new articles, and generating cove
 
 **Expected output (prompts 1 and 2):** every response must include title, slug, category, short description, keywords, and full blog content. FAQS is optional. Ready to paste into Contentful / the blog detail page.
 
-**Expected output (prompt 3):** one cover image, exported as WebP, 1000 x 667. The model randomly picks one style (A/B/C) from the post category pool, then saves a Contentful-ready `coverImage`.
+**Expected output (prompt 3):** one cover image, exported as WebP, 1000 x 667. The model randomly picks one style (A/B/C/D) from the post category pool, then saves a Contentful-ready `coverImage`.
 
 ---
 
@@ -214,8 +214,8 @@ OUTPUT PATH: [e.g. rewrites/youtube-premium-vs-free-is-it-worth-it.webp]
 
 STYLE SELECTION (required)
 1) Look at CATEGORY.
-2) From that category's STYLE POOL below, randomly pick ONE style (A, B, or C).
-3) In your first output line before the image, write: STYLE PICKED: [Category] / [A|B|C] - [style name]
+2) From that category's STYLE POOL below, randomly pick ONE style (A, B, C, or D).
+3) In your first output line before the image, write: STYLE PICKED: [Category] / [A|B|C|D] - [style name]
 4) Generate using only that picked style. Do not blend multiple styles.
 5) If regenerating the same post, pick a different style letter than last time when possible.
 
@@ -231,35 +231,41 @@ SHARED LOOK (all styles)
 
 CATEGORY STYLE POOLS
 
-CONTENT CREATION (pick A, B, or C at random)
+CONTENT CREATION (pick A, B, C, or D at random)
 - A) Creator desk still life: desk-top camera or mic silhouette in soft side light, open notebook or script pages, muted LED accent; product-photo feel, not a gaming RGB desk.
 - B) Video workspace: large monitor showing a generic dark video player + simple sidebar (no logos); beside it a script or shot-list document; moody cinematic night grading.
 - C) Publish board: wall or desk with printed thumbnail drafts, sticky notes for titles/hooks, one tablet showing a clean channel-style dashboard mock (generic).
+- D) Editorial frame: one strong still from a generic article or video scene (object + lighting, no people), framed like a magazine cover photo with teal rim light.
 
-WEB DEVELOPMENT (pick A, B, or C at random)
+WEB DEVELOPMENT (pick A, B, C, or D at random)
 - A) Split monitor: left dark code editor (generic), right browser preview of the topic UI; teal accents; faint grid on preview.
 - B) Single ultrawide IDE close-up: readable code for the topic (HTML/CSS/JS), soft bokeh desk edge.
 - C) Browser-first layout: full-bleed dark browser with a clean local app/page for the topic; subtle editor peek at the side.
+- D) Stack diagram: isometric dark blocks for HTML / CSS / JS (or the topic stack), connected by thin teal lines, no logos.
 
-TECHNOLOGY (pick A, B, or C at random)
+TECHNOLOGY (pick A, B, C, or D at random)
 - A) Abstract tech object: layered glass panels, circuit-like light paths, teal glow; conceptual not sci-fi chaos.
 - B) Terminal + diagram: dark terminal window with simple commands next to a clean architecture/flowchart panel.
 - C) Device still life: phone + laptop showing a related tech UI mock, desk top-down or 3/4 angle.
+- D) Macro hardware: close-up of a generic chip, cable, or server rack edge with teal specular highlights; documentary product lighting.
 
-FREELANCING (pick A, B, or C at random)
+FREELANCING (pick A, B, C, or D at random)
 - A) Proposal desk: laptop with a clean proposal/doc UI, notebook with rate notes, coffee cup; calm morning light.
 - B) Profile mock: browser showing a generic freelancer profile/dashboard (no marketplace logos), portfolio tiles visible.
 - C) Client workflow board: kanban-style cards (Brief / Draft / Delivery) on a dark desk with a tablet calendar.
+- D) Invoice still life: printed invoice or contract, calculator, pen, and a laptop showing a simple billing UI; quiet studio light.
 
-DIGITAL MARKETING (pick A, B, or C at random)
+DIGITAL MARKETING (pick A, B, C, or D at random)
 - A) Analytics wall: dark dashboard with simple charts and funnel blocks (no brand logos), teal highlights.
 - B) Campaign desk: moodboard printouts, ad-creative drafts on tablet, sticky notes for audience/offer.
 - C) Growth map: clean whiteboard or digital board with channel arrows (Search / Social / Email) and a laptop showing a landing page mock.
+- D) Search intent board: oversized keyword cards and a SERP-style results mock (generic, no Google logo) on a dark desk.
 
-DESIGN & CREATIVITY (pick A, B, or C at random)
+DESIGN & CREATIVITY (pick A, B, C, or D at random)
 - A) Design canvas: dark design-tool style artboard with color swatches, type samples, and a polished component mock (no Figma logo).
 - B) Material desk: paper samples, printed palette chips, ruler, tablet with UI mock; soft studio light.
 - C) Before/after frame: two side-by-side phone or browser frames showing weak vs refined layout for the topic.
+- D) Type specimen: large letterforms and a small UI mock on a charcoal field, teal accent on one glyph; editorial print feel.
 
 HARD CONSTRAINTS
 - Final file: WebP only.
