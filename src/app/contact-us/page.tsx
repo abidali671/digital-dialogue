@@ -5,11 +5,13 @@ import ContentContainer from "@/components/ContentContainer";
 import Title from "@/components/Title";
 
 export const metadata: Metadata = {
-  title: "Contact Us",
+  title: {
+    absolute: "Contact Digital Dialogue | Questions and Partnerships",
+  },
   description: constants.descriptions.CONTACT_US,
   alternates: { canonical: "/contact-us" },
   openGraph: {
-    title: "Contact Us",
+    title: "Contact Digital Dialogue | Questions and Partnerships",
     description: constants.descriptions.CONTACT_US,
     url: "/contact-us",
   },

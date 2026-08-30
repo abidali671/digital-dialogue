@@ -6,11 +6,13 @@ import ContentContainer from "@/components/ContentContainer";
 import Title from "@/components/Title";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: {
+    absolute: "About Digital Dialogue | Who We Are and What We Publish",
+  },
   description: constants.descriptions.ABOUT,
   alternates: { canonical: "/about" },
   openGraph: {
-    title: "About",
+    title: "About Digital Dialogue | Who We Are and What We Publish",
     description: constants.descriptions.ABOUT,
     url: "/about",
   },

@@ -6,11 +6,13 @@ import ContentContainer from "@/components/ContentContainer";
 import Title from "@/components/Title";
 
 export const metadata: Metadata = {
-  title: "Disclaimer",
+  title: {
+    absolute: "Disclaimer | How to Use Digital Dialogue Content",
+  },
   description: constants.descriptions.DISCLAIMER,
   alternates: { canonical: "/disclaimer" },
   openGraph: {
-    title: "Disclaimer",
+    title: "Disclaimer | How to Use Digital Dialogue Content",
     description: constants.descriptions.DISCLAIMER,
     url: "/disclaimer",
   },
