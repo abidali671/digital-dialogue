@@ -45,7 +45,7 @@ npm run lint      # ESLint
 
 ## Clear all cache (`/api/revalidate`)
 
-Protected by `REVALIDATE_SECRET`. Pass the secret in the query string or as `Authorization: Bearer …`. Clears the full site cache (root layout and every nested page / fetch cache under it).
+Protected by `REVALIDATE_SECRET`. Pass the secret in the query string or as `Authorization: Bearer …`. Clears the Contentful data cache tag and static route caches (compatible with Next 13.4).
 
 Replace:
 
@@ -71,7 +71,9 @@ Successful response:
 {
   "revalidated": true,
   "now": 1710000000000,
-  "scope": "all"
+  "scope": "all",
+  "tag": "contentful",
+  "paths": ["/", "/blogs", "/authors", "/about", "/contact-us", "/privacy-policy", "/disclaimer", "/feed.xml"]
 }
 ```
 

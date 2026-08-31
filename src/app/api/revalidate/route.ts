@@ -1,7 +1,19 @@
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
+import { CONTENTFUL_CACHE_TAG } from "@/lib/contentful/client";
 
 export const dynamic = "force-dynamic";
+
+const STATIC_PATHS = [
+  "/",
+  "/blogs",
+  "/authors",
+  "/about",
+  "/contact-us",
+  "/privacy-policy",
+  "/disclaimer",
+  "/feed.xml",
+] as const;
 
 function getSecret(request: NextRequest) {
   const header = request.headers.get("authorization");
@@ -18,7 +30,8 @@ function isAuthorized(request: NextRequest) {
 }
 
 /**
- * Clear the full site cache (root layout + all nested pages/data).
+ * Clear the full site cache (Contentful fetch tag + static routes).
+ * Next 13.4 only supports single-arg revalidatePath / revalidateTag.
  *
  * GET  /api/revalidate?secret=...
  * POST /api/revalidate
@@ -36,12 +49,18 @@ async function handleRevalidate(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  revalidatePath("/", "layout");
+  revalidateTag(CONTENTFUL_CACHE_TAG);
+
+  for (const path of STATIC_PATHS) {
+    revalidatePath(path);
+  }
 
   return NextResponse.json({
     revalidated: true,
     now: Date.now(),
     scope: "all",
+    tag: CONTENTFUL_CACHE_TAG,
+    paths: STATIC_PATHS,
   });
 }
 

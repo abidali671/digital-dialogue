@@ -4,6 +4,9 @@ const WEEK = 7 * 24 * HOUR;
 export const REVALIDATE_LISTING = HOUR;
 export const REVALIDATE_DETAIL = WEEK;
 
+/** Shared fetch tag so /api/revalidate can clear all Contentful data cache. */
+export const CONTENTFUL_CACHE_TAG = "contentful";
+
 type ContentfulLink = {
   sys: {
     type: "Link";
@@ -133,7 +136,7 @@ async function getEntries(
   const revalidate = options?.revalidate ?? REVALIDATE_LISTING;
 
   const res = await fetch(url, {
-    next: { revalidate },
+    next: { revalidate, tags: [CONTENTFUL_CACHE_TAG] },
   });
 
   if (!res.ok) {
