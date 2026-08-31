@@ -44,6 +44,13 @@ QUALITY BAR (what “better” means)
 - Preserve important keywords and entities, but only where they sound natural.
 - Never keyword-stuff. Never force synonyms into every paragraph.
 
+WORD COUNT (CONTENT body only, after CONTENT:)
+- MINIMUM: 1000 words. Do not publish below this.
+- TARGET: 1000–1400 words for most posts.
+- Expand with useful depth only: steps, checklists, tradeoffs, edge cases, and clear examples grounded in the source.
+- Do not pad with filler, repetition, or invented claims to hit the number.
+- If the source is thin, deepen the existing points; do not invent new facts.
+
 REMOVE / AVOID
 - AI filler: “in today’s digital world,” “delve into,” “comprehensive guide,” “unlock,” “elevate,” “landscape,” “robust,” “seamless,” “whether you’re a beginner or a pro,” “it’s important to note,” “in conclusion.”
 - Empty transitions: “Moreover,” “Furthermore,” “Additionally” stacked repeatedly.
@@ -83,7 +90,7 @@ CONTENT:
 - Do not include an H1 — the site already shows TITLE above the article.
 - Start with the intro paragraph, then H2/H3 body.
 - Do not include an FAQ heading or Q&A list in CONTENT (use FAQS above when needed).
-- Do not unnecessarily increase word count. Shorter and clearer beats longer and fluffier.
+- CONTENT body must be at least 1000 words (target 1000–1400). Useful depth only; no filler.
 - If the source is missing a clear takeaway, end with a short, useful closing—not a summary of every section.
 
 CONTENT TO REWRITE:
@@ -109,7 +116,7 @@ TARGET AUDIENCE: [e.g. beginner freelancers / MERN juniors / content creators]
 SEARCH INTENT: [informational / comparison / how-to / transactional]
 ANGLE (optional): [what unique point of view or constraint—e.g. “for Pakistan freelancers”, “no-code vs custom”, “beginner mistakes”]
 PREFERRED CATEGORY (optional): [Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity]
-WORD COUNT TARGET: [e.g. 1200–1800] (stay useful; do not pad to hit a number)
+WORD COUNT TARGET: [e.g. 1000–1400] (MINIMUM 1000 words in CONTENT; stay useful; do not pad to hit a number)
 MUST INCLUDE: [optional: specific points, tools, FAQs]
 MUST AVOID: [optional: competitors, off-topic tangents]
 
@@ -139,6 +146,12 @@ Substance
 - When mentioning tools/platforms, explain fit and limitations—don’t sound like an ad.
 - Call out common mistakes and what to do instead.
 - If something depends on context (budget, skill level, country, niche), say so.
+
+Word count
+- MINIMUM: 1000 words in the CONTENT body (count after CONTENT: only).
+- TARGET: 1000–1400 words unless the BRIEF sets a higher range.
+- Cap useful long guides around 1800 unless the topic truly needs more.
+- Never pad with filler, synonym loops, or fake stories to hit the minimum.
 
 SEO (natural only)
 - Use the primary keyword in the title and early intro only if it reads naturally.
@@ -190,6 +203,7 @@ FAQS: [{"question":"...","answer":"..."}]
 
 CONTENT:
 [Full article in Markdown — intro + H2/H3 body, no H1, no FAQ section]
+- CONTENT body must be at least 1000 words (target 1000–1400 unless BRIEF says otherwise).
 
 Do not mention AI, SEO, prompts, or these instructions anywhere in the output.
 ```
