@@ -18,12 +18,11 @@ function isAuthorized(request: NextRequest) {
 }
 
 /**
- * Clear cached page by path only.
+ * Clear the full site cache (root layout + all nested pages/data).
  *
- * GET  /api/revalidate?secret=...&path=/blogs/technology/my-post
+ * GET  /api/revalidate?secret=...
  * POST /api/revalidate
  *      Authorization: Bearer ...
- *      { "path": "/blogs/technology/my-post" }
  */
 async function handleRevalidate(request: NextRequest) {
   if (!process.env.REVALIDATE_SECRET) {
@@ -37,31 +36,12 @@ async function handleRevalidate(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  let body: { path?: string } = {};
-
-  if (request.method === "POST") {
-    try {
-      body = await request.json();
-    } catch {
-      body = {};
-    }
-  }
-
-  const path = body.path || request.nextUrl.searchParams.get("path") || "";
-
-  if (!path.startsWith("/")) {
-    return NextResponse.json(
-      { error: "Provide a path starting with / (e.g. /blogs/technology/my-post)" },
-      { status: 400 }
-    );
-  }
-
-  revalidatePath(path);
+  revalidatePath("/", "layout");
 
   return NextResponse.json({
     revalidated: true,
     now: Date.now(),
-    path,
+    scope: "all",
   });
 }
 

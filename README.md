@@ -43,39 +43,26 @@ npm run lint      # ESLint
 |---|---|
 | All pages (home, listings, blog detail) | 1 minute |
 
-## Clear cache by path (`/api/revalidate`)
+## Clear all cache (`/api/revalidate`)
 
-Protected by `REVALIDATE_SECRET`. Pass the secret in the query string or as `Authorization: Bearer …`.
+Protected by `REVALIDATE_SECRET`. Pass the secret in the query string or as `Authorization: Bearer …`. Clears the full site cache (root layout and every nested page / fetch cache under it).
 
 Replace:
 
 - `YOUR_DOMAIN` → `http://localhost:3000` locally, or `https://www.digitaldialogue.pk` in production
 - `YOUR_SECRET` → value of `REVALIDATE_SECRET`
-- `path` → the page path to clear (must start with `/`)
 
-### Clear one blog post
+### GET
 
 ```bash
-curl "https://www.digitaldialogue.pk/api/revalidate?secret=YOUR_SECRET&path=/blogs/technology/my-post-slug"
+curl "https://www.digitaldialogue.pk/api/revalidate?secret=YOUR_SECRET"
 ```
 
-POST example:
+### POST
 
 ```bash
 curl -X POST "https://www.digitaldialogue.pk/api/revalidate" \
-  -H "Authorization: Bearer YOUR_SECRET" \
-  -H "Content-Type: application/json" \
-  -d "{\"path\":\"/blogs/technology/my-post-slug\"}"
-```
-
-### Clear other pages (same API)
-
-```bash
-# Home
-curl "https://www.digitaldialogue.pk/api/revalidate?secret=YOUR_SECRET&path=/"
-
-# Blogs listing
-curl "https://www.digitaldialogue.pk/api/revalidate?secret=YOUR_SECRET&path=/blogs"
+  -H "Authorization: Bearer YOUR_SECRET"
 ```
 
 Successful response:
@@ -84,7 +71,7 @@ Successful response:
 {
   "revalidated": true,
   "now": 1710000000000,
-  "path": "/blogs/technology/my-post-slug"
+  "scope": "all"
 }
 ```
 
