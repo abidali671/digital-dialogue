@@ -259,29 +259,9 @@ export default async function BlogDetailPage({ params }: PageProps) {
               </p>
 
               <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
-                <div className="flex items-center gap-3">
-                  <span className="h-11 w-11 shrink-0 overflow-hidden rounded-full bg-mist">
-                    <Image
-                      alt={author.fields.name}
-                      src={"https:" + author.fields.picture.fields.file.url}
-                      width={44}
-                      height={44}
-                      className="h-full w-full object-cover"
-                    />
-                  </span>
-                  <div>
-                    <Link
-                      href={`/authors/${author.fields.slug}`}
-                      className="block text-base font-semibold text-ink hover:text-accent"
-                    >
-                      {author.fields.name}
-                    </Link>
-                    <p className="font-mono text-xs text-mute-soft">
-                      {formatLongDate(publishedAt)} ·{" "}
-                      {readingTime} min read
-                    </p>
-                  </div>
-                </div>
+                <p className="font-mono text-xs text-mute-soft">
+                  {formatLongDate(publishedAt)} · {readingTime} min read
+                </p>
                 <ShareButtons url={shareUrl} />
               </div>
             </div>
