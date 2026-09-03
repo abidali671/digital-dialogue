@@ -17,7 +17,7 @@ const Layout = ({ children, categories, featuredPosts }: LayoutPropsT) => {
       <main className="container-body">{children}</main>
       <FeaturedPosts posts={featuredPosts} />
       <PopularTags />
-      <Footer />
+      <Footer categories={categories} />
     </React.Fragment>
   );
 };

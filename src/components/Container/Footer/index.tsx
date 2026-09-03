@@ -3,13 +3,23 @@ import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 import config from "@/lib/config";
+import { ICategoryData } from "@/types";
 
-const Footer = () => {
+interface FooterPropsT {
+  categories: ICategoryData[];
+}
+
+const Footer = ({ categories }: FooterPropsT) => {
+  const topicLinks = categories.map((category) => ({
+    label: category.fields.label,
+    href: `/blogs/${category.fields.slug}`,
+  }));
+
   return (
     <footer className="border-t border-ink-soft bg-ink">
       <ContentContainer className="flex flex-col gap-10 py-14">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-3 lg:grid-cols-4">
-          <div className="flex flex-col items-start gap-5 md:col-span-2">
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="flex flex-col items-start gap-5 sm:col-span-2">
             <Link
               href="/"
               className="inline-flex items-center"
@@ -55,6 +65,9 @@ const Footer = () => {
               </Link>
             </div>
           </div>
+          {topicLinks.length > 0 && (
+            <FooterLink title="Topics" links={topicLinks} />
+          )}
           <FooterLink title="Pages" links={config.FOOTER_LINKS} />
           <div className="flex w-full flex-col gap-3">
             <h2 className="font-display text-lg font-bold text-white">
