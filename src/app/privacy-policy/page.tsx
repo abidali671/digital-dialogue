@@ -27,8 +27,7 @@ export default function PrivacyPolicyPage() {
       </p>
 
       <p>
-        If you have questions about this policy, contact us at{" "}
-        <a href={`mailto:${config.EMAIL}`}>{config.EMAIL}</a> or through our{" "}
+        If you have questions about this policy, use our{" "}
         <Link href="/contact-us" className="underline">
           contact page
         </Link>
@@ -190,9 +189,12 @@ export default function PrivacyPolicyPage() {
       <p>
         Depending on where you live, you may have rights to access, correct,
         delete, or restrict processing of your personal data, or to object to
-        certain processing. To make a request, email{" "}
-        <a href={`mailto:${config.EMAIL}`}>{config.EMAIL}</a>. We will respond
-        within a reasonable time and as required by applicable law.
+        certain processing. To make a request, use our{" "}
+        <Link href="/contact-us" className="underline">
+          contact page
+        </Link>
+        . We will respond within a reasonable time and as required by applicable
+        law.
       </p>
       <p>
         California residents may have additional rights under the CCPA,
@@ -222,8 +224,8 @@ export default function PrivacyPolicyPage() {
         Questions about this Privacy Policy can be sent through the{" "}
         <Link href="/contact-us" className="underline">
           contact page
-        </Link>{" "}
-        or directly to:
+        </Link>
+        .
       </p>
       <div>
         <p className="text-gray-800 tracking-wide">
@@ -231,12 +233,6 @@ export default function PrivacyPolicyPage() {
         </p>
         <p className="text-gray-800 tracking-wide">
           Operator: <b>{config.AUTHOR_NAME}</b>
-        </p>
-        <p className="text-gray-800 tracking-wide">
-          Email: <b>{config.EMAIL}</b>
-        </p>
-        <p className="text-gray-700 tracking-wide">
-          Phone: <b>{config.PHONE}</b>
         </p>
       </div>
     </div>

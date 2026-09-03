@@ -84,8 +84,8 @@ export default function DisclaimerPage() {
         <h2>Contact</h2>
         <p>
           Questions about this disclaimer can go to the{" "}
-          <Link href="/contact-us">contact page</Link>, {config.EMAIL}. See
-          also the <Link href="/privacy-policy">privacy policy</Link> and{" "}
+          <Link href="/contact-us">contact page</Link>. See also the{" "}
+          <Link href="/privacy-policy">privacy policy</Link> and{" "}
           <Link href="/about">about page</Link>.
         </p>
       </div>

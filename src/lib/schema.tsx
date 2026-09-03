@@ -18,7 +18,11 @@ export function organizationSchema() {
     name: config.SITE_NAME,
     url: config.BASE_URL,
     logo: `${config.BASE_URL}/logo.webp`,
-    email: config.EMAIL,
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer support",
+      url: `${config.BASE_URL}/contact-us`,
+    },
     sameAs: [config.LINKEDIN_URL, config.UPWORK_URL, config.FIVERR_URL],
   };
 }

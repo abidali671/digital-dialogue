@@ -39,8 +39,7 @@ export default function AboutPage() {
         </p>
         <p>
           You can meet the writing team on the{" "}
-          <Link href="/authors">authors page</Link>, email{" "}
-          <a href={`mailto:${config.EMAIL}`}>{config.EMAIL}</a>, use the{" "}
+          <Link href="/authors">authors page</Link>, use the{" "}
           <Link href="/contact-us">contact form</Link>, or reach him on{" "}
           <a
             href={config.LINKEDIN_URL}

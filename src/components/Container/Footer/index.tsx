@@ -60,18 +60,12 @@ const Footer = () => {
             <h2 className="font-display text-lg font-bold text-white">
               Contact
             </h2>
-            <a
-              href={`mailto:${config.EMAIL}`}
+            <Link
+              href="/contact-us"
               className="text-sm text-mute-soft transition-colors hover:text-accent"
             >
-              {config.EMAIL}
-            </a>
-            <a
-              href={`tel:${config.PHONE.replace(/\s+/g, "")}`}
-              className="text-sm text-mute-soft transition-colors hover:text-accent"
-            >
-              {config.PHONE}
-            </a>
+              Contact form
+            </Link>
             <div className="mt-1 flex flex-col gap-2">
               {config.SOCIAL_LINKS.map((link) => (
                 <a

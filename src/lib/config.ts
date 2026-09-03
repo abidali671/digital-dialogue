@@ -40,8 +40,6 @@ const SOCIAL_LINKS = [
 ];
 
 const config = {
-  EMAIL: "abid.saeed.ali92@gmail.com",
-  PHONE: "+92 3248218854",
   NAV_LINKS,
   FOOTER_LINKS,
   SOCIAL_LINKS,
