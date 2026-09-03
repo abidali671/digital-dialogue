@@ -5,7 +5,7 @@ const descriptions = {
   AUTHORS:
     "Meet the writers behind Digital Dialogue and browse their practical articles on freelancing, technology, digital marketing, content creation, and design.",
   PRIVACY_POLICY:
-    "Read the Digital Dialogue privacy policy to understand what information we collect, how we use it, how cookies work, and the rights available to you.",
+    "Read the Digital Dialogue privacy policy: what we collect, cookies, Google AdSense disclosures, your rights, and how to contact us.",
   CONTACT_US:
     "Contact Digital Dialogue with questions, feedback, article ideas, or partnership enquiries about our freelancing, technology, marketing, and design content.",
   ABOUT:

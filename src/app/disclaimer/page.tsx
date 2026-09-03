@@ -26,7 +26,7 @@ export default function DisclaimerPage() {
         <p>
           The information on Digital Dialogue ({config.BASE_URL}) is for
           general reading only. It is not legal, financial, tax, medical, or
-          professional advice. Last updated: 18 August 2026.
+          professional advice. Last updated: 2 September 2026.
         </p>
 
         <h2>No guarantees</h2>
@@ -66,6 +66,19 @@ export default function DisclaimerPage() {
           compliance with local laws and the terms of any platform you join.
           If you need advice for your situation, speak to a qualified
           professional.
+        </p>
+
+        <h2>Advertising</h2>
+        <p>
+          Digital Dialogue may display third-party advertisements, including
+          ads served by Google AdSense. Ad partners may use cookies or similar
+          technologies as described in our{" "}
+          <Link href="/privacy-policy">privacy policy</Link>. Ads do not change
+          our editorial standards: we aim to publish useful guides first.
+        </p>
+        <p>
+          Some articles may mention tools, platforms, or services. Unless a
+          post clearly says otherwise, a mention is not a paid endorsement.
         </p>
 
         <h2>Contact</h2>

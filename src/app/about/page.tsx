@@ -33,13 +33,15 @@ export default function AboutPage() {
 
         <h2>Who runs the site</h2>
         <p>
-          The site is run by {config.AUTHOR_NAME}. He writes and edits for
-          builders, freelancers, and junior developers who need clear steps
-          they can use the same day.
+          Digital Dialogue is owned and operated by {config.AUTHOR_NAME}, based
+          in Pakistan. He writes and edits for builders, freelancers, and junior
+          developers who need clear steps they can use the same day.
         </p>
         <p>
-          You can meet the full writing team on the{" "}
-          <Link href="/authors">authors page</Link>, or reach him on{" "}
+          You can meet the writing team on the{" "}
+          <Link href="/authors">authors page</Link>, email{" "}
+          <a href={`mailto:${config.EMAIL}`}>{config.EMAIL}</a>, use the{" "}
+          <Link href="/contact-us">contact form</Link>, or reach him on{" "}
           <a
             href={config.LINKEDIN_URL}
             target="_blank"
@@ -74,6 +76,14 @@ export default function AboutPage() {
         <p>
           Start with the <Link href="/blogs">blog index</Link>, or send a
           question through the <Link href="/contact-us">contact page</Link>.
+        </p>
+
+        <h2>Policies</h2>
+        <p>
+          How we handle visitor data is explained in the{" "}
+          <Link href="/privacy-policy">privacy policy</Link>. Limits on how to
+          use our articles are in the{" "}
+          <Link href="/disclaimer">disclaimer</Link>.
         </p>
       </div>
     </ContentContainer>
