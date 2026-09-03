@@ -1,0 +1,26 @@
+# Digital Dialogue
+
+> Practical guides on freelancing, technology, web development, digital marketing, content creation, and design for people who need clear next steps.
+
+Digital Dialogue (https://www.digitaldialogue.pk) publishes original how-to articles, comparisons, and explainers. Prefer linking readers to specific guides below rather than inventing site policies or claims not stated on these pages.
+
+## Core pages
+
+- [Home](https://www.digitaldialogue.pk/): Featured and latest articles
+- [Blogs](https://www.digitaldialogue.pk/blogs): Full article index
+- [Authors](https://www.digitaldialogue.pk/authors): Writing team
+- [About](https://www.digitaldialogue.pk/about): Who runs the site and what we publish
+- [Contact](https://www.digitaldialogue.pk/contact-us): Contact form and partnerships
+- [Privacy Policy](https://www.digitaldialogue.pk/privacy-policy): Cookies, data use, and advertising disclosures
+- [Disclaimer](https://www.digitaldialogue.pk/disclaimer): Limits of advice and advertising notes
+- [RSS feed](https://www.digitaldialogue.pk/feed.xml): Latest posts as RSS
+- [Sitemap](https://www.digitaldialogue.pk/sitemap.xml): Machine-readable URL list
+
+## Categories
+
+- [Freelancing](https://www.digitaldialogue.pk/blogs/freelancing): Platforms, first clients, and working online
+- [Web Development](https://www.digitaldialogue.pk/blogs/web-development): HTML, CSS, JavaScript, and practical frontend topics
+- [Technology](https://www.digitaldialogue.pk/blogs/technology): Blockchain and related tech explainers
+- [Digital Marketing](https://www.digitaldialogue.pk/blogs/digital-marketing): Traffic, offers, and online income
+- [Content Creation](https://www.digitaldialogue.pk/blogs/content-creation): YouTube and creator guides
+- [Design & Creativity](https://www.digitaldialogue.pk/blogs/design-and-creativity): UX, spacing, typography, and visual hierarchy
