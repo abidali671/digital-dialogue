@@ -1,4 +1,5 @@
 import type { TocHeading } from "@/lib/toc";
+import Link from "next/link";
 
 interface PropsT {
   headings: TocHeading[];
@@ -11,7 +12,7 @@ const TableOfContents = ({ headings }: PropsT) => {
       <ol>
         {headings.map((heading) => (
           <li key={heading.id}>
-            <a href={`#${heading.id}`}>{heading.text}</a>
+            <Link href={`#${heading.id}`}>{heading.text}</Link>
           </li>
         ))}
       </ol>
