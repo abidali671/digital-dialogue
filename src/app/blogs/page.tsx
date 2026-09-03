@@ -4,9 +4,10 @@ import contentful_client, {
 } from "@/lib/contentful/client";
 import config from "@/lib/config";
 import constants from "@/constants";
+import CategoryHubs from "@/components/CategoryHubs";
 import BlogsClient from "@/components/blogs/BlogsClient";
 import { parseSearchQuery } from "@/lib/listing";
-import { IPostData } from "@/types";
+import { ICategoryData, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
 
@@ -41,25 +42,33 @@ export default async function BlogsPage({ searchParams }: PageProps) {
   const currentPage = parsePage(searchParams.page);
   const searchQuery = parseSearchQuery(searchParams.q);
 
-  const response = await contentful_client.getEntries({
-    content_type: "post",
-    limit: config.BLOGS_PER_PAGE,
-    skip: (currentPage - 1) * config.BLOGS_PER_PAGE,
-    order: "-sys.updatedAt",
-    ...(searchQuery ? { query: searchQuery } : {}),
-  });
+  const [response, categoriesRes] = await Promise.all([
+    contentful_client.getEntries({
+      content_type: "post",
+      limit: config.BLOGS_PER_PAGE,
+      skip: (currentPage - 1) * config.BLOGS_PER_PAGE,
+      order: "-sys.updatedAt",
+      ...(searchQuery ? { query: searchQuery } : {}),
+    }),
+    contentful_client.getEntries({ content_type: "category" }),
+  ]);
 
   const totalPages = Math.max(
     1,
     Math.ceil(response.total / config.BLOGS_PER_PAGE)
   );
+  const categories = categoriesRes.items as unknown as ICategoryData[];
+  const showCategoryHubs = currentPage === 1 && !searchQuery;
 
   return (
-    <BlogsClient
-      posts={response.items as unknown as IPostData[]}
-      currentPage={Math.min(currentPage, totalPages)}
-      totalPages={totalPages}
-      searchQuery={searchQuery}
-    />
+    <>
+      <BlogsClient
+        posts={response.items as unknown as IPostData[]}
+        currentPage={Math.min(currentPage, totalPages)}
+        totalPages={totalPages}
+        searchQuery={searchQuery}
+      />
+      {showCategoryHubs && <CategoryHubs categories={categories} />}
+    </>
   );
 }
