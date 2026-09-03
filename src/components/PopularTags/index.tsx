@@ -10,7 +10,7 @@ const PopularTags = () => {
   if (!tags.length) return null;
 
   return (
-    <section className="border-b border-line bg-mist">
+    <section className="border-t border-line bg-white">
       <ContentContainer className="py-14 md:py-16">
         <div className="flex flex-col gap-2">
           <Title as="h2">Popular tags</Title>
