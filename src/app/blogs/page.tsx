@@ -64,6 +64,7 @@ export default async function BlogsPage({ searchParams }: PageProps) {
     <>
       <BlogsClient
         posts={response.items as unknown as IPostData[]}
+        categories={categories}
         currentPage={Math.min(currentPage, totalPages)}
         totalPages={totalPages}
         searchQuery={searchQuery}

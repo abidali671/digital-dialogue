@@ -33,7 +33,7 @@ const CategoryBlogsClient = ({
       <ContentContainer className="relative flex flex-col justify-center pt-10">
         <Title>{title}</Title>
         {description && (
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-mute">
+          <p className="mt-4 max-w-3xl text-base leading-relaxed text-mute">
             {description}
           </p>
         )}
