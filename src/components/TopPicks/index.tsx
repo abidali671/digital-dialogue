@@ -9,7 +9,7 @@ interface IProps {
   posts: IPostData[];
 }
 
-/** Numbered editorial list of hand-picked posts, shown under the hero. */
+/** Numbered editorial list driven by config.EDITOR_PICK_SLUGS. */
 const TopPicks = ({ posts }: IProps) => {
   if (!posts.length) return null;
 

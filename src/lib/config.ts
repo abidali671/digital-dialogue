@@ -46,6 +46,13 @@ const FEATURED_POST_SLUGS = [
   "youtube-premium-vs-free-is-it-worth-it",
 ] as const;
 
+/** Home page Editor's picks (under the hero). Keep distinct from FEATURED_POST_SLUGS. */
+const EDITOR_PICK_SLUGS = [
+  "best-freelancing-platform-for-beginners-in-pakistan",
+  "how-to-earn-money-online-with-your-smartphone",
+  "margin-vs-padding-whats-the-difference",
+] as const;
+
 /** Tag hubs linked from home and blogs listing. */
 const POPULAR_TAGS = [
   { label: "Upwork", slug: "upwork" },
@@ -67,6 +74,7 @@ const config = {
   FOOTER_LINKS,
   SOCIAL_LINKS,
   FEATURED_POST_SLUGS,
+  EDITOR_PICK_SLUGS,
   POPULAR_TAGS,
   FORM_ACTION: "https://formspree.io/f/xoqoddgp",
   BASE_URL: "https://www.digitaldialogue.pk",

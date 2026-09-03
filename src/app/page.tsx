@@ -9,6 +9,7 @@ import contentful_client, {
 } from "@/lib/contentful/client";
 import config from "@/lib/config";
 import constants from "@/constants";
+import { getPostsBySlugs } from "@/lib/posts";
 import {
   JsonLdScript,
   organizationSchema,
@@ -30,21 +31,25 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [postsRes, categoriesRes] = await Promise.all([
+  const [postsRes, categoriesRes, pickedPosts] = await Promise.all([
     contentful_client.getEntries({
       content_type: "post",
       limit: 16,
       order: "-sys.updatedAt",
     }),
     contentful_client.getEntries({ content_type: "category" }),
+    getPostsBySlugs(config.EDITOR_PICK_SLUGS),
   ]);
 
   const posts = postsRes.items as unknown as IPostData[];
   const categories = categoriesRes.items as unknown as ICategoryData[];
+  const editorPickSlugs = new Set<string>(config.EDITOR_PICK_SLUGS);
 
   const featuredPost = posts.slice(0, 1);
-  const pickedPosts = posts.slice(1, 4);
-  const latestPosts = posts.length > 4 ? posts.slice(4) : posts;
+  const latestPosts = posts
+    .slice(1)
+    .filter((post) => !editorPickSlugs.has(post.fields.slug))
+    .slice(0, 12);
 
   return (
     <>
