@@ -31,10 +31,13 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
+  const latestCount = config.BLOGS_PER_PAGE;
+  const fetchLimit = 1 + latestCount + config.EDITOR_PICK_SLUGS.length;
+
   const [postsRes, categoriesRes, pickedPosts] = await Promise.all([
     contentful_client.getEntries({
       content_type: "post",
-      limit: 16,
+      limit: fetchLimit,
       order: "-sys.updatedAt",
     }),
     contentful_client.getEntries({ content_type: "category" }),
@@ -49,7 +52,7 @@ export default async function HomePage() {
   const latestPosts = posts
     .slice(1)
     .filter((post) => !editorPickSlugs.has(post.fields.slug))
-    .slice(0, 12);
+    .slice(0, latestCount);
 
   return (
     <>
