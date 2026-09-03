@@ -26,7 +26,7 @@ const NAV_LINKS = [
 ];
 
 const FOOTER_LINKS = NAV_LINKS.filter(
-  (link) => link.href !== "/privacy-policy"
+  (link) => link.href !== "/privacy-policy" && link.href !== "/contact-us",
 );
 
 const LINKEDIN_URL = "https://www.linkedin.com/in/abid-ali-89ab4a1bb/";

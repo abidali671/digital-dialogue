@@ -73,15 +73,16 @@ const Footer = ({ categories }: FooterPropsT) => {
             <h2 className="font-display text-lg font-bold text-white">
               Contact
             </h2>
-            <Link
-              href="/contact-us"
-              className="text-sm text-mute-soft transition-colors hover:text-accent"
-            >
-              Contact form
-            </Link>
+
             <div className="mt-1 flex flex-col gap-2">
+              <Link
+                href="/contact-us"
+                className="text-sm text-mute-soft transition-colors hover:text-accent"
+                >
+                Contact form
+              </Link>
               {config.SOCIAL_LINKS.map((link) => (
-                <a
+                <Link
                   key={link.href}
                   href={link.href}
                   target="_blank"
@@ -89,7 +90,7 @@ const Footer = ({ categories }: FooterPropsT) => {
                   className="text-sm text-mute-soft transition-colors hover:text-accent"
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
             </div>
           </div>
