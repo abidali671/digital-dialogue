@@ -5,7 +5,7 @@ import contentful_client, {
 } from "@/lib/contentful/client";
 import Layout from "@/components/layout";
 import config from "@/lib/config";
-import { ICategoryData } from "@/types";
+import { ICategoryData, IPostData } from "@/types";
 import "@/styles/global.css";
 
 export const revalidate = REVALIDATE_LISTING;
@@ -75,12 +75,37 @@ async function getCategories() {
   return response.items as unknown as ICategoryData[];
 }
 
+async function getFeaturedPosts() {
+  const slugs = [...config.FEATURED_POST_SLUGS];
+  if (!slugs.length) return [] as IPostData[];
+
+  const response = await contentful_client.getEntries({
+    content_type: "post",
+    "fields.slug[in]": slugs.join(","),
+    limit: slugs.length,
+  });
+
+  const bySlug = new Map(
+    (response.items as unknown as IPostData[]).map((post) => [
+      post.fields.slug,
+      post,
+    ])
+  );
+
+  return slugs
+    .map((slug) => bySlug.get(slug))
+    .filter((post): post is IPostData => Boolean(post));
+}
+
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const categories = await getCategories();
+  const [categories, featuredPosts] = await Promise.all([
+    getCategories(),
+    getFeaturedPosts(),
+  ]);
 
   return (
     <html
@@ -88,7 +113,9 @@ export default async function RootLayout({
       className={`${bodyFont.variable} ${displayFont.variable} ${monoFont.variable}`}
     >
       <body>
-        <Layout categories={categories}>{children}</Layout>
+        <Layout categories={categories} featuredPosts={featuredPosts}>
+          {children}
+        </Layout>
       </body>
     </html>
   );

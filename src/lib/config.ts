@@ -39,10 +39,18 @@ const SOCIAL_LINKS = [
   { label: "Fiverr", href: FIVERR_URL },
 ];
 
+/** Post slugs shown as featured cards above the footer on every page. */
+const FEATURED_POST_SLUGS = [
+  "what-is-upwork-and-how-does-it-work",
+  "7-design-thinking-principles-explained",
+  "youtube-premium-vs-free-is-it-worth-it",
+] as const;
+
 const config = {
   NAV_LINKS,
   FOOTER_LINKS,
   SOCIAL_LINKS,
+  FEATURED_POST_SLUGS,
   FORM_ACTION: "https://formspree.io/f/xoqoddgp",
   BASE_URL: "https://www.digitaldialogue.pk",
   BLOGS_PER_PAGE: 15,
