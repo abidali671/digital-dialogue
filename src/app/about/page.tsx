@@ -66,11 +66,30 @@ export default function AboutPage() {
 
         <h2>What you will find</h2>
         <ul>
-          <li>Freelancing: platforms, first clients, and working from home</li>
-          <li>Web development: HTML, CSS, JavaScript, and practical frontend skills</li>
-          <li>Technology: blockchain and other tools, explained without hype</li>
-          <li>Digital marketing: traffic, agencies, and measurement</li>
-          <li>Design: UX, color, and why design choices matter</li>
+          <li>
+            <Link href="/blogs/freelancing">Freelancing</Link>: platforms,
+            first clients, and working from home
+          </li>
+          <li>
+            <Link href="/blogs/web-development">Web development</Link>: HTML,
+            CSS, JavaScript, and practical frontend skills
+          </li>
+          <li>
+            <Link href="/blogs/technology">Technology</Link>: blockchain and
+            other tools, explained without hype
+          </li>
+          <li>
+            <Link href="/blogs/digital-marketing">Digital marketing</Link>:
+            traffic, agencies, and measurement
+          </li>
+          <li>
+            <Link href="/blogs/content-creation">Content creation</Link>:
+            YouTube, creators, and building an audience
+          </li>
+          <li>
+            <Link href="/blogs/design-and-creativity">Design</Link>: UX, color,
+            and why design choices matter
+          </li>
         </ul>
         <p>
           Start with the <Link href="/blogs">blog index</Link>, or send a
