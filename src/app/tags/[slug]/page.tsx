@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import contentful_client, {
   REVALIDATE_LISTING,
 } from "@/lib/contentful/client";
+import CategoryHubs from "@/components/CategoryHubs";
 import CategoryBlogsClient from "@/components/blogs/CategoryBlogsClient";
 import { parseSearchQuery } from "@/lib/listing";
 import {
@@ -11,7 +12,7 @@ import {
   searchTextFromKeywordSlug,
   toKeywordTags,
 } from "@/lib/keywords";
-import { IPostData } from "@/types";
+import { ICategoryData, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
 
@@ -62,13 +63,16 @@ export default async function TagPage({ params, searchParams }: PageProps) {
 
     const searchQuery = parseSearchQuery(searchParams.q);
 
-    const response = await contentful_client.getEntries({
-      content_type: "post",
-      "fields.keywords[match]": tagQuery,
-      order: "-sys.updatedAt",
-      limit: 100,
-      ...(searchQuery ? { query: searchQuery } : {}),
-    });
+    const [response, categoriesRes] = await Promise.all([
+      contentful_client.getEntries({
+        content_type: "post",
+        "fields.keywords[match]": tagQuery,
+        order: "-sys.updatedAt",
+        limit: 100,
+        ...(searchQuery ? { query: searchQuery } : {}),
+      }),
+      contentful_client.getEntries({ content_type: "category" }),
+    ]);
 
     let posts = (response.items as unknown as IPostData[]).filter((post) =>
       postHasKeywordSlug(post, slug)
@@ -87,13 +91,18 @@ export default async function TagPage({ params, searchParams }: PageProps) {
 
     if (!posts.length && !searchQuery) notFound();
 
+    const categories = categoriesRes.items as unknown as ICategoryData[];
+
     return (
-      <CategoryBlogsClient
-        posts={posts}
-        title={resolveTagLabel(slug, posts)}
-        basePath={`/tags/${slug}`}
-        searchQuery={searchQuery}
-      />
+      <>
+        <CategoryBlogsClient
+          posts={posts}
+          title={resolveTagLabel(slug, posts)}
+          basePath={`/tags/${slug}`}
+          searchQuery={searchQuery}
+        />
+        {!searchQuery && <CategoryHubs categories={categories} />}
+      </>
     );
   } catch (error) {
     if (
