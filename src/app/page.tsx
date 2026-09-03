@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Hero from "@/components/HeroSection";
 import TopPicks from "@/components/TopPicks";
 import CategoryHubs from "@/components/CategoryHubs";
+import PopularTags from "@/components/PopularTags";
 import AllPosts from "@/components/AllPosts";
 import Newsletter from "@/components/Newsletter";
 import contentful_client, {
@@ -52,6 +53,7 @@ export default async function HomePage() {
       <Hero posts={featuredPost} />
       <TopPicks posts={pickedPosts} />
       <CategoryHubs categories={categories} />
+      <PopularTags />
       <AllPosts posts={latestPosts} categories={categories} />
       <Newsletter />
     </>

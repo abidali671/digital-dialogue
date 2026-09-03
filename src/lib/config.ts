@@ -46,11 +46,28 @@ const FEATURED_POST_SLUGS = [
   "youtube-premium-vs-free-is-it-worth-it",
 ] as const;
 
+/** Tag hubs linked from home and blogs listing. */
+const POPULAR_TAGS = [
+  { label: "Upwork", slug: "upwork" },
+  { label: "Fiverr", slug: "fiverr" },
+  { label: "LinkedIn", slug: "linkedin" },
+  { label: "Accessibility", slug: "accessibility" },
+  { label: "Instagram", slug: "instagram" },
+  { label: "Design Thinking", slug: "design-thinking" },
+  { label: "Web Design", slug: "web-design" },
+  { label: "Empathize", slug: "empathize" },
+  { label: "Ethereum", slug: "ethereum" },
+  { label: "Hire Marketing Agency", slug: "hire-marketing-agency" },
+  { label: "Digital Marketing", slug: "digital-marketing" },
+  { label: "Sell Digital Products", slug: "sell-digital-products" },
+] as const;
+
 const config = {
   NAV_LINKS,
   FOOTER_LINKS,
   SOCIAL_LINKS,
   FEATURED_POST_SLUGS,
+  POPULAR_TAGS,
   FORM_ACTION: "https://formspree.io/f/xoqoddgp",
   BASE_URL: "https://www.digitaldialogue.pk",
   BLOGS_PER_PAGE: 15,
