@@ -11,6 +11,7 @@ import { IPostData } from "@/types";
 interface PropsT {
   posts: IPostData[];
   title: string;
+  description?: string;
   basePath: string;
   searchQuery: string;
   currentPage?: number;
@@ -20,6 +21,7 @@ interface PropsT {
 const CategoryBlogsClient = ({
   posts,
   title,
+  description,
   basePath,
   searchQuery,
   currentPage,
@@ -30,6 +32,11 @@ const CategoryBlogsClient = ({
       <PostSearch searchQuery={searchQuery} basePath={basePath} />
       <ContentContainer className="relative flex flex-col justify-center pt-10">
         <Title>{title}</Title>
+        {description && (
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-mute">
+            {description}
+          </p>
+        )}
         {searchQuery && (
           <p className="mt-4 text-sm text-mute">
             Showing results for “{searchQuery}”

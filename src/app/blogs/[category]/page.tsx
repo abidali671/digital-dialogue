@@ -84,6 +84,10 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
     if (!category_response.items.length) notFound();
 
     const category = category_response.items[0] as unknown as ICategoryData;
+    const label = String(category.fields.label);
+    const description =
+      category.fields.description?.replace(/\s+/g, " ").trim() ||
+      `Browse practical ${label.toLowerCase()} articles, guides, and tips from Digital Dialogue.`;
 
     const response = await contentful_client.getEntries({
       content_type: "post",
@@ -102,7 +106,8 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
     return (
       <CategoryBlogsClient
         posts={response.items as unknown as IPostData[]}
-        title={String(category.fields.label)}
+        title={label}
+        description={description}
         basePath={`/blogs/${params.category}`}
         searchQuery={searchQuery}
         currentPage={Math.min(currentPage, totalPages)}

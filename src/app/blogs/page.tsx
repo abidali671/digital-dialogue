@@ -58,7 +58,7 @@ export default async function BlogsPage({ searchParams }: PageProps) {
     Math.ceil(response.total / config.BLOGS_PER_PAGE)
   );
   const categories = categoriesRes.items as unknown as ICategoryData[];
-  const showCategoryHubs = currentPage === 1 && !searchQuery;
+  const showCategoryHubs = !searchQuery;
 
   return (
     <>
