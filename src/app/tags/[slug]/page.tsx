@@ -12,6 +12,7 @@ import {
   searchTextFromKeywordSlug,
   toKeywordTags,
 } from "@/lib/keywords";
+import { pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { ICategoryData, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
@@ -37,21 +38,22 @@ export async function generateMetadata({
   const slug = params.slug?.trim();
   if (!slug) {
     return {
-      title: "Tag",
+      title: pageTitle("Tag"),
       description: "Browse articles by topic on Digital Dialogue.",
     };
   }
 
   const label = labelFromKeywordSlug(slug);
   const title = `Articles tagged ${label}`;
+  const resolvedTitle = resolvePageTitle(title);
   const description = `Browse guides and explainers tagged ${label.toLowerCase()} on Digital Dialogue.`;
   const canonical = `/tags/${slug}`;
 
   return {
-    title,
+    title: pageTitle(title),
     description,
     alternates: { canonical },
-    openGraph: { title, description, url: canonical },
+    openGraph: { title: resolvedTitle, description, url: canonical },
   };
 }
 

@@ -10,6 +10,7 @@ import contentful_client, {
 import config from "@/lib/config";
 import constants from "@/constants";
 import { getPostsBySlugs } from "@/lib/posts";
+import { pageTitle, resolvePageTitle } from "@/lib/metadata";
 import {
   JsonLdScript,
   organizationSchema,
@@ -19,12 +20,14 @@ import { ICategoryData, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
 
+const HOME_TITLE = `${config.SITE_NAME} | Freelancing and Technology Guides`;
+
 export const metadata: Metadata = {
-  title: { absolute: `${config.SITE_NAME} | Freelancing and Technology Guides` },
+  title: pageTitle(HOME_TITLE),
   description: constants.descriptions.HOME,
   alternates: { canonical: "/" },
   openGraph: {
-    title: `${config.SITE_NAME} | Freelancing and Technology Guides`,
+    title: resolvePageTitle(HOME_TITLE),
     description: constants.descriptions.HOME,
     url: "/",
   },

@@ -6,6 +6,7 @@ import contentful_client, {
 import config from "@/lib/config";
 import CategoryBlogsClient from "@/components/blogs/CategoryBlogsClient";
 import { parseSearchQuery } from "@/lib/listing";
+import { pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { ICategoryData, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
@@ -35,7 +36,7 @@ export async function generateMetadata({
 
     if (!category) {
       return {
-        title: "Blog Category",
+        title: pageTitle("Blog Category"),
         description: "Browse practical articles by topic on Digital Dialogue.",
       };
     }
@@ -44,6 +45,7 @@ export async function generateMetadata({
     const pageSuffix = currentPage > 1 ? `, Page ${currentPage}` : "";
     const label = String(category.fields.label);
     const title = `${label} Articles${pageSuffix}`;
+    const resolvedTitle = resolvePageTitle(title);
     const fallback = `Browse practical ${label.toLowerCase()} articles, guides, and tips from Digital Dialogue.`;
     const rawDescription = (category.fields.description || fallback)
       .replace(/\s+/g, " ")
@@ -58,14 +60,14 @@ export async function generateMetadata({
         : `/blogs/${params.category}`;
 
     return {
-      title,
+      title: pageTitle(title),
       description,
       alternates: { canonical },
-      openGraph: { title, description, url: canonical },
+      openGraph: { title: resolvedTitle, description, url: canonical },
     };
   } catch {
     return {
-      title: "Blog Category",
+      title: pageTitle("Blog Category"),
       description: "Browse practical articles by topic on Digital Dialogue.",
     };
   }

@@ -1,14 +1,17 @@
 ﻿import type { Metadata } from "next";
 import constants from "@/constants";
 import config from "@/lib/config";
+import { pageTitle, resolvePageTitle } from "@/lib/metadata";
 import Link from "next/link";
 
+const PRIVACY_TITLE = "Privacy Policy";
+
 export const metadata: Metadata = {
-  title: "Privacy Policy",
+  title: pageTitle(PRIVACY_TITLE),
   description: constants.descriptions.PRIVACY_POLICY,
   alternates: { canonical: "/privacy-policy" },
   openGraph: {
-    title: "Privacy Policy",
+    title: resolvePageTitle(PRIVACY_TITLE),
     description: constants.descriptions.PRIVACY_POLICY,
     url: "/privacy-policy",
   },

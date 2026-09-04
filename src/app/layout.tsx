@@ -39,10 +39,7 @@ const DEFAULT_OG_IMAGE = {
 };
 
 export const metadata: Metadata = {
-  title: {
-    default: config.SITE_NAME,
-    template: `%s | ${config.SITE_NAME}`,
-  },
+  title: config.SITE_NAME,
   description: config.DEFAULT_DESCRIPTION,
   metadataBase: new URL(config.BASE_URL),
   alternates: {

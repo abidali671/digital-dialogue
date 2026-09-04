@@ -4,16 +4,19 @@ import contentful_client, {
 } from "@/lib/contentful/client";
 import constants from "@/constants";
 import AuthorsClient from "@/components/authors/AuthorsClient";
+import { pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { IAuthor } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
 
+const AUTHORS_TITLE = "Meet Our Authors";
+
 export const metadata: Metadata = {
-  title: "Meet Our Authors",
+  title: pageTitle(AUTHORS_TITLE),
   description: constants.descriptions.AUTHORS,
   alternates: { canonical: "/authors" },
   openGraph: {
-    title: "Meet Our Authors",
+    title: resolvePageTitle(AUTHORS_TITLE),
     description: constants.descriptions.AUTHORS,
     url: "/authors",
   },

@@ -4,15 +4,16 @@ import constants from "@/constants";
 import config from "@/lib/config";
 import ContentContainer from "@/components/ContentContainer";
 import Title from "@/components/Title";
+import { pageTitle, resolvePageTitle } from "@/lib/metadata";
+
+const ABOUT_TITLE = "About Digital Dialogue | Who We Are and What We Publish";
 
 export const metadata: Metadata = {
-  title: {
-    absolute: "About Digital Dialogue | Who We Are and What We Publish",
-  },
+  title: pageTitle(ABOUT_TITLE),
   description: constants.descriptions.ABOUT,
   alternates: { canonical: "/about" },
   openGraph: {
-    title: "About Digital Dialogue | Who We Are and What We Publish",
+    title: resolvePageTitle(ABOUT_TITLE),
     description: constants.descriptions.ABOUT,
     url: "/about",
   },

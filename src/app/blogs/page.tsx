@@ -7,6 +7,7 @@ import constants from "@/constants";
 import CategoryHubs from "@/components/CategoryHubs";
 import BlogsClient from "@/components/blogs/BlogsClient";
 import { parseSearchQuery } from "@/lib/listing";
+import { pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { ICategoryData, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
@@ -24,14 +25,15 @@ export function generateMetadata({ searchParams }: PageProps): Metadata {
   const currentPage = parsePage(searchParams.page);
   const pageSuffix = currentPage > 1 ? `, Page ${currentPage}` : "";
   const title = `Freelancing, Technology and Marketing Articles${pageSuffix}`;
+  const resolvedTitle = resolvePageTitle(title);
   const canonical = currentPage > 1 ? `/blogs?page=${currentPage}` : "/blogs";
 
   return {
-    title,
+    title: pageTitle(title),
     description: constants.descriptions.BLOGS,
     alternates: { canonical },
     openGraph: {
-      title,
+      title: resolvedTitle,
       description: constants.descriptions.BLOGS,
       url: canonical,
     },

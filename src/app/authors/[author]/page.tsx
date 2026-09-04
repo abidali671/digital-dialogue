@@ -6,6 +6,7 @@ import contentful_client, {
 import config from "@/lib/config";
 import AuthorPostsClient from "@/components/authors/AuthorPostsClient";
 import { parseSearchQuery } from "@/lib/listing";
+import { pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { IAuthor, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
@@ -32,7 +33,7 @@ export async function generateMetadata({
     const author = author_response.items[0] as unknown as IAuthor | undefined;
     if (!author) {
       return {
-        title: "Author Not Found",
+        title: pageTitle("Author Not Found"),
         description: "The requested Digital Dialogue author could not be found.",
       };
     }
@@ -40,6 +41,7 @@ export async function generateMetadata({
     const currentPage = parsePage(searchParams.page);
     const pageSuffix = currentPage > 1 ? `, Page ${currentPage}` : "";
     const title = `${author.fields.name}'s Articles${pageSuffix}`;
+    const resolvedTitle = resolvePageTitle(title);
     const about = author.fields.about.replace(/\s+/g, " ").trim();
     const description =
       about.length > 160 ? `${about.slice(0, 157).trimEnd()}...` : about;
@@ -49,14 +51,14 @@ export async function generateMetadata({
         : `/authors/${params.author}`;
 
     return {
-      title,
+      title: pageTitle(title),
       description,
       alternates: { canonical },
-      openGraph: { title, description, url: canonical },
+      openGraph: { title: resolvedTitle, description, url: canonical },
     };
   } catch {
     return {
-      title: "Digital Dialogue Author",
+      title: pageTitle("Digital Dialogue Author"),
       description: "Browse articles by a Digital Dialogue author.",
     };
   }

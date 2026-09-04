@@ -17,6 +17,7 @@ import Link from "next/link";
 import config from "@/lib/config";
 import { formatLongDate, getPublishedDate, getReadingTime, toIsoTimestamp } from "@/helper";
 import { pickRelatedPosts, toKeywordTags } from "@/lib/keywords";
+import { pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { breadcrumbSchema, JsonLdScript } from "@/lib/schema";
 import { extractToc, shouldShowToc } from "@/lib/toc";
 import TableOfContents from "@/components/TableOfContents";
@@ -49,7 +50,7 @@ export async function generateMetadata({
     const category = category_response.items[0];
     if (!category) {
       return {
-        title: "Article Not Found",
+        title: pageTitle("Article Not Found"),
         description: "The requested Digital Dialogue article could not be found.",
       };
     }
@@ -65,13 +66,14 @@ export async function generateMetadata({
     const post = response.items[0] as unknown as IPostData | undefined;
     if (!post) {
       return {
-        title: "Article Not Found",
+        title: pageTitle("Article Not Found"),
         description: "The requested Digital Dialogue article could not be found.",
       };
     }
 
     const url = `${config.BASE_URL}/blogs/${params.category}/${params.blog_detail}`;
     const title = String(post.fields.title);
+    const resolvedTitle = resolvePageTitle(title);
     const description = toMetaDescription(
       post.fields.excerpt,
       `Read ${title} on Digital Dialogue.`
@@ -85,12 +87,12 @@ export async function generateMetadata({
     const images = imageUrl ? [imageUrl] : undefined;
 
     return {
-      title,
+      title: pageTitle(title),
       description,
       keywords: post.fields.keywords,
       alternates: { canonical: url },
       openGraph: {
-        title,
+        title: resolvedTitle,
         description,
         url,
         type: "article",
@@ -98,14 +100,14 @@ export async function generateMetadata({
       },
       twitter: {
         card: "summary_large_image",
-        title,
+        title: resolvedTitle,
         description,
         images,
       },
     };
   } catch {
     return {
-      title: "Digital Dialogue Article",
+      title: pageTitle("Digital Dialogue Article"),
       description: "Read practical articles and guides from Digital Dialogue.",
     };
   }

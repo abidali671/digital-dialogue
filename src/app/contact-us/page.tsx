@@ -3,15 +3,16 @@ import constants from "@/constants";
 import config from "@/lib/config";
 import ContentContainer from "@/components/ContentContainer";
 import Title from "@/components/Title";
+import { pageTitle, resolvePageTitle } from "@/lib/metadata";
+
+const CONTACT_TITLE = "Contact Digital Dialogue | Questions and Partnerships";
 
 export const metadata: Metadata = {
-  title: {
-    absolute: "Contact Digital Dialogue | Questions and Partnerships",
-  },
+  title: pageTitle(CONTACT_TITLE),
   description: constants.descriptions.CONTACT_US,
   alternates: { canonical: "/contact-us" },
   openGraph: {
-    title: "Contact Digital Dialogue | Questions and Partnerships",
+    title: resolvePageTitle(CONTACT_TITLE),
     description: constants.descriptions.CONTACT_US,
     url: "/contact-us",
   },
