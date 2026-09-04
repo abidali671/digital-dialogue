@@ -11,39 +11,59 @@ import {
 } from "next-share";
 import { useState } from "react";
 
-const ShareButtons = ({ url }: { url: string }) => {
-  const [copied, setCopied] = useState(false);
+interface ShareButtonsProps {
+  url: string;
+  title?: string;
+  hashtags?: string[];
+}
 
-  const handleCopy = () => {
-    const tempTextarea = document.createElement("textarea");
-    tempTextarea.value = url;
-    document.body.appendChild(tempTextarea);
-    tempTextarea.select();
-    document.execCommand("copy");
-    document.body.removeChild(tempTextarea);
+/** Title on top, hashtags next; link is appended separately by each network. */
+function buildShareText(title?: string, hashtags?: string[]) {
+  const tags = (hashtags ?? []).map((tag) => `#${tag}`).join(" ");
+  return [title?.trim(), tags].filter(Boolean).join("\n\n");
+}
+
+const ShareButtons = ({ url, title, hashtags = [] }: ShareButtonsProps) => {
+  const [copied, setCopied] = useState(false);
+  const shareText = buildShareText(title, hashtags);
+
+  const handleCopy = async () => {
+    const clipboardText = [shareText, url].filter(Boolean).join("\n\n");
+    try {
+      await navigator.clipboard.writeText(clipboardText);
+    } catch {
+      const tempTextarea = document.createElement("textarea");
+      tempTextarea.value = clipboardText;
+      document.body.appendChild(tempTextarea);
+      tempTextarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempTextarea);
+    }
 
     setCopied(true);
-
-    setTimeout(() => {
-      setCopied(false);
-    }, 1000);
+    setTimeout(() => setCopied(false), 1000);
   };
+
   return (
-    <div className="flex gap-3 items-center">
-      <FacebookShareButton url={url}>
+    <div className="flex items-center gap-3">
+      <FacebookShareButton url={url} quote={shareText || title}>
         <FacebookIcon size={32} round />
       </FacebookShareButton>
-      <TwitterShareButton url={url}>
+      <TwitterShareButton url={url} title={shareText || title}>
         <TwitterIcon size={32} round />
       </TwitterShareButton>
-      <WhatsappShareButton url={url}>
+      <WhatsappShareButton
+        url={url}
+        title={shareText || title}
+        separator={"\n\n"}
+      >
         <WhatsappIcon size={32} round />
       </WhatsappShareButton>
 
       <button
         type="button"
         onClick={handleCopy}
-        aria-label="Copy link"
+        aria-label="Copy share text"
         className="relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-mist text-ink transition-colors hover:bg-accent-soft"
       >
         <LinkIcon />

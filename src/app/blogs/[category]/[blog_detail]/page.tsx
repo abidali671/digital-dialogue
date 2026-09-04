@@ -16,7 +16,7 @@ import Image from "next/image";
 import Link from "next/link";
 import config from "@/lib/config";
 import { formatLongDate, getPublishedDate, getReadingTime, toIsoTimestamp } from "@/helper";
-import { pickRelatedPosts, toKeywordTags } from "@/lib/keywords";
+import { pickRelatedPosts, toKeywordTags, toShareHashtags } from "@/lib/keywords";
 import { pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { breadcrumbSchema, JsonLdScript } from "@/lib/schema";
 import { extractToc, shouldShowToc } from "@/lib/toc";
@@ -194,6 +194,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
         Boolean(faq?.question?.trim() && faq?.answer?.trim())
     );
     const shareUrl = `${config.BASE_URL}/blogs/${category}/${blog_detail}`;
+    const shareHashtags = toShareHashtags(keywords);
     const readingTime = getReadingTime(content);
     const tocHeadings = extractToc(content);
 
@@ -264,7 +265,11 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 <p className="font-mono text-xs text-mute-soft">
                   {formatLongDate(publishedAt)} · {readingTime} min read
                 </p>
-                <ShareButtons url={shareUrl} />
+                <ShareButtons
+                  url={shareUrl}
+                  title={title}
+                  hashtags={shareHashtags}
+                />
               </div>
             </div>
           </ContentContainer>
@@ -308,7 +313,11 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
             <div className="mt-10 flex flex-wrap items-center gap-4 border-y border-line py-5">
               <p className="text-sm font-semibold text-ink">Share this article</p>
-              <ShareButtons url={shareUrl} />
+              <ShareButtons
+                url={shareUrl}
+                title={title}
+                hashtags={shareHashtags}
+              />
             </div>
 
             <div className="mt-10 flex flex-col gap-4 rounded-xl border border-line bg-white p-6 sm:flex-row">

@@ -36,6 +36,22 @@ export function toKeywordTags(keywords?: string): IKeywordTag[] {
   return tags;
 }
 
+/** Hashtags for social share composers (no # prefix). */
+export function toShareHashtags(keywords?: string, max = 10): string[] {
+  const seen: Record<string, true> = {};
+  const hashtags: string[] = [];
+
+  for (const label of parseKeywordLabels(keywords)) {
+    const tag = label.replace(/[^a-zA-Z0-9]/g, "");
+    if (!tag || seen[tag.toLowerCase()]) continue;
+    seen[tag.toLowerCase()] = true;
+    hashtags.push(tag);
+    if (hashtags.length >= max) break;
+  }
+
+  return hashtags;
+}
+
 export function searchTextFromKeywordSlug(slug: string): string {
   return slug.replace(/-/g, " ").trim();
 }
