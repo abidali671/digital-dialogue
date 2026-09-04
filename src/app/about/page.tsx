@@ -41,13 +41,13 @@ export default function AboutPage() {
           You can meet the writing team on the{" "}
           <Link href="/authors">authors page</Link>, use the{" "}
           <Link href="/contact-us">contact form</Link>, or reach him on{" "}
-          <a
+          <Link
             href={config.LINKEDIN_URL}
             target="_blank"
             rel="noopener noreferrer"
           >
             LinkedIn
-          </a>
+          </Link>
           .
         </p>
 

@@ -43,8 +43,8 @@ export async function generateMetadata({
   }
 
   const label = labelFromKeywordSlug(slug);
-  const title = `${label} Articles`;
-  const description = `Browse practical ${label.toLowerCase()} articles, guides, and tips from Digital Dialogue.`;
+  const title = `Articles tagged ${label}`;
+  const description = `Browse guides and explainers tagged ${label.toLowerCase()} on Digital Dialogue.`;
   const canonical = `/tags/${slug}`;
 
   return {
