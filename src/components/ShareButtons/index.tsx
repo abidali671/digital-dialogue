@@ -14,41 +14,83 @@ import { useState } from "react";
 interface ShareButtonsProps {
   url: string;
   title?: string;
+  excerpt?: string;
   hashtags?: string[];
 }
 
-/** Title on top, hashtags next; link is appended separately by each network. */
+/** Title + hashtags for X / WhatsApp. */
 function buildShareText(title?: string, hashtags?: string[]) {
-  const tags = (hashtags ?? []).map((tag) => `#${tag}`).join(" ");
-  return [title?.trim(), tags].filter(Boolean).join("\n\n");
+  const heading = title?.trim() ?? "";
+  const tags = (hashtags ?? [])
+    .map((tag) => `#${tag.replace(/^#/, "")}`)
+    .join(" ");
+  return [heading, tags].filter(Boolean).join("\n\n");
 }
 
-const ShareButtons = ({ url, title, hashtags = [] }: ShareButtonsProps) => {
+/** Facebook clipboard caption: title, excerpt, hashtags, link. */
+function buildFacebookCaption(
+  url: string,
+  title?: string,
+  excerpt?: string,
+  hashtags?: string[]
+) {
+  const tags = (hashtags ?? [])
+    .map((tag) => `#${tag.replace(/^#/, "")}`)
+    .join(" ");
+  return [title?.trim(), excerpt?.trim(), tags, url]
+    .filter(Boolean)
+    .join("\n\n");
+}
+
+async function writeClipboard(text: string) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const tempTextarea = document.createElement("textarea");
+    tempTextarea.value = text;
+    document.body.appendChild(tempTextarea);
+    tempTextarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempTextarea);
+  }
+}
+
+const ShareButtons = ({
+  url,
+  title,
+  excerpt,
+  hashtags = [],
+}: ShareButtonsProps) => {
   const [copied, setCopied] = useState(false);
+  const [facebookHint, setFacebookHint] = useState(false);
   const shareText = buildShareText(title, hashtags);
+  const facebookCaption = buildFacebookCaption(url, title, excerpt, hashtags);
 
   const handleCopy = async () => {
-    const clipboardText = [shareText, url].filter(Boolean).join("\n\n");
-    try {
-      await navigator.clipboard.writeText(clipboardText);
-    } catch {
-      const tempTextarea = document.createElement("textarea");
-      tempTextarea.value = clipboardText;
-      document.body.appendChild(tempTextarea);
-      tempTextarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(tempTextarea);
-    }
-
+    await writeClipboard(facebookCaption);
     setCopied(true);
     setTimeout(() => setCopied(false), 1000);
   };
 
   return (
     <div className="flex items-center gap-3">
-      <FacebookShareButton url={url} quote={shareText || title}>
-        <FacebookIcon size={32} round />
-      </FacebookShareButton>
+      <div className="relative">
+        <FacebookShareButton
+          url={url}
+          beforeOnClick={async () => {
+            await writeClipboard(facebookCaption);
+            setFacebookHint(true);
+            setTimeout(() => setFacebookHint(false), 3000);
+          }}
+        >
+          <FacebookIcon size={32} round />
+        </FacebookShareButton>
+        {facebookHint && (
+          <div className="absolute left-1/2 top-full z-10 mt-2 w-40 -translate-x-1/2 rounded border border-line bg-white p-2 text-center text-xs font-medium text-ink shadow-sm">
+            Caption copied — paste into Facebook
+          </div>
+        )}
+      </div>
       <TwitterShareButton url={url} title={shareText || title}>
         <TwitterIcon size={32} round />
       </TwitterShareButton>
@@ -59,7 +101,6 @@ const ShareButtons = ({ url, title, hashtags = [] }: ShareButtonsProps) => {
       >
         <WhatsappIcon size={32} round />
       </WhatsappShareButton>
-
       <button
         type="button"
         onClick={handleCopy}
@@ -69,7 +110,7 @@ const ShareButtons = ({ url, title, hashtags = [] }: ShareButtonsProps) => {
         <LinkIcon />
         {copied && (
           <div className="absolute top-full z-10 mt-2 w-28 rounded border border-line bg-white p-1 text-center text-xs font-medium text-accent">
-            Link copied!
+            Copied!
           </div>
         )}
       </button>

@@ -268,6 +268,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 <ShareButtons
                   url={shareUrl}
                   title={title}
+                  excerpt={excerpt}
                   hashtags={shareHashtags}
                 />
               </div>
@@ -316,6 +317,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
               <ShareButtons
                 url={shareUrl}
                 title={title}
+                excerpt={excerpt}
                 hashtags={shareHashtags}
               />
             </div>
