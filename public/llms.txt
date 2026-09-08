@@ -24,3 +24,23 @@ Digital Dialogue (https://www.digitaldialogue.pk) publishes original how-to arti
 - [Digital Marketing](https://www.digitaldialogue.pk/blogs/digital-marketing): Traffic, offers, and online income
 - [Content Creation](https://www.digitaldialogue.pk/blogs/content-creation): YouTube and creator guides
 - [Design & Creativity](https://www.digitaldialogue.pk/blogs/design-and-creativity): UX, spacing, typography, and visual hierarchy
+
+## Key guides
+
+- [What is Upwork and How Does It Work](https://www.digitaldialogue.pk/blogs/freelancing/what-is-upwork-and-how-does-it-work): How Upwork profiles, proposals, contracts, milestones, payments, and reviews work for freelancers and clients
+- [7 Design Thinking Principles Explained](https://www.digitaldialogue.pk/blogs/design-and-creativity/7-design-thinking-principles-explained): The seven design thinking principles — empathize, define, ideate, prototype, test, implement, learn — and how to use them
+- [YouTube Premium vs Free: Is It Worth It?](https://www.digitaldialogue.pk/blogs/content-creation/youtube-premium-vs-free-is-it-worth-it): Compare YouTube Premium vs free for viewers and creators, when free is enough, and when Premium is worth it
+- [Best freelancing platform for beginners in Pakistan](https://www.digitaldialogue.pk/blogs/freelancing/best-freelancing-platform-for-beginners-in-pakistan): Compares beginner-friendly freelancing platforms for people starting in Pakistan
+- [How to earn money online with your smartphone](https://www.digitaldialogue.pk/blogs/freelancing/how-to-earn-money-online-with-your-smartphone): Practical smartphone-based ways to earn online without a full desktop setup
+- [Margin vs padding: what's the difference](https://www.digitaldialogue.pk/blogs/design-and-creativity/margin-vs-padding-whats-the-difference): Clear explanation of margin vs padding with when to use each
+- [How to grow traffic and make money online](https://www.digitaldialogue.pk/blogs/digital-marketing/how-to-grow-traffic-and-make-money-online): Steps for growing site traffic and turning it into online income
+- [Can you get scammed on blockchain](https://www.digitaldialogue.pk/blogs/technology/can-you-get-scammed-on-blockchain): Common blockchain scam patterns and how to avoid them
+- [Semantic HTML checklist for SEO and accessibility](https://www.digitaldialogue.pk/blogs/web-development/semantic-html-checklist-for-seo-and-accessibility): Practical checklist for semantic HTML that helps SEO and accessibility
+- [How to start a YouTube channel in 2026](https://www.digitaldialogue.pk/blogs/content-creation/how-to-start-a-youtube-channel-in-2026): Beginner steps to launch a YouTube channel
+- [UI vs UX: what's the difference](https://www.digitaldialogue.pk/blogs/design-and-creativity/ui-vs-ux-whats-the-difference): Simple breakdown of UI vs UX and why both matter
+- [How to build a landing page with only HTML and CSS](https://www.digitaldialogue.pk/blogs/web-development/how-to-build-a-landing-page-with-only-html-and-css): Build a landing page using only HTML and CSS
+
+## Optional
+
+- [Full URL list](https://www.digitaldialogue.pk/sitemap.xml)
+- [RSS](https://www.digitaldialogue.pk/feed.xml)
