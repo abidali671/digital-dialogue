@@ -26,17 +26,22 @@ const NAV_LINKS = [
 ];
 
 const FOOTER_LINKS = NAV_LINKS.filter(
-  (link) => link.href !== "/privacy-policy" && link.href !== "/contact-us",
+  (link) => link.href !== "/privacy-policy",
 );
 
 const LINKEDIN_URL = "https://www.linkedin.com/in/abid-ali-89ab4a1bb/";
 const UPWORK_URL = "https://www.upwork.com/freelancers/~014093a104f15a71c0";
 const FIVERR_URL = "https://www.fiverr.com/abidsaeed92";
+const X_URL = "https://x.com/digtldialogue";
+const FACEBOOK_URL =
+  "https://www.facebook.com/people/Digital-Dialogue/61594232400603/";
 
 const SOCIAL_LINKS = [
   { label: "LinkedIn", href: LINKEDIN_URL },
   { label: "Upwork", href: UPWORK_URL },
   { label: "Fiverr", href: FIVERR_URL },
+  { label: "Facebook", href: FACEBOOK_URL },
+  { label: "X", href: X_URL },
 ];
 
 /** Post slugs shown as featured cards above the footer on every page. */
@@ -86,6 +91,8 @@ const config = {
   LINKEDIN_URL,
   UPWORK_URL,
   FIVERR_URL,
+  X_URL,
+  FACEBOOK_URL,
 };
 
 export default config;

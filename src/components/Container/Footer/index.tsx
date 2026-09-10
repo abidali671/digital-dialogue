@@ -75,12 +75,6 @@ const Footer = ({ categories }: FooterPropsT) => {
             </h2>
 
             <div className="mt-1 flex flex-col gap-2">
-              <Link
-                href="/contact-us"
-                className="text-sm text-mute-soft transition-colors hover:text-accent"
-                >
-                Contact form
-              </Link>
               {config.SOCIAL_LINKS.map((link) => (
                 <Link
                   key={link.href}
