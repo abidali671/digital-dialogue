@@ -3,6 +3,7 @@ import Navbar from "./Container/Navbar";
 import Footer from "./Container/Footer";
 import FeaturedPosts from "./FeaturedPosts";
 import PopularTags from "./PopularTags";
+import AdminCacheFab from "./AdminCacheFab";
 import { ICategoryData, IPostData } from "@/types";
 
 type LayoutPropsT = PropsWithChildren<{
@@ -13,13 +14,14 @@ type LayoutPropsT = PropsWithChildren<{
 const Layout = ({ children, categories, featuredPosts }: LayoutPropsT) => {
   return (
     <React.Fragment>
-      <Suspense fallback={null}>
-        <Navbar categories={categories} />
-      </Suspense>
+      <Navbar categories={categories} />
       <main className="container-body">{children}</main>
       <FeaturedPosts posts={featuredPosts} />
       <PopularTags />
       <Footer categories={categories} />
+      <Suspense fallback={null}>
+        <AdminCacheFab />
+      </Suspense>
     </React.Fragment>
   );
 };
