@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 import { ICategoryData } from "@/types";
 import { Transition } from "@headlessui/react";
 
@@ -17,9 +18,99 @@ interface INavbarProps {
 }
 
 const MOBILE_NAV_ID = "mobile-navigation";
+const SECRET_STORAGE_KEY = "dd_revalidate_secret";
+
+function getRevalidateSecret(): string | null {
+  if (typeof window === "undefined") return null;
+
+  const stored = sessionStorage.getItem(SECRET_STORAGE_KEY);
+  if (stored) return stored;
+
+  const entered = window.prompt("Enter REVALIDATE_SECRET");
+  if (!entered) return null;
+
+  sessionStorage.setItem(SECRET_STORAGE_KEY, entered);
+  return entered;
+}
+
+async function callRevalidate(path?: string) {
+  const secret = getRevalidateSecret();
+  if (!secret) return { ok: false, message: "Secret required" };
+
+  const url = path
+    ? `/api/revalidate?path=${encodeURIComponent(path)}`
+    : "/api/revalidate";
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${secret}`,
+      "Content-Type": "application/json",
+    },
+    ...(path ? { body: JSON.stringify({ path }) } : {}),
+  });
+
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    if (res.status === 401) {
+      sessionStorage.removeItem(SECRET_STORAGE_KEY);
+    }
+    return {
+      ok: false,
+      message: data.error || `Failed (${res.status})`,
+    };
+  }
+
+  return { ok: true, message: path ? `Cleared ${path}` : "Cleared whole site" };
+}
+
+const AdminCacheControls = () => {
+  const pathname = usePathname();
+  const [status, setStatus] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+
+  const run = async (scope: "page" | "site") => {
+    setBusy(true);
+    setStatus(null);
+    const result =
+      scope === "page"
+        ? await callRevalidate(pathname || "/")
+        : await callRevalidate();
+    setStatus(result.message);
+    setBusy(false);
+  };
+
+  return (
+    <div className="flex items-center gap-2">
+      <button
+        type="button"
+        disabled={busy}
+        onClick={() => run("page")}
+        className="rounded-md border border-line bg-mist px-2 py-1 font-mono text-[10px] uppercase tracking-wide text-ink hover:bg-white disabled:opacity-50"
+      >
+        Clear page
+      </button>
+      <button
+        type="button"
+        disabled={busy}
+        onClick={() => run("site")}
+        className="rounded-md border border-line bg-mist px-2 py-1 font-mono text-[10px] uppercase tracking-wide text-ink hover:bg-white disabled:opacity-50"
+      >
+        Clear site
+      </button>
+      {status && (
+        <span className="hidden max-w-[140px] truncate font-mono text-[10px] text-mute sm:inline">
+          {status}
+        </span>
+      )}
+    </div>
+  );
+};
 
 const Navbar = ({ categories }: INavbarProps) => {
   const [isMenu, setIsMenu] = useState(false);
+  const searchParams = useSearchParams();
+  const isAdmin = searchParams.get("mode") === "admin";
 
   const toggleMenu = () => setIsMenu(!isMenu);
 
@@ -72,8 +163,14 @@ const Navbar = ({ categories }: INavbarProps) => {
               <Link href={item.href}>{item.label}</Link>
             </li>
           ))}
+          {isAdmin && (
+            <li className="ml-2 flex items-center">
+              <AdminCacheControls />
+            </li>
+          )}
         </ul>
-        <div className="mobile-nav-container">
+        <div className="mobile-nav-container flex items-center gap-3">
+          {isAdmin && <AdminCacheControls />}
           <button
             type="button"
             className="cursor-pointer text-ink"
