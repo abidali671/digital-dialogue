@@ -15,6 +15,13 @@ const STATIC_PATHS = [
   "/feed.xml",
 ] as const;
 
+type ContentfulListItem = {
+  fields?: {
+    slug?: string;
+    category?: { fields?: { slug?: string } };
+  };
+};
+
 function getSecret(request: NextRequest) {
   const header = request.headers.get("authorization");
   if (header?.startsWith("Bearer ")) {
@@ -77,9 +84,103 @@ async function getRawPath(request: NextRequest): Promise<string | null> {
   return null;
 }
 
-function revalidateAll() {
+/** Fresh Contentful list (bypass Next data cache) so we can purge every post path. */
+async function fetchAllBlogPaths(): Promise<string[]> {
+  const space = process.env.CONTENTFUL_SPACE_ID;
+  const environment = process.env.CONTENTFUL_ENVIRONMENT || "master";
+  const accessToken = process.env.CONTENTFUL_DELIVERY_ACCESS_TOKEN;
+  if (!space || !accessToken) return [];
+
+  const paths: string[] = [];
+  const limit = 100;
+  let skip = 0;
+  let total = Infinity;
+
+  while (skip < total) {
+    const params = new URLSearchParams({
+      access_token: accessToken,
+      content_type: "post",
+      include: "1",
+      limit: String(limit),
+      skip: String(skip),
+    });
+
+    const url = `https://cdn.contentful.com/spaces/${space}/environments/${environment}/entries?${params}`;
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) break;
+
+    const data = (await res.json()) as {
+      items?: ContentfulListItem[];
+      total?: number;
+      includes?: {
+        Entry?: Array<{
+          sys?: { id?: string; contentType?: { sys?: { id?: string } } };
+          fields?: { slug?: string };
+        }>;
+      };
+    };
+
+    total = data.total ?? 0;
+    const categoryById = new Map<string, string>();
+    for (const entry of data.includes?.Entry ?? []) {
+      if (
+        entry.sys?.contentType?.sys?.id === "category" &&
+        entry.sys?.id &&
+        entry.fields?.slug
+      ) {
+        categoryById.set(entry.sys.id, entry.fields.slug);
+      }
+    }
+
+    for (const item of data.items ?? []) {
+      const postSlug = item.fields?.slug;
+      if (!postSlug) continue;
+
+      const categoryField = item.fields.category as
+        | { fields?: { slug?: string }; sys?: { id?: string } }
+        | undefined;
+      const categorySlug =
+        categoryField?.fields?.slug ||
+        (categoryField?.sys?.id
+          ? categoryById.get(categoryField.sys.id)
+          : undefined);
+      if (!categorySlug) continue;
+
+      paths.push(`/blogs/${categorySlug}/${postSlug}`);
+    }
+
+    skip += limit;
+  }
+
+  // Also purge category listing pages
+  const categoryParams = new URLSearchParams({
+    access_token: accessToken,
+    content_type: "category",
+    limit: "100",
+  });
+  const categoryRes = await fetch(
+    `https://cdn.contentful.com/spaces/${space}/environments/${environment}/entries?${categoryParams}`,
+    { cache: "no-store" }
+  );
+  if (categoryRes.ok) {
+    const categoryData = (await categoryRes.json()) as {
+      items?: Array<{ fields?: { slug?: string } }>;
+    };
+    for (const item of categoryData.items ?? []) {
+      if (item.fields?.slug) paths.push(`/blogs/${item.fields.slug}`);
+    }
+  }
+
+  return paths;
+}
+
+async function revalidateAll() {
   revalidateTag(CONTENTFUL_CACHE_TAG);
-  for (const path of STATIC_PATHS) {
+
+  const blogPaths = await fetchAllBlogPaths();
+  const paths = [...STATIC_PATHS, ...blogPaths];
+
+  for (const path of paths) {
     revalidatePath(path);
   }
 
@@ -88,13 +189,15 @@ function revalidateAll() {
     now: Date.now(),
     scope: "all",
     tag: CONTENTFUL_CACHE_TAG,
+    pathCount: paths.length,
     paths: STATIC_PATHS,
+    blogPathCount: blogPaths.length,
   });
 }
 
 function revalidateOne(path: string) {
-  // Path-only clear used to leave the Contentful fetch cache (up to 7 days)
-  // intact, so the page regenerated with the same stale body.
+  // Must clear the Contentful fetch tag too — path-only purge used to rebuild
+  // the page from a still-cached Delivery response (up to REVALIDATE_DETAIL).
   revalidateTag(CONTENTFUL_CACHE_TAG);
   revalidatePath(path);
   return NextResponse.json({
