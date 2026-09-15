@@ -41,15 +41,14 @@ npm run lint      # ESLint
 
 | Route type | Cache |
 |---|---|
-| Home, listings, authors, tags | 1 hour |
-| Blog detail pages | 7 days (use on-demand revalidate after Contentful edits) |
+| Home, listings, authors, tags, blog detail | 1 hour |
 
 ## Clear cache (`/api/revalidate`)
 
 Protected by `REVALIDATE_SECRET`. Pass the secret in the query string or as `Authorization: Bearer …`.
 
-- **Full site:** clears the Contentful data cache tag + static listing routes
-- **Single path:** clears the Contentful data cache tag **and** that route (needed for stuck blog posts)
+- **Full site:** clears the Contentful data cache tag, static routes, and every blog/category path
+- **Single path:** clears the Contentful data cache tag **and** that route
 
 Compatible with Next 13.4.
 

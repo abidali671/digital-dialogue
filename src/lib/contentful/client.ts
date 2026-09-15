@@ -1,8 +1,8 @@
 const HOUR = 60 * 60;
-const WEEK = 7 * 24 * HOUR;
 
 export const REVALIDATE_LISTING = HOUR;
-export const REVALIDATE_DETAIL = WEEK;
+/** Blog detail pages — keep aligned with listings so Contentful edits surface within an hour. */
+export const REVALIDATE_DETAIL = HOUR;
 
 /** Shared fetch tag so /api/revalidate can clear all Contentful data cache. */
 export const CONTENTFUL_CACHE_TAG = "contentful";
