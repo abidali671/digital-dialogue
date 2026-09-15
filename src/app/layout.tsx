@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, IBM_Plex_Mono, Source_Sans_3 } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import contentful_client, {
   REVALIDATE_LISTING,
 } from "@/lib/contentful/client";
@@ -92,6 +93,7 @@ export default async function RootLayout({
         <Layout categories={categories} featuredPosts={featuredPosts}>
           {children}
         </Layout>
+        <Analytics />
       </body>
     </html>
   );
