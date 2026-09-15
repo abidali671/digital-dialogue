@@ -136,7 +136,7 @@ async function fetchAllBlogPaths(): Promise<string[]> {
       const postSlug = item.fields?.slug;
       if (!postSlug) continue;
 
-      const categoryField = item.fields.category as
+      const categoryField = item.fields?.category as
         | { fields?: { slug?: string }; sys?: { id?: string } }
         | undefined;
       const categorySlug =
