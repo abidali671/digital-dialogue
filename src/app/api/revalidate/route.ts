@@ -93,12 +93,16 @@ function revalidateAll() {
 }
 
 function revalidateOne(path: string) {
+  // Path-only clear used to leave the Contentful fetch cache (up to 7 days)
+  // intact, so the page regenerated with the same stale body.
+  revalidateTag(CONTENTFUL_CACHE_TAG);
   revalidatePath(path);
   return NextResponse.json({
     revalidated: true,
     now: Date.now(),
     scope: "path",
     path,
+    tag: CONTENTFUL_CACHE_TAG,
   });
 }
 
@@ -116,6 +120,7 @@ function revalidateOne(path: string) {
  *   POST /api/revalidate
  *        Authorization: Bearer ...
  *        { "path": "/blogs/category/slug" }
+ *   (also clears the Contentful data tag so the page does not rebuild from a stale fetch)
  */
 async function handleRevalidate(request: NextRequest) {
   if (!process.env.REVALIDATE_SECRET) {

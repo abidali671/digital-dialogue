@@ -1,21 +1,42 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
 const SECRET_STORAGE_KEY = "dd_revalidate_secret";
+const ADMIN_MODE_KEY = "dd_admin_mode";
 
-function getRevalidateSecret(): string | null {
+function readSecret(): string | null {
   if (typeof window === "undefined") return null;
 
-  const stored = sessionStorage.getItem(SECRET_STORAGE_KEY);
+  const fromLocal = localStorage.getItem(SECRET_STORAGE_KEY);
+  if (fromLocal) return fromLocal;
+
+  // Migrate older session-only secret if present.
+  const fromSession = sessionStorage.getItem(SECRET_STORAGE_KEY);
+  if (fromSession) {
+    localStorage.setItem(SECRET_STORAGE_KEY, fromSession);
+    sessionStorage.removeItem(SECRET_STORAGE_KEY);
+    return fromSession;
+  }
+
+  return null;
+}
+
+function getRevalidateSecret(): string | null {
+  const stored = readSecret();
   if (stored) return stored;
 
   const entered = window.prompt("Enter REVALIDATE_SECRET");
   if (!entered) return null;
 
-  sessionStorage.setItem(SECRET_STORAGE_KEY, entered);
+  localStorage.setItem(SECRET_STORAGE_KEY, entered);
   return entered;
+}
+
+function clearStoredSecret() {
+  localStorage.removeItem(SECRET_STORAGE_KEY);
+  sessionStorage.removeItem(SECRET_STORAGE_KEY);
 }
 
 async function callRevalidate(path?: string) {
@@ -34,7 +55,7 @@ async function callRevalidate(path?: string) {
   const data = await res.json().catch(() => ({}));
   if (!res.ok) {
     if (res.status === 401) {
-      sessionStorage.removeItem(SECRET_STORAGE_KEY);
+      clearStoredSecret();
     }
     return {
       ok: false,
@@ -51,11 +72,22 @@ async function callRevalidate(path?: string) {
 const AdminCacheFab = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const isAdmin = searchParams.get("mode") === "admin";
+  const urlIsAdmin = searchParams.get("mode") === "admin";
 
+  const [isAdmin, setIsAdmin] = useState(urlIsAdmin);
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+
+  useEffect(() => {
+    if (urlIsAdmin) {
+      localStorage.setItem(ADMIN_MODE_KEY, "1");
+      setIsAdmin(true);
+      return;
+    }
+
+    setIsAdmin(localStorage.getItem(ADMIN_MODE_KEY) === "1");
+  }, [urlIsAdmin]);
 
   if (!isAdmin) return null;
 
@@ -68,6 +100,14 @@ const AdminCacheFab = () => {
         : await callRevalidate();
     setStatus(result.message);
     setBusy(false);
+  };
+
+  const exitAdmin = () => {
+    localStorage.removeItem(ADMIN_MODE_KEY);
+    clearStoredSecret();
+    setIsAdmin(false);
+    setOpen(false);
+    setStatus(null);
   };
 
   return (
@@ -89,6 +129,14 @@ const AdminCacheFab = () => {
             className="rounded-md border border-line bg-mist px-3 py-2 text-left font-mono text-[11px] uppercase tracking-wide text-ink hover:bg-white disabled:opacity-50"
           >
             Clear site
+          </button>
+          <button
+            type="button"
+            disabled={busy}
+            onClick={exitAdmin}
+            className="rounded-md border border-line px-3 py-2 text-left font-mono text-[11px] uppercase tracking-wide text-mute hover:bg-mist disabled:opacity-50"
+          >
+            Exit admin
           </button>
           {status && (
             <p className="break-words px-1 font-mono text-[10px] text-mute">
