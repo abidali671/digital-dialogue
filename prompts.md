@@ -7,7 +7,7 @@ Prompts for rewriting existing posts, drafting new articles, and generating cove
 
 **Expected output (prompts 1 and 2):** every response must include title, slug, category, short description, keywords, and full blog content. FAQS is optional. Ready to paste into Contentful / the blog detail page.
 
-**Expected output (prompt 3):** one cover image, exported as WebP, 1000 x 667. The model randomly picks one style (A/B/C/D) from the post category pool, then saves a Contentful-ready `coverImage`.
+**Expected output (prompt 3):** one cover image, exported as WebP, 1000 x 667. The model randomly picks LOOK MODE (BRIGHT or DARK) and one style (A–F) from the post category pool, then saves a Contentful-ready `coverImage`.
 
 ---
 
@@ -233,7 +233,7 @@ Do not mention AI, SEO, prompts, or these instructions anywhere in the output.
 
 ## 3. Generate a blog cover image
 
-Use when a post needs a `coverImage` for Contentful. Pick a style from the category pool below (do not force the old code-editor look on every category). Shared brand accents: charcoal / black base, teal-cyan highlights, cinematic lighting.
+Use when a post needs a `coverImage` for Contentful. Pick a style from the category pool below (do not force the old code-editor look on every category). Randomly choose LOOK MODE first: **BRIGHT** (new colorful look) or **DARK** (classic charcoal / teal cinematic look), then pick a style letter.
 
 ### Prompt
 
@@ -248,15 +248,16 @@ SCENE FOCUS: [1 short line on what the image should communicate, e.g. YouTube Pr
 OUTPUT PATH: [e.g. rewrites/youtube-premium-vs-free-is-it-worth-it.webp]
 
 STYLE SELECTION (required)
-1) Look at CATEGORY.
-2) From that category's STYLE POOL below, randomly pick ONE style (A, B, C, or D).
-3) In your first output line before the image, write: STYLE PICKED: [Category] / [A|B|C|D] - [style name]
-4) Generate using only that picked style. Do not blend multiple styles.
-5) If regenerating the same post, pick a different style letter than last time when possible.
+1) Randomly pick LOOK MODE with equal chance (about 50/50): BRIGHT or DARK.
+2) Look at CATEGORY.
+3) From that category's STYLE POOL below, randomly pick ONE style (A, B, C, D, E, or F).
+4) In your first output line before the image, write: STYLE PICKED: [Category] / [A|B|C|D|E|F] - [style name] / LOOK: [BRIGHT|DARK]
+5) Generate using only that picked style + look mode. Do not blend styles. Do not blend look modes.
+6) Apply the scene composition from the style, then re-light and re-color it to match LOOK MODE (see SHARED LOOK).
+7) If regenerating the same post, pick a different style letter and/or the other look mode when possible.
 
 SHARED LOOK (all styles)
 - Photorealistic or high-end editorial CGI. Sharp, cinematic, professional publication quality.
-- Palette: charcoal, near-black, soft mist gray, teal/cyan accents. Warm amber highlight optional.
 - Soft film grain OK. Shallow depth of field OK at edges only.
 - Fill the frame with one strong composition. No collage of many tiny cards.
 - No people, faces, or hands.
@@ -264,43 +265,73 @@ SHARED LOOK (all styles)
 - No watermarks, no stock-photo cliches, no giant poster title of the article on top of the image.
 - Small readable UI text inside a mock screen is OK. Do not invent fake stats or follower counts.
 
-CATEGORY STYLE POOLS
+LOOK MODE: BRIGHT (new colorful look)
+- The image must read as colorful at a glance, not as a black/gray frame with a thin accent.
+- Use at least 3 distinct hues beyond neutrals (teal/cyan, warm amber/gold, coral/soft red, soft violet, lime/mint, sky blue, paper cream, sage green).
+- Brand accents: teal/cyan and warm amber should appear, but they are accents—not the whole palette.
+- Prefer lit scenes: daylight, golden-hour window light, soft studio gels, or a bright UI theme.
+- Backgrounds: soft color washes, warm wood, paper cream, frosted glass, or gently tinted surfaces—not flat black or charcoal voids.
+- Screens/UI: prefer light or mid-tone interfaces with colored charts, cards, or chrome. Dark UI only if the rest of the scene still carries strong color.
+- Reject BRIGHT renders that end up mostly black/gray with only a thin teal rim light; regenerate brighter if needed.
 
-CONTENT CREATION (pick A, B, C, or D at random)
-- A) Creator desk still life: desk-top camera or mic silhouette in soft side light, open notebook or script pages, muted LED accent; product-photo feel, not a gaming RGB desk.
-- B) Video workspace: large monitor showing a generic dark video player + simple sidebar (no logos); beside it a script or shot-list document; moody cinematic night grading.
+LOOK MODE: DARK (classic cinematic look)
+- Palette: charcoal, near-black, soft mist gray, teal/cyan accents. Warm amber highlight optional.
+- Moody cinematic lighting, soft rim lights, subtle specular highlights. Night desk / studio grading is OK.
+- Backgrounds may be charcoal, near-black, or dark mist; keep the scene readable with teal/cyan (and optional amber) accents.
+- Screens/UI: dark editors, dashboards, and browsers are preferred; teal accents on chrome or highlights.
+- Still keep one strong subject and clean composition—do not turn it into muddy noise or pure black emptiness.
+- Do not force daylight wood desks or pastel props when LOOK is DARK; adapt the same style scene to the dark palette.
+
+CATEGORY STYLE POOLS
+(Scene recipes only. Lighting, background, and UI theme must follow the picked LOOK MODE.)
+
+CONTENT CREATION (pick A, B, C, D, E, or F at random)
+- A) Creator desk still life: camera or mic, open notebook or script pages, desk lamp accent; product-photo feel, not a gaming RGB desk.
+- B) Video workspace: large monitor with a generic video timeline/player + simple sidebar (no logos); script or shot-list beside it.
 - C) Publish board: wall or desk with printed thumbnail drafts, sticky notes for titles/hooks, one tablet showing a clean channel-style dashboard mock (generic).
 - D) Editorial frame: one strong still from a generic article or video scene (object + lighting, no people), framed like a magazine cover photo with teal rim light.
+- E) Podcast / voice kit: condenser mic, headphones, and a tablet showing a simple waveform or episode list UI.
+- F) Thumbnail craft table: printed swatches, cut paper shapes, marker sketches for hooks, and a tablet with a generic cover-layout mock.
 
-WEB DEVELOPMENT (pick A, B, C, or D at random)
-- A) Split monitor: left dark code editor (generic), right browser preview of the topic UI; teal accents; faint grid on preview.
-- B) Single ultrawide IDE close-up: readable code for the topic (HTML/CSS/JS), soft bokeh desk edge.
-- C) Browser-first layout: full-bleed dark browser with a clean local app/page for the topic; subtle editor peek at the side.
-- D) Stack diagram: isometric dark blocks for HTML / CSS / JS (or the topic stack), connected by thin teal lines, no logos.
+WEB DEVELOPMENT (pick A, B, C, D, E, or F at random)
+- A) Split monitor: left code editor (generic), right browser preview of the topic UI; teal accents; faint grid on preview.
+- B) Single ultrawide IDE close-up: readable code for the topic (HTML/CSS/JS); soft bokeh desk edge.
+- C) Browser-first layout: full-bleed browser with a clean local app/page for the topic; subtle editor peek at the side.
+- D) Stack diagram: isometric blocks for HTML / CSS / JS (or the topic stack), connected by thin teal lines, no logos.
+- E) Component playground: floating UI cards (buttons, forms, nav) in a design-system layout with color tokens visible.
+- F) Responsive trio: phone, tablet, and laptop showing the same topic UI; desk with a notebook and cable accents.
 
-TECHNOLOGY (pick A, B, C, or D at random)
-- A) Abstract tech object: layered glass panels, circuit-like light paths, teal glow; conceptual not sci-fi chaos.
-- B) Terminal + diagram: dark terminal window with simple commands next to a clean architecture/flowchart panel.
-- C) Device still life: phone + laptop showing a related tech UI mock, desk top-down or 3/4 angle.
+TECHNOLOGY (pick A, B, C, D, E, or F at random)
+- A) Abstract tech object: layered glass panels, circuit-like light paths, teal glow; conceptual, not sci-fi chaos.
+- B) Terminal + diagram: terminal window with simple commands next to a clean architecture/flowchart panel.
+- C) Device still life: phone + laptop showing a related tech UI mock; top-down or 3/4 angle.
 - D) Macro hardware: close-up of a generic chip, cable, or server rack edge with teal specular highlights; documentary product lighting.
+- E) Cloud map: soft isometric nodes and data paths on a fog or mist ground; clean and readable, not neon cyberpunk chaos.
+- F) Wearable / gadget tray: earbuds, smartwatch, and phone on a tray showing simple status UI.
 
-FREELANCING (pick A, B, C, or D at random)
-- A) Proposal desk: laptop with a clean proposal/doc UI, notebook with rate notes, coffee cup; calm morning light.
+FREELANCING (pick A, B, C, D, E, or F at random)
+- A) Proposal desk: laptop with a clean proposal/doc UI, notebook with rate notes, coffee cup.
 - B) Profile mock: browser showing a generic freelancer profile/dashboard (no marketplace logos), portfolio tiles visible.
-- C) Client workflow board: kanban-style cards (Brief / Draft / Delivery) on a dark desk with a tablet calendar.
-- D) Invoice still life: printed invoice or contract, calculator, pen, and a laptop showing a simple billing UI; quiet studio light.
+- C) Client workflow board: kanban-style cards (Brief / Draft / Delivery) with a tablet calendar.
+- D) Invoice still life: printed invoice or contract, calculator, pen, and a laptop showing a simple billing UI.
+- E) Rate card flat lay: printed rate sheet, sticky “scope / extras” notes, pens, and a tablet with a simple pricing table UI.
+- F) Kickoff kit: branded folder (generic), project brief printout, sticky milestones, and a laptop with a kickoff checklist UI.
 
-DIGITAL MARKETING (pick A, B, C, or D at random)
-- A) Analytics wall: dark dashboard with simple charts and funnel blocks (no brand logos), teal highlights.
+DIGITAL MARKETING (pick A, B, C, D, E, or F at random)
+- A) Analytics wall: dashboard with charts and funnel blocks (no brand logos), teal highlights.
 - B) Campaign desk: moodboard printouts, ad-creative drafts on tablet, sticky notes for audience/offer.
-- C) Growth map: clean whiteboard or digital board with channel arrows (Search / Social / Email) and a laptop showing a landing page mock.
-- D) Search intent board: oversized keyword cards and a SERP-style results mock (generic, no Google logo) on a dark desk.
+- C) Growth map: whiteboard or digital board with channel arrows (Search / Social / Email) and a laptop showing a landing page mock.
+- D) Search intent board: oversized keyword cards and a SERP-style results mock (generic, no Google logo).
+- E) Email / nurture desk: printed email wireframes, subject-line sticky notes, and a tablet showing a newsletter mock.
+- F) Offer ladder: stacked product/offer cards (Lead magnet / Tripwire / Core offer) beside a laptop with a simple funnel UI.
 
-DESIGN & CREATIVITY (pick A, B, C, or D at random)
-- A) Design canvas: dark design-tool style artboard with color swatches, type samples, and a polished component mock (no Figma logo).
-- B) Material desk: paper samples, printed palette chips, ruler, tablet with UI mock; soft studio light.
+DESIGN & CREATIVITY (pick A, B, C, D, E, or F at random)
+- A) Design canvas: design-tool style artboard with color swatches, type samples, and a polished component mock (no Figma logo).
+- B) Material desk: paper samples, printed palette chips, ruler, tablet with UI mock.
 - C) Before/after frame: two side-by-side phone or browser frames showing weak vs refined layout for the topic.
-- D) Type specimen: large letterforms and a small UI mock on a charcoal field, teal accent on one glyph; editorial print feel.
+- D) Type specimen: large letterforms and a small UI mock, teal accent on one glyph; editorial print feel.
+- E) Brand system board: logo mark placeholders, color tokens, spacing grid, and icon set laid out like a style guide poster.
+- F) Texture + UI mix: fabric/paper textures beside a tablet showing a refined interface.
 
 HARD CONSTRAINTS
 - Final file: WebP only.
@@ -309,12 +340,13 @@ HARD CONSTRAINTS
 - Export quality: high, optimized WebP (typically 80-90 quality).
 - Filename: [SLUG].webp (unless OUTPUT PATH is provided).
 - Match SCENE FOCUS to the picked style so the subject fits the category.
+- Match LOOK MODE strictly: BRIGHT stays colorful; DARK stays charcoal/teal cinematic.
 
 AFTER GENERATING
 1) Center-crop to 3:2 if needed.
 2) Resize to 1000 x 667.
 3) Save as WebP at OUTPUT PATH (or rewrites/[SLUG].webp).
-4) Confirm in one short line: STYLE PICKED, width, height, format. No extra commentary.
+4) Confirm in one short line: STYLE PICKED, LOOK, width, height, format. No extra commentary.
 ```
 
 ---
