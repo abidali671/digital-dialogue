@@ -74,8 +74,6 @@ const POPULAR_TAGS = [
   { label: "Sell Digital Products", slug: "sell-digital-products" },
 ] as const;
 
-const ADSENSE_CLIENT_ID = "ca-pub-6695195287407019";
-
 const config = {
   NAV_LINKS,
   FOOTER_LINKS,
@@ -95,7 +93,6 @@ const config = {
   FIVERR_URL,
   X_URL,
   FACEBOOK_URL,
-  ADSENSE_CLIENT_ID,
 };
 
 export default config;
