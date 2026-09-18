@@ -74,7 +74,6 @@ const POPULAR_TAGS = [
   { label: "Sell Digital Products", slug: "sell-digital-products" },
 ] as const;
 
-/** Matches public/ads.txt (google.com, pub-…, DIRECT, …). */
 const ADSENSE_CLIENT_ID = "ca-pub-6695195287407019";
 
 const config = {
