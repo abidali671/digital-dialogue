@@ -81,7 +81,7 @@ const config = {
   FEATURED_POST_SLUGS,
   EDITOR_PICK_SLUGS,
   POPULAR_TAGS,
-  FORM_ACTION: "https://formspree.io/f/xoqoddgp",
+  FORM_ACTION: "https://formspree.io/f/xnpnokwe",
   BASE_URL: "https://www.digitaldialogue.pk",
   BLOGS_PER_PAGE: 15,
   SITE_NAME: "Digital Dialogue",
