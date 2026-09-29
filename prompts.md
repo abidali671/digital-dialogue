@@ -76,7 +76,12 @@ METADATA RULES
 - CATEGORY: pick exactly one from: Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity
   (If none fit perfectly, choose the closest. Do not invent a new category name.)
 - SHORT DESCRIPTION: 140–160 characters. Plain text. One or two sentences. Summarizes the article for meta description + blog cards. No quotes, no markdown, no “learn more.”
-- KEYWORDS: 5–12 relevant keywords/phrases, comma-separated. Include the main topic naturally. No stuffing, no duplicates.
+- KEYWORDS: 3–5 short tags, comma-separated. Each value is published as its own tag page (`/tags/…`), so write reusable labels, not search queries.
+  - 1–3 words each. Examples: Upwork, Upwork proposals, Upwork fees, Upwork profile.
+  - Stay inside the niche: practical Upwork guides for freelance web developers.
+  - Reuse the same spelling every time (`Upwork proposals`, not "proposals on Upwork" or "upwork proposal tips") so posts share one tag URL.
+  - Put the long-tail search phrase in TITLE and CONTENT only. Do not put it in KEYWORDS.
+  - No duplicates, no stuffing, no one-off synonyms.
 - FAQS (optional): include only if the source has FAQ-style Q&A, or clear reader questions worth a short FAQ. Otherwise omit the FAQS field entirely. Never invent filler FAQs. Do not put an FAQ section inside CONTENT.
 
 OUTPUT FORMAT (follow exactly — no extra commentary before or after)
@@ -92,7 +97,7 @@ CATEGORY: [one category]
 
 SHORT DESCRIPTION: [140–160 character plain-text description]
 
-KEYWORDS: [keyword1, keyword2, keyword3, ...]
+KEYWORDS: Upwork, Upwork proposals
 
 FAQS: [{"question":"...","answer":"..."}]
 
@@ -200,7 +205,12 @@ METADATA RULES
   Rules: strip punctuation; replace spaces with `-`; collapse multiple hyphens; no leading/trailing hyphen; ASCII only (e.g. `&` → `and`); keep it readable and preferably under ~60 characters.
   Example: "How to Learn Blockchain for Beginners" → `how-to-learn-blockchain-for-beginners`
 - SHORT DESCRIPTION: 140–160 characters. Plain text. Compelling enough for blog cards and accurate enough for meta description. Must reflect the article. No markdown, no quotes around the whole string, no “Read more.”
-- KEYWORDS: 5–12 phrases, comma-separated. Start from the primary/secondary keywords, then add only natural related terms.
+- KEYWORDS: 3–5 short tags, comma-separated. Each value is published as its own tag page (`/tags/…`), so write reusable labels, not search queries.
+  - 1–3 words each. Examples: Upwork, Upwork proposals, Upwork fees, Upwork profile.
+  - Stay inside the niche: practical Upwork guides for freelance web developers.
+  - Reuse the same spelling every time (`Upwork proposals`, not "proposals on Upwork" or "upwork proposal tips") so posts share one tag URL.
+  - PRIMARY KEYWORD and SECONDARY KEYWORDS guide the title and body. Copy one into KEYWORDS only when it is already a 1–3 word tag. Leave the long-tail phrase out of KEYWORDS.
+  - No duplicates, no stuffing, no one-off synonyms.
 - CATEGORY: exactly one of: Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity
   (Use PREFERRED CATEGORY if provided and valid; otherwise pick the best fit.)
 - FAQS (optional): include only when a short FAQ adds new value (typically 3–6 items). Otherwise omit the FAQS field entirely. Never invent filler FAQs. Do not put an FAQ section inside CONTENT.
@@ -218,7 +228,7 @@ CATEGORY: [one category]
 
 SHORT DESCRIPTION: [140–160 character plain-text description]
 
-KEYWORDS: [keyword1, keyword2, keyword3, ...]
+KEYWORDS: Upwork, Upwork proposals
 
 FAQS: [{"question":"...","answer":"..."}]
 
@@ -359,7 +369,7 @@ AFTER GENERATING
 | `SLUG` | Post slug (URL: `/blogs/{category}/{slug}`) |
 | `CATEGORY` | Category entry |
 | `SHORT DESCRIPTION` | Excerpt + meta description |
-| `KEYWORDS` | Keywords field |
+| `KEYWORDS` | Keywords field. Each comma-separated label becomes a tag page (`/tags/…`), so keep 3–5 short reusable tags |
 | `FAQS` (optional) | Post `faqs` JSON field (`[{ "question", "answer" }, ...]`) |
 | `CONTENT` | Rich text / Markdown body |
 | Cover image (WebP, 1000 x 667) | Post `coverImage` asset |
