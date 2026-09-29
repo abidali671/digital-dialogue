@@ -1,6 +1,12 @@
 # Digital Dialogue
 
-Next.js App Router blog powered by Contentful. Practical writing on freelancing, technology, and building things that ship.
+Next.js App Router blog powered by Contentful.
+
+## Niche
+
+Practical Upwork guides for freelance web developers.
+
+One subject for the whole site. Each post targets one keyword inside that subject, such as an Upwork proposal, profile, fee, or first job. The audience is global.
 
 ## Getting started
 
