@@ -1,9 +1,8 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
-import Arrow from "@/assets/icon/arrow";
 import { IPostData } from "@/types";
 import { formatLongDate, getPublishedDate } from "@/helper";
+import { contentfulImageUrl } from "@/lib/contentfulImage";
 
 interface CardPropsT {
   data: IPostData;
@@ -20,12 +19,14 @@ const PostCard = ({ data, priority = false }: CardPropsT) => {
       className="post-card-root"
     >
       <div className="post-card-cover-wrapper">
-        <Image
-          src={"https:" + coverImage.fields.file.url}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={contentfulImageUrl(coverImage.fields.file.url, 800)}
           alt={title}
-          fill
-          priority={priority}
-          sizes="(min-width: 1280px) 400px, (min-width: 640px) 45vw, 100vw"
+          width={800}
+          height={450}
+          loading={priority ? "eager" : "lazy"}
+          decoding="async"
         />
       </div>
       <div className="post-card-content-wrapper">
@@ -39,10 +40,7 @@ const PostCard = ({ data, priority = false }: CardPropsT) => {
           {formatLongDate(publishedAt)}
         </p>
 
-        <p className="post-card-read-text">
-          Read Article
-          <Arrow height={24} width={24} />
-        </p>
+        <p className="post-card-read-text">Read Article</p>
       </div>
     </Link>
   );

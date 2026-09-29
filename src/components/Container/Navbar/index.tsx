@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { ICategoryData } from "@/types";
 import { Transition } from "@headlessui/react";
 
 import Link from "next/link";
@@ -12,8 +11,13 @@ import Hamburger from "@/assets/icon/Hamburger";
 import ContentContainer from "../../ContentContainer";
 import config from "@/lib/config";
 
+export type NavbarCategory = {
+  label: string;
+  href: string;
+};
+
 interface INavbarProps {
-  categories: ICategoryData[];
+  categories: NavbarCategory[];
 }
 
 const MOBILE_NAV_ID = "mobile-navigation";
@@ -50,10 +54,7 @@ const Navbar = ({ categories }: INavbarProps) => {
             <li>
               <Menu
                 buttonLabel="Categories"
-                list={categories.map((category) => ({
-                  label: category.fields.label,
-                  href: `/blogs/${category.fields.slug}`,
-                }))}
+                list={categories}
                 button={({ open }) => (
                   <>
                     Categories
@@ -105,12 +106,10 @@ const Navbar = ({ categories }: INavbarProps) => {
                 {categories?.map((category) => (
                   <li
                     onClick={toggleMenu}
-                    key={category.fields.slug}
+                    key={category.href}
                     className="m-0"
                   >
-                    <Link href={`/blogs/${category.fields.slug}`}>
-                      {category.fields.label}
-                    </Link>
+                    <Link href={category.href}>{category.label}</Link>
                   </li>
                 ))}
               </ul>

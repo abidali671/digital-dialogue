@@ -1,9 +1,9 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import ContentContainer from "../ContentContainer";
 import { IPostData } from "@/types";
 import { formatShortDate, getPublishedDate } from "@/helper";
+import { contentfulImageUrl } from "@/lib/contentfulImage";
 
 interface IProps {
   posts: IPostData[];
@@ -41,12 +41,15 @@ const TopPicks = ({ posts }: IProps) => {
                 </p>
               </div>
               <div className="relative hidden h-20 w-20 shrink-0 overflow-hidden rounded-lg bg-mist-soft sm:block">
-                <Image
-                  src={"https:" + post.fields.coverImage.fields.file.url}
-                  alt={post.fields.title}
-                  fill
-                  sizes="80px"
-                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={contentfulImageUrl(post.fields.coverImage.fields.file.url, 160)}
+                  alt=""
+                  width={160}
+                  height={160}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
                 />
               </div>
             </Link>

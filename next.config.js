@@ -25,6 +25,8 @@ const contentSecurityPolicy = [
 const nextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
+    deviceSizes: [640, 828, 1200],
+    imageSizes: [128, 256, 384],
     remotePatterns: [
       { protocol: "https", hostname: "images.ctfassets.net" },
     ],

@@ -14,7 +14,12 @@ type LayoutPropsT = PropsWithChildren<{
 const Layout = ({ children, categories, featuredPosts }: LayoutPropsT) => {
   return (
     <React.Fragment>
-      <Navbar categories={categories} />
+      <Navbar
+        categories={categories.map((category) => ({
+          label: category.fields.label,
+          href: `/blogs/${category.fields.slug}`,
+        }))}
+      />
       <main className="container-body">{children}</main>
       <FeaturedPosts posts={featuredPosts} />
       <PopularTags />

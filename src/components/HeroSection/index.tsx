@@ -1,10 +1,10 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import ContentContainer from "../ContentContainer";
 import { IPostData } from "@/types";
 import config from "@/lib/config";
 import { formatLongDate, getPublishedDate } from "@/helper";
+import { contentfulImageUrl } from "@/lib/contentfulImage";
 
 interface IProps {
   posts: IPostData[];
@@ -50,13 +50,14 @@ const Hero = ({ posts }: IProps) => {
             className="group block animate-fade-in overflow-hidden rounded-xl border border-white/10 bg-white/5"
           >
             <div className="relative h-56 w-full overflow-hidden md:h-64">
-              <Image
-                src={"https:" + post.fields.coverImage.fields.file.url}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={contentfulImageUrl(post.fields.coverImage.fields.file.url, 1200)}
                 alt={post.fields.title}
-                fill
-                priority
-                sizes="(min-width: 1100px) 600px, 100vw"
-                className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                width={1200}
+                height={675}
+                decoding="async"
+                className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
               />
             </div>
             <div className="flex flex-col gap-3 p-6">
