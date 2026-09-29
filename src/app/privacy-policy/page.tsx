@@ -26,7 +26,7 @@ export default function PrivacyPolicyPage() {
         This Privacy Policy explains how Digital Dialogue (&ldquo;we,&rdquo;
         &ldquo;us,&rdquo; or &ldquo;our&rdquo;), accessible at{" "}
         <b>{config.BASE_URL}</b>, collects, uses, and shares information when
-        you visit our website. Last updated: 2 September 2026.
+        you visit our website. Last updated: 29 September 2026.
       </p>
 
       <p>
@@ -105,6 +105,22 @@ export default function PrivacyPolicyPage() {
       <p>
         You can control or delete cookies through your browser settings. Blocking
         some cookies may affect how parts of the site work.
+      </p>
+
+      <h2>Google Analytics</h2>
+      <p>
+        Digital Dialogue uses Google Analytics to understand how visitors use
+        the site, such as which pages are opened and how people arrive. Google
+        may set cookies and receive usage data, including IP address, under its
+        own policy. See{" "}
+        <a
+          href="https://policies.google.com/privacy"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Google&apos;s Privacy Policy
+        </a>
+        .
       </p>
 
       <h2>Google AdSense and advertising</h2>

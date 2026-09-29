@@ -4,7 +4,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 /**
  * Security headers for crawl audits and browser hardening.
- * CSP allows Next.js, Contentful images, Formspree, and Google AdSense.
+ * CSP allows Next.js, Contentful images, Formspree, Google Analytics, and Google AdSense.
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
@@ -12,11 +12,11 @@ const contentSecurityPolicy = [
   "object-src 'none'",
   "frame-ancestors 'self'",
   "form-action 'self' https://formspree.io",
-  "img-src 'self' data: blob: https://images.ctfassets.net https://*.ctfassets.net https://pagead2.googlesyndication.com https://*.googlesyndication.com https://www.google.com https://www.gstatic.com",
+  "img-src 'self' data: blob: https://images.ctfassets.net https://*.ctfassets.net https://pagead2.googlesyndication.com https://*.googlesyndication.com https://www.google.com https://www.gstatic.com https://www.google-analytics.com https://www.googletagmanager.com",
   "font-src 'self' data:",
   "style-src 'self' 'unsafe-inline'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagservices.com https://www.google.com https://www.gstatic.com https://adservice.google.com",
-  "connect-src 'self' https://formspree.io https://cdn.contentful.com https://images.ctfassets.net https://pagead2.googlesyndication.com https://*.googlesyndication.com https://www.google.com https://googleads.g.doubleclick.net",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagservices.com https://www.google.com https://www.gstatic.com https://adservice.google.com https://www.googletagmanager.com",
+  "connect-src 'self' https://formspree.io https://cdn.contentful.com https://images.ctfassets.net https://pagead2.googlesyndication.com https://*.googlesyndication.com https://www.google.com https://googleads.g.doubleclick.net https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
   "frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.google.com https://www.googletagmanager.com",
   "upgrade-insecure-requests",
 ].join("; ");

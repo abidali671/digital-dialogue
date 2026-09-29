@@ -83,6 +83,7 @@ const config = {
   POPULAR_TAGS,
   FORM_ACTION: "https://formspree.io/f/xnpnokwe",
   BASE_URL: "https://www.digitaldialogue.pk",
+  GA_MEASUREMENT_ID: "G-WTZCCLQ2FF",
   BLOGS_PER_PAGE: 15,
   SITE_NAME: "Digital Dialogue",
   DEFAULT_DESCRIPTION:
