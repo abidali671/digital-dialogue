@@ -10,6 +10,7 @@ import { HOME_FAQS } from "@/lib/homeFaqs";
  */
 const HomeGuide = () => {
   return (
+    <>
     <section className="border-b border-line bg-mist">
       <ContentContainer className="py-14 md:py-16">
         <div className="article-wrapper">
@@ -145,10 +146,17 @@ const HomeGuide = () => {
             it all the way through. Use the steps before you open five more
             tabs. This site is written for that pace.
           </p>
-          <PostFaqs faqs={HOME_FAQS} />
         </div>
       </ContentContainer>
     </section>
+    <section className="border-b border-line bg-white">
+      <ContentContainer className="py-14 md:py-16">
+        <div className="article-wrapper">
+          <PostFaqs faqs={HOME_FAQS} className="" />
+        </div>
+      </ContentContainer>
+    </section>
+    </>
   );
 };
 

@@ -2,13 +2,19 @@ import type { IFaq } from "@/types";
 
 type PostFaqsProps = {
   faqs: IFaq[];
+  className?: string;
 };
 
-export default function PostFaqs({ faqs }: PostFaqsProps) {
+export default function PostFaqs({ faqs, className }: PostFaqsProps) {
   if (!faqs.length) return null;
 
   return (
-    <section className="mt-14 border-t border-line pt-10" aria-labelledby="faqs-heading">
+    <section
+      className={
+        className ?? "mt-14 border-t border-line pt-10"
+      }
+      aria-labelledby="faqs-heading"
+    >
       <h2
         id="faqs-heading"
         className="font-display text-2xl font-bold tracking-tight text-ink md:text-3xl"
