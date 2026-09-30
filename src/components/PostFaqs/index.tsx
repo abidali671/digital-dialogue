@@ -10,9 +10,7 @@ export default function PostFaqs({ faqs, className }: PostFaqsProps) {
 
   return (
     <section
-      className={
-        className ?? "mt-14 border-t border-line pt-10"
-      }
+      className={className ?? "mt-14 border-t border-line pt-10"}
       aria-labelledby="faqs-heading"
     >
       <h2
@@ -26,7 +24,9 @@ export default function PostFaqs({ faqs, className }: PostFaqsProps) {
           <details key={faq.question} className="group py-4">
             <summary className="cursor-pointer list-none font-display text-lg font-semibold text-ink marker:content-none [&::-webkit-details-marker]:hidden">
               <span className="flex items-start justify-between gap-4">
-                <span>{faq.question}</span>
+                <h3 className="font-display text-lg font-semibold text-ink">
+                  {faq.question}
+                </h3>
                 <span
                   aria-hidden
                   className="mt-1 shrink-0 font-mono text-sm text-mute transition-transform group-open:rotate-45"
