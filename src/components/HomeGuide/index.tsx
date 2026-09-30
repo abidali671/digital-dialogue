@@ -29,8 +29,7 @@ const HomeGuide = () => {
           <p>
             Abid Ali runs the publication from Pakistan and edits it for that
             reader. You can read the background on the{" "}
-            <Link href="/about">about page</Link>, see who writes on the{" "}
-            <Link href="/authors">authors page</Link>, or send a note through{" "}
+            <Link href="/about">about page</Link>, or send a note through{" "}
             <Link href="/contact-us">contact</Link>.
           </p>
 

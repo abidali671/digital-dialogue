@@ -55,10 +55,9 @@ export default function DisclaimerPage() {
 
         <h2>Opinions</h2>
         <p>
-          Views on this site belong to Digital Dialogue and its{" "}
-          <Link href="/authors">authors</Link> unless stated otherwise. They
-          do not represent any employer, client, or company mentioned in an
-          article.
+          Views on this site belong to Digital Dialogue and its authors unless
+          stated otherwise. They do not represent any employer, client, or
+          company mentioned in an article.
         </p>
 
         <h2>Your responsibility</h2>

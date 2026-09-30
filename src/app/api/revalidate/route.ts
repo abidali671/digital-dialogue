@@ -7,10 +7,11 @@ export const dynamic = "force-dynamic";
 const STATIC_PATHS = [
   "/",
   "/blogs",
-  "/authors",
   "/about",
   "/contact-us",
   "/privacy-policy",
+  "/terms-of-service",
+  "/affiliate-disclosure",
   "/disclaimer",
   "/feed.xml",
 ] as const;

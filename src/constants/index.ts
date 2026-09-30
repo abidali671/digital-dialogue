@@ -2,8 +2,6 @@ const descriptions = {
   HOME: "Practical freelancing guides for beginners and web developers: Upwork, profiles, proposals, fees, and how to land clients without fluff.",
   BLOGS:
     "Browse practical freelancing articles on Upwork, Fiverr, proposals, fees, and first-client workflows for people who want clearer next steps.",
-  AUTHORS:
-    "Meet the writers behind Digital Dialogue and browse their practical freelancing articles on platforms, profiles, proposals, and client work.",
   PRIVACY_POLICY:
     "Read the Digital Dialogue privacy policy: what we collect, cookies, Google AdSense disclosures, your rights, and how to contact us.",
   CONTACT_US:

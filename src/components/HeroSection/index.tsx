@@ -35,10 +35,10 @@ const Hero = ({ posts }: IProps) => {
               Start reading
             </Link>
             <Link
-              href="/authors"
+              href="/about"
               className="rounded-lg border border-white/20 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-accent hover:text-accent"
             >
-              Meet the authors
+              About the site
             </Link>
           </div>
         </div>

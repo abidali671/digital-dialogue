@@ -39,8 +39,7 @@ export default function AboutPage() {
           use the same day.
         </p>
         <p>
-          You can meet the writing team on the{" "}
-          <Link href="/authors">authors page</Link>, use the{" "}
+          You can use the{" "}
           <Link href="/contact-us">contact form</Link>, or reach him on{" "}
           <Link
             href={config.LINKEDIN_URL}
