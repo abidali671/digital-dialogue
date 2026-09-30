@@ -21,7 +21,7 @@ const Hero = ({ posts }: IProps) => {
             {config.SITE_NAME}
           </p>
           <h1 className="mb-5 font-display text-4xl font-bold leading-[1.1] tracking-tight text-white md:text-5xl">
-            Practical freelancing guides for people who need a clear next step.
+            Helpful Freelancing Guides for Those Seeking Clear Direction
           </h1>
           <p className="mb-8 max-w-md text-base leading-relaxed text-white/70 md:text-lg">
             Profiles, proposals, platforms, and fees—written from real client
@@ -51,7 +51,10 @@ const Hero = ({ posts }: IProps) => {
             <div className="relative h-56 w-full overflow-hidden md:h-64">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={contentfulImageUrl(post.fields.coverImage.fields.file.url, 1200)}
+                src={contentfulImageUrl(
+                  post.fields.coverImage.fields.file.url,
+                  1200,
+                )}
                 alt={post.fields.title}
                 width={1200}
                 height={675}

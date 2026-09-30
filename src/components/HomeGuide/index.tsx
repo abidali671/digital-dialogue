@@ -23,11 +23,11 @@ const HomeGuide = () => {
               or a clear answer.
             </p>
             <p>
-              The writing is for people who do the work themselves: freelancers
-              looking for the next client, beginners setting up an Upwork
-              account, and web developers who sell services online. Posts stay
-              specific. If a piece does not help you start, compare, or fix
-              something, it does not belong on the site.
+              This writing is for people who work on their own. It includes
+              freelancers looking for new clients, beginners setting up an
+              Upwork account, and web developers offering their services online.
+              It includes freelancers who want new clients, beginners making an
+              Upwork account, and web developers selling their services online.
             </p>
             <p>
               Abid Ali runs the site from Pakistan and edits it for that reader.
@@ -60,18 +60,19 @@ const HomeGuide = () => {
 
             <h2>What the freelancing guides cover</h2>
             <p>
-              The <Link href="/blogs/freelancing">freelancing guides</Link>{" "}
-              explain how a marketplace actually works, what a beginner should
-              set up before sending a proposal, how to write a profile clients
-              open, and how to price and close work without wasting Connects.
+              <Link href="/blogs/freelancing">Freelancing guides</Link> show how
+              a marketplace functions. They tell beginners what to prepare
+              before sending a proposal. They explain how to write a profile
+              that attracts clients. They also cover how to set prices and get
+              jobs without wasting Connects.
             </p>
             <p>
               A useful freelance article names the step you are on. Starting out
               is a different problem from raising a rate. Both are different
               from choosing between two platforms. The posts try to keep those
-              apart. You should finish one guide knowing what to do this week:
-              which profile field to rewrite, which sample to show, or which
-              offer to decline.
+              apart. You need to complete one guide this week. It should tell
+              you what profile field to change, what sample to share, or which
+              offer to turn down.
             </p>
             <p>
               Readers in Pakistan will notice that the advice changes,
@@ -95,11 +96,10 @@ const HomeGuide = () => {
 
             <h2>Profiles, proposals, and first jobs</h2>
             <p>
-              Profile and proposal guides focus on what clients actually read:
-              title, overview, portfolio proof, rate, and a pitch that answers
-              the brief. First-job guides cover targeting, interviews,
-              contracts, and delivery—the path from Connects spent to a signed
-              contract.
+              Profile and proposal guides highlight the important parts clients
+              notice. These include the title, overview, proof of your work in
+              your portfolio, your rates, and a pitch that answers the project's
+              needs.
             </p>
             <p>
               Fee and Connects articles put money in plain numbers: what you

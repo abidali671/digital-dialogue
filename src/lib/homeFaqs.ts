@@ -15,7 +15,7 @@ export const HOME_FAQS: IFaq[] = [
   {
     question: "How are the guides different from generic freelancing articles?",
     answer:
-      "The guides are made to help readers make one clear choice or take one next step. Instead of broad 'get rich' or 'earn online' content, they focus on tasks like rewriting a profile field, choosing a platform, pricing a service, deciding whether to spend Connects, or improving a proposal.",
+      "The guides are made to help readers make one clear choice or take one next step. Instead of general advice on getting rich or making money online, they focus on specific tasks. This includes rewriting your profile, choosing a platform, setting a service price, deciding if you need Connects, and improving your proposal.",
   },
   {
     question:
