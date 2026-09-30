@@ -96,15 +96,15 @@ const HomeGuide = () => {
 
             <h2>Profiles, proposals, and first jobs</h2>
             <p>
-              Profile and proposal guides help you focus on what clients care
-              about. These include your title, profile summary, portfolio,
-              rates, and how well your proposal matches the project.
+              Profile and proposal guides help you understand what clients want.
+              They cover your title, profile summary, portfolio, rates, and how
+              well your proposal fits the project.
             </p>
             <p>
-              Fee and Connects articles put money in plain numbers: what you
-              keep after platform fees, and when a listing is worth applying to.
-              Use those when you are pricing a website gig or deciding whether
-              to spend Connects on a vague post.
+              Fee and Connects articles explain money clearly. They show what
+              you earn after platform fees and which jobs are worth applying
+              for. Use this information when pricing a website job or deciding
+              to spend Connects on a unclear post.
             </p>
 
             <h2>What these guides leave out</h2>
