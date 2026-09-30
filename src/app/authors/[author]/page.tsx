@@ -99,6 +99,14 @@ export default async function AuthorPage({ params, searchParams }: PageProps) {
         totalPages={totalPages}
         authorName={author.fields.name}
         authorSlug={author.fields.slug}
+        authorRole={author.fields.role}
+        authorAbout={author.fields.about}
+        authorPictureUrl={
+          author.fields.picture?.fields?.file?.url
+            ? `https:${author.fields.picture.fields.file.url}`
+            : undefined
+        }
+        authorPictureAlt={author.fields.picture?.fields?.title}
         searchQuery={searchQuery}
       />
     );
