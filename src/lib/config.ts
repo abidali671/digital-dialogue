@@ -56,16 +56,16 @@ const EDITOR_PICK_SLUGS = [
 
 /** Tag hubs linked from home and blogs listing. Freelancing niche only. */
 const POPULAR_TAGS = [
+  { label: "Freelancing", slug: "freelancing" },
+  { label: "Freelance Platforms", slug: "freelance-platforms" },
   { label: "Upwork", slug: "upwork" },
   { label: "Fiverr", slug: "fiverr" },
   { label: "Freelancer", slug: "freelancer" },
-  { label: "LinkedIn", slug: "linkedin" },
-  { label: "Upwork Profile", slug: "upwork-profile" },
-  { label: "Proposals", slug: "upwork-proposal" },
-  { label: "Connects", slug: "upwork-connects" },
-  { label: "Freelance Platforms", slug: "freelance-platforms" },
-  { label: "Upwork for Beginners", slug: "upwork-for-beginners" },
+  { label: "Proposals", slug: "proposals" },
+  { label: "Freelance Profile", slug: "freelance-profile" },
+  { label: "Beginners", slug: "beginners" },
   { label: "Upwork Fees", slug: "upwork-fees" },
+  { label: "Connects", slug: "connects" },
 ] as const;
 
 const config = {
