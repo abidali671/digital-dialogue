@@ -15,7 +15,7 @@ import {
   organizationSchema,
   websiteSchema,
 } from "@/lib/schema";
-import { ICategoryData, IPostData } from "@/types";
+import { IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
 
@@ -36,18 +36,16 @@ export default async function HomePage() {
   const latestCount = config.BLOGS_PER_PAGE;
   const fetchLimit = 1 + latestCount + config.EDITOR_PICK_SLUGS.length;
 
-  const [postsRes, categoriesRes, pickedPosts] = await Promise.all([
+  const [postsRes, pickedPosts] = await Promise.all([
     contentful_client.getEntries({
       content_type: "post",
       limit: fetchLimit,
       order: "-sys.updatedAt",
     }),
-    contentful_client.getEntries({ content_type: "category" }),
     getPostsBySlugs(config.EDITOR_PICK_SLUGS),
   ]);
 
   const posts = postsRes.items as unknown as IPostData[];
-  const categories = categoriesRes.items as unknown as ICategoryData[];
   const editorPickSlugs = new Set<string>(config.EDITOR_PICK_SLUGS);
 
   const featuredPost = posts.slice(0, 1);
@@ -61,7 +59,7 @@ export default async function HomePage() {
       <JsonLdScript data={[organizationSchema(), websiteSchema()]} />
       <Hero posts={featuredPost} />
       <TopPicks posts={pickedPosts} />
-      <AllPosts posts={latestPosts} categories={categories} />
+      <AllPosts posts={latestPosts} />
       <Newsletter />
     </>
   );
