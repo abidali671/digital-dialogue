@@ -4,7 +4,6 @@ import contentful_client, {
 } from "@/lib/contentful/client";
 import config from "@/lib/config";
 import constants from "@/constants";
-import CategoryHubs from "@/components/CategoryHubs";
 import BlogsClient from "@/components/blogs/BlogsClient";
 import { parseSearchQuery } from "@/lib/listing";
 import { pageTitle, resolvePageTitle } from "@/lib/metadata";
@@ -60,18 +59,14 @@ export default async function BlogsPage({ searchParams }: PageProps) {
     Math.ceil(response.total / config.BLOGS_PER_PAGE)
   );
   const categories = categoriesRes.items as unknown as ICategoryData[];
-  const showCategoryHubs = !searchQuery;
 
   return (
-    <>
-      <BlogsClient
-        posts={response.items as unknown as IPostData[]}
-        categories={categories}
-        currentPage={Math.min(currentPage, totalPages)}
-        totalPages={totalPages}
-        searchQuery={searchQuery}
-      />
-      {showCategoryHubs && <CategoryHubs categories={categories} />}
-    </>
+    <BlogsClient
+      posts={response.items as unknown as IPostData[]}
+      categories={categories}
+      currentPage={Math.min(currentPage, totalPages)}
+      totalPages={totalPages}
+      searchQuery={searchQuery}
+    />
   );
 }

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Hero from "@/components/HeroSection";
 import TopPicks from "@/components/TopPicks";
-import CategoryHubs from "@/components/CategoryHubs";
 import AllPosts from "@/components/AllPosts";
 import HomeGuide from "@/components/HomeGuide";
 import Newsletter from "@/components/Newsletter";
@@ -63,7 +62,6 @@ export default async function HomePage() {
       <JsonLdScript data={[organizationSchema(), websiteSchema()]} />
       <Hero posts={featuredPost} />
       <TopPicks posts={pickedPosts} />
-      <CategoryHubs categories={categories} />
       <HomeGuide />
       <AllPosts posts={latestPosts} categories={categories} />
       <Newsletter />
