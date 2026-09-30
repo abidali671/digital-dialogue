@@ -4,26 +4,20 @@ import Footer from "./Container/Footer";
 import FeaturedPosts from "./FeaturedPosts";
 import PopularTags from "./PopularTags";
 import AdminCacheFab from "./AdminCacheFab";
-import { ICategoryData, IPostData } from "@/types";
+import { IPostData } from "@/types";
 
 type LayoutPropsT = PropsWithChildren<{
-  categories: ICategoryData[];
   featuredPosts: IPostData[];
 }>;
 
-const Layout = ({ children, categories, featuredPosts }: LayoutPropsT) => {
+const Layout = ({ children, featuredPosts }: LayoutPropsT) => {
   return (
     <React.Fragment>
-      <Navbar
-        categories={categories.map((category) => ({
-          label: category.fields.label,
-          href: `/blogs/${category.fields.slug}`,
-        }))}
-      />
+      <Navbar />
       <main className="container-body">{children}</main>
       <FeaturedPosts posts={featuredPosts} />
       <PopularTags />
-      <Footer categories={categories} />
+      <Footer />
       <Suspense fallback={null}>
         <AdminCacheFab />
       </Suspense>

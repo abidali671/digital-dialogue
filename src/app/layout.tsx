@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import { Fraunces, IBM_Plex_Mono, Source_Sans_3 } from "next/font/google";
-import contentful_client, {
-  REVALIDATE_LISTING,
-} from "@/lib/contentful/client";
+import { REVALIDATE_LISTING } from "@/lib/contentful/client";
 import Layout from "@/components/layout";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import config from "@/lib/config";
 import { getPostsBySlugs } from "@/lib/posts";
-import { ICategoryData } from "@/types";
 import "@/styles/global.css";
 
 export const revalidate = REVALIDATE_LISTING;
@@ -67,22 +64,12 @@ export const metadata: Metadata = {
   },
 };
 
-async function getCategories() {
-  const response = await contentful_client.getEntries({
-    content_type: "category",
-  });
-  return response.items as unknown as ICategoryData[];
-}
-
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [categories, featuredPosts] = await Promise.all([
-    getCategories(),
-    getPostsBySlugs(config.FEATURED_POST_SLUGS),
-  ]);
+  const featuredPosts = await getPostsBySlugs(config.FEATURED_POST_SLUGS);
 
   return (
     <html
@@ -91,9 +78,7 @@ export default async function RootLayout({
     >
       <body>
         <GoogleAnalytics />
-        <Layout categories={categories} featuredPosts={featuredPosts}>
-          {children}
-        </Layout>
+        <Layout featuredPosts={featuredPosts}>{children}</Layout>
       </body>
     </html>
   );

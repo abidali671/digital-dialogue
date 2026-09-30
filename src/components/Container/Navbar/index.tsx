@@ -5,24 +5,13 @@ import { Transition } from "@headlessui/react";
 
 import Link from "next/link";
 import Image from "next/image";
-import ChevronDown from "@/assets/icon/ChevronDown";
-import Menu from "@/components/Menu";
 import Hamburger from "@/assets/icon/Hamburger";
 import ContentContainer from "../../ContentContainer";
 import config from "@/lib/config";
 
-export type NavbarCategory = {
-  label: string;
-  href: string;
-};
-
-interface INavbarProps {
-  categories: NavbarCategory[];
-}
-
 const MOBILE_NAV_ID = "mobile-navigation";
 
-const Navbar = ({ categories }: INavbarProps) => {
+const Navbar = () => {
   const [isMenu, setIsMenu] = useState(false);
 
   const toggleMenu = () => setIsMenu(!isMenu);
@@ -45,30 +34,7 @@ const Navbar = ({ categories }: INavbarProps) => {
           />
         </Link>
         <ul className="nav-list">
-          {config.NAV_LINKS.slice(0, 4).map((item) => (
-            <li key={item.href}>
-              <Link href={item.href}>{item.label}</Link>
-            </li>
-          ))}
-          {categories && (
-            <li>
-              <Menu
-                buttonLabel="Categories"
-                list={categories}
-                button={({ open }) => (
-                  <>
-                    Categories
-                    <ChevronDown
-                      className={`h-4 w-4 transition-transform ${
-                        open ? "rotate-180" : ""
-                      }`}
-                    />
-                  </>
-                )}
-              />
-            </li>
-          )}
-          {config.NAV_LINKS.slice(4).map((item) => (
+          {config.NAV_LINKS.map((item) => (
             <li key={item.href}>
               <Link href={item.href}>{item.label}</Link>
             </li>
@@ -98,18 +64,6 @@ const Navbar = ({ categories }: INavbarProps) => {
                 {config.NAV_LINKS.map((item) => (
                   <li key={item.href} onClick={toggleMenu} className="m-0">
                     <Link href={item.href}>{item.label}</Link>
-                  </li>
-                ))}
-                <li className="m-0 border-y border-line px-6 py-4 font-mono text-xs uppercase tracking-[0.12em] text-mute">
-                  Categories
-                </li>
-                {categories?.map((category) => (
-                  <li
-                    onClick={toggleMenu}
-                    key={category.href}
-                    className="m-0"
-                  >
-                    <Link href={category.href}>{category.label}</Link>
                   </li>
                 ))}
               </ul>
