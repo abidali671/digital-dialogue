@@ -73,8 +73,8 @@ const ShareButtons = ({
   };
 
   return (
-    <div className="flex items-center gap-3">
-      <div className="relative">
+    <div className="flex h-8 items-center gap-3 leading-none">
+      <div className="relative flex h-8 w-8 shrink-0 items-center justify-center">
         <FacebookShareButton
           url={url}
           beforeOnClick={async () => {
@@ -91,21 +91,25 @@ const ShareButtons = ({
           </div>
         )}
       </div>
-      <TwitterShareButton url={url} title={shareText || title}>
-        <TwitterIcon size={32} round />
-      </TwitterShareButton>
-      <WhatsappShareButton
-        url={url}
-        title={shareText || title}
-        separator={"\n\n"}
-      >
-        <WhatsappIcon size={32} round />
-      </WhatsappShareButton>
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center">
+        <TwitterShareButton url={url} title={shareText || title}>
+          <TwitterIcon size={32} round />
+        </TwitterShareButton>
+      </div>
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center">
+        <WhatsappShareButton
+          url={url}
+          title={shareText || title}
+          separator={"\n\n"}
+        >
+          <WhatsappIcon size={32} round />
+        </WhatsappShareButton>
+      </div>
       <button
         type="button"
         onClick={handleCopy}
         aria-label="Copy share text"
-        className="relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-mist text-ink transition-colors hover:bg-accent-soft"
+        className="relative flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-mist text-ink transition-colors hover:bg-accent-soft"
       >
         <LinkIcon />
         {copied && (

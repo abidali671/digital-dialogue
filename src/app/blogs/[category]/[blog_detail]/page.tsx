@@ -262,7 +262,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
               </p>
 
               <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
-                <p className="font-mono text-xs text-mute-soft">
+                <p className="flex h-8 items-center font-mono text-xs leading-none text-mute-soft">
                   {formatLongDate(publishedAt)} · {readingTime} min read
                 </p>
                 <ShareButtons
@@ -313,7 +313,9 @@ export default async function BlogDetailPage({ params }: PageProps) {
             )}
 
             <div className="mt-10 flex flex-wrap items-center gap-4 border-y border-line py-5">
-              <p className="text-sm font-semibold text-ink">Share this article</p>
+              <p className="flex h-8 items-center text-sm font-semibold leading-none text-ink">
+                Share this article
+              </p>
               <ShareButtons
                 url={shareUrl}
                 title={title}
