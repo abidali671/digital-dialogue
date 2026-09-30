@@ -117,16 +117,12 @@ export default async function BlogDetailPage({ params }: PageProps) {
   try {
     const { category, blog_detail } = params;
 
-    const [category_response, categories_response] = await Promise.all([
+    const [category_response] = await Promise.all([
       contentful_client.getEntries(
         {
           content_type: "category",
           "fields.slug": category,
         },
-        { revalidate: REVALIDATE_DETAIL }
-      ),
-      contentful_client.getEntries(
-        { content_type: "category" },
         { revalidate: REVALIDATE_DETAIL }
       ),
     ]);
@@ -174,8 +170,6 @@ export default async function BlogDetailPage({ params }: PageProps) {
       relatedPoolResponse.items as unknown as IPostData[],
       3
     );
-    const categories = categories_response.items as unknown as ICategoryData[];
-
     const {
       coverImage,
       category: postCategory,
@@ -350,37 +344,18 @@ export default async function BlogDetailPage({ params }: PageProps) {
           </div>
         </ContentContainer>
 
-        <section className="mt-14 border-t border-line bg-white py-14 md:py-16">
-          <ContentContainer>
-            {relatedPosts.length > 0 && (
-              <>
-                <Title as="h2">Keep reading</Title>
-                <div className="mt-10 grid gap-10 sm:grid-cols-2 xl:grid-cols-3">
-                  {relatedPosts.map((item) => (
-                    <PostCard key={item.fields.slug} data={item} />
-                  ))}
-                </div>
-              </>
-            )}
-
-            <div className="mt-14 border-t border-line pt-8">
-              <p className="mb-4 font-mono text-xs uppercase tracking-[0.14em] text-mute">
-                Browse categories
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {categories.map((data) => (
-                  <Link
-                    key={data.fields.slug}
-                    href={`/blogs/${data.fields.slug}`}
-                    className="rounded-md border border-line px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-accent hover:text-accent"
-                  >
-                    {data.fields.label}
-                  </Link>
+        {relatedPosts.length > 0 && (
+          <section className="mt-14 border-t border-line bg-white py-14 md:py-16">
+            <ContentContainer>
+              <Title as="h2">Keep reading</Title>
+              <div className="mt-10 grid gap-10 sm:grid-cols-2 xl:grid-cols-3">
+                {relatedPosts.map((item) => (
+                  <PostCard key={item.fields.slug} data={item} />
                 ))}
               </div>
-            </div>
-          </ContentContainer>
-        </section>
+            </ContentContainer>
+          </section>
+        )}
       </>
     );
   } catch (error) {
