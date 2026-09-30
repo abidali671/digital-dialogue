@@ -11,7 +11,7 @@ import { createRichTextOptions } from "@/lib/richText";
 import contentful_client, {
   REVALIDATE_DETAIL,
 } from "@/lib/contentful/client";
-import { ICategoryData, IFaq, IPostData } from "@/types";
+import { IFaq, IPostData } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import config from "@/lib/config";
@@ -117,18 +117,15 @@ export default async function BlogDetailPage({ params }: PageProps) {
   try {
     const { category, blog_detail } = params;
 
-    const [category_response] = await Promise.all([
-      contentful_client.getEntries(
-        {
-          content_type: "category",
-          "fields.slug": category,
-        },
-        { revalidate: REVALIDATE_DETAIL }
-      ),
-    ]);
+    const category_response = await contentful_client.getEntries(
+      {
+        content_type: "category",
+        "fields.slug": category,
+      },
+      { revalidate: REVALIDATE_DETAIL }
+    );
 
     if (!category_response.items.length) notFound();
-
     const response = await contentful_client.getEntries(
       {
         content_type: "post",
