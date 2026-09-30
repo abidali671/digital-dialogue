@@ -26,6 +26,6 @@ export const HOME_FAQS: IFaq[] = [
   {
     question: "When should readers check the date on an older article?",
     answer:
-      "Check the date when the article covers things that change over time, such as platform fees, Connects prices, or marketplace rules. Older posts can still help when they explain stable skills, such as how to structure a proposal.",
+      "Check the date when the article covers things that can change over time, such as platform fees, Connects prices, or marketplace rules. Older articles can still be useful for topics that don’t change much, like how to structure a proposal.",
   },
 ];

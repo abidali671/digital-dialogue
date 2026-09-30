@@ -75,8 +75,8 @@ const HomeGuide = () => {
               offer to turn down.
             </p>
             <p>
-              Readers in Pakistan will notice that the advice changes,
-              particularly concerning payment and platform selection. Someone
+              Readers in Pakistan will see that the advice is different,
+              especially about payment and choosing a platform. Someone
               elsewhere can still follow the steps by writing the same pieces.
               The point is the work, not a local shortcut that only works once.
             </p>
@@ -96,10 +96,9 @@ const HomeGuide = () => {
 
             <h2>Profiles, proposals, and first jobs</h2>
             <p>
-              Profile and proposal guides highlight the important parts clients
-              notice. These include the title, overview, proof of your work in
-              your portfolio, your rates, and a pitch that answers the project's
-              needs.
+              Profile and proposal guides help you focus on what clients care
+              about. These include your title, profile summary, portfolio,
+              rates, and how well your proposal matches the project.
             </p>
             <p>
               Fee and Connects articles put money in plain numbers: what you
@@ -124,9 +123,12 @@ const HomeGuide = () => {
             </p>
             <p>
               The byline on the site is a real person. The contact page reaches
-              that person. The privacy policy and disclaimer explain what the
-              site does with a visit and how far the articles go. Read those
-              when you want the limit. Read a guide when you want the next step.
+              that person.
+            </p>
+            <p>
+              The privacy policy and disclaimer explain what the site does with
+              a visit and how far the articles go. Read those when you want the
+              limit. Read a guide when you want the next step.
             </p>
 
             <h2>A sensible order of reading</h2>
