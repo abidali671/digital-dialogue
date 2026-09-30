@@ -15,7 +15,9 @@ import {
   organizationSchema,
   websiteSchema,
 } from "@/lib/schema";
+import { HOME_FAQS } from "@/lib/homeFaqs";
 import { IPostData } from "@/types";
+import { FAQPageJsonLd } from "next-seo";
 
 export const revalidate = REVALIDATE_LISTING;
 
@@ -57,6 +59,13 @@ export default async function HomePage() {
   return (
     <>
       <JsonLdScript data={[organizationSchema(), websiteSchema()]} />
+      <FAQPageJsonLd
+        useAppDir
+        mainEntity={HOME_FAQS.map((faq) => ({
+          questionName: faq.question,
+          acceptedAnswerText: faq.answer,
+        }))}
+      />
       <Hero posts={featuredPost} />
       <TopPicks posts={pickedPosts} />
       <AllPosts posts={latestPosts} />

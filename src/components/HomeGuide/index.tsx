@@ -1,6 +1,8 @@
 import Link from "next/link";
 import ContentContainer from "../ContentContainer";
+import PostFaqs from "../PostFaqs";
 import Title from "../Title";
+import { HOME_FAQS } from "@/lib/homeFaqs";
 
 /**
  * Homepage prose. Card grids alone leave the document mostly markup,
@@ -28,18 +30,18 @@ const HomeGuide = () => {
           </p>
           <p>
             Abid Ali runs the site from Pakistan and edits it for that reader.
-            You can read the
-            <Link href="/about">about page</Link> for the background, or send a
-            note through <Link href="/contact-us">contact</Link>.
+            You can read the <Link href="/about">about page</Link> for the
+            background, or send a note through{" "}
+            <Link href="/contact-us">contact</Link>.
           </p>
 
           <h2>How to use the homepage</h2>
           <p>
-            The featured story at the top is the piece to open first. Editor's
-            picks below it are a short, numbered set of guides that still help
-            even if you are new to the archive. The latest articles are the
-            newest full posts, with a short excerpt so you can skip anything
-            that is not your problem today.
+            The featured story at the top is the piece to open first.
+            Editor&apos;s picks below it are a short, numbered set of guides
+            that still help even if you are new to the archive. The latest
+            articles are the newest full posts, with a short excerpt so you can
+            skip anything that is not your problem today.
           </p>
           <p>
             Further down, featured posts are a stable set of explainers that
@@ -143,6 +145,7 @@ const HomeGuide = () => {
             it all the way through. Use the steps before you open five more
             tabs. This site is written for that pace.
           </p>
+          <PostFaqs faqs={HOME_FAQS} />
         </div>
       </ContentContainer>
     </section>
