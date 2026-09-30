@@ -3,6 +3,7 @@ import Navbar from "./Container/Navbar";
 import Footer from "./Container/Footer";
 import FeaturedPosts from "./FeaturedPosts";
 import PopularTags from "./PopularTags";
+import HomeGuideOnHome from "./HomeGuideOnHome";
 import AdminCacheFab from "./AdminCacheFab";
 import { IPostData } from "@/types";
 
@@ -17,6 +18,7 @@ const Layout = ({ children, featuredPosts }: LayoutPropsT) => {
       <main className="container-body">{children}</main>
       <FeaturedPosts posts={featuredPosts} />
       <PopularTags />
+      <HomeGuideOnHome />
       <Footer />
       <Suspense fallback={null}>
         <AdminCacheFab />

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Hero from "@/components/HeroSection";
 import TopPicks from "@/components/TopPicks";
 import AllPosts from "@/components/AllPosts";
-import HomeGuide from "@/components/HomeGuide";
 import Newsletter from "@/components/Newsletter";
 import contentful_client, {
   REVALIDATE_LISTING,
@@ -62,7 +61,6 @@ export default async function HomePage() {
       <JsonLdScript data={[organizationSchema(), websiteSchema()]} />
       <Hero posts={featuredPost} />
       <TopPicks posts={pickedPosts} />
-      <HomeGuide />
       <AllPosts posts={latestPosts} categories={categories} />
       <Newsletter />
     </>

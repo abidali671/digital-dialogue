@@ -8,7 +8,7 @@ import Title from "../Title";
  */
 const HomeGuide = () => {
   return (
-    <section className="border-b border-line bg-white">
+    <section className="border-b border-line bg-mist">
       <ContentContainer className="py-14 md:py-16">
         <div className="article-wrapper">
           <Title as="h2">What Digital Dialogue publishes</Title>
