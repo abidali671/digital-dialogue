@@ -24,7 +24,7 @@ function parsePage(page?: string) {
 export function generateMetadata({ searchParams }: PageProps): Metadata {
   const currentPage = parsePage(searchParams.page);
   const pageSuffix = currentPage > 1 ? `, Page ${currentPage}` : "";
-  const title = `Freelancing, Technology and Marketing Articles${pageSuffix}`;
+  const title = `Freelancing Articles and Upwork Guides${pageSuffix}`;
   const resolvedTitle = resolvePageTitle(title);
   const canonical = currentPage > 1 ? `/blogs?page=${currentPage}` : "/blogs";
 

@@ -34,9 +34,9 @@ const Footer = ({ categories }: FooterPropsT) => {
               />
             </Link>
             <p className="max-w-md text-base leading-relaxed text-mute-soft">
-              Practical guides on freelancing, web development, technology,
-              marketing, and design. Written for people who need a clear next
-              step, not another theory dump.
+              Practical freelancing guides on Upwork, profiles, proposals, and
+              landing clients. Written for people who need a clear next step,
+              not another theory dump.
             </p>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <Link

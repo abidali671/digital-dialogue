@@ -21,7 +21,7 @@ import { ICategoryData, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
 
-const HOME_TITLE = `${config.SITE_NAME} | Freelancing and Technology Guides`;
+const HOME_TITLE = `${config.SITE_NAME} | Practical Freelancing Guides`;
 
 export const metadata: Metadata = {
   title: pageTitle(HOME_TITLE),

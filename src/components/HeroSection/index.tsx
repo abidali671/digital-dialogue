@@ -21,12 +21,11 @@ const Hero = ({ posts }: IProps) => {
             {config.SITE_NAME}
           </p>
           <h1 className="mb-5 font-display text-4xl font-bold leading-[1.1] tracking-tight text-white md:text-5xl">
-            Practical writing on freelancing, technology and building things
-            that ship.
+            Practical freelancing guides for people who need a clear next step.
           </h1>
           <p className="mb-8 max-w-md text-base leading-relaxed text-white/70 md:text-lg">
-            No fluff, no theory dumps. Just guides, teardowns and tools from
-            people who actually do the work.
+            Profiles, proposals, platforms, and fees—written from real client
+            work, not theory dumps.
           </p>
           <div className="flex flex-wrap items-center gap-3">
             <Link

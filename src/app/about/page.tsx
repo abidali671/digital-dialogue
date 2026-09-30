@@ -26,17 +26,17 @@ export default function AboutPage() {
         <Title>About Digital Dialogue</Title>
 
         <p>
-          Digital Dialogue is a practical blog on freelancing, technology, web
-          development, digital marketing, content creation, and design. We
-          publish guides, teardowns, and explainers for people who want to
-          ship work, not collect theory.
+          Digital Dialogue is a practical blog on freelancing. We publish
+          guides on platforms, profiles, proposals, fees, and landing client
+          work—for people who want a clear next step, not another theory dump.
         </p>
 
         <h2>Who runs the site</h2>
         <p>
           Digital Dialogue is owned and operated by {config.AUTHOR_NAME}, based
-          in Pakistan. He writes and edits for builders, freelancers, and junior
-          developers who need clear steps they can use the same day.
+          in Pakistan. He is a full-stack developer and freelancer who writes
+          and edits for beginners and web developers who need steps they can
+          use the same day.
         </p>
         <p>
           You can meet the writing team on the{" "}
@@ -54,11 +54,10 @@ export default function AboutPage() {
 
         <h2>Why this site exists</h2>
         <p>
-          A lot of online advice is either too vague or too long. Digital
+          A lot of freelancing advice is either too vague or too long. Digital
           Dialogue exists to answer real questions in plain language: which
-          freelance platform to use, how HTML and CSS still fit together, how
-          to judge a marketing agency, and similar decisions people actually
-          have to make.
+          platform to use, how to build an Upwork profile, what to put in a
+          proposal, and how fees and Connects actually work.
         </p>
         <p>
           If a post does not help you choose, start, or fix something, it does
@@ -68,28 +67,18 @@ export default function AboutPage() {
         <h2>What you will find</h2>
         <ul>
           <li>
-            <Link href="/blogs/freelancing">Freelancing</Link>: platforms,
-            first clients, and working from home
+            <Link href="/blogs/freelancing">Freelancing guides</Link>: platforms,
+            profiles, proposals, fees, and first clients
           </li>
           <li>
-            <Link href="/blogs/web-development">Web development</Link>: HTML,
-            CSS, JavaScript, and practical frontend skills
+            Upwork walkthroughs: how the marketplace works, beginner setup, and
+            winning jobs
           </li>
           <li>
-            <Link href="/blogs/technology">Technology</Link>: blockchain and
-            other tools, explained without hype
+            Platform comparisons: Upwork, Fiverr, Freelancer, and when each fits
           </li>
           <li>
-            <Link href="/blogs/digital-marketing">Digital marketing</Link>:
-            traffic, agencies, and measurement
-          </li>
-          <li>
-            <Link href="/blogs/content-creation">Content creation</Link>:
-            YouTube, creators, and building an audience
-          </li>
-          <li>
-            <Link href="/blogs/design-and-creativity">Design</Link>: UX, color,
-            and why design choices matter
+            Practical next steps for web developers selling freelance services
           </li>
         </ul>
         <p>

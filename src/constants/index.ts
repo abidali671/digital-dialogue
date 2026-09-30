@@ -1,15 +1,15 @@
 const descriptions = {
-  HOME: "Practical advice on freelancing, technology, digital marketing, content creation, and design for people building skills, careers, and businesses online.",
+  HOME: "Practical freelancing guides for beginners and web developers: Upwork, profiles, proposals, fees, and how to land clients without fluff.",
   BLOGS:
-    "Browse practical guides on freelancing, technology, digital marketing, content creation, and design, written for people who want to do better work.",
+    "Browse practical freelancing articles on Upwork, Fiverr, proposals, fees, and first-client workflows for people who want clearer next steps.",
   AUTHORS:
-    "Meet the writers behind Digital Dialogue and browse their practical articles on freelancing, technology, digital marketing, content creation, and design.",
+    "Meet the writers behind Digital Dialogue and browse their practical freelancing articles on platforms, profiles, proposals, and client work.",
   PRIVACY_POLICY:
     "Read the Digital Dialogue privacy policy: what we collect, cookies, Google AdSense disclosures, your rights, and how to contact us.",
   CONTACT_US:
-    "Contact Digital Dialogue with questions, feedback, article ideas, or partnership enquiries about our freelancing, technology, marketing, and design content.",
+    "Contact Digital Dialogue with questions, feedback, article ideas, or partnership enquiries about our freelancing content.",
   ABOUT:
-    "Learn who runs Digital Dialogue, why the site exists, and what kinds of practical freelancing, technology, and design guides you will find here.",
+    "Learn who runs Digital Dialogue, why the site exists, and what practical freelancing guides you will find here.",
   DISCLAIMER:
     "Read the Digital Dialogue disclaimer for how to use our articles, limits of our advice, and how we treat external links and accuracy.",
 };

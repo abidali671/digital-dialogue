@@ -32,7 +32,7 @@ export default function DisclaimerPage() {
 
         <h2>No guarantees</h2>
         <p>
-          Articles on freelancing, earning online, marketing, and technology
+          Articles on freelancing, platforms, proposals, and client work
           describe common approaches and tradeoffs. Results depend on your
           skills, market, location, and effort. We do not promise income,
           rankings, job offers, or specific outcomes.

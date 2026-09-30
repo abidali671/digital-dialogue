@@ -36,7 +36,7 @@ const DEFAULT_OG_IMAGE = {
   url: "/og-default.webp",
   width: 1200,
   height: 630,
-  alt: `${config.SITE_NAME} — practical guides on freelancing and technology`,
+  alt: `${config.SITE_NAME} — practical freelancing guides`,
 };
 
 export const metadata: Metadata = {
