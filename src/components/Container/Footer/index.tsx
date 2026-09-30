@@ -24,9 +24,9 @@ const Footer = () => {
               />
             </Link>
             <p className="max-w-md text-base leading-relaxed text-mute-soft">
-              Practical freelancing guides on Upwork, profiles, proposals, and
-              landing clients. Written for people who need a clear next step,
-              not another theory dump.
+              Practical freelancing guides on platforms, profiles, proposals,
+              and landing clients. Written for people who need a clear next
+              step, not another theory dump.
             </p>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <Link
@@ -34,6 +34,18 @@ const Footer = () => {
                 className="text-sm text-white/80 transition-colors hover:text-accent"
               >
                 Privacy Policy
+              </Link>
+              <Link
+                href="/terms-of-service"
+                className="text-sm text-white/80 transition-colors hover:text-accent"
+              >
+                Terms of Service
+              </Link>
+              <Link
+                href="/affiliate-disclosure"
+                className="text-sm text-white/80 transition-colors hover:text-accent"
+              >
+                Affiliate Disclosure
               </Link>
               <Link
                 href="/disclaimer"

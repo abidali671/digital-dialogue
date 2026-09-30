@@ -56,6 +56,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry("/about", { changeFrequency: "yearly", priority: 0.4 }),
     entry("/contact-us", { changeFrequency: "yearly", priority: 0.3 }),
     entry("/privacy-policy", { changeFrequency: "yearly", priority: 0.3 }),
+    entry("/terms-of-service", { changeFrequency: "yearly", priority: 0.3 }),
+    entry("/affiliate-disclosure", { changeFrequency: "yearly", priority: 0.3 }),
     entry("/disclaimer", { changeFrequency: "yearly", priority: 0.3 }),
   ];
 

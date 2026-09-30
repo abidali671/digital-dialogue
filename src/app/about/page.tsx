@@ -89,8 +89,11 @@ export default function AboutPage() {
         <h2>Policies</h2>
         <p>
           How we handle visitor data is explained in the{" "}
-          <Link href="/privacy-policy">privacy policy</Link>. Limits on how to
-          use our articles are in the{" "}
+          <Link href="/privacy-policy">privacy policy</Link>. Site use rules are
+          in the <Link href="/terms-of-service">terms of service</Link>.
+          Affiliate and advertising relationships are in the{" "}
+          <Link href="/affiliate-disclosure">affiliate disclosure</Link>. Limits
+          on how to use our articles are in the{" "}
           <Link href="/disclaimer">disclaimer</Link>.
         </p>
       </div>

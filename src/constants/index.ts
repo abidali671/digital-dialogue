@@ -12,6 +12,10 @@ const descriptions = {
     "Learn who runs Digital Dialogue, why the site exists, and what practical freelancing guides you will find here.",
   DISCLAIMER:
     "Read the Digital Dialogue disclaimer for how to use our articles, limits of our advice, and how we treat external links and accuracy.",
+  TERMS:
+    "Read the Digital Dialogue terms of service: how you may use the site, content ownership, advertising, and limits of liability.",
+  AFFILIATE_DISCLOSURE:
+    "Read how Digital Dialogue discloses affiliate links, commissions, and advertising so you know when we may earn from a recommendation.",
 };
 
 export default { descriptions };
