@@ -69,10 +69,12 @@ const HomeGuide = () => {
             <p>
               A useful freelance article names the step you are on. Starting out
               is a different problem from raising a rate. Both are different
-              from choosing between two platforms. The posts try to keep those
-              apart. You need to complete one guide this week. It should tell
-              you what profile field to change, what sample to share, or which
-              offer to turn down.
+              from choosing between two platforms.
+            </p>
+            <p>
+              The posts try to keep those apart. You need to complete one guide
+              this week. It should tell you what profile field to change, what
+              sample to share, or which offer to turn down.
             </p>
             <p>
               Readers in Pakistan will see that the advice is different,
