@@ -72,17 +72,9 @@ const AuthorPostsClient = ({
         </div>
 
         {testimonials.length > 0 && (
-          <section
-            className="-mx-4 mt-10 border-b border-line bg-mist px-4 py-12 sm:-mx-6 sm:px-6 md:mx-0 md:rounded-2xl md:border md:border-line md:px-8"
-            aria-labelledby="author-testimonials-heading"
-          >
-            <h2
-              id="author-testimonials-heading"
-              className="text-center font-display text-2xl font-bold tracking-tight text-ink md:text-3xl"
-            >
-              Client testimonials
-            </h2>
-            <p className="mx-auto mt-2 max-w-2xl text-center text-base text-mute">
+          <section className="-mx-4 bg-mist px-4 py-12 sm:-mx-6 sm:px-6 md:mx-0 md:px-8">
+            <Title as="h2">Client testimonials</Title>
+            <p className="mt-2 max-w-2xl text-base text-mute">
               Selected feedback from Upwork and Fiverr clients.
             </p>
             <div className="mt-10">
