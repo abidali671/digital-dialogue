@@ -5,9 +5,10 @@ import contentful_client, {
 } from "@/lib/contentful/client";
 import config from "@/lib/config";
 import AuthorPostsClient from "@/components/authors/AuthorPostsClient";
+import { getAuthorBySlug } from "@/constants/authors";
 import { parseSearchQuery } from "@/lib/listing";
 import { pageTitle, resolvePageTitle } from "@/lib/metadata";
-import { IAuthor, IPostData } from "@/types";
+import { IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
 
@@ -25,64 +26,47 @@ export async function generateMetadata({
   params,
   searchParams,
 }: PageProps): Promise<Metadata> {
-  try {
-    const author_response = await contentful_client.getEntries({
-      content_type: "author",
-      "fields.slug": params.author,
-    });
-    const author = author_response.items[0] as unknown as IAuthor | undefined;
-    if (!author) {
-      return {
-        title: pageTitle("Author Not Found"),
-        description: "The requested Digital Dialogue author could not be found.",
-      };
-    }
-
-    const currentPage = parsePage(searchParams.page);
-    const pageSuffix = currentPage > 1 ? `, Page ${currentPage}` : "";
-    const title = `${author.fields.name}'s Articles${pageSuffix}`;
-    const resolvedTitle = resolvePageTitle(title);
-    const about = author.fields.about.replace(/\s+/g, " ").trim();
-    const description =
-      about.length > 160 ? `${about.slice(0, 157).trimEnd()}...` : about;
-    const canonical =
-      currentPage > 1
-        ? `/authors/${params.author}?page=${currentPage}`
-        : `/authors/${params.author}`;
-
+  const author = getAuthorBySlug(params.author);
+  if (!author) {
     return {
-      title: pageTitle(title),
-      description,
-      alternates: { canonical },
-      openGraph: { title: resolvedTitle, description, url: canonical },
-    };
-  } catch {
-    return {
-      title: pageTitle("Digital Dialogue Author"),
-      description: "Browse articles by a Digital Dialogue author.",
+      title: pageTitle("Author Not Found"),
+      description: "The requested Digital Dialogue author could not be found.",
     };
   }
+
+  const currentPage = parsePage(searchParams.page);
+  const pageSuffix = currentPage > 1 ? `, Page ${currentPage}` : "";
+  const title = `${author.name}'s Articles${pageSuffix}`;
+  const resolvedTitle = resolvePageTitle(title);
+  const about = author.about.replace(/\s+/g, " ").trim();
+  const description =
+    about.length > 160 ? `${about.slice(0, 157).trimEnd()}...` : about;
+  const canonical =
+    currentPage > 1
+      ? `/authors/${params.author}?page=${currentPage}`
+      : `/authors/${params.author}`;
+
+  return {
+    title: pageTitle(title),
+    description,
+    alternates: { canonical },
+    openGraph: { title: resolvedTitle, description, url: canonical },
+  };
 }
 
 export default async function AuthorPage({ params, searchParams }: PageProps) {
   try {
+    const author = getAuthorBySlug(params.author);
+    if (!author) notFound();
+
     const currentPage = parsePage(searchParams.page);
     const searchQuery = parseSearchQuery(searchParams.q);
 
-    const author_response = await contentful_client.getEntries({
-      content_type: "author",
-      "fields.slug": params.author,
-    });
-
-    if (!author_response.items.length) notFound();
-
-    const author = author_response.items[0] as unknown as IAuthor;
-
+    // Site author is static; all posts are attributed to them.
     const posts_response = await contentful_client.getEntries({
       content_type: "post",
       limit: config.BLOGS_PER_PAGE,
       skip: (currentPage - 1) * config.BLOGS_PER_PAGE,
-      links_to_entry: author.sys.id,
       order: "-sys.updatedAt",
       ...(searchQuery ? { query: searchQuery } : {}),
     });
@@ -97,16 +81,13 @@ export default async function AuthorPage({ params, searchParams }: PageProps) {
         posts={posts_response.items as unknown as IPostData[]}
         currentPage={Math.min(currentPage, totalPages)}
         totalPages={totalPages}
-        authorName={author.fields.name}
-        authorSlug={author.fields.slug}
-        authorRole={author.fields.role}
-        authorAbout={author.fields.about}
-        authorPictureUrl={
-          author.fields.picture?.fields?.file?.url
-            ? `https:${author.fields.picture.fields.file.url}`
-            : undefined
-        }
-        authorPictureAlt={author.fields.picture?.fields?.title}
+        authorName={author.name}
+        authorSlug={author.slug}
+        authorRole={author.role}
+        authorAbout={author.about}
+        authorPictureUrl={author.picture}
+        authorPictureAlt={author.pictureAlt}
+        testimonials={author.testimonials}
         searchQuery={searchQuery}
       />
     );

@@ -59,17 +59,6 @@ export interface IImage {
   };
 }
 
-export interface IAuthor {
-  sys: ISysData;
-  fields: {
-    name: string;
-    slug: string;
-    role: string;
-    about: string;
-    picture: IImage;
-  };
-}
-
 export interface IKeywordTag {
   label: string;
   slug: string;
@@ -83,7 +72,6 @@ export interface IFaq {
 export interface IPostData {
   sys: ISysData;
   fields: {
-    author: IAuthor;
     category: ICategoryData;
     coverImage: IImage;
     content: Document;

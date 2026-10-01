@@ -5,7 +5,8 @@ import contentful_client, {
 } from "@/lib/contentful/client";
 import config from "@/lib/config";
 import { toKeywordTags } from "@/lib/keywords";
-import type { IAuthor, ICategoryData, IPostData } from "@/types";
+import type { ICategoryData, IPostData } from "@/types";
+import { AUTHORS } from "@/constants/authors";
 
 export const revalidate = REVALIDATE_LISTING;
 
@@ -61,10 +62,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   try {
-    const [posts, categories, authors] = await Promise.all([
+    const [posts, categories] = await Promise.all([
       getAllEntries({ content_type: "post", include: 1 }),
       getAllEntries({ content_type: "category", include: 0 }),
-      getAllEntries({ content_type: "author", include: 0 }),
     ]);
 
     const categoryRoutes = (categories as unknown as ICategoryData[]).map(
@@ -91,9 +91,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ),
       );
 
-    const authorRoutes = (authors as unknown as IAuthor[]).map((author) =>
-      entry(`/authors/${author.fields.slug}`, {
-        lastModified: author.sys.updatedAt,
+    const authorRoutes = AUTHORS.map((author) =>
+      entry(`/authors/${author.slug}`, {
         changeFrequency: "monthly",
         priority: 0.5,
       }),

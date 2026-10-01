@@ -22,6 +22,7 @@ import { breadcrumbSchema, JsonLdScript } from "@/lib/schema";
 import { extractToc, shouldShowToc } from "@/lib/toc";
 import TableOfContents from "@/components/TableOfContents";
 import { ArticleJsonLd, FAQPageJsonLd } from "next-seo";
+import { getSiteAuthor } from "@/constants/authors";
 
 export const revalidate = REVALIDATE_DETAIL;
 
@@ -171,12 +172,12 @@ export default async function BlogDetailPage({ params }: PageProps) {
       coverImage,
       category: postCategory,
       title,
-      author,
       content,
       excerpt,
       keywords,
       faqs,
     } = post.fields;
+    const author = getSiteAuthor();
     const { updatedAt } = post.sys;
     const publishedAt = getPublishedDate(post);
     const keywordTags = toKeywordTags(keywords);
@@ -200,7 +201,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
           type="Blog"
           title={title}
           description={excerpt}
-          authorName={author.fields.name}
+          authorName={author.name}
           url={shareUrl}
           keywords={keywords}
           datePublished={toIsoTimestamp(publishedAt)}
@@ -321,26 +322,28 @@ export default async function BlogDetailPage({ params }: PageProps) {
             </div>
 
             <div className="mt-10 flex flex-col gap-4 rounded-xl border border-line bg-white p-6 sm:flex-row">
-              <span className="h-16 w-16 shrink-0 overflow-hidden rounded-full bg-mist">
-                <Image
-                  alt={author.fields.name}
-                  src={"https:" + author.fields.picture.fields.file.url}
-                  width={64}
-                  height={64}
-                  className="h-full w-full object-cover"
-                />
-              </span>
+              {author.picture ? (
+                <span className="h-16 w-16 shrink-0 overflow-hidden rounded-full bg-mist">
+                  <Image
+                    alt={author.pictureAlt || author.name}
+                    src={author.picture}
+                    width={64}
+                    height={64}
+                    className="h-full w-full object-cover"
+                  />
+                </span>
+              ) : null}
               <div>
                 <p className="font-mono text-xs uppercase tracking-[0.1em] text-accent">
-                  {author.fields.role}
+                  {author.role}
                 </p>
                 <Link
-                  href={`/authors/${author.fields.slug}`}
+                  href={`/authors/${author.slug}`}
                   className="font-display text-xl font-bold text-ink hover:text-accent"
                 >
-                  {author.fields.name}
+                  {author.name}
                 </Link>
-                <p className="mt-2 text-base text-mute">{author.fields.about}</p>
+                <p className="mt-2 text-base text-mute">{author.about}</p>
               </div>
             </div>
           </div>

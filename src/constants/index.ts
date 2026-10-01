@@ -16,4 +16,13 @@ const descriptions = {
     "Read how Digital Dialogue discloses affiliate links, commissions, and advertising so you know when we may earn from a recommendation.",
 };
 
+export {
+  AUTHORS,
+  AUTHORS_BY_SLUG,
+  getAuthorBySlug,
+  getSiteAuthor,
+  type AuthorTestimonial,
+  type StaticAuthor,
+} from "./authors";
+
 export default { descriptions };

@@ -13,7 +13,7 @@ const PopularTags = () => {
     <section className="border-t border-line bg-white">
       <ContentContainer className="py-14 md:py-16">
         <div className="flex flex-col gap-2">
-          <Title as="p">Popular tags</Title>
+          <Title as="h2">Popular tags</Title>
           <p className="max-w-xl text-base text-mute">
             Follow a topic into related guides without digging through the full
             archive.
