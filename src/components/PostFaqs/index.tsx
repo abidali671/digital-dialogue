@@ -12,6 +12,7 @@ export default function PostFaqs({ faqs, className }: PostFaqsProps) {
     <section
       className={className ?? "mt-14 border-t border-line pt-10"}
       aria-labelledby="faqs-heading"
+      id="faqs-section"
     >
       <h2
         id="faqs-heading"

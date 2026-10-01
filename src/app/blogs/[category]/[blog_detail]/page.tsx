@@ -187,7 +187,12 @@ export default async function BlogDetailPage({ params }: PageProps) {
     const shareUrl = `${config.BASE_URL}/blogs/${category}/${blog_detail}`;
     const shareHashtags = toShareHashtags(keywords);
     const readingTime = getReadingTime(content);
-    const tocHeadings = extractToc(content);
+    const tocHeadings = [
+      ...extractToc(content),
+      ...(faqList.length > 0
+        ? [{ id: "faqs-section", text: "Frequently asked questions", level: 2 as const }]
+        : []),
+    ];
 
     return (
       <>
