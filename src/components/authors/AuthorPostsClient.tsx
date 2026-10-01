@@ -7,9 +7,9 @@ import Pagination from "@/components/Pagination";
 import PostCard from "@/components/PostCard";
 import PostSearch from "@/components/PostSearch";
 import Title from "@/components/Title";
+import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 import type { AuthorTestimonial } from "@/constants/authors";
 import { IPostData } from "@/types";
-import config from "@/lib/config";
 
 interface PropsT {
   posts: IPostData[];
@@ -23,10 +23,6 @@ interface PropsT {
   authorPictureAlt?: string;
   testimonials: AuthorTestimonial[];
   searchQuery: string;
-}
-
-function sourceUrl(source: AuthorTestimonial["source"]) {
-  return source === "Upwork" ? config.UPWORK_URL : config.FIVERR_URL;
 }
 
 const AuthorPostsClient = ({
@@ -77,48 +73,21 @@ const AuthorPostsClient = ({
 
         {testimonials.length > 0 && (
           <section
-            className="mt-10 border-b border-line pb-10"
+            className="-mx-4 mt-10 border-b border-line bg-mist px-4 py-12 sm:-mx-6 sm:px-6 md:mx-0 md:rounded-2xl md:border md:border-line md:px-8"
             aria-labelledby="author-testimonials-heading"
           >
             <h2
               id="author-testimonials-heading"
-              className="font-display text-2xl font-bold tracking-tight text-ink md:text-3xl"
+              className="text-center font-display text-2xl font-bold tracking-tight text-ink md:text-3xl"
             >
               Client testimonials
             </h2>
-            <p className="mt-2 max-w-2xl text-base text-mute">
+            <p className="mx-auto mt-2 max-w-2xl text-center text-base text-mute">
               Selected feedback from Upwork and Fiverr clients.
             </p>
-            <ul className="mt-8 grid gap-6 md:grid-cols-2">
-              {testimonials.map((item) => (
-                <li
-                  key={`${item.source}-${item.clientName}-${item.quote.slice(0, 24)}`}
-                  className="border border-line bg-white p-6"
-                >
-                  {typeof item.rating === "number" && (
-                    <p className="font-mono text-xs uppercase tracking-wide text-accent">
-                      {Math.max(0, Math.min(5, item.rating))}/5 on {item.source}
-                    </p>
-                  )}
-                  <blockquote className="mt-3 text-base leading-relaxed text-ink">
-                    “{item.quote}”
-                  </blockquote>
-                  <p className="mt-4 text-sm text-mute">
-                    <span className="font-semibold text-ink">{item.clientName}</span>
-                    {item.project ? ` · ${item.project}` : null}
-                    {" · "}
-                    <a
-                      href={sourceUrl(item.source)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-accent hover:text-accent-hover"
-                    >
-                      {item.source}
-                    </a>
-                  </p>
-                </li>
-              ))}
-            </ul>
+            <div className="mt-10">
+              <TestimonialsCarousel testimonials={testimonials} />
+            </div>
           </section>
         )}
 

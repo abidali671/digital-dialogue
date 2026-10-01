@@ -56,21 +56,21 @@ export const AUTHORS: StaticAuthor[] = [
       {
         quote:
           "This was our first project together and it was relatively minor however this seller identified the issue and helped me to resolve it within the timeline we agreed. They also made some suggestions to improve function and prevent issues in the future. I recommend this seller.",
-        clientName: "andrewstrealtor",
+        clientName: "Andrews Realtor",
         source: "Fiverr",
         rating: 5,
       },
       {
         quote:
           "Abid Ali exceeded expectations with his attention to detail and delivered a bug-free application. His proactive communication and high level of cooperation made working with him a seamless experience. He migrated our entire application faster than expected and handled revisions effectively—10/10 would use his services again!",
-        clientName: "oskarfranttigl",
+        clientName: "Oskar Franttigl",
         source: "Fiverr",
         rating: 5,
       },
       {
         quote:
           "Abid Ali truly impressed me with his exceptional attention to detail, code expertise, and overall professionalism. He was not only polite but also incredibly timely, going above and beyond to ensure everything was perfect. Highly recommended for any software development needs!",
-        clientName: "joshsmith",
+        clientName: "Josh Smith",
         source: "Fiverr",
         rating: 5,
       },
