@@ -44,7 +44,7 @@ const TopPicks = ({ posts }: IProps) => {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={contentfulImageUrl(post.fields.coverImage.fields.file.url, 160)}
-                  alt=""
+                  alt={post.fields.title}
                   width={160}
                   height={160}
                   loading="lazy"
