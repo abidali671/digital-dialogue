@@ -17,7 +17,7 @@ const FeaturedPosts = ({ posts }: IProps) => {
     <section className="border-t border-line bg-mist py-14 md:py-16">
       <ContentContainer>
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <Title as="h2">Featured posts</Title>
+          <Title as="p">Featured posts</Title>
           <Link href="/blogs" className="link-underline text-sm">
             View all posts
           </Link>
