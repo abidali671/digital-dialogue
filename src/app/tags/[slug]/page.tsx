@@ -31,6 +31,20 @@ function resolveTagLabel(slug: string, posts: IPostData[]) {
   return labelFromKeywordSlug(slug);
 }
 
+function tagPageTitle(label: string, slug: string) {
+  if (slug === "freelancing") {
+    return "Practical freelancing guides";
+  }
+  return `Freelancing guides on ${label}`;
+}
+
+function tagPageDescription(label: string, slug: string) {
+  if (slug === "freelancing") {
+    return "Browse practical freelancing guides on Digital Dialogue. Clear next steps on profiles, proposals, platforms, fees, and landing client work.";
+  }
+  return `Browse practical freelancing guides on ${label} from Digital Dialogue. Clear next steps on profiles, proposals, platforms, fees, and landing client work.`;
+}
+
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
@@ -44,9 +58,9 @@ export async function generateMetadata({
   }
 
   const label = labelFromKeywordSlug(slug);
-  const title = `Articles tagged ${label}`;
+  const title = tagPageTitle(label, slug);
   const resolvedTitle = resolvePageTitle(title);
-  const description = `Browse practical freelancing guides tagged ${label} on Digital Dialogue. Profiles, proposals, platforms and clear next steps for beginners and freelancers.`;
+  const description = tagPageDescription(label, slug);
   const canonical = `/tags/${slug}`;
 
   return {
@@ -90,10 +104,13 @@ export default async function TagPage({ params, searchParams }: PageProps) {
 
     if (!posts.length && !searchQuery) notFound();
 
+    const label = resolveTagLabel(slug, posts);
+
     return (
       <CategoryBlogsClient
         posts={posts}
-        title={resolveTagLabel(slug, posts)}
+        title={tagPageTitle(label, slug)}
+        description={tagPageDescription(label, slug)}
         basePath={`/tags/${slug}`}
         searchQuery={searchQuery}
       />
