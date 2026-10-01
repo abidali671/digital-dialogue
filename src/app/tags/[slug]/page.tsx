@@ -40,9 +40,9 @@ function tagPageTitle(label: string, slug: string) {
 
 function tagPageDescription(label: string, slug: string) {
   if (slug === "freelancing") {
-    return "Browse practical freelancing guides on Digital Dialogue. Clear next steps on profiles, proposals, platforms, fees, and landing client work.";
+    return "Browse practical freelancing guides. Clear next steps on profiles, proposals, platforms, fees, and landing client work.";
   }
-  return `Browse practical freelancing guides on ${label} from Digital Dialogue. Clear next steps on profiles, proposals, platforms, fees, and landing client work.`;
+  return `Browse practical freelancing guides on ${label}. Clear next steps on profiles, proposals, platforms, fees, and landing client work.`;
 }
 
 export async function generateMetadata({
@@ -53,7 +53,7 @@ export async function generateMetadata({
     return {
       title: pageTitle("Tag"),
       description:
-        "Browse Digital Dialogue articles by topic tag. Freelancing guides on platforms, profiles, proposals and practical next steps.",
+        "Browse articles by topic tag. Freelancing guides on platforms, profiles, proposals and practical next steps.",
     };
   }
 
