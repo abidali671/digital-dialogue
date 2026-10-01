@@ -38,14 +38,15 @@ export async function generateMetadata({
   if (!slug) {
     return {
       title: pageTitle("Tag"),
-      description: "Browse articles by topic on Digital Dialogue.",
+      description:
+        "Browse Digital Dialogue articles by topic tag. Freelancing guides on platforms, profiles, proposals and practical next steps.",
     };
   }
 
   const label = labelFromKeywordSlug(slug);
   const title = `Articles tagged ${label}`;
   const resolvedTitle = resolvePageTitle(title);
-  const description = `Browse guides and explainers tagged ${label.toLowerCase()} on Digital Dialogue.`;
+  const description = `Browse practical freelancing guides tagged ${label} on Digital Dialogue. Profiles, proposals, platforms and clear next steps for beginners and freelancers.`;
   const canonical = `/tags/${slug}`;
 
   return {
