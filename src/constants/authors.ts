@@ -22,7 +22,7 @@ export const AUTHORS: StaticAuthor[] = [
     name: "Abid Ali",
     role: "Founder of Digital Dialogue",
     about:
-      "Abid Ali is a full-stack web developer and freelancer based in Pakistan. He builds client projects with React, Next.js, and Node, and writes practical freelancing guides on platforms, profiles, proposals, pricing, and landing work without fluff.",
+      "Abid Ali is a full-stack web developer and freelancer based in Pakistan. He creates projects using React, Next.js, and Node. He writes helpful guides on freelancing.",
     picture: "/authors/abid-ali.jpg",
     pictureAlt: "Abid Ali",
     testimonials: [
