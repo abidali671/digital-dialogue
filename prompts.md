@@ -5,7 +5,7 @@ Prompts for rewriting existing posts, drafting new articles, and generating cove
 
 **How to use:** copy one prompt block, fill the bracketed fields, paste into your model.
 
-**Expected output (prompts 1 and 2):** every response must include title, slug, category, short description, keywords, and full blog content. FAQS is optional. Ready to paste into Contentful / the blog detail page.
+**Expected output (prompts 1 and 2):** every response must include title, slug, category, short description, tags, keywords, and full blog content. FAQS is optional. Ready to paste into Contentful / the blog detail page.
 
 **Expected output (prompt 3):** one cover image, exported as WebP, 1000 x 667. The model randomly picks LOOK MODE (BRIGHT or DARK) and one style (A–F) from the post category pool, then saves a Contentful-ready `coverImage`.
 
@@ -66,7 +66,7 @@ REMOVE / AVOID
 - AI filler: “in today’s digital world,” “delve into,” “comprehensive guide,” “unlock,” “elevate,” “landscape,” “robust,” “seamless,” “whether you’re a beginner or a pro,” “it’s important to note,” “in conclusion.”
 - Empty transitions: “Moreover,” “Furthermore,” “Additionally” stacked repeatedly.
 - Buzzword salads and motivational fluff with no practical takeaway.
-- Em dash (—) anywhere in TITLE, SHORT DESCRIPTION, KEYWORDS, or CONTENT. Use a comma, period, colon, parentheses, or a regular hyphen (-) instead.
+- Em dash (—) anywhere in TITLE, SHORT DESCRIPTION, TAGS, KEYWORDS, or CONTENT. Use a comma, period, colon, parentheses, or a regular hyphen (-) instead.
 
 METADATA RULES
 - TITLE: clear, specific, matches search intent. Not clickbait. Max ~60 characters when possible.
@@ -76,12 +76,16 @@ METADATA RULES
 - CATEGORY: pick exactly one from: Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity
   (If none fit perfectly, choose the closest. Do not invent a new category name.)
 - SHORT DESCRIPTION: 140–160 characters. Plain text. One or two sentences. Summarizes the article for meta description + blog cards. No quotes, no markdown, no “learn more.”
-- KEYWORDS: 3–5 short tags, comma-separated. Each value is published as its own tag page (`/tags/…`), so write reusable labels, not search queries.
-  - 1–3 words each. Examples: Upwork, Upwork proposals, Upwork fees, Upwork profile.
-  - Stay inside the niche: practical Upwork guides for freelance web developers.
+- TAGS: 3–5 short public labels, comma-separated. Each value is published as its own tag page (`/tags/…`) and shown under the post, so write reusable hub labels, not search queries.
+  - 1–3 words each. Examples: Upwork, Freelancing, Proposals, Upwork fees, Freelance profile.
+  - Stay inside the niche: practical freelancing / Upwork guides for web developers and beginners.
   - Reuse the same spelling every time (`Upwork proposals`, not "proposals on Upwork" or "upwork proposal tips") so posts share one tag URL.
-  - Put the long-tail search phrase in TITLE and CONTENT only. Do not put it in KEYWORDS.
   - No duplicates, no stuffing, no one-off synonyms.
+- KEYWORDS: 5–12 targeted search phrases for this post, comma-separated. Editorial / SEO targeting list (what this article is trying to rank for). Not shown as tag chips.
+  - Include the primary long-tail phrase plus close variants and related intents covered in the article.
+  - May be longer than tags (e.g. `how to write an upwork proposal`, `upwork for beginners`, `upwork profile tips for web developers`).
+  - Do not duplicate TAGS entries unless a short tag is also a real target phrase.
+  - No stuffing: only phrases the article actually serves.
 - FAQS (optional): include only if the source has FAQ-style Q&A, or clear reader questions worth a short FAQ. Otherwise omit the FAQS field entirely. Never invent filler FAQs. Do not put an FAQ section inside CONTENT.
 
 OUTPUT FORMAT (follow exactly — no extra commentary before or after)
@@ -97,7 +101,9 @@ CATEGORY: [one category]
 
 SHORT DESCRIPTION: [140–160 character plain-text description]
 
-KEYWORDS: Upwork, Upwork proposals
+TAGS: Upwork, Freelancing, Proposals
+
+KEYWORDS: how to write an upwork proposal, upwork proposal tips, upwork for web developers, win upwork jobs
 
 FAQS: [{"question":"...","answer":"..."}]
 
@@ -193,7 +199,7 @@ Trust & accuracy
 
 STYLE BAN LIST
 Avoid: “in today’s fast-paced world,” “delve into,” “comprehensive guide,” “unlock your potential,” “ever-evolving landscape,” “robust solution,” “seamless experience,” “whether you’re a beginner or an expert,” “in conclusion,” stacked “Moreover/Furthermore/Additionally,” and other AI filler.
-- Never use an em dash (—) in TITLE, SHORT DESCRIPTION, KEYWORDS, or CONTENT. Prefer a comma, period, colon, parentheses, or a regular hyphen (-).
+- Never use an em dash (—) in TITLE, SHORT DESCRIPTION, TAGS, KEYWORDS, or CONTENT. Prefer a comma, period, colon, parentheses, or a regular hyphen (-).
 
 ENDING
 - Close with a concrete takeaway or next step.
@@ -205,12 +211,17 @@ METADATA RULES
   Rules: strip punctuation; replace spaces with `-`; collapse multiple hyphens; no leading/trailing hyphen; ASCII only (e.g. `&` → `and`); keep it readable and preferably under ~60 characters.
   Example: "How to Learn Blockchain for Beginners" → `how-to-learn-blockchain-for-beginners`
 - SHORT DESCRIPTION: 140–160 characters. Plain text. Compelling enough for blog cards and accurate enough for meta description. Must reflect the article. No markdown, no quotes around the whole string, no “Read more.”
-- KEYWORDS: 3–5 short tags, comma-separated. Each value is published as its own tag page (`/tags/…`), so write reusable labels, not search queries.
-  - 1–3 words each. Examples: Upwork, Upwork proposals, Upwork fees, Upwork profile.
-  - Stay inside the niche: practical Upwork guides for freelance web developers.
+- TAGS: 3–5 short public labels, comma-separated. Each value is published as its own tag page (`/tags/…`) and shown under the post, so write reusable hub labels, not search queries.
+  - 1–3 words each. Examples: Upwork, Freelancing, Proposals, Upwork fees, Freelance profile.
+  - Stay inside the niche: practical freelancing / Upwork guides for web developers and beginners.
   - Reuse the same spelling every time (`Upwork proposals`, not "proposals on Upwork" or "upwork proposal tips") so posts share one tag URL.
-  - PRIMARY KEYWORD and SECONDARY KEYWORDS guide the title and body. Copy one into KEYWORDS only when it is already a 1–3 word tag. Leave the long-tail phrase out of KEYWORDS.
+  - PRIMARY KEYWORD and SECONDARY KEYWORDS from the BRIEF guide title and body. Copy a BRIEF phrase into TAGS only when it is already a 1–3 word hub label.
   - No duplicates, no stuffing, no one-off synonyms.
+- KEYWORDS: 5–12 targeted search phrases for this post, comma-separated. Editorial / SEO targeting list (what this article is trying to rank for). Not shown as tag chips.
+  - Start from PRIMARY KEYWORD and useful SECONDARY KEYWORDS, then add close variants the article actually covers.
+  - May be longer phrases (e.g. `how to write an upwork proposal`, `upwork for beginners`, `upwork profile tips for web developers`).
+  - Do not duplicate TAGS entries unless a short tag is also a real target phrase.
+  - No stuffing: only phrases the article actually serves.
 - CATEGORY: exactly one of: Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity
   (Use PREFERRED CATEGORY if provided and valid; otherwise pick the best fit.)
 - FAQS (optional): include only when a short FAQ adds new value (typically 3–6 items). Otherwise omit the FAQS field entirely. Never invent filler FAQs. Do not put an FAQ section inside CONTENT.
@@ -228,7 +239,9 @@ CATEGORY: [one category]
 
 SHORT DESCRIPTION: [140–160 character plain-text description]
 
-KEYWORDS: Upwork, Upwork proposals
+TAGS: Upwork, Freelancing, Proposals
+
+KEYWORDS: how to write an upwork proposal, upwork proposal tips, upwork for web developers, win upwork jobs
 
 FAQS: [{"question":"...","answer":"..."}]
 
@@ -369,7 +382,8 @@ AFTER GENERATING
 | `SLUG` | Post slug (URL: `/blogs/{category}/{slug}`) |
 | `CATEGORY` | Category entry |
 | `SHORT DESCRIPTION` | Excerpt + meta description |
-| `KEYWORDS` | Keywords field. Each comma-separated label becomes a tag page (`/tags/…`), so keep 3–5 short reusable tags |
+| `TAGS` | Tags field. Short hub labels (3–5). Drive `/tags/…` pages and chips under the post |
+| `KEYWORDS` | Keywords field. Targeted search phrases for this post (editorial / SEO targeting; not tag chips) |
 | `FAQS` (optional) | Post `faqs` JSON field (`[{ "question", "answer" }, ...]`) |
 | `CONTENT` | Rich text / Markdown body |
 | Cover image (WebP, 1000 x 667) | Post `coverImage` asset |
