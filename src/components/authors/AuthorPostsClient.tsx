@@ -75,7 +75,7 @@ const AuthorPostsClient = ({
           <section className="-mx-4 bg-mist px-4 py-12 sm:-mx-6 sm:px-6 md:mx-0 md:px-8">
             <Title as="h2">Client testimonials</Title>
             <p className="mt-2 max-w-2xl text-base text-mute">
-              Selected feedback from Upwork and Fiverr clients.
+              What clients say after working together on real projects.
             </p>
             <div className="mt-10">
               <TestimonialsCarousel testimonials={testimonials} />
