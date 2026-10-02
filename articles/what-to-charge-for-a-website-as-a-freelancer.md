@@ -6,7 +6,9 @@ CATEGORY: Freelancing
 
 SHORT DESCRIPTION: Price a landing page, a business site, and a small web app as a freelancer. Use scope and your net rate, not a random number from a job post.
 
-KEYWORDS: Upwork, Freelance rates, Website pricing, Upwork fees
+TAGS: Upwork, Freelancing, Upwork fees, Freelance rates
+
+KEYWORDS: what to charge for a website as a freelancer, freelance website pricing, landing page price, business site price, small web app pricing, Upwork website price after fee
 
 FAQS: [{"question":"Should I publish prices on my Upwork profile?","answer":"Publish an hourly rate if you bill hourly. For fixed-price sites, the profile can name a starting range only if you also say what that range includes. A single 'websites from $99' line attracts the wrong clients."},{"question":"What if the client's budget is half my price?","answer":"Offer half the scope, not half the care. One landing page instead of a six-page site. If they need the whole site and will not pay, decline. Discounting the full scope trains them to expect it."},{"question":"Do I charge less because I am new on Upwork?","answer":"You can charge less than a freelancer with many reviews for the same offer. You should not charge less than the days the work takes after Upwork's fee. A review does not pay the time back."}]
 

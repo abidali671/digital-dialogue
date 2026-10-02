@@ -6,7 +6,9 @@ CATEGORY: Freelancing
 
 SHORT DESCRIPTION: See what you keep after the Upwork freelancer fee. Run a $100, a $500, and a $1,000 job through the fee percent in your account before you bid.
 
-KEYWORDS: Upwork, Upwork fees, Freelance rates, Upwork contract
+TAGS: Upwork, Upwork fees, Freelance rates, Upwork contract
+
+KEYWORDS: Upwork fees, what the freelancer keeps, Upwork freelancer service fee, Upwork payout after fee, raise rate to cover Upwork fee, fixed price and hourly Upwork fee
 
 FAQS: [{"question":"Is the Upwork freelancer fee still a sliding 20, 10, and 5 percent?","answer":"Do not trust a remembered ladder. Upwork has changed freelancer fees before. Open the fee page in your account and use the percent shown for a new contract."},{"question":"Does the client pay the fee, or do I?","answer":"Both sides can have charges. Your payout is reduced by the freelancer service fee. Clients may also pay a marketplace fee or a contract initiation fee. Read the offer before you accept so you know which number is yours."},{"question":"Should I raise my rate to cover the fee?","answer":"Yes, if the fee would push the project under the amount you need. Quote the client a price that still works after the deduction. Do not quietly absorb a fee you have not calculated."}]
 

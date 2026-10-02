@@ -82,9 +82,11 @@ METADATA RULES
   - Reuse the same spelling every time (`Upwork proposals`, not "proposals on Upwork" or "upwork proposal tips") so posts share one tag URL.
   - No duplicates, no stuffing, no one-off synonyms.
 - KEYWORDS: 5–12 targeted search phrases for this post, comma-separated. Editorial / SEO targeting list (what this article is trying to rank for). Not shown as tag chips.
-  - Include the primary long-tail phrase plus close variants and related intents covered in the article.
-  - May be longer than tags (e.g. `how to write an upwork proposal`, `upwork for beginners`, `upwork profile tips for web developers`).
-  - Do not duplicate TAGS entries unless a short tag is also a real target phrase.
+  - Pull phrases from the TITLE, H2 topics, SHORT DESCRIPTION, and wording actually used in CONTENT. Every KEYWORDS item must be something the article covers in plain language.
+  - Include the primary title phrase (or PRIMARY KEYWORD when writing from a brief) plus related phrases that appear as real sections or repeated advice in the body.
+  - May be longer than tags (e.g. `how to write an upwork proposal`, `funded milestone`, `Upwork freelancer service fee`).
+  - Do not invent unused long-tails, synonym lists, or “SEO variants” that never show up in the article.
+  - Do not duplicate TAGS entries unless a short tag is also a real target phrase used in the piece.
   - No stuffing: only phrases the article actually serves.
 - FAQS (optional): include only if the source has FAQ-style Q&A, or clear reader questions worth a short FAQ. Otherwise omit the FAQS field entirely. Never invent filler FAQs. Do not put an FAQ section inside CONTENT.
 
@@ -218,9 +220,11 @@ METADATA RULES
   - PRIMARY KEYWORD and SECONDARY KEYWORDS from the BRIEF guide title and body. Copy a BRIEF phrase into TAGS only when it is already a 1–3 word hub label.
   - No duplicates, no stuffing, no one-off synonyms.
 - KEYWORDS: 5–12 targeted search phrases for this post, comma-separated. Editorial / SEO targeting list (what this article is trying to rank for). Not shown as tag chips.
-  - Start from PRIMARY KEYWORD and useful SECONDARY KEYWORDS, then add close variants the article actually covers.
-  - May be longer phrases (e.g. `how to write an upwork proposal`, `upwork for beginners`, `upwork profile tips for web developers`).
-  - Do not duplicate TAGS entries unless a short tag is also a real target phrase.
+  - Start from PRIMARY KEYWORD and only those SECONDARY KEYWORDS the finished article actually covers.
+  - Pull remaining phrases from the TITLE, H2 topics, SHORT DESCRIPTION, and wording used in CONTENT. Every KEYWORDS item must map to real advice in the piece.
+  - May be longer phrases (e.g. `how to write an upwork proposal`, `funded milestone`, `Upwork freelancer service fee`).
+  - Do not invent unused long-tails, synonym lists, or “SEO variants” that never appear in the article.
+  - Do not duplicate TAGS entries unless a short tag is also a real target phrase used in the piece.
   - No stuffing: only phrases the article actually serves.
 - CATEGORY: exactly one of: Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity
   (Use PREFERRED CATEGORY if provided and valid; otherwise pick the best fit.)

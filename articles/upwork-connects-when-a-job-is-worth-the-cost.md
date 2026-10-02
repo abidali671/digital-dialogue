@@ -6,7 +6,9 @@ CATEGORY: Freelancing
 
 SHORT DESCRIPTION: Decide when an Upwork job is worth the Connects. Compare the bid cost with the budget, the scope, and the chance you can actually deliver it.
 
-KEYWORDS: Upwork, Upwork Connects, Upwork jobs, Upwork proposals
+TAGS: Upwork, Connects, Upwork jobs, Proposals
+
+KEYWORDS: Upwork Connects, when a job is worth the Connects, Upwork Connects cost, boost Upwork proposal, weekly Connects budget, Upwork proposal Connects
 
 FAQS: [{"question":"Do unused Connects roll over forever?","answer":"Upwork has changed how Connects expire and how many you get free. Read the current rule in your account before you buy a large pack. Do not assume a balance lasts all year."},{"question":"Should I boost every proposal?","answer":"No. A boost spends extra Connects to sit higher in a list. Use it only when the job matches your offer and the client looks serious. Boosting a bad fit just makes the rejection more expensive."},{"question":"Is a cheap job worth a few Connects just for the review?","answer":"Only if the scope is truly small and you would do that scope at that price again. A review on a chaotic, underpriced site is not a discount. It is advertising for more of the same work."}]
 

@@ -6,7 +6,9 @@ CATEGORY: Freelancing
 
 SHORT DESCRIPTION: Turn one finished Upwork contract into the next job with a clean handoff, one review request, and a follow-on offer that has a written price.
 
-KEYWORDS: Upwork, Upwork reviews, Upwork contract, Upwork jobs
+TAGS: Upwork, Upwork reviews, Upwork contract, Upwork jobs
+
+KEYWORDS: how to get the next job from the same Upwork client, next job from the same Upwork client, ask for Upwork review, Upwork follow-on offer, Upwork contract handoff, keep the next job on Upwork
 
 FAQS: [{"question":"Should I ask for a review before the client has the finished site?","answer":"No. Ask after you have submitted the work and they have what they hired you for. An early review request feels like pressure, and a review of a half-finished site is the one you will regret."},{"question":"Can the next job stay on the same contract?","answer":"Sometimes, if you add a new milestone with its own price and scope. A brand-new offer is clearer when the work is a different project. Either way, write the new scope down. Do not let 'phase two' live only in chat."},{"question":"What if they leave a mixed review?","answer":"You can respond once, in public, with a calm factual note. Do not argue line by line. Fix the part of the delivery that created the complaint before you pitch them more work."}]
 

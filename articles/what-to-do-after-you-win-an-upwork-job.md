@@ -6,7 +6,9 @@ CATEGORY: Freelancing
 
 SHORT DESCRIPTION: After an Upwork win, match the offer to your proposal, send one clear first message, and start the build only after the milestone is funded.
 
-KEYWORDS: Upwork, Upwork contract, Upwork proposals, Upwork jobs
+TAGS: Upwork, Upwork contract, Proposals, Upwork jobs
+
+KEYWORDS: what to do after you win an Upwork job, accept Upwork offer, funded milestone, first message after Upwork hire, Upwork contract kickoff, start work after milestone funded
 
 FAQS: [{"question":"The client said I'm hired in chat. Can I start building?","answer":"Not yet. Wait for an offer you have accepted and, on fixed price, a funded milestone. A friendly message is not a contract and it will not release any payment."},{"question":"What belongs in the first message after I accept?","answer":"Restate the pages or the fix, the deadline for the first draft, what you need from them, and how you will send work. Skip a second sales pitch. They already hired you."},{"question":"Should we move the files to email to make it easier?","answer":"Keep files and decisions on the Upwork contract. Email and drive links are easy to lose in a dispute, and taking the relationship off the platform breaks the rules."}]
 

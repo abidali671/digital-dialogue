@@ -6,7 +6,9 @@ CATEGORY: Freelancing
 
 SHORT DESCRIPTION: Choose Upwork jobs as a web developer by filtering for a real deliverable, a budget near your floor, and a client who will hire on the platform.
 
-KEYWORDS: Upwork, Upwork jobs, Upwork proposals, Upwork Connects
+TAGS: Upwork, Upwork jobs, Proposals, Connects
+
+KEYWORDS: how to choose Upwork jobs as a web developer, Upwork jobs for web developers, Upwork job feed, Upwork job filters, Upwork proposal, Upwork Connects
 
 FAQS: [{"question":"Should I sort the Upwork feed by newest only?","answer":"Newest is useful so you are not bidding on a post that already has dozens of replies. It is not a quality filter. Still read the scope and the budget before you spend Connects."},{"question":"Is a payment-verified client required?","answer":"Prefer clients who have a verified payment method, especially for fixed-price work that must be funded. A missing method is a reason to pause, not always a reason to lecture them. Do not start work until a milestone is funded."},{"question":"What search words should a web developer use?","answer":"Use the words in your offer, such as landing page, Next.js, or WordPress, plus a budget floor if the search allows it. Searching only 'web developer' returns every mismatched post on the site."}]
 
