@@ -386,8 +386,8 @@ AFTER GENERATING
 | `SLUG` | Post slug (URL: `/blogs/{category}/{slug}`) |
 | `CATEGORY` | Category entry |
 | `SHORT DESCRIPTION` | Excerpt + meta description |
-| `TAGS` | Tags field. Short hub labels (3–5). Drive `/tags/…` pages and chips under the post |
-| `KEYWORDS` | Keywords field. Targeted search phrases for this post (editorial / SEO targeting; not tag chips) |
+| `TAGS` | Contentful `tags` field. Short hub labels (3–5). Drive `/tags/…` pages and chips under the post |
+| `KEYWORDS` | Contentful `keywords` field. Targeted search phrases for this post (meta / editorial SEO; not tag chips) |
 | `FAQS` (optional) | Post `faqs` JSON field (`[{ "question", "answer" }, ...]`) |
 | `CONTENT` | Rich text / Markdown body |
 | Cover image (WebP, 1000 x 667) | Post `coverImage` asset |
