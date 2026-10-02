@@ -1,14 +1,14 @@
 import type { IKeywordTag, IPostData } from "@/types";
 
-export function parseKeywordLabels(keywords?: string): string[] {
+export function parseKeywordLabels(value?: string): string[] {
   const labels: string[] = [];
   const seen: Record<string, true> = {};
 
-  for (const raw of (keywords ?? "").split(",")) {
-    const keyword = raw.trim();
-    if (!keyword || seen[keyword]) continue;
-    seen[keyword] = true;
-    labels.push(keyword);
+  for (const raw of (value ?? "").split(",")) {
+    const label = raw.trim();
+    if (!label || seen[label]) continue;
+    seen[label] = true;
+    labels.push(label);
   }
 
   return labels;
@@ -22,11 +22,11 @@ export function slugifyKeyword(label: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-export function toKeywordTags(keywords?: string): IKeywordTag[] {
+export function toKeywordTags(value?: string): IKeywordTag[] {
   const seen: Record<string, true> = {};
   const tags: IKeywordTag[] = [];
 
-  for (const label of parseKeywordLabels(keywords)) {
+  for (const label of parseKeywordLabels(value)) {
     const slug = slugifyKeyword(label);
     if (!slug || seen[slug]) continue;
     seen[slug] = true;
@@ -36,12 +36,15 @@ export function toKeywordTags(keywords?: string): IKeywordTag[] {
   return tags;
 }
 
-/** Hashtags for social share composers (no # prefix). */
-export function toShareHashtags(keywords?: string, max = 10): string[] {
+export function getPostTags(post: IPostData): IKeywordTag[] {
+  return toKeywordTags(post.fields.tags || post.fields.keywords);
+}
+
+export function toShareHashtags(value?: string, max = 10): string[] {
   const seen: Record<string, true> = {};
   const hashtags: string[] = [];
 
-  for (const label of parseKeywordLabels(keywords)) {
+  for (const label of parseKeywordLabels(value)) {
     const tag = label.replace(/[^a-zA-Z0-9]/g, "");
     if (!tag || seen[tag.toLowerCase()]) continue;
     seen[tag.toLowerCase()] = true;
@@ -64,8 +67,13 @@ export function labelFromKeywordSlug(slug: string): string {
     .join(" ");
 }
 
+export function postHasTagSlug(post: IPostData, slug: string): boolean {
+  return getPostTags(post).some((tag) => tag.slug === slug);
+}
+
+/** @deprecated Use postHasTagSlug */
 export function postHasKeywordSlug(post: IPostData, slug: string): boolean {
-  return toKeywordTags(post.fields.keywords).some((tag) => tag.slug === slug);
+  return postHasTagSlug(post, slug);
 }
 
 export function pickRelatedPosts(
@@ -75,7 +83,7 @@ export function pickRelatedPosts(
   max = 3
 ): IPostData[] {
   const currentSlugs: Record<string, true> = {};
-  for (const tag of toKeywordTags(current.fields.keywords)) {
+  for (const tag of getPostTags(current)) {
     currentSlugs[tag.slug] = true;
   }
   const picked: IPostData[] = [];
@@ -94,9 +102,7 @@ export function pickRelatedPosts(
     .filter((post) => !seen[post.sys.id])
     .map((post) => ({
       post,
-      score: toKeywordTags(post.fields.keywords).filter(
-        (tag) => currentSlugs[tag.slug]
-      ).length,
+      score: getPostTags(post).filter((tag) => currentSlugs[tag.slug]).length,
     }))
     .filter((item) => item.score > 0)
     .sort((a, b) => b.score - a.score);

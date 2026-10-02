@@ -78,7 +78,8 @@ export interface IPostData {
     slug: string;
     excerpt: string;
     title: string;
-    keywords: string;
+    tags?: string;
+    keywords?: string;
     publishDate?: string;
     faqs?: IFaq[];
   };

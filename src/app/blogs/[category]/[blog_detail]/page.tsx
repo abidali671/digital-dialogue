@@ -16,7 +16,7 @@ import Image from "next/image";
 import Link from "next/link";
 import config from "@/lib/config";
 import { formatLongDate, getPublishedDate, getReadingTime, toIsoTimestamp } from "@/helper";
-import { pickRelatedPosts, toKeywordTags, toShareHashtags } from "@/lib/keywords";
+import { pickRelatedPosts, getPostTags, toShareHashtags } from "@/lib/keywords";
 import { pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { breadcrumbSchema, JsonLdScript } from "@/lib/schema";
 import { extractToc, shouldShowToc } from "@/lib/toc";
@@ -174,19 +174,20 @@ export default async function BlogDetailPage({ params }: PageProps) {
       title,
       content,
       excerpt,
+      tags,
       keywords,
       faqs,
     } = post.fields;
     const author = getSiteAuthor();
     const { updatedAt } = post.sys;
     const publishedAt = getPublishedDate(post);
-    const keywordTags = toKeywordTags(keywords);
+    const postTags = getPostTags(post);
     const faqList = (faqs ?? []).filter(
       (faq): faq is IFaq =>
         Boolean(faq?.question?.trim() && faq?.answer?.trim())
     );
     const shareUrl = `${config.BASE_URL}/blogs/${category}/${blog_detail}`;
-    const shareHashtags = toShareHashtags(keywords);
+    const shareHashtags = toShareHashtags(tags || keywords);
     const readingTime = getReadingTime(content);
     const tocHeadings = [
       ...extractToc(content),
@@ -299,11 +300,11 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
             <PostFaqs faqs={faqList} />
 
-            {keywordTags.length > 0 && (
+            {postTags.length > 0 && (
               <div className="mt-12 flex flex-wrap gap-2">
-                {keywordTags.map((tag) => (
-                  <Tag key={tag.slug} href={`/tags/${tag.slug}`}>
-                    {tag.label}
+                {postTags.map((item) => (
+                  <Tag key={item.slug} href={`/tags/${item.slug}`}>
+                    {item.label}
                   </Tag>
                 ))}
               </div>

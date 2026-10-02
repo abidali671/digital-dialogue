@@ -4,7 +4,7 @@ import contentful_client, {
   type GetEntriesQuery,
 } from "@/lib/contentful/client";
 import config from "@/lib/config";
-import { toKeywordTags } from "@/lib/keywords";
+import { getPostTags } from "@/lib/keywords";
 import type { ICategoryData, IPostData } from "@/types";
 import { AUTHORS } from "@/constants/authors";
 
@@ -101,7 +101,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const seenTagSlugs: Record<string, true> = {};
     const tagSlugs: string[] = [];
     for (const post of posts as unknown as IPostData[]) {
-      for (const tag of toKeywordTags(post.fields.keywords)) {
+      for (const tag of getPostTags(post)) {
         if (seenTagSlugs[tag.slug]) continue;
         seenTagSlugs[tag.slug] = true;
         tagSlugs.push(tag.slug);

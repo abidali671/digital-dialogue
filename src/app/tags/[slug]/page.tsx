@@ -7,9 +7,9 @@ import CategoryBlogsClient from "@/components/blogs/CategoryBlogsClient";
 import { parseSearchQuery } from "@/lib/listing";
 import {
   labelFromKeywordSlug,
-  postHasKeywordSlug,
+  postHasTagSlug,
   searchTextFromKeywordSlug,
-  toKeywordTags,
+  getPostTags,
 } from "@/lib/keywords";
 import { pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { IPostData } from "@/types";
@@ -23,9 +23,7 @@ type PageProps = {
 
 function resolveTagLabel(slug: string, posts: IPostData[]) {
   for (const post of posts) {
-    const match = toKeywordTags(post.fields.keywords).find(
-      (tag) => tag.slug === slug
-    );
+    const match = getPostTags(post).find((tag) => tag.slug === slug);
     if (match) return match.label;
   }
   return labelFromKeywordSlug(slug);
@@ -81,15 +79,27 @@ export default async function TagPage({ params, searchParams }: PageProps) {
 
     const response = await contentful_client.getEntries({
       content_type: "post",
-      "fields.keywords[match]": tagQuery,
+      "fields.tags[match]": tagQuery,
       order: "-sys.updatedAt",
       limit: 100,
       ...(searchQuery ? { query: searchQuery } : {}),
     });
 
     let posts = (response.items as unknown as IPostData[]).filter((post) =>
-      postHasKeywordSlug(post, slug)
+      postHasTagSlug(post, slug)
     );
+
+    if (!posts.length && !searchQuery) {
+      const keywordMatch = await contentful_client.getEntries({
+        content_type: "post",
+        "fields.keywords[match]": tagQuery,
+        order: "-sys.updatedAt",
+        limit: 100,
+      });
+      posts = (keywordMatch.items as unknown as IPostData[]).filter((post) =>
+        postHasTagSlug(post, slug)
+      );
+    }
 
     if (!posts.length && !searchQuery) {
       const fallback = await contentful_client.getEntries({
@@ -98,7 +108,7 @@ export default async function TagPage({ params, searchParams }: PageProps) {
         limit: 100,
       });
       posts = (fallback.items as unknown as IPostData[]).filter((post) =>
-        postHasKeywordSlug(post, slug)
+        postHasTagSlug(post, slug)
       );
     }
 
