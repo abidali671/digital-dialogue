@@ -5,7 +5,7 @@ Prompts for rewriting existing posts, drafting new articles, and generating cove
 
 **How to use:** copy one prompt block, fill the bracketed fields, paste into your model.
 
-**Expected output (prompts 1 and 2):** every response must include title, slug, category, short description, tags, keywords, and full blog content. FAQS is optional. Ready to paste into Contentful / the blog detail page.
+**Expected output (prompts 1 and 2):** every response must include title, slug, category, short description, tags, keywords, and full blog content. Every KEYWORDS phrase must also appear in CONTENT. FAQS is optional. Ready to paste into Contentful / the blog detail page.
 
 **Expected output (prompt 3):** one cover image, exported as WebP, 1000 x 667. The model randomly picks LOOK MODE (BRIGHT or DARK) and one style (A–F) from the post category pool, then saves a Contentful-ready `coverImage`.
 
@@ -54,6 +54,14 @@ QUALITY BAR (what “better” means)
 - Preserve important keywords and entities, but only where they sound natural.
 - Never keyword-stuff. Never force synonyms into every paragraph.
 
+KEYWORDS IN CONTENT (strict — non-negotiable)
+- Every phrase listed under KEYWORDS must appear in CONTENT as readable wording (exact phrase or the same words in natural order). Do not list a keyword you never write.
+- Primary target (usually the TITLE phrase / first KEYWORDS item): use in the opening screen (first 1–2 paragraphs) and in at least one H2 or H3 when it fits.
+- Remaining KEYWORDS: each must appear at least once in CONTENT (body paragraph or a heading). Prefer one clear use per phrase over repeating the same string.
+- Write KEYWORDS first as a checklist of what the article will cover, then write CONTENT that hits every item. If a phrase does not fit the article, remove it from KEYWORDS instead of leaving it unused.
+- Keep usage natural. Do not dump all KEYWORDS into one sentence, bold every phrase, or add a “Keywords:” line in CONTENT.
+- Case can match readable prose (e.g. “Upwork Connects”); meaning and word order must still match the KEYWORDS entry.
+
 WORD COUNT (CONTENT body only, after CONTENT:)
 - MINIMUM: 900 words. Do not publish below this.
 - MAXIMUM: 1500 words. Do not go over this.
@@ -82,7 +90,8 @@ METADATA RULES
   - Reuse the same spelling every time (`Upwork proposals`, not "proposals on Upwork" or "upwork proposal tips") so posts share one tag URL.
   - No duplicates, no stuffing, no one-off synonyms.
 - KEYWORDS: 5–12 targeted search phrases for this post, comma-separated. Editorial / SEO targeting list (what this article is trying to rank for). Not shown as tag chips.
-  - Pull phrases from the TITLE, H2 topics, SHORT DESCRIPTION, and wording actually used in CONTENT. Every KEYWORDS item must be something the article covers in plain language.
+  - Only list phrases you will actually write in CONTENT. After drafting, silently verify each KEYWORDS item appears in CONTENT; drop any that do not.
+  - Pull phrases from the TITLE, H2 topics, SHORT DESCRIPTION, and wording used in CONTENT. Every KEYWORDS item must be something the article covers in plain language.
   - Include the primary title phrase (or PRIMARY KEYWORD when writing from a brief) plus related phrases that appear as real sections or repeated advice in the body.
   - May be longer than tags (e.g. `how to write an upwork proposal`, `funded milestone`, `Upwork freelancer service fee`).
   - Do not invent unused long-tails, synonym lists, or “SEO variants” that never show up in the article.
@@ -115,6 +124,7 @@ CONTENT:
 - Start with the intro paragraph, then H2/H3 body.
 - Do not include an FAQ heading or Q&A list in CONTENT (use FAQS above when needed).
 - CONTENT body must be 900–1500 words (minimum 900, maximum 1500). Useful depth only; no filler.
+- Every KEYWORDS phrase must appear in this CONTENT (see KEYWORDS IN CONTENT). If one does not fit, remove it from KEYWORDS before you finish.
 - If the source is missing a clear takeaway, end with a short, useful closing—not a summary of every section.
 
 CONTENT TO REWRITE:
@@ -187,11 +197,19 @@ Word count
 - TARGET: 900–1500 words unless the BRIEF sets a range inside that band.
 - Never pad with filler, synonym loops, or fake stories to hit the minimum.
 
-SEO (natural only)
-- Use the primary keyword in the title and early intro only if it reads naturally.
-- Use secondary keywords where they fit; never force them.
+SEO (natural only — still required)
+- Use the PRIMARY KEYWORD in the TITLE and in the early intro when it reads naturally.
+- Build the KEYWORDS list from PRIMARY KEYWORD + SECONDARY KEYWORDS the article will cover, then use every KEYWORDS phrase in CONTENT (see KEYWORDS IN CONTENT below).
 - Use related entities/terms a knowledgeable reader expects.
-- No keyword stuffing. No synonym spam.
+- No keyword stuffing. No synonym spam. No unused KEYWORDS.
+
+KEYWORDS IN CONTENT (strict — non-negotiable)
+- Every phrase listed under KEYWORDS must appear in CONTENT as readable wording (exact phrase or the same words in natural order). Do not list a keyword you never write.
+- Primary target (PRIMARY KEYWORD / first KEYWORDS item): use in the opening screen (first 1–2 paragraphs) and in at least one H2 or H3 when it fits.
+- Remaining KEYWORDS: each must appear at least once in CONTENT (body paragraph or a heading). Prefer one clear use per phrase over repeating the same string.
+- Write KEYWORDS as a coverage checklist, then write CONTENT that hits every item. If a BRIEF secondary keyword does not fit, omit it from KEYWORDS.
+- Keep usage natural. Do not dump all KEYWORDS into one sentence, bold every phrase, or add a “Keywords:” line in CONTENT.
+- Case can match readable prose; meaning and word order must still match the KEYWORDS entry.
 
 Trust & accuracy
 - Do not invent stats, studies, quotes, surveys, or “experts say.”
@@ -220,6 +238,7 @@ METADATA RULES
   - PRIMARY KEYWORD and SECONDARY KEYWORDS from the BRIEF guide title and body. Copy a BRIEF phrase into TAGS only when it is already a 1–3 word hub label.
   - No duplicates, no stuffing, no one-off synonyms.
 - KEYWORDS: 5–12 targeted search phrases for this post, comma-separated. Editorial / SEO targeting list (what this article is trying to rank for). Not shown as tag chips.
+  - Only list phrases you will actually write in CONTENT. After drafting, silently verify each KEYWORDS item appears in CONTENT; drop any that do not.
   - Start from PRIMARY KEYWORD and only those SECONDARY KEYWORDS the finished article actually covers.
   - Pull remaining phrases from the TITLE, H2 topics, SHORT DESCRIPTION, and wording used in CONTENT. Every KEYWORDS item must map to real advice in the piece.
   - May be longer phrases (e.g. `how to write an upwork proposal`, `funded milestone`, `Upwork freelancer service fee`).
@@ -252,6 +271,7 @@ FAQS: [{"question":"...","answer":"..."}]
 CONTENT:
 [Full article in Markdown — intro + H2/H3 body, no H1, no FAQ section]
 - CONTENT body must be 900–1500 words (minimum 900, maximum 1500 unless BRIEF sets a range inside that band).
+- Every KEYWORDS phrase must appear in this CONTENT (see KEYWORDS IN CONTENT). If one does not fit, remove it from KEYWORDS before you finish.
 
 Do not mention AI, SEO, prompts, or these instructions anywhere in the output.
 ```
