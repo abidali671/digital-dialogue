@@ -5,7 +5,7 @@ Prompts for rewriting existing posts, drafting new articles, and generating cove
 
 **How to use:** copy one prompt block, fill the bracketed fields, paste into your model.
 
-**Expected output (prompts 1 and 2):** every response must include title, slug, category, short description, tags, keywords, and full blog content. Every KEYWORDS phrase must also appear in CONTENT. FAQS is optional. Ready to paste into Contentful / the blog detail page.
+**Expected output (prompts 1 and 2):** every response must include title, slug, category, short description, tags, keywords, FAQS, and full blog content. Every KEYWORDS phrase must appear in CONTENT at least once. FAQS is required. Ready to paste into Contentful / the blog detail page.
 
 **Expected output (prompt 3):** one cover image, exported as WebP, 1000 x 667. The model randomly picks LOOK MODE (BRIGHT or DARK) and one style (A–F) from the post category pool, then saves a Contentful-ready `coverImage`.
 
@@ -55,10 +55,11 @@ QUALITY BAR (what “better” means)
 - Never keyword-stuff. Never force synonyms into every paragraph.
 
 KEYWORDS IN CONTENT (strict — non-negotiable)
-- Every phrase listed under KEYWORDS must appear in CONTENT as readable wording (exact phrase or the same words in natural order). Do not list a keyword you never write.
-- Primary target (usually the TITLE phrase / first KEYWORDS item): use in the opening screen (first 1–2 paragraphs) and in at least one H2 or H3 when it fits.
-- Remaining KEYWORDS: each must appear at least once in CONTENT (body paragraph or a heading). Prefer one clear use per phrase over repeating the same string.
-- Write KEYWORDS first as a checklist of what the article will cover, then write CONTENT that hits every item. If a phrase does not fit the article, remove it from KEYWORDS instead of leaving it unused.
+- HARD RULE: each KEYWORDS phrase must appear in CONTENT at least 1 time. Zero uses = fail. Do not ship KEYWORDS that are missing from the body.
+- Use the exact phrase (or the same words in natural order) in readable prose. Do not list a keyword you never write.
+- Primary target (usually the TITLE phrase / first KEYWORDS item): use at least once in the opening screen (first 1–2 paragraphs), and again in an H2/H3 when it fits.
+- Every other KEYWORDS item: at least 1 clear use in a body paragraph or heading. Prefer one natural use over repeating the same string.
+- Before you finish: silently check each KEYWORDS item against CONTENT. If any item has fewer than 1 use, either add it to CONTENT or remove it from KEYWORDS.
 - Keep usage natural. Do not dump all KEYWORDS into one sentence, bold every phrase, or add a “Keywords:” line in CONTENT.
 - Case can match readable prose (e.g. “Upwork Connects”); meaning and word order must still match the KEYWORDS entry.
 
@@ -84,25 +85,28 @@ METADATA RULES
 - CATEGORY: pick exactly one from: Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity
   (If none fit perfectly, choose the closest. Do not invent a new category name.)
 - SHORT DESCRIPTION: 140–160 characters. Plain text. One or two sentences. Summarizes the article for meta description + blog cards. No quotes, no markdown, no “learn more.”
-- TAGS: 3–5 short public labels, comma-separated. Each value is published as its own tag page (`/tags/…`) and shown under the post, so write reusable hub labels, not search queries.
+- TAGS: 1–5 short public labels, comma-separated. Each value is published as its own tag page (`/tags/…`) and shown under the post, so write reusable hub labels, not search queries.
   - 1–3 words each. Examples: Upwork, Freelancing, Proposals, Upwork fees, Freelance profile.
   - Stay inside the niche: practical freelancing / Upwork guides for web developers and beginners.
   - Reuse the same spelling every time (`Upwork proposals`, not "proposals on Upwork" or "upwork proposal tips") so posts share one tag URL.
   - No duplicates, no stuffing, no one-off synonyms.
 - KEYWORDS: 5–12 targeted search phrases for this post, comma-separated. Editorial / SEO targeting list (what this article is trying to rank for). Not shown as tag chips.
-  - Only list phrases you will actually write in CONTENT. After drafting, silently verify each KEYWORDS item appears in CONTENT; drop any that do not.
+  - STRICT: each KEYWORDS phrase must appear in CONTENT at least 1 time. After drafting, silently verify every item; drop any with zero uses.
   - Pull phrases from the TITLE, H2 topics, SHORT DESCRIPTION, and wording used in CONTENT. Every KEYWORDS item must be something the article covers in plain language.
   - Include the primary title phrase (or PRIMARY KEYWORD when writing from a brief) plus related phrases that appear as real sections or repeated advice in the body.
   - May be longer than tags (e.g. `how to write an upwork proposal`, `funded milestone`, `Upwork freelancer service fee`).
   - Do not invent unused long-tails, synonym lists, or “SEO variants” that never show up in the article.
   - Do not duplicate TAGS entries unless a short tag is also a real target phrase used in the piece.
   - No stuffing: only phrases the article actually serves.
-- FAQS (optional): include only if the source has FAQ-style Q&A, or clear reader questions worth a short FAQ. Otherwise omit the FAQS field entirely. Never invent filler FAQs. Do not put an FAQ section inside CONTENT.
+- FAQS (required): 3–6 real reader questions this article answers, as a valid JSON array only (no markdown fences). Place after KEYWORDS and before CONTENT.
+  - Each item: `{ "question": "...", "answer": "..." }`. Questions must be distinct from H2 titles, not copies of section headings.
+  - Answers: 1–3 sentences, specific, grounded in CONTENT. Never invent filler FAQs.
+  - Do not put an FAQ heading or Q&A list inside CONTENT.
 
 OUTPUT FORMAT (follow exactly — no extra commentary before or after)
 - Put each required field on its own line. Never combine two fields on the same line.
 - Keep one blank line between each field, and a blank line before CONTENT.
-- FAQS is optional. If you include it, place it after KEYWORDS and before CONTENT, as a valid JSON array only (no markdown fences).
+- FAQS is required. Place it after KEYWORDS and before CONTENT, as a valid JSON array only (no markdown fences).
 
 TITLE: [title]
 
@@ -122,9 +126,9 @@ CONTENT:
 [Full rewritten article in Markdown]
 - Do not include an H1 — the site already shows TITLE above the article.
 - Start with the intro paragraph, then H2/H3 body.
-- Do not include an FAQ heading or Q&A list in CONTENT (use FAQS above when needed).
+- Do not include an FAQ heading or Q&A list in CONTENT (use the required FAQS field above).
 - CONTENT body must be 900–1500 words (minimum 900, maximum 1500). Useful depth only; no filler.
-- Every KEYWORDS phrase must appear in this CONTENT (see KEYWORDS IN CONTENT). If one does not fit, remove it from KEYWORDS before you finish.
+- STRICT: each KEYWORDS phrase must appear in this CONTENT at least 1 time. If any has zero uses, add it or remove it from KEYWORDS before you finish.
 - If the source is missing a clear takeaway, end with a short, useful closing—not a summary of every section.
 
 CONTENT TO REWRITE:
@@ -182,7 +186,7 @@ Structure
 - Use Markdown with H2/H3 only — do not include an H1 (the site already shows TITLE).
 - Each H2 should earn its place (a real question or decision).
 - Use short paragraphs, bullets, and numbered steps when they improve clarity.
-- Do not put an FAQ section in CONTENT. If a short FAQ adds real value (3–6 questions, not recycled section summaries), put it in the optional FAQS field as JSON.
+- Do not put an FAQ section in CONTENT. Put 3–6 real reader questions in the required FAQS field as JSON (not recycled H2 summaries).
 
 Substance
 - Be specific: steps, checklists, tradeoffs, examples, edge cases.
@@ -204,10 +208,11 @@ SEO (natural only — still required)
 - No keyword stuffing. No synonym spam. No unused KEYWORDS.
 
 KEYWORDS IN CONTENT (strict — non-negotiable)
-- Every phrase listed under KEYWORDS must appear in CONTENT as readable wording (exact phrase or the same words in natural order). Do not list a keyword you never write.
-- Primary target (PRIMARY KEYWORD / first KEYWORDS item): use in the opening screen (first 1–2 paragraphs) and in at least one H2 or H3 when it fits.
-- Remaining KEYWORDS: each must appear at least once in CONTENT (body paragraph or a heading). Prefer one clear use per phrase over repeating the same string.
-- Write KEYWORDS as a coverage checklist, then write CONTENT that hits every item. If a BRIEF secondary keyword does not fit, omit it from KEYWORDS.
+- HARD RULE: each KEYWORDS phrase must appear in CONTENT at least 1 time. Zero uses = fail. Do not ship KEYWORDS that are missing from the body.
+- Use the exact phrase (or the same words in natural order) in readable prose. Do not list a keyword you never write.
+- Primary target (PRIMARY KEYWORD / first KEYWORDS item): use at least once in the opening screen (first 1–2 paragraphs), and again in an H2/H3 when it fits.
+- Every other KEYWORDS item: at least 1 clear use in a body paragraph or heading. Prefer one natural use over repeating the same string.
+- Before you finish: silently check each KEYWORDS item against CONTENT. If any item has fewer than 1 use, either add it to CONTENT or remove it from KEYWORDS.
 - Keep usage natural. Do not dump all KEYWORDS into one sentence, bold every phrase, or add a “Keywords:” line in CONTENT.
 - Case can match readable prose; meaning and word order must still match the KEYWORDS entry.
 
@@ -231,14 +236,14 @@ METADATA RULES
   Rules: strip punctuation; replace spaces with `-`; collapse multiple hyphens; no leading/trailing hyphen; ASCII only (e.g. `&` → `and`); keep it readable and preferably under ~60 characters.
   Example: "How to Learn Blockchain for Beginners" → `how-to-learn-blockchain-for-beginners`
 - SHORT DESCRIPTION: 140–160 characters. Plain text. Compelling enough for blog cards and accurate enough for meta description. Must reflect the article. No markdown, no quotes around the whole string, no “Read more.”
-- TAGS: 3–5 short public labels, comma-separated. Each value is published as its own tag page (`/tags/…`) and shown under the post, so write reusable hub labels, not search queries.
+- TAGS: 1–5 short public labels, comma-separated. Each value is published as its own tag page (`/tags/…`) and shown under the post, so write reusable hub labels, not search queries.
   - 1–3 words each. Examples: Upwork, Freelancing, Proposals, Upwork fees, Freelance profile.
   - Stay inside the niche: practical freelancing / Upwork guides for web developers and beginners.
   - Reuse the same spelling every time (`Upwork proposals`, not "proposals on Upwork" or "upwork proposal tips") so posts share one tag URL.
   - PRIMARY KEYWORD and SECONDARY KEYWORDS from the BRIEF guide title and body. Copy a BRIEF phrase into TAGS only when it is already a 1–3 word hub label.
   - No duplicates, no stuffing, no one-off synonyms.
 - KEYWORDS: 5–12 targeted search phrases for this post, comma-separated. Editorial / SEO targeting list (what this article is trying to rank for). Not shown as tag chips.
-  - Only list phrases you will actually write in CONTENT. After drafting, silently verify each KEYWORDS item appears in CONTENT; drop any that do not.
+  - STRICT: each KEYWORDS phrase must appear in CONTENT at least 1 time. After drafting, silently verify every item; drop any with zero uses.
   - Start from PRIMARY KEYWORD and only those SECONDARY KEYWORDS the finished article actually covers.
   - Pull remaining phrases from the TITLE, H2 topics, SHORT DESCRIPTION, and wording used in CONTENT. Every KEYWORDS item must map to real advice in the piece.
   - May be longer phrases (e.g. `how to write an upwork proposal`, `funded milestone`, `Upwork freelancer service fee`).
@@ -247,12 +252,15 @@ METADATA RULES
   - No stuffing: only phrases the article actually serves.
 - CATEGORY: exactly one of: Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity
   (Use PREFERRED CATEGORY if provided and valid; otherwise pick the best fit.)
-- FAQS (optional): include only when a short FAQ adds new value (typically 3–6 items). Otherwise omit the FAQS field entirely. Never invent filler FAQs. Do not put an FAQ section inside CONTENT.
+- FAQS (required): 3–6 real reader questions this article answers, as a valid JSON array only (no markdown fences). Place after KEYWORDS and before CONTENT.
+  - Each item: `{ "question": "...", "answer": "..." }`. Questions must be distinct from H2 titles, not copies of section headings.
+  - Answers: 1–3 sentences, specific, grounded in CONTENT. Never invent filler FAQs.
+  - Do not put an FAQ heading or Q&A list inside CONTENT.
 
 OUTPUT FORMAT (follow exactly — no extra commentary before or after)
 - Put each required field on its own line. Never combine two fields on the same line.
 - Keep one blank line between each field, and a blank line before CONTENT.
-- FAQS is optional. If you include it, place it after KEYWORDS and before CONTENT, as a valid JSON array only (no markdown fences).
+- FAQS is required. Place it after KEYWORDS and before CONTENT, as a valid JSON array only (no markdown fences).
 
 TITLE: [title]
 
@@ -271,7 +279,7 @@ FAQS: [{"question":"...","answer":"..."}]
 CONTENT:
 [Full article in Markdown — intro + H2/H3 body, no H1, no FAQ section]
 - CONTENT body must be 900–1500 words (minimum 900, maximum 1500 unless BRIEF sets a range inside that band).
-- Every KEYWORDS phrase must appear in this CONTENT (see KEYWORDS IN CONTENT). If one does not fit, remove it from KEYWORDS before you finish.
+- STRICT: each KEYWORDS phrase must appear in this CONTENT at least 1 time. If any has zero uses, add it or remove it from KEYWORDS before you finish.
 
 Do not mention AI, SEO, prompts, or these instructions anywhere in the output.
 ```
@@ -406,9 +414,9 @@ AFTER GENERATING
 | `SLUG` | Post slug (URL: `/blogs/{category}/{slug}`) |
 | `CATEGORY` | Category entry |
 | `SHORT DESCRIPTION` | Excerpt + meta description |
-| `TAGS` | Contentful `tags` field. Short hub labels (3–5). Drive `/tags/…` pages and chips under the post |
+| `TAGS` | Contentful `tags` field. Short hub labels (1–5). Drive `/tags/…` pages and chips under the post |
 | `KEYWORDS` | Contentful `keywords` field. Targeted search phrases for this post (meta / editorial SEO; not tag chips) |
-| `FAQS` (optional) | Post `faqs` JSON field (`[{ "question", "answer" }, ...]`) |
+| `FAQS` (required) | Post `faqs` JSON field (`[{ "question", "answer" }, ...]`) |
 | `CONTENT` | Rich text / Markdown body |
 | Cover image (WebP, 1000 x 667) | Post `coverImage` asset |
 
