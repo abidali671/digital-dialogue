@@ -6,7 +6,7 @@ import config from "@/lib/config";
 import constants from "@/constants";
 import BlogsClient from "@/components/blogs/BlogsClient";
 import { parseSearchQuery } from "@/lib/listing";
-import { pageTitle, resolvePageTitle } from "@/lib/metadata";
+import { pageTitle, resolvePageTitle, withPageMetaDescription } from "@/lib/metadata";
 import { ICategoryData, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
@@ -25,15 +25,19 @@ export function generateMetadata({ searchParams }: PageProps): Metadata {
   const pageSuffix = currentPage > 1 ? `, Page ${currentPage}` : "";
   const title = `Freelancing Articles and Upwork Guides${pageSuffix}`;
   const resolvedTitle = resolvePageTitle(title);
+  const description = withPageMetaDescription(
+    constants.descriptions.BLOGS,
+    currentPage
+  );
   const canonical = currentPage > 1 ? `/blogs?page=${currentPage}` : "/blogs";
 
   return {
     title: pageTitle(title),
-    description: constants.descriptions.BLOGS,
+    description,
     alternates: { canonical },
     openGraph: {
       title: resolvedTitle,
-      description: constants.descriptions.BLOGS,
+      description,
       url: canonical,
     },
   };

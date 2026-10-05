@@ -7,7 +7,7 @@ import config from "@/lib/config";
 import AuthorPostsClient from "@/components/authors/AuthorPostsClient";
 import { getAuthorBySlug } from "@/constants/authors";
 import { parseSearchQuery } from "@/lib/listing";
-import { pageTitle, resolvePageTitle } from "@/lib/metadata";
+import { pageTitle, resolvePageTitle, withPageMetaDescription } from "@/lib/metadata";
 import { IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
@@ -39,8 +39,10 @@ export async function generateMetadata({
   const title = `${author.name}'s Articles${pageSuffix}`;
   const resolvedTitle = resolvePageTitle(title);
   const about = author.about.replace(/\s+/g, " ").trim();
-  const description =
-    about.length > 160 ? `${about.slice(0, 157).trimEnd()}...` : about;
+  const description = withPageMetaDescription(
+    about.length > 160 ? `${about.slice(0, 157).trimEnd()}...` : about,
+    currentPage
+  );
   const canonical =
     currentPage > 1
       ? `/authors/${params.author}?page=${currentPage}`

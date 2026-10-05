@@ -6,7 +6,7 @@ import contentful_client, {
 import config from "@/lib/config";
 import CategoryBlogsClient from "@/components/blogs/CategoryBlogsClient";
 import { parseSearchQuery } from "@/lib/listing";
-import { pageTitle, resolvePageTitle } from "@/lib/metadata";
+import { pageTitle, resolvePageTitle, withPageMetaDescription } from "@/lib/metadata";
 import { ICategoryData, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
@@ -50,10 +50,12 @@ export async function generateMetadata({
     const rawDescription = (category.fields.description || fallback)
       .replace(/\s+/g, " ")
       .trim();
-    const description =
+    const description = withPageMetaDescription(
       rawDescription.length > 160
         ? `${rawDescription.slice(0, 157).trimEnd()}...`
-        : rawDescription;
+        : rawDescription,
+      currentPage
+    );
     const canonical =
       currentPage > 1
         ? `/blogs/${params.category}?page=${currentPage}`

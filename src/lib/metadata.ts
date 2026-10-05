@@ -18,3 +18,20 @@ export function resolvePageTitle(title: string): string {
 export function pageTitle(title: string): NonNullable<Metadata["title"]> {
   return { absolute: resolvePageTitle(title) };
 }
+
+/** Makes paginated listing descriptions unique vs page 1 (audit duplicate-meta). */
+export function withPageMetaDescription(
+  description: string,
+  page: number
+): string {
+  const base = description.replace(/\s+/g, " ").trim();
+  if (page <= 1) return base;
+
+  const suffix = ` Page ${page}.`;
+  const maxBase = Math.max(40, 160 - suffix.length);
+  const trimmed =
+    base.length > maxBase
+      ? `${base.slice(0, maxBase - 3).trimEnd()}...`
+      : base.replace(/\.+$/, "");
+  return `${trimmed}${suffix}`;
+}
