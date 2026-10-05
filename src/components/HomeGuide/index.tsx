@@ -26,8 +26,6 @@ const HomeGuide = () => {
               This writing is for people who work on their own. It includes
               freelancers looking for new clients, beginners setting up an
               Upwork account, and web developers offering their services online.
-              It includes freelancers who want new clients, beginners making an
-              Upwork account, and web developers selling their services online.
             </p>
             <p>
               Abid Ali runs the site from Pakistan and edits it for that reader.
@@ -70,11 +68,6 @@ const HomeGuide = () => {
               A useful freelance article names the step you are on. Starting out
               is a different problem from raising a rate. Both are different
               from choosing between two platforms.
-            </p>
-            <p>
-              The posts try to keep those apart. You need to complete one guide
-              this week. It should tell you what profile field to change, what
-              sample to share, or which offer to turn down.
             </p>
             <p>
               Readers in Pakistan will see that the advice is different,
