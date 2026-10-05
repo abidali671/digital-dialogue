@@ -1,31 +1,35 @@
 import type { IFaq } from "@/types";
 
-/** Homepage FAQs — keep in sync with HomeGuide. */
+/** Homepage FAQs — rendered by HomeGuide and FAQPage JSON-LD. */
 export const HOME_FAQS: IFaq[] = [
   {
-    question: "Who is Digital Dialogue mainly written for?",
+    question: "Is Upwork a good place for a complete beginner to start?",
     answer:
-      "It is written for practical freelancers who do the work themselves. That includes beginners setting up marketplace accounts, freelancers looking for their next client, and web developers selling services online. It is also edited with Pakistan-based readers in mind when payment methods or platform choices affect the advice.",
+      "Yes, if you have a skill you can already deliver, such as web development, writing, design or admin support, and a few samples to show. Upwork is competitive, so beginners who pick one clear service and apply to a small number of well-matched jobs do better than those who apply to everything.",
   },
   {
-    question: "What should a reader use the homepage for?",
+    question: "How long does it take to get the first job?",
     answer:
-      "Use the homepage to pick the right guide fast. The featured story points to the most useful current piece. Editor's picks help newer readers. Latest articles show recent posts. Tags narrow the topic to Upwork, Fiverr, proposals, or Connects.",
+      "It varies a lot. Some freelancers land a first contract within a couple of weeks, and others need a month or more of steady applying. The main factors are how specific your offer is, the quality of your portfolio, and whether your proposals respond to the actual job post. Treat the first month as practice.",
   },
   {
-    question: "How are the guides different from generic freelancing articles?",
+    question: "How much does it cost to use Upwork?",
     answer:
-      "These guides help you make clear choices and take the next step. They offer tips on making money online, like improving your profile, choosing a platform, setting your rates, deciding on Connects, and writing better proposals.",
+      "Creating an account is free. You pay with Connects to submit proposals, and Upwork takes a service fee from what you earn. The fee percentage and Connects price can change, so check Upwork's current help pages before you set your rates. Our Upwork fees guide explains how to work out what you actually keep.",
   },
   {
-    question:
-      "What is the recommended reading order for someone starting with Upwork?",
+    question: "Should I use Upwork, Fiverr or Freelancer?",
     answer:
-      "If you have already chosen Upwork, read the beginner setup guide first. Then read the profile guide. Then read the proposal guide. Read one guide per sitting and use the steps before opening several more tabs.",
+      "It depends on how you want to sell. Upwork suits proposal-based project and hourly work, Fiverr suits fixed-price packages that clients order directly, and Freelancer is bid-based. Pick one main platform first, and add a second only after your first is working. The platform comparison goes through the differences.",
   },
   {
-    question: "When should readers check the date on an older article?",
+    question: "Can I freelance from Pakistan, and how do I get paid?",
     answer:
-      "Check the date when the article covers things that can change over time, such as platform fees, Connects prices, or marketplace rules. Older articles can still be useful for topics that don’t change much, like how to structure a proposal.",
+      "Yes, many Pakistani freelancers work on these platforms. Withdrawal options and requirements differ by platform and change over time, so check the payment settings in your own account before you apply for jobs. We cover this in the beginner platform guide for Pakistan.",
+  },
+  {
+    question: "Are the older articles still accurate?",
+    answer:
+      'Check the "last updated" date on each article. Posts about fees, Connects prices and platform rules go out of date fastest. Guides on how to structure a profile or proposal age more slowly. If you spot something outdated, tell us through the contact page.',
   },
 ];
