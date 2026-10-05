@@ -64,7 +64,16 @@ function getPublishedDate(post: {
   );
 }
 
-/** ISO-8601 timestamp for structured data (e.g. 2024-09-16T12:00:00.000Z). */
+/** Calendar day in UTC, e.g. 2026-10-05 */
+function utcDateKey(iso: string) {
+  return new Date(iso).toISOString().slice(0, 10);
+}
+
+/** True when updatedAt falls on a later UTC day than the published date. */
+function wasUpdatedAfterPublish(publishedAt: string, updatedAt?: string) {
+  if (!updatedAt) return false;
+  return utcDateKey(updatedAt) > utcDateKey(publishedAt);
+}
 function toIsoTimestamp(iso: string) {
   return new Date(iso).toISOString();
 }
@@ -76,4 +85,5 @@ export {
   formatShortDate,
   getPublishedDate,
   toIsoTimestamp,
+  wasUpdatedAfterPublish,
 };

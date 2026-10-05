@@ -83,6 +83,7 @@ const config = {
   DEFAULT_DESCRIPTION:
     "Practical freelancing guides for web developers and beginners: Upwork profiles, proposals, fees, Connects, and landing clients without fluff.",
   AUTHOR_NAME: "Abid Ali",
+  CONTACT_EMAIL: "abid.saeed.ali92@gmail.com",
   LINKEDIN_URL,
   UPWORK_URL,
   FIVERR_URL,

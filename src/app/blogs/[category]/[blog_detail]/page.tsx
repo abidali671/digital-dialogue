@@ -15,7 +15,7 @@ import { IFaq, IPostData } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import config from "@/lib/config";
-import { formatLongDate, getPublishedDate, getReadingTime, toIsoTimestamp } from "@/helper";
+import { formatLongDate, getPublishedDate, getReadingTime, toIsoTimestamp, wasUpdatedAfterPublish } from "@/helper";
 import { pickRelatedPosts, getPostTags, toShareHashtags } from "@/lib/keywords";
 import { pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { breadcrumbSchema, JsonLdScript } from "@/lib/schema";
@@ -260,8 +260,20 @@ export default async function BlogDetailPage({ params }: PageProps) {
               </p>
 
               <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
-                <p className="flex h-8 items-center font-mono text-xs leading-none text-mute-soft">
-                  {formatLongDate(publishedAt)} · {readingTime} min read
+                <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs leading-none text-mute-soft">
+                  <time dateTime={toIsoTimestamp(publishedAt)}>
+                    {formatLongDate(publishedAt)}
+                  </time>
+                  {wasUpdatedAfterPublish(publishedAt, updatedAt) && (
+                    <>
+                      <span aria-hidden>·</span>
+                      <time dateTime={toIsoTimestamp(updatedAt)}>
+                        Updated {formatLongDate(updatedAt)}
+                      </time>
+                    </>
+                  )}
+                  <span aria-hidden>·</span>
+                  <span>{readingTime} min read</span>
                 </p>
                 <ShareButtons
                   url={shareUrl}

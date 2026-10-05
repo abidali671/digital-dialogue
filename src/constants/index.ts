@@ -5,7 +5,7 @@ const descriptions = {
   PRIVACY_POLICY:
     "Read the Digital Dialogue privacy policy: what we collect, cookies, Google AdSense disclosures, your rights, and how to contact us.",
   CONTACT_US:
-    "Contact Digital Dialogue for freelancing guide feedback, article ideas, corrections, or partnership enquiries. Reach Abid Ali by form or LinkedIn.",
+    "Contact Digital Dialogue for freelancing guide feedback, article ideas, corrections, or partnership enquiries. Reach Abid Ali by form, email, or LinkedIn.",
   ABOUT:
     "Learn who runs Digital Dialogue, why the site exists, and what practical freelancing guides you will find here.",
   DISCLAIMER:

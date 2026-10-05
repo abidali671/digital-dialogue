@@ -27,7 +27,14 @@ export default function ContactUsPage() {
         <p className="mt-6 text-base leading-relaxed text-mute md:text-lg">
           Digital Dialogue is run by {config.AUTHOR_NAME} from Pakistan. Use
           this page for guide feedback, corrections, article ideas, or
-          partnerships that fit the site. You can also reach him on{" "}
+          partnerships that fit the site. Email{" "}
+          <a
+            href={`mailto:${config.CONTACT_EMAIL}`}
+            className="font-semibold text-accent hover:text-accent-hover"
+          >
+            {config.CONTACT_EMAIL}
+          </a>
+          , or reach him on{" "}
           <Link
             href={config.LINKEDIN_URL}
             target="_blank"
@@ -65,7 +72,14 @@ export default function ContactUsPage() {
           </h2>
           <p className="mt-3 text-base text-mute">
             Include your name, a working email, and a clear subject. Say what
-            you need in a few sentences.
+            you need in a few sentences. You can also write directly to{" "}
+            <a
+              href={`mailto:${config.CONTACT_EMAIL}`}
+              className="font-semibold text-accent hover:text-accent-hover"
+            >
+              {config.CONTACT_EMAIL}
+            </a>
+            .
           </p>
           <form
             action={config.FORM_ACTION}
