@@ -21,7 +21,7 @@ const Hero = ({ posts }: IProps) => {
             {config.SITE_NAME}
           </p>
           <h1 className="mb-5 font-display text-4xl font-bold leading-[1.1] tracking-tight text-white md:text-5xl">
-            Practical Freelancing Guides for Beginners on Upwork, Fiverr
+            Practical Freelancing tips for Beginners on Upwork, Fiverr
           </h1>
           <p className="mb-8 max-w-md text-base leading-relaxed text-white/70 md:text-lg">
             Profiles, proposals, platforms, and fees — based on real client

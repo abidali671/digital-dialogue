@@ -66,7 +66,7 @@ export default function AboutPage() {
         <h2>What you will find</h2>
         <ul>
           <li>
-            <Link href="/blogs/freelancing">Freelancing guides</Link>: platforms,
+            <Link href="/blogs/freelancing">Freelancing tips</Link>: platforms,
             profiles, proposals, fees, and first clients
           </li>
           <li>

@@ -36,7 +36,7 @@ export default function TermsOfServicePage() {
 
         <h2>What this site is</h2>
         <p>
-          Digital Dialogue publishes practical freelancing guides for general
+          Digital Dialogue publishes practical freelancing tips for general
           information. Content is not legal, financial, tax, or professional
           advice. Outcomes depend on your skills, market, and effort. See our{" "}
           <Link href="/disclaimer">disclaimer</Link> for more detail.

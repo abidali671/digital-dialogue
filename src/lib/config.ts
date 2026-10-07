@@ -81,7 +81,7 @@ const config = {
   BLOGS_PER_PAGE: 15,
   SITE_NAME: "Digital Dialogue",
   DEFAULT_DESCRIPTION:
-    "Practical freelancing guides for web developers and beginners: Upwork profiles, proposals, fees, Connects, and landing clients without fluff.",
+    "Practical freelancing tips for web developers and beginners: Upwork profiles, proposals, fees, Connects, and landing clients without fluff.",
   AUTHOR_NAME: "Abid Ali",
   CONTACT_EMAIL: "abid.saeed.ali92@gmail.com",
   LINKEDIN_URL,

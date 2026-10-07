@@ -24,7 +24,7 @@ const Footer = () => {
               />
             </Link>
             <p className="max-w-md text-base leading-relaxed text-mute-soft">
-              Practical freelancing guides on platforms, profiles, proposals,
+              Practical freelancing tips on platforms, profiles, proposals,
               and landing clients. Written for people who need a clear next
               step, not another theory dump.
             </p>
