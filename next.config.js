@@ -21,6 +21,23 @@ const contentSecurityPolicy = [
   "upgrade-insecure-requests",
 ].join("; ");
 
+/** Removed niche categories → freelancing hub (301). */
+const REMOVED_CATEGORIES = [
+  "content-creation",
+  "technology",
+  "digital-marketing",
+  "web-development",
+  "design-and-creativity",
+  "design-creativity",
+];
+
+/** Unpublished freelancing posts that used to live under /blogs/freelancing. */
+const REMOVED_FREELANCING_SLUGS = [
+  "how-to-earn-money-online-with-your-smartphone",
+  "how-to-earn-money-online-from-home",
+  "best-ways-to-earn-money-online-with-instagram",
+];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -30,6 +47,27 @@ const nextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "images.ctfassets.net" },
     ],
+  },
+  async redirects() {
+    const freelancing = "/blogs/freelancing";
+    const categoryRedirects = REMOVED_CATEGORIES.flatMap((slug) => [
+      {
+        source: `/blogs/${slug}`,
+        destination: freelancing,
+        permanent: true,
+      },
+      {
+        source: `/blogs/${slug}/:path*`,
+        destination: freelancing,
+        permanent: true,
+      },
+    ]);
+    const postRedirects = REMOVED_FREELANCING_SLUGS.map((slug) => ({
+      source: `/blogs/freelancing/${slug}`,
+      destination: freelancing,
+      permanent: true,
+    }));
+    return [...categoryRedirects, ...postRedirects];
   },
   async headers() {
     return [
