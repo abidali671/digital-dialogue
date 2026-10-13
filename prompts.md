@@ -13,27 +13,29 @@ Prompts for rewriting existing posts, drafting new articles, and generating cove
 
 ## 1. Rewrite an existing blog
 
-Use when you have a draft, thin post, or AI-sounding article and need a stronger human edit.
+Use when you have a draft, thin post, or uneven article and need a clearer edit in a neutral tone.
 
 ### Prompt
 
 ```text
-You are a senior editor for a practical tech/freelancing blog (Digital Dialogue). Rewrite the article below so it reads like a skilled human writer who ships work for a living—not like a generic AI summary.
+You are an editor for a practical tech/freelancing blog (Digital Dialogue). Rewrite the article below in a neutral tone. Keep it specific and useful. Do not turn it into a generic summary or a personal essay.
 
 VOICE & AUDIENCE
 - Audience: freelancers, junior–mid developers, and builders who want clear, usable advice.
-- Tone: direct, specific, calm confidence. No hype. No guru energy.
+- Tone: neutral, plain, and even. Informative, not personal. No hype, no sarcasm, no guru energy.
 - Prefer concrete language over abstract claims.
 
-HUMAN STYLE (required)
-- Write like a skilled human editor: natural rhythm, uneven sentence lengths, and plain spoken phrasing.
-- Sound like someone who has done the work, not like a template summarizing a topic.
-- Vary openings. Do not start every section the same way.
-- Use judgment calls when useful (“skip this if…”, “do this first”, “this only matters when…”).
+NEUTRAL TONE (required)
+- Write in a neutral tone from the first sentence to the last. Calm, even, and impersonal.
+- No first person. Do not use "I", "we", "my", or "our". Do not invent a narrator.
+- No anecdotes, jokes, rhetorical asides, or attitude. Do not scold the reader.
+- Do not use coaching asides ("skip this if…", "do this first", "you will thank yourself"). State the condition in plain language ("This applies when…", "This does not apply when…").
+- Second person is fine for a real step ("Set the tag", "Open the URL"). Use plain description when a step is not needed.
+- State what something does, when it applies, and what to do. Do not editorialize.
+- Vary sentence length enough to stay readable. Do not perform a personality.
 - Prefer concrete nouns and verbs over polished abstractions.
-- Keep some rough edges of real advice. Perfect symmetry and identical section shapes feel generated.
-- Do not sound like ChatGPT, Gemini, or a content mill. If a line could appear on any generic blog, rewrite it.
-- Never announce that the piece is “human-written,” “AI-free,” or “rewritten.” Just write that way.
+- If a line is empty filler, cut it or replace it with a fact or a step.
+- Never announce the tone, or that the piece was rewritten. Just write that way.
 
 NON-NEGOTIABLES
 - Preserve meaning, facts, and search intent.
@@ -48,7 +50,7 @@ QUALITY BAR (what “better” means)
 - Fix weak structure: use clear H2/H3s that map to real questions.
 - Keep paragraphs short (2–4 sentences). Make it easy to scan.
 - Prefer active voice and specific verbs (“set up,” “charge,” “deploy”) over vague ones (“leverage,” “utilize”).
-- Replace generic advice with actionable steps, tradeoffs, or “do this / skip that” guidance when the source allows.
+- Replace generic advice with actionable steps, tradeoffs, or plain when-to-use guidance when the source allows. Keep that guidance neutral.
 - Where comparisons exist, make them clearer (pros/cons, when to choose each).
 - Keep useful examples; remove fluff examples that add no decision value.
 - Preserve important keywords and entities, but only where they sound natural.
@@ -144,7 +146,7 @@ Use when starting from a topic + keyword brief. Fill every field before running.
 ### Prompt
 
 ```text
-You are a senior writer for Digital Dialogue—a practical blog on freelancing, technology, web development, marketing, content, and design. Write one original article for humans first, search engines second. The finished piece must read like a real human wrote it, not like generated content.
+You are a writer for Digital Dialogue, a practical blog on freelancing, technology, web development, marketing, content, and design. Write one original article in a neutral tone, for readers first. Keep it specific and useful. Do not write a generic summary or a personal essay.
 
 BRIEF
 TOPIC: [TOPIC]
@@ -165,22 +167,24 @@ BEFORE WRITING (do this silently—do not show it)
 4) Decide what the reader should be able to DO after reading.
 5) Choose the best single category from the allowed list.
 
-HUMAN STYLE (required)
-- Write like a skilled human who ships work: natural rhythm, mixed sentence length, clear spoken phrasing.
-- Sound like advice from practice, not a polished summary of a topic.
-- Vary section openings. Do not mirror the same template under every H2.
-- Use judgment calls when useful (“skip this if…”, “do this first”, “this only matters when…”).
+NEUTRAL TONE (required)
+- Write in a neutral tone from the first sentence to the last. Calm, even, and impersonal.
+- No first person. Do not use "I", "we", "my", or "our". Do not invent a narrator or a personal story.
+- No anecdotes, jokes, rhetorical asides, or attitude. Do not scold the reader.
+- Do not use coaching asides ("skip this if…", "do this first", "you will thank yourself"). State the condition in plain language ("This applies when…", "This does not apply when…").
+- Second person is fine for a real step ("Set the tag", "Open the URL"). Use plain description when a step is not needed.
+- State what something does, when it applies, and what to do. Do not editorialize.
+- Vary section openings so the piece is readable. Do not perform a personality, and do not copy the same template under every H2.
 - Prefer concrete nouns and verbs over abstract marketing language.
-- Keep slight unevenness in structure when it helps clarity. Perfect symmetry often reads as generated.
-- Do not sound like ChatGPT, Gemini, or a content mill. If a sentence could fit any generic blog, rewrite it.
-- Never say the article is “human-written,” “AI-free,” or similar. Just write that way.
+- If a line is empty filler, cut it or replace it with a fact or a step.
+- Never announce the tone, or that the article is "human-written" or "AI-free." Just write that way.
 
 ARTICLE REQUIREMENTS
 
 Title & intro
 - Write a clear, specific title that matches intent (not clickbait). Max ~60 characters when possible.
 - Open with the answer or payoff quickly—no long preamble.
-- Explain who this is for (and who it is not for) when helpful.
+- State who the advice applies to, in plain language, when that limit matters.
 
 Structure
 - Use Markdown with H2/H3 only — do not include an H1 (the site already shows TITLE).
@@ -435,5 +439,5 @@ Paste one of these under the prompt when needed:
 **Comparison posts:**  
 `Use a clear comparison table (Markdown) plus a “choose X if / choose Y if” section.`
 
-**Stronger human voice:**  
-`Rewrite any line that sounds templated, overly balanced, or generically polished. Prefer blunt, specific phrasing a working freelancer or developer would actually say.`
+**Neutral tone check:**  
+`Keep the tone neutral: no first person, no asides, no hype, no sarcasm. State the fact or the step.`
