@@ -7,7 +7,7 @@ Prompts for rewriting existing posts, drafting new articles, and generating cove
 
 **Expected output (prompts 1 and 2):** every response must include title, slug, category, short description, tags, keywords, FAQS, and full blog content. Every KEYWORDS phrase must appear in CONTENT at least once. FAQS is required. Ready to paste into Contentful / the blog detail page.
 
-**Expected output (prompt 3):** one cover image, exported as WebP, 1000 x 667. The model randomly picks LOOK MODE (BRIGHT or DARK) and one style (A–F) from the post category pool, then saves a Contentful-ready `coverImage`.
+**Expected output (prompt 3):** one cover image, exported as WebP, 1200 x 630. The model randomly picks LOOK MODE (BRIGHT or DARK) and one style (A–F) from the post category pool, then saves a Contentful-ready `coverImage`.
 
 ---
 
@@ -394,16 +394,16 @@ DESIGN & CREATIVITY (pick A, B, C, D, E, or F at random)
 
 HARD CONSTRAINTS
 - Final file: WebP only.
-- Final size: exactly 1000 x 667 pixels (3:2).
-- Generate at a close landscape ratio (4:3 is fine), then center-crop and resize to 1000 x 667.
+- Final size: exactly 1200 x 630 pixels (1.91:1).
+- Generate at a close landscape ratio (16:9 is fine), then center-crop and resize to 1200 x 630.
 - Export quality: high, optimized WebP (typically 80-90 quality).
 - Filename: [SLUG].webp (unless OUTPUT PATH is provided).
 - Match SCENE FOCUS to the picked style so the subject fits the category.
 - Match LOOK MODE strictly: BRIGHT stays colorful; DARK stays charcoal/teal cinematic.
 
 AFTER GENERATING
-1) Center-crop to 3:2 if needed.
-2) Resize to 1000 x 667.
+1) Center-crop to 1.91:1 if needed.
+2) Resize to 1200 x 630.
 3) Save as WebP at OUTPUT PATH (or rewrites/[SLUG].webp).
 4) Confirm in one short line: STYLE PICKED, LOOK, width, height, format. No extra commentary.
 ```
@@ -422,7 +422,7 @@ AFTER GENERATING
 | `KEYWORDS` | Contentful `keywords` field. Targeted search phrases for this post (meta / editorial SEO; not tag chips) |
 | `FAQS` (required) | Post `faqs` JSON field (`[{ "question", "answer" }, ...]`) |
 | `CONTENT` | Rich text / Markdown body |
-| Cover image (WebP, 1000 x 667) | Post `coverImage` asset |
+| Cover image (WebP, 1200 x 630) | Post `coverImage` asset |
 
 ---
 
