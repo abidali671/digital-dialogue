@@ -4,7 +4,7 @@ import constants from "@/constants";
 import config from "@/lib/config";
 import ContentContainer from "@/components/ContentContainer";
 import Title from "@/components/Title";
-import { pageTitle, resolvePageTitle } from "@/lib/metadata";
+import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
 
 const ABOUT_TITLE = "About Digital Dialogue | Who We Are and What We Publish";
 
@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: resolvePageTitle(ABOUT_TITLE),
     description: constants.descriptions.ABOUT,
     url: "/about",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 

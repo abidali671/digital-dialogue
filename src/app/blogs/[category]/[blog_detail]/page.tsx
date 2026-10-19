@@ -17,7 +17,7 @@ import Link from "next/link";
 import config from "@/lib/config";
 import { formatLongDate, getPublishedDate, getReadingTime, toIsoTimestamp, wasUpdatedAfterPublish } from "@/helper";
 import { pickRelatedPosts, getPostTags, toShareHashtags } from "@/lib/keywords";
-import { pageTitle, resolvePageTitle } from "@/lib/metadata";
+import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { breadcrumbSchema, JsonLdScript } from "@/lib/schema";
 import { extractToc, shouldShowToc } from "@/lib/toc";
 import TableOfContents from "@/components/TableOfContents";
@@ -85,7 +85,7 @@ export async function generateMetadata({
         ? `https:${imagePath}`
         : imagePath
       : undefined;
-    const images = imageUrl ? [imageUrl] : undefined;
+    const images = imageUrl ? [imageUrl] : [DEFAULT_OG_IMAGE];
 
     return {
       title: pageTitle(title),

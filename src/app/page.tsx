@@ -9,7 +9,7 @@ import contentful_client, {
 import config from "@/lib/config";
 import constants from "@/constants";
 import { getPostsBySlugs } from "@/lib/posts";
-import { pageTitle, resolvePageTitle } from "@/lib/metadata";
+import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
 import {
   JsonLdScript,
   organizationSchema,
@@ -31,6 +31,7 @@ export const metadata: Metadata = {
     title: resolvePageTitle(HOME_TITLE),
     description: constants.descriptions.HOME,
     url: "/",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 

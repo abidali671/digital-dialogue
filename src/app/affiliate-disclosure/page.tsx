@@ -4,7 +4,7 @@ import constants from "@/constants";
 import config from "@/lib/config";
 import ContentContainer from "@/components/ContentContainer";
 import Title from "@/components/Title";
-import { pageTitle, resolvePageTitle } from "@/lib/metadata";
+import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
 
 const AFFILIATE_TITLE = "Affiliate Disclosure | Digital Dialogue";
 
@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: resolvePageTitle(AFFILIATE_TITLE),
     description: constants.descriptions.AFFILIATE_DISCLOSURE,
     url: "/affiliate-disclosure",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 

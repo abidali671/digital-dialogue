@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import config from "@/lib/config";
 
+/** Fallback share image when a page does not have its own cover. */
+export const DEFAULT_OG_IMAGE = {
+  url: "/og-default.webp",
+  width: 1200,
+  height: 630,
+  alt: `${config.SITE_NAME} — practical freelancing tips`,
+};
+
 /** Only append the site name when the base title is short enough to stay useful in SERPs. */
 const TITLE_SUFFIX_MAX_LENGTH = 40;
 

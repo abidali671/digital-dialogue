@@ -7,7 +7,7 @@ import config from "@/lib/config";
 import AuthorPostsClient from "@/components/authors/AuthorPostsClient";
 import { getAuthorBySlug } from "@/constants/authors";
 import { parseSearchQuery } from "@/lib/listing";
-import { pageTitle, resolvePageTitle, withPageMetaDescription } from "@/lib/metadata";
+import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle, withPageMetaDescription } from "@/lib/metadata";
 import { IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
@@ -52,7 +52,12 @@ export async function generateMetadata({
     title: pageTitle(title),
     description,
     alternates: { canonical },
-    openGraph: { title: resolvedTitle, description, url: canonical },
+    openGraph: {
+      title: resolvedTitle,
+      description,
+      url: canonical,
+      images: [DEFAULT_OG_IMAGE],
+    },
   };
 }
 

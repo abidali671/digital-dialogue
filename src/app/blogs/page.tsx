@@ -6,7 +6,7 @@ import config from "@/lib/config";
 import constants from "@/constants";
 import BlogsClient from "@/components/blogs/BlogsClient";
 import { parseSearchQuery } from "@/lib/listing";
-import { pageTitle, resolvePageTitle, withPageMetaDescription } from "@/lib/metadata";
+import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle, withPageMetaDescription } from "@/lib/metadata";
 import { ICategoryData, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
@@ -39,6 +39,7 @@ export function generateMetadata({ searchParams }: PageProps): Metadata {
       title: resolvedTitle,
       description,
       url: canonical,
+      images: [DEFAULT_OG_IMAGE],
     },
   };
 }

@@ -4,6 +4,7 @@ import { REVALIDATE_LISTING } from "@/lib/contentful/client";
 import Layout from "@/components/layout";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import config from "@/lib/config";
+import { DEFAULT_OG_IMAGE } from "@/lib/metadata";
 import { getPostsBySlugs } from "@/lib/posts";
 import "@/styles/global.css";
 
@@ -28,13 +29,6 @@ const monoFont = IBM_Plex_Mono({
   weight: ["400", "500"],
   variable: "--font-mono",
 });
-
-const DEFAULT_OG_IMAGE = {
-  url: "/og-default.webp",
-  width: 1200,
-  height: 630,
-  alt: `${config.SITE_NAME} — practical freelancing tips`,
-};
 
 export const metadata: Metadata = {
   title: config.SITE_NAME,

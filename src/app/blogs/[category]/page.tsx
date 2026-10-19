@@ -6,7 +6,7 @@ import contentful_client, {
 import config from "@/lib/config";
 import CategoryBlogsClient from "@/components/blogs/CategoryBlogsClient";
 import { parseSearchQuery } from "@/lib/listing";
-import { pageTitle, resolvePageTitle, withPageMetaDescription } from "@/lib/metadata";
+import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle, withPageMetaDescription } from "@/lib/metadata";
 import { ICategoryData, IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
@@ -65,7 +65,12 @@ export async function generateMetadata({
       title: pageTitle(title),
       description,
       alternates: { canonical },
-      openGraph: { title: resolvedTitle, description, url: canonical },
+      openGraph: {
+        title: resolvedTitle,
+        description,
+        url: canonical,
+        images: [DEFAULT_OG_IMAGE],
+      },
     };
   } catch {
     return {

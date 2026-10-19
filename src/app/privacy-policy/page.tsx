@@ -1,7 +1,7 @@
 ﻿import type { Metadata } from "next";
 import constants from "@/constants";
 import config from "@/lib/config";
-import { pageTitle, resolvePageTitle } from "@/lib/metadata";
+import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
 import Link from "next/link";
 
 const PRIVACY_TITLE = "Privacy Policy";
@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     title: resolvePageTitle(PRIVACY_TITLE),
     description: constants.descriptions.PRIVACY_POLICY,
     url: "/privacy-policy",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 

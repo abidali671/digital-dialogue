@@ -11,7 +11,7 @@ import {
   searchTextFromKeywordSlug,
   getPostTags,
 } from "@/lib/keywords";
-import { pageTitle, resolvePageTitle } from "@/lib/metadata";
+import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { IPostData } from "@/types";
 
 export const revalidate = REVALIDATE_LISTING;
@@ -65,7 +65,12 @@ export async function generateMetadata({
     title: pageTitle(title),
     description,
     alternates: { canonical },
-    openGraph: { title: resolvedTitle, description, url: canonical },
+    openGraph: {
+      title: resolvedTitle,
+      description,
+      url: canonical,
+      images: [DEFAULT_OG_IMAGE],
+    },
   };
 }
 

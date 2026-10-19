@@ -4,7 +4,7 @@ import constants from "@/constants";
 import config from "@/lib/config";
 import ContentContainer from "@/components/ContentContainer";
 import Title from "@/components/Title";
-import { pageTitle, resolvePageTitle } from "@/lib/metadata";
+import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
 
 const DISCLAIMER_TITLE = "Disclaimer | How to Use Digital Dialogue Content";
 
@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     title: resolvePageTitle(DISCLAIMER_TITLE),
     description: constants.descriptions.DISCLAIMER,
     url: "/disclaimer",
+    images: [DEFAULT_OG_IMAGE],
   },
 };
 
