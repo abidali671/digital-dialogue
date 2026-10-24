@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import contentful_client, {
-  REVALIDATE_LISTING,
-} from "@/lib/contentful/client";
 import CategoryBlogsClient from "@/components/blogs/CategoryBlogsClient";
 import { parseSearchQuery } from "@/lib/listing";
-import {
-  labelFromKeywordSlug,
-  postHasTagSlug,
-  searchTextFromKeywordSlug,
-  getPostTags,
-} from "@/lib/keywords";
+import { labelFromKeywordSlug, getPostTags } from "@/lib/keywords";
+import { isNextNotFound } from "@/lib/next-errors";
+import { loadTagPosts } from "@/lib/tags";
+import { REVALIDATE_LISTING } from "@/lib/contentful/client";
 import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { IPostData } from "@/types";
 
@@ -47,15 +42,12 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const slug = params.slug?.trim();
-  if (!slug) {
-    return {
-      title: pageTitle("Tag"),
-      description:
-        "Browse articles by topic tag. Freelancing tips on platforms, profiles, proposals and practical next steps.",
-    };
-  }
+  if (!slug) notFound();
 
-  const label = labelFromKeywordSlug(slug);
+  const posts = await loadTagPosts(slug);
+  if (!posts.length) notFound();
+
+  const label = resolveTagLabel(slug, posts);
   const title = tagPageTitle(label, slug);
   const resolvedTitle = resolvePageTitle(title);
   const description = tagPageDescription(label, slug);
@@ -77,47 +69,15 @@ export async function generateMetadata({
 export default async function TagPage({ params, searchParams }: PageProps) {
   try {
     const slug = params.slug?.trim();
-    const tagQuery = searchTextFromKeywordSlug(slug || "");
-    if (!slug || !tagQuery) notFound();
+    if (!slug) notFound();
 
     const searchQuery = parseSearchQuery(searchParams.q);
-
-    const response = await contentful_client.getEntries({
-      content_type: "post",
-      "fields.tags[match]": tagQuery,
-      order: "-sys.updatedAt",
-      limit: 100,
-      ...(searchQuery ? { query: searchQuery } : {}),
-    });
-
-    let posts = (response.items as unknown as IPostData[]).filter((post) =>
-      postHasTagSlug(post, slug)
-    );
-
-    if (!posts.length && !searchQuery) {
-      const keywordMatch = await contentful_client.getEntries({
-        content_type: "post",
-        "fields.keywords[match]": tagQuery,
-        order: "-sys.updatedAt",
-        limit: 100,
-      });
-      posts = (keywordMatch.items as unknown as IPostData[]).filter((post) =>
-        postHasTagSlug(post, slug)
-      );
-    }
-
-    if (!posts.length && !searchQuery) {
-      const fallback = await contentful_client.getEntries({
-        content_type: "post",
-        order: "-sys.updatedAt",
-        limit: 100,
-      });
-      posts = (fallback.items as unknown as IPostData[]).filter((post) =>
-        postHasTagSlug(post, slug)
-      );
-    }
-
+    const posts = await loadTagPosts(slug, searchQuery);
     if (!posts.length && !searchQuery) notFound();
+    if (searchQuery && !posts.length) {
+      const tagged = await loadTagPosts(slug);
+      if (!tagged.length) notFound();
+    }
 
     const label = resolveTagLabel(slug, posts);
 
@@ -131,14 +91,7 @@ export default async function TagPage({ params, searchParams }: PageProps) {
       />
     );
   } catch (error) {
-    if (
-      typeof error === "object" &&
-      error !== null &&
-      "digest" in error &&
-      (error as { digest?: string }).digest === "NEXT_NOT_FOUND"
-    ) {
-      throw error;
-    }
+    if (isNextNotFound(error)) throw error;
     redirect("/");
   }
 }

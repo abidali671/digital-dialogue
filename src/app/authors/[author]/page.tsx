@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cache } from "react";
 import { notFound, redirect } from "next/navigation";
 import contentful_client, {
   REVALIDATE_LISTING,
@@ -7,6 +8,12 @@ import config from "@/lib/config";
 import AuthorPostsClient from "@/components/authors/AuthorPostsClient";
 import { getAuthorBySlug } from "@/constants/authors";
 import { parseSearchQuery } from "@/lib/listing";
+import { isNextNotFound } from "@/lib/next-errors";
+import {
+  assertPageInRange,
+  pageCount,
+  parsePageQuery,
+} from "@/lib/pagination";
 import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle, withPageMetaDescription } from "@/lib/metadata";
 import { IPostData } from "@/types";
 
@@ -17,24 +24,33 @@ type PageProps = {
   searchParams: { page?: string; q?: string };
 };
 
-function parsePage(page?: string) {
-  const value = Number(page) || 1;
-  return value < 1 ? 1 : value;
-}
+const loadAuthorPosts = cache(async (page: number, searchQuery: string) => {
+  const response = await contentful_client.getEntries({
+    content_type: "post",
+    limit: config.BLOGS_PER_PAGE,
+    skip: (page - 1) * config.BLOGS_PER_PAGE,
+    order: "-sys.updatedAt",
+    ...(searchQuery ? { query: searchQuery } : {}),
+  });
+  return {
+    posts: response.items as unknown as IPostData[],
+    totalPages: pageCount(response.total, config.BLOGS_PER_PAGE),
+  };
+});
 
 export async function generateMetadata({
   params,
   searchParams,
 }: PageProps): Promise<Metadata> {
   const author = getAuthorBySlug(params.author);
-  if (!author) {
-    return {
-      title: pageTitle("Author Not Found"),
-      description: "The requested Digital Dialogue author could not be found.",
-    };
-  }
+  if (!author) notFound();
 
-  const currentPage = parsePage(searchParams.page);
+  const currentPage = parsePageQuery(searchParams.page);
+  const { totalPages } = await loadAuthorPosts(
+    currentPage,
+    parseSearchQuery(searchParams.q)
+  );
+  assertPageInRange(currentPage, totalPages);
   const pageSuffix = currentPage > 1 ? `, Page ${currentPage}` : "";
   const title = `${author.name}'s Articles${pageSuffix}`;
   const resolvedTitle = resolvePageTitle(title);
@@ -66,27 +82,15 @@ export default async function AuthorPage({ params, searchParams }: PageProps) {
     const author = getAuthorBySlug(params.author);
     if (!author) notFound();
 
-    const currentPage = parsePage(searchParams.page);
+    const currentPage = parsePageQuery(searchParams.page);
     const searchQuery = parseSearchQuery(searchParams.q);
-
-    // Site author is static; all posts are attributed to them.
-    const posts_response = await contentful_client.getEntries({
-      content_type: "post",
-      limit: config.BLOGS_PER_PAGE,
-      skip: (currentPage - 1) * config.BLOGS_PER_PAGE,
-      order: "-sys.updatedAt",
-      ...(searchQuery ? { query: searchQuery } : {}),
-    });
-
-    const totalPages = Math.max(
-      1,
-      Math.ceil(posts_response.total / config.BLOGS_PER_PAGE)
-    );
+    const { posts, totalPages } = await loadAuthorPosts(currentPage, searchQuery);
+    assertPageInRange(currentPage, totalPages);
 
     return (
       <AuthorPostsClient
-        posts={posts_response.items as unknown as IPostData[]}
-        currentPage={Math.min(currentPage, totalPages)}
+        posts={posts}
+        currentPage={currentPage}
         totalPages={totalPages}
         authorName={author.name}
         authorSlug={author.slug}
@@ -99,14 +103,7 @@ export default async function AuthorPage({ params, searchParams }: PageProps) {
       />
     );
   } catch (error) {
-    if (
-      typeof error === "object" &&
-      error !== null &&
-      "digest" in error &&
-      (error as { digest?: string }).digest === "NEXT_NOT_FOUND"
-    ) {
-      throw error;
-    }
+    if (isNextNotFound(error)) throw error;
     redirect("/");
   }
 }

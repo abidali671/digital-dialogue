@@ -17,6 +17,7 @@ import Link from "next/link";
 import config from "@/lib/config";
 import { formatLongDate, getPublishedDate, getReadingTime, toIsoTimestamp, wasUpdatedAfterPublish } from "@/helper";
 import { pickRelatedPosts, getPostTags, toShareHashtags } from "@/lib/keywords";
+import { isNextNotFound } from "@/lib/next-errors";
 import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { breadcrumbSchema, JsonLdScript } from "@/lib/schema";
 import { extractToc, shouldShowToc } from "@/lib/toc";
@@ -49,12 +50,7 @@ export async function generateMetadata({
       { revalidate: REVALIDATE_DETAIL }
     );
     const category = category_response.items[0];
-    if (!category) {
-      return {
-        title: pageTitle("Article Not Found"),
-        description: "The requested Digital Dialogue article could not be found.",
-      };
-    }
+    if (!category) notFound();
 
     const response = await contentful_client.getEntries(
       {
@@ -65,12 +61,7 @@ export async function generateMetadata({
       { revalidate: REVALIDATE_DETAIL }
     );
     const post = response.items[0] as unknown as IPostData | undefined;
-    if (!post) {
-      return {
-        title: pageTitle("Article Not Found"),
-        description: "The requested Digital Dialogue article could not be found.",
-      };
-    }
+    if (!post) notFound();
 
     const url = `${config.BASE_URL}/blogs/${params.category}/${params.blog_detail}`;
     const title = String(post.fields.title);
@@ -106,7 +97,8 @@ export async function generateMetadata({
         images,
       },
     };
-  } catch {
+  } catch (error) {
+    if (isNextNotFound(error)) throw error;
     return {
       title: pageTitle("Digital Dialogue Article"),
       description: "Read practical articles and guides from Digital Dialogue.",
@@ -377,14 +369,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
       </>
     );
   } catch (error) {
-    if (
-      typeof error === "object" &&
-      error !== null &&
-      "digest" in error &&
-      (error as { digest?: string }).digest === "NEXT_NOT_FOUND"
-    ) {
-      throw error;
-    }
+    if (isNextNotFound(error)) throw error;
     redirect("/");
   }
 }
