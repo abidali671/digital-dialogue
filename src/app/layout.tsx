@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, IBM_Plex_Mono, Source_Sans_3 } from "next/font/google";
 import { REVALIDATE_LISTING } from "@/lib/contentful/client";
 import Layout from "@/components/layout";
+import GoogleAdSense from "@/components/GoogleAdSense";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import config from "@/lib/config";
 import { DEFAULT_OG_IMAGE } from "@/lib/metadata";
@@ -70,6 +71,9 @@ export default async function RootLayout({
       lang="en"
       className={`${bodyFont.variable} ${displayFont.variable} ${monoFont.variable}`}
     >
+      <head>
+        <GoogleAdSense />
+      </head>
       <body>
         <GoogleAnalytics />
         <Layout featuredPosts={featuredPosts}>{children}</Layout>

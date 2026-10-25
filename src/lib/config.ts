@@ -78,6 +78,7 @@ const config = {
   FORM_ACTION: "https://formspree.io/f/xnpnokwe",
   BASE_URL: "https://www.digitaldialogue.pk",
   GA_MEASUREMENT_ID: "G-WTZCCLQ2FF",
+  ADSENSE_CLIENT_ID: "ca-pub-6695195287407019",
   BLOGS_PER_PAGE: 15,
   SITE_NAME: "Digital Dialogue",
   DEFAULT_DESCRIPTION:
