@@ -5,6 +5,7 @@
 @import "./components/container.css";
 @import "./components/post-card.css";
 @import "./pages/blog-detail.css";
+@import "./pages/fee-calculator.css";
 
 :root {
   --bg: #f4f6f8;
@@ -45,6 +46,17 @@ ul,
 ol {
   list-style-type: disc;
   margin-left: 20px;
+}
+
+.plain-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.plain-list > li {
+  margin: 0;
+  list-style: none;
 }
 
 li {

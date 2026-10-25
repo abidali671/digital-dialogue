@@ -59,6 +59,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry("/terms-of-service", { changeFrequency: "yearly", priority: 0.3 }),
     entry("/affiliate-disclosure", { changeFrequency: "yearly", priority: 0.3 }),
     entry("/disclaimer", { changeFrequency: "yearly", priority: 0.3 }),
+    entry("/tools", { changeFrequency: "monthly", priority: 0.6 }),
+    entry("/tools/upwork-fee-calculator", {
+      changeFrequency: "monthly",
+      priority: 0.8,
+    }),
+    entry("/tools/upwork-connects-calculator", {
+      changeFrequency: "monthly",
+      priority: 0.8,
+    }),
+    entry("/tools/freelance-rate-calculator", {
+      changeFrequency: "monthly",
+      priority: 0.8,
+    }),
   ];
 
   try {

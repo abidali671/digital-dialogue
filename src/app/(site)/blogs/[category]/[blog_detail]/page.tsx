@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
+import Breadcrumb from "@/components/Breadcrumb";
 import ContentContainer from "@/components/ContentContainer";
 import PostCard from "@/components/PostCard";
 import PostFaqs from "@/components/PostFaqs";
@@ -204,6 +205,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
         />
         <JsonLdScript
           data={breadcrumbSchema([
+            { name: "Home", path: "/" },
             { name: "Blogs", path: "/blogs" },
             {
               name: postCategory.fields.label,
@@ -228,21 +230,16 @@ export default async function BlogDetailPage({ params }: PageProps) {
         <header className="border-b border-line bg-white">
           <ContentContainer className="py-12 md:py-16">
             <div className="reading-column">
-              <nav
-                aria-label="Breadcrumb"
-                className="mb-6 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.1em] text-mute"
-              >
-                <Link href="/blogs" className="hover:text-accent">
-                  Blogs
-                </Link>
-                <span className="text-mute-soft">/</span>
-                <Link
-                  href={`/blogs/${postCategory.fields.slug}`}
-                  className="text-accent hover:text-accent-hover"
-                >
-                  {postCategory.fields.label}
-                </Link>
-              </nav>
+              <Breadcrumb
+                items={[
+                  { label: "Home", href: "/" },
+                  { label: "Blogs", href: "/blogs" },
+                  {
+                    label: postCategory.fields.label,
+                    href: `/blogs/${postCategory.fields.slug}`,
+                  },
+                ]}
+              />
 
               <h1 className="mb-5 font-display text-3xl font-bold leading-[1.15] tracking-tight text-ink md:text-5xl">
                 {title}

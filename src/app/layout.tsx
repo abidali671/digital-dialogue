@@ -6,7 +6,6 @@ import GoogleAdSense from "@/components/GoogleAdSense";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import config from "@/lib/config";
 import { DEFAULT_OG_IMAGE } from "@/lib/metadata";
-import { getPostsBySlugs } from "@/lib/posts";
 import "@/styles/global.css";
 
 export const revalidate = REVALIDATE_LISTING;
@@ -59,13 +58,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const featuredPosts = await getPostsBySlugs(config.FEATURED_POST_SLUGS);
-
   return (
     <html
       lang="en"
@@ -76,7 +73,7 @@ export default async function RootLayout({
       </head>
       <body>
         <GoogleAnalytics />
-        <Layout featuredPosts={featuredPosts}>{children}</Layout>
+        <Layout>{children}</Layout>
       </body>
     </html>
   );

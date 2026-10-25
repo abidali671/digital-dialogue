@@ -1,0 +1,413 @@
+/* Scoped to the fee calculator so site-wide heading, paragraph and list rules stay put. */
+.fee-page {
+  color: #334155;
+}
+
+.fee-page h1,
+.fee-page h2,
+.fee-page h3 {
+  color: #0f172a;
+}
+
+.fee-page h1 {
+  font-size: 2.25rem;
+  line-height: 1.1;
+}
+
+.fee-page h2 {
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.fee-page h3 {
+  font-size: 1.25rem;
+  line-height: 1.25;
+}
+
+.fee-page p,
+.fee-page li,
+.fee-page dd,
+.fee-page dt,
+.fee-page label,
+.fee-page legend,
+.fee-page th,
+.fee-page td {
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.fee-page ul,
+.fee-page ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fee-page a {
+  color: inherit;
+}
+
+/* Match the site breadcrumb. The page-wide link color would otherwise wash it out. */
+.fee-page .site-breadcrumb a {
+  font-weight: inherit;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.fee-page .site-breadcrumb a:hover {
+  color: #0d9488;
+}
+
+/* Tailwind 3.3 has no size-* utilities, and an unsized SVG falls back to a huge default. */
+.fee-page svg {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+.fee-page svg.fee-svg-lg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.fee-page .fee-link {
+  font-weight: 600;
+  color: #0f766e;
+  text-decoration: underline;
+  text-decoration-color: rgb(13 148 136 / 0.4);
+  text-underline-offset: 4px;
+}
+
+.fee-page .fee-link:hover {
+  color: #115e59;
+  text-decoration-color: #115e59;
+}
+
+.fee-page .fee-card {
+  border-radius: 0.75rem;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.04), 0 10px 28px rgb(15 23 42 / 0.06);
+}
+
+.fee-page .fee-btn {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 0 1.5rem;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.fee-page .fee-btn-primary {
+  border: 0;
+  background: #0f766e;
+  color: #fff;
+}
+
+.fee-page .fee-btn-primary:hover {
+  background: #115e59;
+}
+
+.fee-page .fee-btn-secondary {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
+}
+
+.fee-page .fee-btn-secondary:hover {
+  border-color: rgb(15 23 42 / 0.4);
+  background: #f4f6f8;
+}
+
+.fee-page .fee-label {
+  display: block;
+  margin-bottom: 0.375rem;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.fee-page .fee-hint {
+  margin-top: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  color: #475569;
+}
+
+.fee-page .fee-field {
+  position: relative;
+  display: flex;
+  min-height: 3rem;
+  align-items: stretch;
+  border-radius: 0.5rem;
+  border: 1px solid #7b8798;
+  background: #fff;
+}
+
+.fee-page .fee-field:focus-within {
+  border-color: #0f766e;
+  box-shadow: 0 0 0 3px rgb(13 148 136 / 0.28);
+}
+
+.fee-page .fee-field:has([aria-invalid="true"]) {
+  border-color: #b91c1c;
+  box-shadow: 0 0 0 1px #b91c1c;
+}
+
+.fee-page .fee-field:has([aria-invalid="true"]):focus-within {
+  box-shadow: 0 0 0 3px rgb(185 28 28 / 0.22);
+}
+
+.fee-page .fee-field:has(:disabled) {
+  cursor: not-allowed;
+  border-color: #e2e8f0;
+  background: #eef2f6;
+}
+
+.fee-page .fee-affix {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  padding: 0 0.75rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.875rem;
+  color: #475569;
+}
+
+.fee-page .fee-affix-l {
+  border-right: 1px solid #e2e8f0;
+}
+
+.fee-page .fee-affix-r {
+  border-left: 1px solid #e2e8f0;
+}
+
+.fee-page .fee-input {
+  width: 100%;
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  padding: 0.625rem 0.75rem;
+  font-size: 17px;
+  color: #0f172a;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+}
+
+.fee-page .fee-input:disabled {
+  cursor: not-allowed;
+  color: #64748b;
+}
+
+.fee-page select.fee-input {
+  cursor: pointer;
+  appearance: none;
+  padding-right: 2.5rem;
+}
+
+.fee-page .fee-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.375rem;
+  margin-top: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #b91c1c;
+}
+
+.fee-page .fee-segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid #cbd5e1;
+  background: #f4f6f8;
+  padding: 0.25rem;
+}
+
+.fee-page .fee-segmented label {
+  position: relative;
+  display: flex;
+  min-height: 2.75rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.375rem;
+  padding: 0 0.75rem;
+  font-size: 15px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.fee-page .fee-segmented input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.fee-page .fee-segmented label:has(:checked) {
+  background: #fff;
+  color: #0f172a;
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.1), 0 0 0 1px rgb(15 23 42 / 0.08);
+}
+
+.fee-page .fee-dot {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 2px solid #7b8798;
+  background: #fff;
+}
+
+.fee-page .fee-segmented label:has(:checked) .fee-dot {
+  border-color: #0f766e;
+  background: #0f766e;
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+.fee-page .fee-segmented label:has(:focus-visible) {
+  outline: 3px solid #0d9488;
+  outline-offset: 1px;
+}
+
+.fee-page .fee-bar {
+  display: flex;
+  height: 3rem;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(15 23 42 / 0.15);
+  background: #eef2f6;
+}
+
+.fee-page .fee-bar-seg {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.fee-page .fee-pat-take {
+  background: #0f766e;
+  color: #fff;
+}
+
+.fee-page .fee-pat-fee {
+  background-color: #1e293b;
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgb(255 255 255 / 0.22) 0 2px,
+    transparent 2px 7px
+  );
+  color: #fff;
+}
+
+.fee-page .fee-pat-extra {
+  background-color: #fde68a;
+  background-image: radial-gradient(rgb(120 53 15 / 0.45) 1.2px, transparent 1.4px);
+  background-size: 7px 7px;
+  color: #422006;
+}
+
+.fee-page .fee-swatch {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  border-radius: 4px;
+  border: 1px solid rgb(15 23 42 / 0.3);
+}
+
+.fee-page .fee-acc-btn {
+  display: flex;
+  width: 100%;
+  min-height: 3.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 0;
+  background: transparent;
+  padding: 1rem 0;
+  text-align: left;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0f172a;
+  cursor: pointer;
+}
+
+.fee-page .fee-acc-btn:hover {
+  color: #0f766e;
+}
+
+.fee-page .fee-acc-icon {
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+}
+
+.fee-page .fee-acc-btn[aria-expanded="true"] .fee-acc-icon {
+  transform: rotate(45deg);
+  border-color: #0f766e;
+  color: #0f766e;
+}
+
+.fee-page [hidden] {
+  display: none !important;
+}
+
+.fee-page .fee-error-list {
+  margin-left: 1.5rem;
+  list-style: disc;
+}
+
+.fee-page h2.fee-section {
+  font-size: 1.875rem;
+  line-height: 1.15;
+}
+
+@media (min-width: 768px) {
+  .fee-page h1 {
+    font-size: 3rem;
+  }
+
+  .fee-page h2.fee-section {
+    font-size: 2.25rem;
+  }
+
+  .fee-page .fee-display {
+    font-size: 3.5rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .fee-page h1 {
+    font-size: 3.5rem;
+  }
+}

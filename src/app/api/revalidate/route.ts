@@ -13,6 +13,10 @@ const STATIC_PATHS = [
   "/terms-of-service",
   "/affiliate-disclosure",
   "/disclaimer",
+  "/tools",
+  "/tools/upwork-fee-calculator",
+  "/tools/upwork-connects-calculator",
+  "/tools/freelance-rate-calculator",
   "/feed.xml",
 ] as const;
 

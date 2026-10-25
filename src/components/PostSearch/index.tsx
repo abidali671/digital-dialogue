@@ -8,9 +8,16 @@ import { listingHref, parseSearchQuery } from "@/lib/listing";
 interface PropsT {
   searchQuery: string;
   basePath: string;
+  placeholder?: string;
+  label?: string;
 }
 
-const PostSearch = ({ searchQuery, basePath }: PropsT) => {
+const PostSearch = ({
+  searchQuery,
+  basePath,
+  placeholder = "Search posts",
+  label = "Search posts",
+}: PropsT) => {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [searchText, setSearchText] = useState(searchQuery);
@@ -44,8 +51,8 @@ const PostSearch = ({ searchQuery, basePath }: PropsT) => {
               ref={inputRef}
               type="search"
               className="h-full min-w-0 flex-1 appearance-none border-0 bg-transparent text-ink shadow-none outline-none ring-0 placeholder:text-mute-soft focus:border-0 focus:outline-none focus:ring-0"
-              placeholder="Search posts"
-              aria-label="Search posts"
+              placeholder={placeholder}
+              aria-label={label}
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
