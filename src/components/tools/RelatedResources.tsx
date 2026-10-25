@@ -95,8 +95,10 @@ function ResourceCard({
       </h3>
       <p className="mt-2 flex-1 leading-relaxed text-[#475569]">{copy}</p>
       {action === "arrow" ? (
-        <p className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-[#0f766e]">
-          {hrefLabel} <Arrow />
+        <p className="mt-5 text-sm font-bold text-[#0f766e]">
+          <Link href={href} className="inline-flex items-center gap-1.5 hover:text-[#0f766e]">
+            {hrefLabel} <Arrow />
+          </Link>
         </p>
       ) : (
         <p className="mt-4 border-t border-line pt-4 text-sm">
