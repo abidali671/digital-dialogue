@@ -2,12 +2,38 @@ import type { Options } from "@contentful/rich-text-react-renderer";
 import type { ReactNode } from "react";
 import {
   BLOCKS,
+  INLINES,
   MARKS,
   type Block,
   type Inline,
   type Text,
 } from "@contentful/rich-text-types";
+import Link from "next/link";
 import { headingPlainText, uniqueHeadingId } from "@/lib/toc";
+
+const SITE_HOSTS = new Set(["digitaldialogue.pk", "www.digitaldialogue.pk"]);
+
+/** Site paths use Next.js Link. External, mail, and same-page hashes stay anchors. */
+function internalPath(uri: string): string | null {
+  const value = uri.trim();
+  if (
+    !value ||
+    value.startsWith("#") ||
+    value.startsWith("mailto:") ||
+    value.startsWith("tel:")
+  ) {
+    return null;
+  }
+  if (value.startsWith("/") && !value.startsWith("//")) return value;
+
+  try {
+    const url = new URL(value);
+    if (!SITE_HOSTS.has(url.hostname)) return null;
+    return `${url.pathname}${url.search}${url.hash}` || "/";
+  } catch {
+    return null;
+  }
+}
 
 function isText(node: Block | Inline | Text): node is Text {
   return node.nodeType === "text";
@@ -69,6 +95,12 @@ export function createRichTextOptions(): Options {
         renderHeading("h2", node, children, usedHeadingIds),
       [BLOCKS.HEADING_3]: (node, children) =>
         renderHeading("h3", node, children, usedHeadingIds),
+      [INLINES.HYPERLINK]: (node, children) => {
+        const uri = typeof node.data.uri === "string" ? node.data.uri : "";
+        const path = internalPath(uri);
+        if (path) return <Link href={path}>{children}</Link>;
+        return <a href={uri}>{children}</a>;
+      },
     },
   };
 }
