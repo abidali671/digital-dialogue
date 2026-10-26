@@ -12,6 +12,7 @@ export type ToolCard = {
   title: string;
   copy: string;
   image: string;
+  alt: string;
 };
 
 export default function ToolsListing({
@@ -51,7 +52,7 @@ export default function ToolsListing({
                 <div className="post-card-cover-wrapper">
                   <Image
                     src={tool.image}
-                    alt=""
+                    alt={tool.alt}
                     fill
                     priority={index === 0}
                     className="object-cover"

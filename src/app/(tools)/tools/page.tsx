@@ -25,18 +25,21 @@ const TOOLS: ToolCard[] = [
     title: "Upwork Fee Calculator",
     copy: "Estimate take-home pay after the freelancer service fee and withdrawal costs.",
     image: "/upwork-fee-calculator.png",
+    alt: "Upwork Fee Calculator showing take-home pay split into what you keep, the service fee, and withdrawal costs.",
   },
   {
     href: "/tools/upwork-connects-calculator",
     title: "Upwork Connects Calculator",
     copy: "See what a set of proposals costs in Connects, and the cost of each reply, interview and contract.",
     image: "/upwork-connects-calculator.png",
+    alt: "Upwork Connects Calculator showing a proposal funnel from proposals to replies, interviews, and contracts.",
   },
   {
     href: "/tools/freelance-rate-calculator",
     title: "Freelance Rate Calculator",
     copy: "Turn a monthly or yearly income goal into an hourly rate that covers fees and unpaid time.",
     image: "/freelance-rate-calculator.png",
+    alt: "Freelance Rate Calculator showing an hourly rate split into take-home goal, expenses, platform fee, and unbilled time.",
   },
 ];
 
