@@ -12,6 +12,7 @@ import Link from "next/link";
 import { headingPlainText, uniqueHeadingId } from "@/lib/toc";
 
 const SITE_HOSTS = new Set(["digitaldialogue.pk", "www.digitaldialogue.pk"]);
+const SAFE_SCHEME = /^(https?:|mailto:|tel:|#|\/)/i;
 
 /** Site paths use Next.js Link. External, mail, and same-page hashes stay anchors. */
 function internalPath(uri: string): string | null {
@@ -96,10 +97,16 @@ export function createRichTextOptions(): Options {
       [BLOCKS.HEADING_3]: (node, children) =>
         renderHeading("h3", node, children, usedHeadingIds),
       [INLINES.HYPERLINK]: (node, children) => {
-        const uri = typeof node.data.uri === "string" ? node.data.uri : "";
+        const uri = typeof node.data.uri === "string" ? node.data.uri.trim() : "";
         const path = internalPath(uri);
         if (path) return <Link href={path}>{children}</Link>;
-        return <a href={uri}>{children}</a>;
+        if (!SAFE_SCHEME.test(uri)) return <>{children}</>;
+        const external = /^https?:/i.test(uri);
+        return (
+          <a href={uri} {...(external ? { rel: "noopener noreferrer" } : {})}>
+            {children}
+          </a>
+        );
       },
     },
   };
