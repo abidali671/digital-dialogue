@@ -5,6 +5,7 @@ import Link from "next/link";
 import Breadcrumb from "@/components/Breadcrumb";
 import ContentContainer from "@/components/ContentContainer";
 import PostSearch from "@/components/PostSearch";
+import FaqSection from "@/components/tools/FaqSection";
 import Title from "@/components/Title";
 import { TOOL_ARTICLES, TOOL_FAQS, TOOLS_INTRO } from "@/lib/toolsHub";
 
@@ -33,7 +34,7 @@ export default function ToolsListing({
       />
       <ContentContainer className="relative flex flex-col justify-center pt-10">
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Tools" }]} />
-        <Title>Freelance calculators for Pakistan</Title>
+        <Title>Upwork freelance calculators</Title>
         {!searchQuery && (
           <div className="mt-4 max-w-3xl space-y-4 text-base leading-relaxed text-mute">
             {TOOLS_INTRO.map((paragraph) => (
@@ -78,13 +79,12 @@ export default function ToolsListing({
           </div>
         )}
         {!searchQuery && (
-          <>
             <section className="mt-16 border-t border-line pt-12" aria-labelledby="tools-guides-title">
               <h2 id="tools-guides-title" className="font-display text-3xl font-bold tracking-tight text-ink">
                 Freelancing guides
               </h2>
               <p className="mt-3 max-w-3xl leading-relaxed text-mute">
-                Articles already on the site that sit next to these calculators. They stay on freelancing: fees, Connects, pricing, proposals and choosing a platform from Pakistan.
+                Articles on the site that sit next to these calculators: fees, Connects, pricing and proposals.
               </p>
               <ul className="mt-8 grid gap-6 md:grid-cols-2">
                 {TOOL_ARTICLES.map((article) => (
@@ -99,24 +99,20 @@ export default function ToolsListing({
                 ))}
               </ul>
             </section>
-            <section className="mt-16 border-t border-line pt-12" aria-labelledby="tools-faq-title">
-              <h2 id="tools-faq-title" className="font-display text-3xl font-bold tracking-tight text-ink">
-                Questions about these calculators
-              </h2>
-              <div className="mt-8 max-w-3xl divide-y divide-line border-y border-line">
-                {TOOL_FAQS.map((item) => (
-                  <div key={item.question} className="py-5">
-                    <h3 className="font-display text-xl font-bold tracking-tight text-ink">
-                      {item.question}
-                    </h3>
-                    <p className="mt-2 leading-relaxed text-mute">{item.answer}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-          </>
         )}
       </ContentContainer>
+      {!searchQuery && (
+        <div className="fee-page border-t border-line">
+          <FaqSection
+            title="Calculator questions"
+            intro="Short answers on take-home pay, Connects, hourly rates and currency."
+            items={TOOL_FAQS.map((item) => ({
+              question: item.question,
+              answer: <p>{item.answer}</p>,
+            }))}
+          />
+        </div>
+      )}
     </div>
   );
 }

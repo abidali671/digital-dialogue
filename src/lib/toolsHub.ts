@@ -1,14 +1,14 @@
 import { USD_PKR, usdPkrAsOfLabel } from "@/lib/usdPkr";
 
 /** Document title before the site-name suffix. Resolved length stays under 60 characters. */
-export const TOOLS_PAGE_TITLE = "Freelance Calculators for Pakistan";
+export const TOOLS_PAGE_TITLE = "Upwork Freelance Calculators";
 
 export const TOOLS_PAGE_DESCRIPTION =
-  "Free calculators for Pakistani freelancers: Upwork take-home pay in rupees, Connects cost per contract, and an hourly rate that covers fees and unpaid time.";
+  "Free calculators for Upwork take-home pay, Connects cost per contract, and the hourly rate that covers fees and unpaid time.";
 
 export const TOOLS_INTRO = [
-  "These three calculators are for freelancers in Pakistan planning Upwork work. They estimate take-home pay, what a batch of proposals costs, and the hourly rate that covers unpaid time.",
-  "Choose PKR on a calculator to convert US dollar amounts into rupees with an exchange rate you can edit. The fee and rate calculators start at 10%, which you should replace with the percentage on your offer. The Connects calculator does not fill in a price. None of them estimate tax.",
+  "These calculators estimate Upwork take-home pay, what a batch of proposals costs in Connects, and the hourly rate that covers unpaid time.",
+  "The fee and rate calculators start at 10%, which you should replace with the percentage on your offer. The Connects calculator does not fill in a price. None of them estimate tax. Working in Pakistan? Choose PKR to convert US dollar amounts with an editable rate.",
 ];
 
 export type HubTool = {
@@ -23,7 +23,7 @@ export const HUB_TOOLS: HubTool[] = [
   {
     href: "/tools/upwork-fee-calculator",
     title: "Upwork Fee Calculator",
-    copy: "Shows what you keep from an hourly or fixed-price Upwork contract after the service fee and any withdrawal costs you add. For freelancers who want the rupee figure before they accept an offer.",
+    copy: "Shows what you keep from an hourly or fixed-price Upwork contract after the service fee and any withdrawal costs you add. For freelancers who want a take-home figure before they accept an offer.",
     image: "/upwork-fee-calculator.png",
     alt: "Upwork Fee Calculator showing take-home pay split into what you keep, the service fee, and withdrawal costs.",
   },
@@ -71,9 +71,9 @@ export const TOOL_ARTICLES: HubArticle[] = [
     copy: "A proposal structure, what to cut, and beginner mistakes that waste Connects.",
   },
   {
-    href: "/blogs/freelancing/best-freelancing-platform-for-beginners-in-pakistan",
-    title: "Best Freelancing Platform for Beginners in Pakistan",
-    copy: "How Upwork, Fiverr and Freelancer differ if you are starting from Pakistan and choosing where to send a first offer.",
+    href: "/blogs/freelancing/how-to-use-upwork-as-a-beginner-a-step-by-step-guide",
+    title: "How to Use Upwork as a Beginner: A Step-by-Step Guide",
+    copy: "How to set up an account, a profile, Connects, first proposals and payouts.",
   },
 ];
 
@@ -84,8 +84,8 @@ export type HubFaq = {
 
 export const TOOL_FAQS: HubFaq[] = [
   {
-    question: "Do the calculators convert amounts into Pakistani rupees?",
-    answer: `Choose PKR. You still enter amounts in US dollars, and the results are converted with the rate in the field. The default is the ${USD_PKR.sourceName} weighted average: 1 USD = ${USD_PKR.rate} PKR as of ${usdPkrAsOfLabel()}. Edit it if your payout rate is different. The other currencies only change the symbol and number format.`,
+    question: "Does choosing a currency convert my amounts?",
+    answer: `Only PKR does. Enter amounts in US dollars and the results use an editable exchange rate. The default is the ${USD_PKR.sourceName} weighted average: 1 USD = ${USD_PKR.rate} PKR as of ${usdPkrAsOfLabel()}. Edit it if your payout rate is different. The other currencies only change the symbol and number format.`,
   },
   {
     question: "What fee percentage should I use?",
@@ -98,9 +98,9 @@ export const TOOL_FAQS: HubFaq[] = [
       "The Connects calculator leaves the price blank on purpose. Upwork’s price, bundles and free monthly Connects can change and may differ by account, so you enter what you actually pay.",
   },
   {
-    question: "Do these include income tax in Pakistan?",
+    question: "Do these include income tax?",
     answer:
-      "No. The calculators leave tax out, because it depends on how you are registered. If you pay tax on freelance income, raise the take-home goal to allow for it, or check with a tax adviser.",
+      "No. The calculators leave tax out, because it depends on where you live and how you are registered. If you pay tax on freelance income, raise the take-home goal to allow for it, or check with a tax adviser.",
   },
   {
     question: "Which calculator should I open first?",
