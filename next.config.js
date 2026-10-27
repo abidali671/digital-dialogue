@@ -21,6 +21,26 @@ const contentSecurityPolicy = [
   "upgrade-insecure-requests",
 ].join("; ");
 
+const scriptHosts =
+  "https://pagead2.googlesyndication.com https://*.googlesyndication.com https://www.googletagservices.com https://www.google.com https://www.gstatic.com https://adservice.google.com https://www.googletagmanager.com https://*.adtrafficquality.google https://fundingchoicesmessages.google.com";
+
+const cspReportOnly = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'self'",
+  "form-action 'self' https://formspree.io",
+  "img-src 'self' data: blob: https://images.ctfassets.net https://*.ctfassets.net https://*.googlesyndication.com https://www.google.com https://*.google.com https://www.gstatic.com https://*.google-analytics.com https://www.googletagmanager.com https://*.doubleclick.net https://*.adtrafficquality.google",
+  "font-src 'self' data:",
+  "style-src 'self' 'unsafe-inline'",
+  `script-src 'self' 'unsafe-inline' ${scriptHosts}`,
+  "connect-src 'self' https://formspree.io https://cdn.contentful.com https://images.ctfassets.net https://*.googlesyndication.com https://www.google.com https://*.doubleclick.net https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.adtrafficquality.google https://fundingchoicesmessages.google.com",
+  "frame-src 'self' https://*.doubleclick.net https://tpc.googlesyndication.com https://*.googlesyndication.com https://www.google.com https://www.googletagmanager.com https://*.adtrafficquality.google https://fundingchoicesmessages.google.com",
+  "worker-src 'self' blob:",
+  "upgrade-insecure-requests",
+  "report-uri /api/csp-report",
+].join("; ");
+
 /** Removed niche categories → freelancing hub (301). */
 const REMOVED_CATEGORIES = [
   "content-creation",
@@ -90,6 +110,10 @@ const nextConfig = {
           {
             key: "Content-Security-Policy",
             value: contentSecurityPolicy,
+          },
+          {
+            key: "Content-Security-Policy-Report-Only",
+            value: cspReportOnly,
           },
         ],
       },
