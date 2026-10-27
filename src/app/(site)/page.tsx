@@ -3,9 +3,7 @@ import Hero from "@/components/HeroSection";
 import TopPicks from "@/components/TopPicks";
 import AllPosts from "@/components/AllPosts";
 import Newsletter from "@/components/Newsletter";
-import contentful_client, {
-  REVALIDATE_LISTING,
-} from "@/lib/contentful/client";
+import contentful_client from "@/lib/contentful/client";
 import config from "@/lib/config";
 import constants from "@/constants";
 import { getPostsBySlugs } from "@/lib/posts";
@@ -19,7 +17,7 @@ import { HOME_FAQS } from "@/lib/homeFaqs";
 import { IPostData } from "@/types";
 import { FAQPageJsonLd } from "next-seo";
 
-export const revalidate = REVALIDATE_LISTING;
+export const revalidate = 3600;
 
 const HOME_TITLE = `${config.SITE_NAME} | Practical Freelancing Tips`;
 

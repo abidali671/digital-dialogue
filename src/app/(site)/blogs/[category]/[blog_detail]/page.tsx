@@ -26,10 +26,10 @@ import TableOfContents from "@/components/TableOfContents";
 import { ArticleJsonLd, FAQPageJsonLd } from "next-seo";
 import { getSiteAuthor } from "@/constants/authors";
 
-export const revalidate = REVALIDATE_DETAIL;
+export const revalidate = 3600;
 
 type PageProps = {
-  params: { category: string; blog_detail: string };
+  params: Promise<{ category: string; blog_detail: string }>;
 };
 
 function toMetaDescription(value: string | undefined, fallback: string) {
@@ -39,9 +39,8 @@ function toMetaDescription(value: string | undefined, fallback: string) {
     : description;
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   try {
     const category_response = await contentful_client.getEntries(
       {
@@ -107,7 +106,8 @@ export async function generateMetadata({
   }
 }
 
-export default async function BlogDetailPage({ params }: PageProps) {
+export default async function BlogDetailPage(props: PageProps) {
+  const params = await props.params;
   try {
     const { category, blog_detail } = params;
 

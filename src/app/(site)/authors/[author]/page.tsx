@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { cache } from "react";
 import { notFound, redirect } from "next/navigation";
-import contentful_client, {
-  REVALIDATE_LISTING,
-} from "@/lib/contentful/client";
+import contentful_client from "@/lib/contentful/client";
 import config from "@/lib/config";
 import AuthorPostsClient from "@/components/authors/AuthorPostsClient";
 import { getAuthorBySlug } from "@/constants/authors";
@@ -17,11 +15,11 @@ import {
 import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle, withPageMetaDescription } from "@/lib/metadata";
 import { IPostData } from "@/types";
 
-export const revalidate = REVALIDATE_LISTING;
+export const revalidate = 3600;
 
 type PageProps = {
-  params: { author: string };
-  searchParams: { page?: string; q?: string };
+  params: Promise<{ author: string }>;
+  searchParams: Promise<{ page?: string; q?: string }>;
 };
 
 const loadAuthorPosts = cache(async (page: number, searchQuery: string) => {
@@ -38,10 +36,9 @@ const loadAuthorPosts = cache(async (page: number, searchQuery: string) => {
   };
 });
 
-export async function generateMetadata({
-  params,
-  searchParams,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const author = getAuthorBySlug(params.author);
   if (!author) notFound();
 
@@ -77,7 +74,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function AuthorPage({ params, searchParams }: PageProps) {
+export default async function AuthorPage(props: PageProps) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   try {
     const author = getAuthorBySlug(params.author);
     if (!author) notFound();

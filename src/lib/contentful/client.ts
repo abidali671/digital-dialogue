@@ -1,5 +1,6 @@
 const HOUR = 60 * 60;
 
+/** Segment `export const revalidate` must stay the literal 3600. Next 15 cannot read this binding. */
 export const REVALIDATE_LISTING = HOUR;
 /** Blog detail pages — keep aligned with listings so Contentful edits surface within an hour. */
 export const REVALIDATE_DETAIL = HOUR;

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Fraunces, IBM_Plex_Mono, Source_Sans_3 } from "next/font/google";
-import { REVALIDATE_LISTING } from "@/lib/contentful/client";
 import Layout from "@/components/layout";
 import GoogleAdSense from "@/components/GoogleAdSense";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -8,7 +7,7 @@ import config from "@/lib/config";
 import { DEFAULT_OG_IMAGE } from "@/lib/metadata";
 import "@/styles/global.css";
 
-export const revalidate = REVALIDATE_LISTING;
+export const revalidate = 3600;
 
 const bodyFont = Source_Sans_3({
   subsets: ["latin"],

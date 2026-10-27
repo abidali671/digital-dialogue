@@ -32,10 +32,11 @@ export const metadata: Metadata = {
 };
 
 type PageProps = {
-  searchParams: { q?: string };
+  searchParams: Promise<{ q?: string }>;
 };
 
-export default function ToolsPage({ searchParams }: PageProps) {
+export default async function ToolsPage(props: PageProps) {
+  const searchParams = await props.searchParams;
   const searchQuery = parseSearchQuery(searchParams.q);
   const needle = searchQuery.toLowerCase();
   const tools = needle
