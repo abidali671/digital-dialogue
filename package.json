@@ -17,7 +17,7 @@
     "@contentful/rich-text-react-renderer": "^16.2.2",
     "@headlessui/react": "^2.2.10",
     "@types/node": "20.2.3",
-    "autoprefixer": "10.4.14",
+    "autoprefixer": "^10.6.2",
     "clsx": "^1.2.1",
     "eslint": "8.41.0",
     "eslint-config-next": "^15.5.28",
@@ -25,7 +25,7 @@
     "next": "^15.5.28",
     "next-seo": "^6.1.0",
     "next-share": "^0.24.0",
-    "postcss": "8.4.23",
+    "postcss": "^8.5.32",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "tailwindcss": "3.3.2",
@@ -36,5 +36,8 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "cross-env": "^10.1.0"
+  },
+  "overrides": {
+    "postcss": "$postcss"
   }
 }
