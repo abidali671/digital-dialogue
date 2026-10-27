@@ -51,29 +51,30 @@ npm run lint      # ESLint
 
 ## Clear cache (`/api/revalidate`)
 
-Protected by `REVALIDATE_SECRET`. Pass the secret in the query string or as `Authorization: Bearer …`.
+Protected by `REVALIDATE_SECRET`. POST only, with `Authorization: Bearer …`.
 
 - **Full site:** clears the Contentful data cache tag, static routes, and every blog/category path
-- **Single path:** clears the Contentful data cache tag **and** that route
-
-Compatible with Next 13.4.
+- **Single path:** POST a JSON body `{ "path": "/blogs/category/slug" }`. That clears the Contentful data cache tag **and** that route
 
 Replace:
 
 - `YOUR_DOMAIN` → `http://localhost:3000` locally, or `https://www.digitaldialogue.pk` in production
 - `YOUR_SECRET` → value of `REVALIDATE_SECRET`
 
-### GET
-
-```bash
-curl "https://www.digitaldialogue.pk/api/revalidate?secret=YOUR_SECRET"
-```
-
 ### POST
 
 ```bash
 curl -X POST "https://www.digitaldialogue.pk/api/revalidate" \
   -H "Authorization: Bearer YOUR_SECRET"
+```
+
+Single page:
+
+```bash
+curl -X POST "https://www.digitaldialogue.pk/api/revalidate" \
+  -H "Authorization: Bearer YOUR_SECRET" \
+  -H "Content-Type: application/json" \
+  -d '{"path":"/blogs"}'
 ```
 
 Successful response:

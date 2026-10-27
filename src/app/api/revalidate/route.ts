@@ -1,8 +1,10 @@
+import { timingSafeEqual } from "node:crypto";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { CONTENTFUL_CACHE_TAG } from "@/lib/contentful/client";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 const STATIC_PATHS = [
   "/",
@@ -29,16 +31,16 @@ type ContentfulListItem = {
 
 function getSecret(request: NextRequest) {
   const header = request.headers.get("authorization");
-  if (header?.startsWith("Bearer ")) {
-    return header.slice("Bearer ".length).trim();
-  }
-  return request.nextUrl.searchParams.get("secret") || "";
+  return header?.startsWith("Bearer ") ? header.slice(7).trim() : "";
 }
 
 function isAuthorized(request: NextRequest) {
   const expected = process.env.REVALIDATE_SECRET;
-  if (!expected) return false;
-  return getSecret(request) === expected;
+  const given = getSecret(request);
+  if (!expected || !given) return false;
+  const a = Buffer.from(given);
+  const b = Buffer.from(expected);
+  return a.length === b.length && timingSafeEqual(a, b);
 }
 
 /** Normalize a site-relative path like `/blogs/seo/my-post`. Returns null if invalid. */
@@ -74,16 +76,11 @@ function normalizePath(raw: string): string | null {
 }
 
 async function getRawPath(request: NextRequest): Promise<string | null> {
-  const fromQuery = request.nextUrl.searchParams.get("path");
-  if (fromQuery !== null) return fromQuery;
-
-  if (request.method === "POST") {
-    try {
-      const body = await request.json();
-      if (body && typeof body.path === "string") return body.path;
-    } catch {
-      // no / invalid JSON — full revalidate
-    }
+  try {
+    const body = await request.json();
+    if (body && typeof body.path === "string") return body.path;
+  } catch {
+    // no / invalid JSON — full revalidate
   }
 
   return null;
@@ -215,30 +212,16 @@ function revalidateOne(path: string) {
 }
 
 /**
- * Clear cache on demand.
- * Next 13.4 only supports single-arg revalidatePath / revalidateTag.
+ * Clear cache on demand. POST only.
+ * Authorization: Bearer <REVALIDATE_SECRET>
  *
- * Full site:
- *   GET  /api/revalidate?secret=...
- *   POST /api/revalidate
- *        Authorization: Bearer ...
- *
- * Single page:
- *   GET  /api/revalidate?secret=...&path=/blogs/category/slug
- *   POST /api/revalidate
- *        Authorization: Bearer ...
- *        { "path": "/blogs/category/slug" }
+ * Full site: POST /api/revalidate
+ * Single page: POST /api/revalidate
+ *   { "path": "/blogs/category/slug" }
  *   (also clears the Contentful data tag so the page does not rebuild from a stale fetch)
  */
 async function handleRevalidate(request: NextRequest) {
-  if (!process.env.REVALIDATE_SECRET) {
-    return NextResponse.json(
-      { error: "REVALIDATE_SECRET is not configured" },
-      { status: 500 }
-    );
-  }
-
-  if (!isAuthorized(request)) {
+  if (!process.env.REVALIDATE_SECRET || !isAuthorized(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -260,8 +243,11 @@ async function handleRevalidate(request: NextRequest) {
   return revalidateAll();
 }
 
-export async function GET(request: NextRequest) {
-  return handleRevalidate(request);
+export async function GET() {
+  return NextResponse.json(
+    { error: "Method Not Allowed" },
+    { status: 405, headers: { Allow: "POST" } }
+  );
 }
 
 export async function POST(request: NextRequest) {
