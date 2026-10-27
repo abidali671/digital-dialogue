@@ -86,6 +86,29 @@ async function getRawPath(request: NextRequest): Promise<string | null> {
   return null;
 }
 
+function contentfulRetryDelay(res: Response) {
+  const resetSeconds = Number(res.headers.get("X-Contentful-RateLimit-Reset"));
+  if (!Number.isFinite(resetSeconds) || resetSeconds < 0) return 250;
+  return Math.min(resetSeconds * 1000, 2000);
+}
+
+async function fetchContentful(url: string, accessToken: string) {
+  const init = {
+    cache: "no-store" as const,
+    headers: { Authorization: `Bearer ${accessToken}` },
+  };
+
+  let res = await fetch(url, init);
+  if (res.status === 429 || res.status >= 500) {
+    await res.arrayBuffer().catch(() => undefined);
+    await new Promise((resolve) =>
+      setTimeout(resolve, contentfulRetryDelay(res))
+    );
+    res = await fetch(url, init);
+  }
+  return res;
+}
+
 /** Fresh Contentful list (bypass Next data cache) so we can purge every post path. */
 async function fetchAllBlogPaths(): Promise<string[]> {
   const space = process.env.CONTENTFUL_SPACE_ID;
@@ -100,7 +123,6 @@ async function fetchAllBlogPaths(): Promise<string[]> {
 
   while (skip < total) {
     const params = new URLSearchParams({
-      access_token: accessToken,
       content_type: "post",
       include: "1",
       limit: String(limit),
@@ -108,7 +130,7 @@ async function fetchAllBlogPaths(): Promise<string[]> {
     });
 
     const url = `https://cdn.contentful.com/spaces/${space}/environments/${environment}/entries?${params}`;
-    const res = await fetch(url, { cache: "no-store" });
+    const res = await fetchContentful(url, accessToken);
     if (!res.ok) break;
 
     const data = (await res.json()) as {
@@ -156,13 +178,12 @@ async function fetchAllBlogPaths(): Promise<string[]> {
 
   // Also purge category listing pages
   const categoryParams = new URLSearchParams({
-    access_token: accessToken,
     content_type: "category",
     limit: "100",
   });
-  const categoryRes = await fetch(
+  const categoryRes = await fetchContentful(
     `https://cdn.contentful.com/spaces/${space}/environments/${environment}/entries?${categoryParams}`,
-    { cache: "no-store" }
+    accessToken
   );
   if (categoryRes.ok) {
     const categoryData = (await categoryRes.json()) as {

@@ -109,6 +109,35 @@ function resolveResponse(data: ContentfulResponse) {
   };
 }
 
+function contentfulRetryDelay(res: Response) {
+  const resetSeconds = Number(res.headers.get("X-Contentful-RateLimit-Reset"));
+  if (!Number.isFinite(resetSeconds) || resetSeconds < 0) return 250;
+  return Math.min(resetSeconds * 1000, 2000);
+}
+
+async function fetchContentful(
+  url: string,
+  accessToken: string,
+  init: RequestInit & { next?: { revalidate?: number; tags?: string[] } }
+) {
+  const requestInit = {
+    ...init,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  let res = await fetch(url, requestInit);
+  if (res.status === 429 || res.status >= 500) {
+    await res.arrayBuffer().catch(() => undefined);
+    await new Promise((resolve) =>
+      setTimeout(resolve, contentfulRetryDelay(res))
+    );
+    res = await fetch(url, requestInit);
+  }
+  return res;
+}
+
 async function getEntries(
   query: GetEntriesQuery = {},
   options?: { revalidate?: number }
@@ -122,7 +151,6 @@ async function getEntries(
   }
 
   const params = new URLSearchParams();
-  params.set("access_token", accessToken);
 
   const { include = 2, ...rest } = query;
   params.set("include", String(include));
@@ -136,13 +164,15 @@ async function getEntries(
   const url = `https://cdn.contentful.com/spaces/${space}/environments/${environment}/entries?${params.toString()}`;
   const revalidate = options?.revalidate ?? REVALIDATE_LISTING;
 
-  const res = await fetch(url, {
+  const res = await fetchContentful(url, accessToken, {
     next: { revalidate, tags: [CONTENTFUL_CACHE_TAG] },
   });
 
   if (!res.ok) {
     const body = await res.text();
-    throw new Error(`Contentful request failed (${res.status}): ${body}`);
+    throw new Error(
+      `Contentful request failed (${res.status}): ${body.slice(0, 200)}`
+    );
   }
 
   const data = (await res.json()) as ContentfulResponse;
