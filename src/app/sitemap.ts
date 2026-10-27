@@ -8,7 +8,7 @@ import { getPostTags } from "@/lib/keywords";
 import type { ICategoryData, IPostData } from "@/types";
 import { AUTHORS } from "@/constants/authors";
 
-export const revalidate = REVALIDATE_LISTING;
+export const revalidate = 3600;
 
 async function getAllEntries(query: GetEntriesQuery) {
   const limit = 100;
@@ -35,7 +35,9 @@ function entry(
   path: string,
   options: {
     lastModified?: string | Date;
-    changeFrequency?: string;
+    changeFrequency?: NonNullable<
+      MetadataRoute.Sitemap[number]["changeFrequency"]
+    >;
     priority?: number;
   } = {},
 ) {

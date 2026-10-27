@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { type JSX } from "react";
 import Link from "next/link";
 import { Menu as HeadlessMenu, Transition } from "@headlessui/react";
 
@@ -20,6 +20,7 @@ const Menu = ({ list, button, buttonLabel }: IMenuProps) => {
         {(state) => button(state)}
       </HeadlessMenu.Button>
       <Transition
+        as="div"
         enter="transition duration-300 ease-out"
         enterFrom="transform scale-95 opacity-0"
         enterTo="transform scale-100 opacity-100"

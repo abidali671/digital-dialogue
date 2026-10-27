@@ -5,7 +5,7 @@ import config from "@/lib/config";
 import { getPublishedDate } from "@/helper";
 import type { IPostData } from "@/types";
 
-export const revalidate = REVALIDATE_LISTING;
+export const revalidate = 3600;
 export const dynamic = "force-static";
 
 function escapeXml(value: string) {

@@ -9,18 +9,10 @@ const ADMIN_MODE_KEY = "dd_admin_mode";
 function readSecret(): string | null {
   if (typeof window === "undefined") return null;
 
-  const fromLocal = localStorage.getItem(SECRET_STORAGE_KEY);
-  if (fromLocal) return fromLocal;
+  // Drop any secret left in localStorage by older builds.
+  localStorage.removeItem(SECRET_STORAGE_KEY);
 
-  // Migrate older session-only secret if present.
-  const fromSession = sessionStorage.getItem(SECRET_STORAGE_KEY);
-  if (fromSession) {
-    localStorage.setItem(SECRET_STORAGE_KEY, fromSession);
-    sessionStorage.removeItem(SECRET_STORAGE_KEY);
-    return fromSession;
-  }
-
-  return null;
+  return sessionStorage.getItem(SECRET_STORAGE_KEY);
 }
 
 function getRevalidateSecret(): string | null {
@@ -30,7 +22,7 @@ function getRevalidateSecret(): string | null {
   const entered = window.prompt("Enter REVALIDATE_SECRET");
   if (!entered) return null;
 
-  localStorage.setItem(SECRET_STORAGE_KEY, entered);
+  sessionStorage.setItem(SECRET_STORAGE_KEY, entered);
   return entered;
 }
 

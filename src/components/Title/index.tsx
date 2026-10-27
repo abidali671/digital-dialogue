@@ -1,4 +1,4 @@
-import React, { ElementType } from "react";
+import React, { ElementType, type JSX } from "react";
 
 interface TitleProps {
   children: React.ReactNode;

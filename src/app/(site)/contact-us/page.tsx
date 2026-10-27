@@ -87,6 +87,20 @@ export default function ContactUsPage() {
             method="POST"
             className="mt-6 grid gap-4"
           >
+            <input
+              type="text"
+              name="_gotcha"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                left: "-9999px",
+                width: 1,
+                height: 1,
+                opacity: 0,
+              }}
+            />
             <label className="grid gap-2">
               <span className="font-mono text-xs uppercase tracking-wide text-mute">
                 Name

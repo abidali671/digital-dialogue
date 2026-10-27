@@ -5,15 +5,14 @@ import { parseSearchQuery } from "@/lib/listing";
 import { labelFromKeywordSlug, getPostTags } from "@/lib/keywords";
 import { isNextNotFound } from "@/lib/next-errors";
 import { loadTagPosts } from "@/lib/tags";
-import { REVALIDATE_LISTING } from "@/lib/contentful/client";
 import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { IPostData } from "@/types";
 
-export const revalidate = REVALIDATE_LISTING;
+export const revalidate = 3600;
 
 type PageProps = {
-  params: { slug: string };
-  searchParams: { q?: string };
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ q?: string }>;
 };
 
 function resolveTagLabel(slug: string, posts: IPostData[]) {
@@ -38,9 +37,8 @@ function tagPageDescription(label: string, slug: string) {
   return `Browse practical freelancing tips on ${label}. Clear next steps on profiles, proposals, platforms, fees, and landing client work.`;
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const slug = params.slug?.trim();
   if (!slug) notFound();
 
@@ -66,7 +64,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function TagPage({ params, searchParams }: PageProps) {
+export default async function TagPage(props: PageProps) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   try {
     const slug = params.slug?.trim();
     if (!slug) notFound();

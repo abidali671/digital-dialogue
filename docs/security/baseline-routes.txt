@@ -1,0 +1,34 @@
+# Baseline route table
+# Branch start: 9e2c804
+# Next.js 13.4.3, recorded before T1
+# Package manager: npm (package-lock.json). yarn.lock removed.
+# Assumption: Vercel Production currently prefers yarn.lock when both
+# lockfiles exist. This repo is developed with npm, so npm is the
+# single install path from this commit on. Confirm on the next Preview.
+
+Route (app)
+○ /
+○ /_not-found
+○ /about
+○ /affiliate-disclosure
+λ /api/revalidate
+λ /authors/[author]
+λ /blogs
+λ /blogs/[category]
+λ /blogs/[category]/[blog_detail]
+○ /contact-us
+○ /disclaimer
+○ /feed.xml
+○ /privacy-policy
+○ /robots.txt
+○ /sitemap.xml
+λ /tags/[slug]
+○ /terms-of-service
+λ /tools
+○ /tools/freelance-rate-calculator
+○ /tools/upwork-connects-calculator
+○ /tools/upwork-fee-calculator
+ƒ Middleware
+
+Legend (Next 13.4): λ server, ○ static
+npm audit before upgrades: 1 critical, 12 high, 6 moderate

@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { cache } from "react";
-import contentful_client, {
-  REVALIDATE_LISTING,
-} from "@/lib/contentful/client";
+import contentful_client from "@/lib/contentful/client";
 import config from "@/lib/config";
 import constants from "@/constants";
 import BlogsClient from "@/components/blogs/BlogsClient";
@@ -15,10 +13,10 @@ import {
 import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle, withPageMetaDescription } from "@/lib/metadata";
 import { ICategoryData, IPostData } from "@/types";
 
-export const revalidate = REVALIDATE_LISTING;
+export const revalidate = 3600;
 
 type PageProps = {
-  searchParams: { page?: string; q?: string };
+  searchParams: Promise<{ page?: string; q?: string }>;
 };
 
 const loadBlogPage = cache(async (page: number, searchQuery: string) => {
@@ -35,9 +33,8 @@ const loadBlogPage = cache(async (page: number, searchQuery: string) => {
   };
 });
 
-export async function generateMetadata({
-  searchParams,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const searchParams = await props.searchParams;
   const currentPage = parsePageQuery(searchParams.page);
   const { totalPages } = await loadBlogPage(
     currentPage,
@@ -66,7 +63,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function BlogsPage({ searchParams }: PageProps) {
+export default async function BlogsPage(props: PageProps) {
+  const searchParams = await props.searchParams;
   const currentPage = parsePageQuery(searchParams.page);
   const searchQuery = parseSearchQuery(searchParams.q);
 

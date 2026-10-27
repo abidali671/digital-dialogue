@@ -1,8 +1,10 @@
+import { timingSafeEqual } from "node:crypto";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 import { CONTENTFUL_CACHE_TAG } from "@/lib/contentful/client";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 const STATIC_PATHS = [
   "/",
@@ -29,16 +31,16 @@ type ContentfulListItem = {
 
 function getSecret(request: NextRequest) {
   const header = request.headers.get("authorization");
-  if (header?.startsWith("Bearer ")) {
-    return header.slice("Bearer ".length).trim();
-  }
-  return request.nextUrl.searchParams.get("secret") || "";
+  return header?.startsWith("Bearer ") ? header.slice(7).trim() : "";
 }
 
 function isAuthorized(request: NextRequest) {
   const expected = process.env.REVALIDATE_SECRET;
-  if (!expected) return false;
-  return getSecret(request) === expected;
+  const given = getSecret(request);
+  if (!expected || !given) return false;
+  const a = Buffer.from(given);
+  const b = Buffer.from(expected);
+  return a.length === b.length && timingSafeEqual(a, b);
 }
 
 /** Normalize a site-relative path like `/blogs/seo/my-post`. Returns null if invalid. */
@@ -74,19 +76,37 @@ function normalizePath(raw: string): string | null {
 }
 
 async function getRawPath(request: NextRequest): Promise<string | null> {
-  const fromQuery = request.nextUrl.searchParams.get("path");
-  if (fromQuery !== null) return fromQuery;
-
-  if (request.method === "POST") {
-    try {
-      const body = await request.json();
-      if (body && typeof body.path === "string") return body.path;
-    } catch {
-      // no / invalid JSON — full revalidate
-    }
+  try {
+    const body = await request.json();
+    if (body && typeof body.path === "string") return body.path;
+  } catch {
+    // no / invalid JSON — full revalidate
   }
 
   return null;
+}
+
+function contentfulRetryDelay(res: Response) {
+  const resetSeconds = Number(res.headers.get("X-Contentful-RateLimit-Reset"));
+  if (!Number.isFinite(resetSeconds) || resetSeconds < 0) return 250;
+  return Math.min(resetSeconds * 1000, 2000);
+}
+
+async function fetchContentful(url: string, accessToken: string) {
+  const init = {
+    cache: "no-store" as const,
+    headers: { Authorization: `Bearer ${accessToken}` },
+  };
+
+  let res = await fetch(url, init);
+  if (res.status === 429 || res.status >= 500) {
+    await res.arrayBuffer().catch(() => undefined);
+    await new Promise((resolve) =>
+      setTimeout(resolve, contentfulRetryDelay(res))
+    );
+    res = await fetch(url, init);
+  }
+  return res;
 }
 
 /** Fresh Contentful list (bypass Next data cache) so we can purge every post path. */
@@ -103,7 +123,6 @@ async function fetchAllBlogPaths(): Promise<string[]> {
 
   while (skip < total) {
     const params = new URLSearchParams({
-      access_token: accessToken,
       content_type: "post",
       include: "1",
       limit: String(limit),
@@ -111,7 +130,7 @@ async function fetchAllBlogPaths(): Promise<string[]> {
     });
 
     const url = `https://cdn.contentful.com/spaces/${space}/environments/${environment}/entries?${params}`;
-    const res = await fetch(url, { cache: "no-store" });
+    const res = await fetchContentful(url, accessToken);
     if (!res.ok) break;
 
     const data = (await res.json()) as {
@@ -159,13 +178,12 @@ async function fetchAllBlogPaths(): Promise<string[]> {
 
   // Also purge category listing pages
   const categoryParams = new URLSearchParams({
-    access_token: accessToken,
     content_type: "category",
     limit: "100",
   });
-  const categoryRes = await fetch(
+  const categoryRes = await fetchContentful(
     `https://cdn.contentful.com/spaces/${space}/environments/${environment}/entries?${categoryParams}`,
-    { cache: "no-store" }
+    accessToken
   );
   if (categoryRes.ok) {
     const categoryData = (await categoryRes.json()) as {
@@ -215,30 +233,16 @@ function revalidateOne(path: string) {
 }
 
 /**
- * Clear cache on demand.
- * Next 13.4 only supports single-arg revalidatePath / revalidateTag.
+ * Clear cache on demand. POST only.
+ * Authorization: Bearer <REVALIDATE_SECRET>
  *
- * Full site:
- *   GET  /api/revalidate?secret=...
- *   POST /api/revalidate
- *        Authorization: Bearer ...
- *
- * Single page:
- *   GET  /api/revalidate?secret=...&path=/blogs/category/slug
- *   POST /api/revalidate
- *        Authorization: Bearer ...
- *        { "path": "/blogs/category/slug" }
+ * Full site: POST /api/revalidate
+ * Single page: POST /api/revalidate
+ *   { "path": "/blogs/category/slug" }
  *   (also clears the Contentful data tag so the page does not rebuild from a stale fetch)
  */
 async function handleRevalidate(request: NextRequest) {
-  if (!process.env.REVALIDATE_SECRET) {
-    return NextResponse.json(
-      { error: "REVALIDATE_SECRET is not configured" },
-      { status: 500 }
-    );
-  }
-
-  if (!isAuthorized(request)) {
+  if (!process.env.REVALIDATE_SECRET || !isAuthorized(request)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -260,8 +264,11 @@ async function handleRevalidate(request: NextRequest) {
   return revalidateAll();
 }
 
-export async function GET(request: NextRequest) {
-  return handleRevalidate(request);
+export async function GET() {
+  return NextResponse.json(
+    { error: "Method Not Allowed" },
+    { status: 405, headers: { Allow: "POST" } }
+  );
 }
 
 export async function POST(request: NextRequest) {

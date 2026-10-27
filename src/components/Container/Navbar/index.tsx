@@ -52,6 +52,7 @@ const Navbar = () => {
             <Hamburger aria-hidden="true" />
           </button>
           <Transition
+            as="div"
             show={isMenu}
             className="fixed left-0 top-[56px] bg-white w-full transition-all duration-500 ease-in-out"
             enterFrom="opacity-0 translate-x-full"
