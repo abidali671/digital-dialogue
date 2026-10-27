@@ -40,6 +40,7 @@ const REMOVED_FREELANCING_SLUGS = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 828, 1200],
