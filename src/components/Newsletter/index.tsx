@@ -24,6 +24,20 @@ const Newsletter = () => {
           method="POST"
           className="flex w-full flex-col gap-3 sm:flex-row"
         >
+          <input
+            type="text"
+            name="_gotcha"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              left: "-9999px",
+              width: 1,
+              height: 1,
+              opacity: 0,
+            }}
+          />
           <input type="hidden" name="subject" value="Newsletter signup" />
           <label className="flex-1">
             <span className="sr-only">Email address</span>
