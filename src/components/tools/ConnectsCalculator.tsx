@@ -1,19 +1,10 @@
 "use client";
 
 import { FormEvent, useId, useRef, useState, type ReactNode, type Ref } from "react";
+import CalculatorCurrencyFields, { PkrRateField, PkrResultNote } from "@/components/tools/CalculatorCurrencyFields";
 import { computeConnects, type ConnectsResult, type Ratio } from "@/lib/upworkConnects";
-import { currencySymbol, formatMoney, formatNum, formatPercent, parseDecimal } from "@/lib/upworkFee";
-
-const CURRENCIES = [
-  ["USD", "USD — US dollar ($)"],
-  ["PKR", "PKR — Pakistani rupee (Rs)"],
-  ["EUR", "EUR — Euro (€)"],
-  ["GBP", "GBP — British pound (£)"],
-  ["AED", "AED — UAE dirham"],
-  ["CAD", "CAD — Canadian dollar ($)"],
-  ["AUD", "AUD — Australian dollar ($)"],
-  ["INR", "INR — Indian rupee (₹)"],
-] as const;
+import { formatNum, formatPercent, parseDecimal } from "@/lib/upworkFee";
+import { USD_PKR, entrySymbol, formatConvertedMoney, usdPkrFieldError } from "@/lib/usdPkr";
 
 const CONNECTS_HELP = "https://support.upwork.com/hc/en-us/articles/211062898-Understanding-and-using-Connects";
 
@@ -26,6 +17,7 @@ type Values = {
   contracts: string;
   other: string;
   currency: string;
+  usdPkr: string;
 };
 
 const INITIAL: Values = {
@@ -37,6 +29,7 @@ const INITIAL: Values = {
   contracts: "",
   other: "",
   currency: "USD",
+  usdPkr: USD_PKR.rate,
 };
 
 type Key = "cost" | "cpp" | "proposals" | "replies" | "interviews" | "contracts" | "other";
@@ -49,9 +42,10 @@ export default function ConnectsCalculator() {
   const [warnings, setWarnings] = useState<string[]>([]);
   const [result, setResult] = useState<ConnectsResult | null>(null);
   const formId = useId();
+  const [rateError, setRateError] = useState("");
   const summaryRef = useRef<HTMLDivElement>(null);
   const firstRef = useRef<HTMLInputElement>(null);
-  const symbol = currencySymbol(values.currency);
+  const symbol = entrySymbol(values.currency);
 
   function collect(current: Values) {
     const found: { id: string; msg: string; key: Key }[] = [];
@@ -104,9 +98,14 @@ export default function ConnectsCalculator() {
     const found = collect(values);
     const next: Errors = {};
     for (const item of found) next[item.key] = item.msg;
+    const fxMsg = values.currency === "PKR" ? usdPkrFieldError(values.usdPkr) : "";
+    setRateError(fxMsg);
     setErrors(next);
-    setSummary(found.map(({ id, msg }) => ({ id, msg })));
-    if (found.length) {
+    setSummary([
+      ...found.map(({ id, msg }) => ({ id, msg })),
+      ...(fxMsg ? [{ id: `${formId}-currency-usd-pkr`, msg: fxMsg }] : []),
+    ]);
+    if (found.length || fxMsg) {
       setResult(null);
       setWarnings([]);
       summaryRef.current?.focus();
@@ -138,10 +137,11 @@ export default function ConnectsCalculator() {
     setSummary([]);
     setWarnings([]);
     setResult(null);
+    setRateError("");
     firstRef.current?.focus();
   }
 
-  const money = (amount: number) => formatMoney(amount, values.currency);
+  const money = (amount: number) => formatConvertedMoney(amount, values.currency, values.usdPkr);
   const show = (metric: Ratio | undefined) => (metric?.value == null ? "Not available yet" : money(metric.value));
   const showPct = (metric: Ratio | undefined) => (metric?.value == null ? "Not available yet" : formatPercent(metric.value, 1));
 
@@ -176,16 +176,29 @@ export default function ConnectsCalculator() {
             </div>
             <div className="grid gap-6 sm:grid-cols-2">
               <Field id={`${formId}-other`} label="Other proposal costs" symbol={symbol} value={values.other} placeholder="0.00" error={errors.other} onChange={(value) => setValues((c) => ({ ...c, other: value }))} hint="Membership or tools for this period. Optional, and kept separate from Connects." />
-              <div>
-                <label className="fee-label" htmlFor={`${formId}-currency`}>Currency</label>
-                <div className="fee-field">
-                  <select className="fee-input" id={`${formId}-currency`} value={values.currency} onChange={(event) => setValues((c) => ({ ...c, currency: event.target.value }))}>
-                    {CURRENCIES.map(([code, label]) => <option key={code} value={code}>{label}</option>)}
-                  </select>
-                </div>
-                <p className="fee-hint">Changes the symbol only. No exchange rates are applied.</p>
-              </div>
+              <CalculatorCurrencyFields
+                id={`${formId}-currency`}
+                currency={values.currency}
+                onCurrencyChange={(currency) => {
+                  setValues((current) => ({ ...current, currency }));
+                  if (currency !== "PKR") setRateError("");
+                }}
+              />
             </div>
+            <PkrRateField
+              id={`${formId}-currency-usd-pkr`}
+              currency={values.currency}
+              rate={values.usdPkr}
+              rateError={rateError}
+              onRateChange={(usdPkr) => {
+                setValues((current) => ({ ...current, usdPkr }));
+                if (rateError) setRateError(usdPkrFieldError(usdPkr));
+              }}
+              onRateBlur={(usdPkr) => {
+                if (usdPkr.trim() === "" && !rateError) return;
+                setRateError(values.currency === "PKR" ? usdPkrFieldError(usdPkr) : "");
+              }}
+            />
             {warnings.map((note) => <p key={note} className="rounded-lg border border-[#d97706]/50 bg-[#fffbeb] px-3 py-2.5 text-sm font-semibold text-[#92400e]">{note}</p>)}
             <div className="flex flex-col-reverse gap-3 border-t border-line pt-6 sm:flex-row sm:items-center">
               <button type="button" className="fee-btn fee-btn-secondary w-full sm:w-auto" onClick={onReset}>Reset</button>
@@ -203,6 +216,7 @@ export default function ConnectsCalculator() {
           )}
           {result && (
             <div>
+              <PkrResultNote currency={values.currency} rate={values.usdPkr} />
               <div className="rounded-xl border border-accent/40 bg-[#f0fdfa] p-5">
                 <p className="text-sm font-bold uppercase tracking-[0.08em] text-[#134e4a]">Cost per contract</p>
                 <p className="fee-display mt-1 font-display text-[2.5rem] font-bold leading-[1.1] text-ink tabular-nums">{show(result.perContract.connects)}</p>
@@ -235,7 +249,7 @@ export default function ConnectsCalculator() {
               </div>
             </div>
           )}
-          <p className="mt-6 border-t border-line pt-4 text-xs leading-relaxed text-[#475569]">Estimates only. Connects prices and refunds change, so enter the price you pay.</p>
+          <p className="mt-6 border-t border-line pt-4 text-xs leading-relaxed text-[#475569]">Estimates only. Connects prices and refunds change, so enter the price you pay. PKR converts US dollar amounts into rupees. Other currencies only change the symbol.</p>
         </section>
       </div>
     </section>

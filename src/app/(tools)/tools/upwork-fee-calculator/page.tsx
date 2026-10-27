@@ -41,7 +41,7 @@ const FAQ = [
   },
   {
     question: "Does choosing a currency convert my amounts?",
-    text: "No. The currency selector only changes the symbol and number format. No exchange rates are used, so enter amounts in the currency you want to see.",
+    text: "PKR does. Enter the contract amounts in US dollars, choose PKR, and the results are converted with an exchange rate you can edit. The default is the State Bank of Pakistan weighted average for the date shown under the rate field. EUR, GBP and the other currencies only change the symbol and number format, so enter those amounts in the currency you want to see.",
   },
   {
     question: "How accurate is this calculator?",
@@ -129,7 +129,7 @@ export default function UpworkFeeCalculatorPage() {
             <div className="max-w-3xl">
               <h1>Upwork Fee Calculator</h1>
               <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[#475569] md:text-xl">
-                Estimate what you actually keep from an Upwork contract after the freelancer service fee and any withdrawal or conversion costs. Works for hourly and fixed-price work.
+                Estimate what you actually keep from an Upwork contract after the freelancer service fee and any withdrawal or conversion costs. Works for hourly and fixed-price work. Choose PKR to convert US dollar amounts into rupees.
               </p>
               <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-accent/40 bg-[#f0fdfa] px-3.5 py-1.5 text-sm font-semibold text-[#134e4a]">
                 <Check />
@@ -141,7 +141,7 @@ export default function UpworkFeeCalculatorPage() {
                 "Hourly and fixed-price contracts",
                 "Editable service fee %",
                 "Withdrawal and conversion costs",
-                "USD, PKR, EUR, GBP and more",
+                "PKR converted from US dollars",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-2">
                   <span className="text-[#0f766e]">
@@ -209,7 +209,7 @@ export default function UpworkFeeCalculatorPage() {
             {[
               ["Pick your contract type", "Choose Hourly to enter your rate and hours, or Fixed-price to enter the total contract or milestone amount."],
               ["Check the fee and extras", "Replace the estimated 10% with the service fee shown on your Upwork offer. Add withdrawal or conversion costs if you know them."],
-              ["Calculate and plan", "Select Calculate take-home to see your estimated payout, the effective deduction and a breakdown you can use when setting rates."],
+              ["Calculate and plan", "Select Calculate take-home to see your estimated payout, the effective deduction and a breakdown you can use when setting rates. Choose PKR to show that payout in rupees."],
             ].map(([title, copy], index) => (
               <li key={title} className="flex gap-4 border-t border-line pt-5">
                 <span className="font-mono text-sm text-[#0f766e]" aria-hidden="true">
@@ -291,7 +291,7 @@ export default function UpworkFeeCalculatorPage() {
       <section className="border-t border-line bg-white">
         <div className="mx-auto w-full max-w-7xl px-5 py-8 sm:px-6">
           <p className="text-sm leading-relaxed text-[#475569]">
-            <strong className="font-semibold text-ink">Disclaimer:</strong> Digital Dialogue is an independent publication. This calculator is not affiliated with, endorsed by, or sponsored by Upwork. All results are estimates for planning only. Your actual fees, rounding, withdrawal charges, exchange rates and taxes may differ. Always check the fee shown on your Upwork offer or contract and Upwork’s official help pages.
+            <strong className="font-semibold text-ink">Disclaimer:</strong> Digital Dialogue is an independent publication. This calculator is not affiliated with, endorsed by, or sponsored by Upwork. All results are estimates for planning only. Your actual fees, rounding, withdrawal charges, exchange rates and taxes may differ. The PKR figure uses the rate shown in the calculator, which you can edit. Always check the fee shown on your Upwork offer or contract and Upwork’s official help pages.
           </p>
         </div>
       </section>

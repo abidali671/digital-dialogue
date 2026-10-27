@@ -1,28 +1,26 @@
 "use client";
 
 import { FormEvent, useEffect, useId, useRef, useState, type ReactNode, type Ref } from "react";
+import CalculatorCurrencyFields, {
+  CALCULATOR_CURRENCIES,
+  PkrRateField,
+  PkrResultNote,
+} from "@/components/tools/CalculatorCurrencyFields";
 import {
   FIELD_RULES,
   FeeResult,
   computeFee,
-  currencySymbol,
   fieldError,
-  formatMoney,
   formatPercent,
   parseDecimal,
   roundPercent,
 } from "@/lib/upworkFee";
-
-const CURRENCIES = [
-  ["USD", "USD — US dollar ($)"],
-  ["PKR", "PKR — Pakistani rupee (Rs)"],
-  ["EUR", "EUR — Euro (€)"],
-  ["GBP", "GBP — British pound (£)"],
-  ["AED", "AED — UAE dirham"],
-  ["CAD", "CAD — Canadian dollar ($)"],
-  ["AUD", "AUD — Australian dollar ($)"],
-  ["INR", "INR — Indian rupee (₹)"],
-] as const;
+import {
+  USD_PKR,
+  entrySymbol,
+  formatConvertedMoney,
+  usdPkrFieldError,
+} from "@/lib/usdPkr";
 
 const UPWORK_FEE_HELP =
   "https://support.upwork.com/hc/en-us/articles/211062538-Learn-about-the-Freelancer-Service-Fee";
@@ -36,6 +34,7 @@ type Values = {
   extraFlat: string;
   extraPct: string;
   currency: string;
+  usdPkr: string;
 };
 
 const INITIAL: Values = {
@@ -47,6 +46,7 @@ const INITIAL: Values = {
   extraFlat: "",
   extraPct: "",
   currency: "USD",
+  usdPkr: USD_PKR.rate,
 };
 
 const CHECKED_FIELDS = [
@@ -86,12 +86,15 @@ export default function FeeCalculator() {
   const [result, setResult] = useState<FeeResult | null>(null);
   const [stale, setStale] = useState(false);
   const [announcement, setAnnouncement] = useState("");
+  const [rateError, setRateError] = useState("");
   const summaryRef = useRef<HTMLDivElement>(null);
   const rateRef = useRef<HTMLInputElement>(null);
   const formId = useId();
 
-  const symbol = currencySymbol(values.currency);
+  const symbol = entrySymbol(values.currency);
   const fixed = values.type === "fixed";
+  const money = (amount: number) =>
+    formatConvertedMoney(amount, values.currency, values.usdPkr);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -99,16 +102,25 @@ export default function FeeCalculator() {
     const hours = params.get("hours");
     const fee = params.get("fee");
     const currency = params.get("currency");
-    if (!rate && !hours && !fee && !currency) return;
-    const allowed = new Set<string>(CURRENCIES.map(([code]) => code));
-    setValues((current) => ({
-      ...current,
-      type: "hourly",
-      rate: rate || current.rate,
-      hours: hours || current.hours,
-      fee: fee || current.fee,
-      currency: currency && allowed.has(currency) ? currency : current.currency,
-    }));
+    const usdPkr = params.get("usdPkr");
+    if (!rate && !hours && !fee && !currency && !usdPkr) return;
+    const allowed = new Set<string>(CALCULATOR_CURRENCIES.map(([code]) => code));
+    setValues((current) => {
+      const nextCurrency =
+        currency && allowed.has(currency) ? currency : current.currency;
+      return {
+        ...current,
+        type: "hourly",
+        rate: rate || current.rate,
+        hours: hours || current.hours,
+        fee: fee || current.fee,
+        currency: nextCurrency,
+        usdPkr:
+          nextCurrency === "PKR" && usdPkr && usdPkrFieldError(usdPkr) === ""
+            ? usdPkr.trim()
+            : current.usdPkr,
+      };
+    });
   }, []);
 
   function setField(key: keyof Values, value: string) {
@@ -142,9 +154,15 @@ export default function FeeCalculator() {
     const found = collectErrors();
     const nextErrors: Partial<Record<FieldName, string>> = {};
     for (const item of found) nextErrors[item.key] = item.msg;
+    const fxMsg =
+      values.currency === "PKR" ? usdPkrFieldError(values.usdPkr) : "";
+    setRateError(fxMsg);
     setErrors(nextErrors);
-    setSummary(found.map(({ id, msg }) => ({ id, msg })));
-    if (found.length) {
+    setSummary([
+      ...found.map(({ id, msg }) => ({ id, msg })),
+      ...(fxMsg ? [{ id: `${formId}-currency-usd-pkr`, msg: fxMsg }] : []),
+    ]);
+    if (found.length || fxMsg) {
       setAnnouncement("");
       track("fee_calc_error", { type: values.type, currency: values.currency });
       if (focusSummary) summaryRef.current?.focus();
@@ -163,10 +181,12 @@ export default function FeeCalculator() {
     setResult(computed);
     setStale(false);
     const effective = formatPercent(roundPercent(computed.effective, 2));
+    const spoken = (amount: number) =>
+      formatConvertedMoney(amount, values.currency, values.usdPkr);
     setAnnouncement("");
     window.setTimeout(() => {
       setAnnouncement(
-        `Estimated take-home: ${formatMoney(computed.takeHome, values.currency)} from ${formatMoney(computed.gross, values.currency)} gross. Service fee ${formatMoney(computed.serviceFee, values.currency)}, additional costs ${formatMoney(computed.extra, values.currency)}, total deduction ${effective}.`
+        `Estimated take-home: ${spoken(computed.takeHome)} from ${spoken(computed.gross)} gross. Service fee ${spoken(computed.serviceFee)}, additional costs ${spoken(computed.extra)}, total deduction ${effective}.`
       );
     }, 50);
     track("fee_calc_submit", { type: values.type, currency: values.currency });
@@ -191,11 +211,35 @@ export default function FeeCalculator() {
     setSummary([]);
     setResult(null);
     setStale(false);
+    setRateError("");
     setAnnouncement("Calculator reset.");
     rateRef.current?.focus();
   }
 
-  const money = (amount: number) => formatMoney(amount, values.currency);
+  function onCurrencyChange(currency: string) {
+    setValues((current) => ({ ...current, currency }));
+    if (currency !== "PKR") setRateError("");
+    if (result && collectErrors().length === 0) {
+      setResult(
+        computeFee({
+          type: values.type,
+          rate: parseDecimal(values.rate) || 0,
+          hours: parseDecimal(values.hours) || 0,
+          amount: parseDecimal(values.amount) || 0,
+          feePercent: parseDecimal(values.fee) || 0,
+          extraFlat: parseDecimal(values.extraFlat) || 0,
+          extraPercent: parseDecimal(values.extraPct) || 0,
+        })
+      );
+      setStale(false);
+    }
+  }
+
+  function onRateChange(usdPkr: string) {
+    setValues((current) => ({ ...current, usdPkr }));
+    if (rateError) setRateError(usdPkrFieldError(usdPkr));
+  }
+
   const shares = result
     ? {
         take: result.gross > 0 ? (result.takeHome / result.gross) * 100 : 0,
@@ -284,57 +328,23 @@ export default function FeeCalculator() {
                 </div>
               </fieldset>
 
-              <div>
-                <label className="fee-label" htmlFor={`${formId}-currency`}>
-                  Currency
-                </label>
-                <div className="fee-field">
-                  <select
-                    className="fee-input"
-                    id={`${formId}-currency`}
-                    value={values.currency}
-                    aria-describedby={`${formId}-currency-hint`}
-                    onChange={(event) => {
-                      const currency = event.target.value;
-                      setValues((current) => ({ ...current, currency }));
-                      if (result && collectErrors().length === 0) {
-                        setResult(
-                          computeFee({
-                            type: values.type,
-                            rate: parseDecimal(values.rate) || 0,
-                            hours: parseDecimal(values.hours) || 0,
-                            amount: parseDecimal(values.amount) || 0,
-                            feePercent: parseDecimal(values.fee) || 0,
-                            extraFlat: parseDecimal(values.extraFlat) || 0,
-                            extraPercent: parseDecimal(values.extraPct) || 0,
-                          })
-                        );
-                        setStale(false);
-                      }
-                    }}
-                  >
-                    {CURRENCIES.map(([code, label]) => (
-                      <option key={code} value={code}>
-                        {label}
-                      </option>
-                    ))}
-                  </select>
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 20 20"
-                    className="fee-svg-lg pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#475569]"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M6 8l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-                <p id={`${formId}-currency-hint`} className="fee-hint">
-                  Changes the symbol and format only. No exchange rates are applied.
-                </p>
-              </div>
+              <CalculatorCurrencyFields
+                id={`${formId}-currency`}
+                currency={values.currency}
+                onCurrencyChange={onCurrencyChange}
+              />
             </div>
+            <PkrRateField
+              id={`${formId}-currency-usd-pkr`}
+              currency={values.currency}
+              rate={values.usdPkr}
+              rateError={rateError}
+              onRateChange={onRateChange}
+              onRateBlur={(usdPkr) => {
+                if (usdPkr.trim() === "" && !rateError) return;
+                setRateError(values.currency === "PKR" ? usdPkrFieldError(usdPkr) : "");
+              }}
+            />
 
             {!fixed && (
               <div className="grid gap-6 sm:grid-cols-2">
@@ -492,6 +502,7 @@ export default function FeeCalculator() {
 
           {result && shares && (
             <div>
+              <PkrResultNote currency={values.currency} rate={values.usdPkr} />
               {stale && (
                 <p className="mb-4 flex items-start gap-2 rounded-lg border border-[#d97706]/50 bg-[#fffbeb] px-3 py-2.5 text-sm font-semibold text-[#92400e]">
                   <AlertIcon className="mt-0.5 shrink-0" />

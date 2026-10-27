@@ -1,47 +1,35 @@
 import type { Metadata } from "next";
-import ToolsListing, { type ToolCard } from "@/components/tools/ToolsListing";
+import ToolsListing from "@/components/tools/ToolsListing";
+import config from "@/lib/config";
 import { parseSearchQuery } from "@/lib/listing";
 import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
+import { breadcrumbSchema, JsonLdScript } from "@/lib/schema";
+import {
+  HUB_TOOLS,
+  TOOL_FAQS,
+  TOOLS_PAGE_DESCRIPTION,
+  TOOLS_PAGE_TITLE,
+} from "@/lib/toolsHub";
 
-const TITLE = "Freelancing tools";
-const DESCRIPTION =
-  "Free calculators for Upwork fees and freelance planning. Estimate take-home pay before you send a proposal.";
+const PATH = "/tools";
 
 export const metadata: Metadata = {
-  title: pageTitle(TITLE),
-  description: DESCRIPTION,
-  alternates: { canonical: "/tools" },
+  title: pageTitle(TOOLS_PAGE_TITLE),
+  description: TOOLS_PAGE_DESCRIPTION,
+  alternates: { canonical: PATH },
   openGraph: {
-    title: resolvePageTitle(TITLE),
-    description: DESCRIPTION,
-    url: "/tools",
+    title: resolvePageTitle(TOOLS_PAGE_TITLE),
+    description: TOOLS_PAGE_DESCRIPTION,
+    url: PATH,
     images: [DEFAULT_OG_IMAGE],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: resolvePageTitle(TOOLS_PAGE_TITLE),
+    description: TOOLS_PAGE_DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE.url],
+  },
 };
-
-const TOOLS: ToolCard[] = [
-  {
-    href: "/tools/upwork-fee-calculator",
-    title: "Upwork Fee Calculator",
-    copy: "Estimate take-home pay after the freelancer service fee and withdrawal costs.",
-    image: "/upwork-fee-calculator.png",
-    alt: "Upwork Fee Calculator showing take-home pay split into what you keep, the service fee, and withdrawal costs.",
-  },
-  {
-    href: "/tools/upwork-connects-calculator",
-    title: "Upwork Connects Calculator",
-    copy: "See what a set of proposals costs in Connects, and the cost of each reply, interview and contract.",
-    image: "/upwork-connects-calculator.png",
-    alt: "Upwork Connects Calculator showing a proposal funnel from proposals to replies, interviews, and contracts.",
-  },
-  {
-    href: "/tools/freelance-rate-calculator",
-    title: "Freelance Rate Calculator",
-    copy: "Turn a monthly or yearly income goal into an hourly rate that covers fees and unpaid time.",
-    image: "/freelance-rate-calculator.png",
-    alt: "Freelance Rate Calculator showing an hourly rate split into take-home goal, expenses, platform fee, and unbilled time.",
-  },
-];
 
 type PageProps = {
   searchParams: { q?: string };
@@ -51,8 +39,56 @@ export default function ToolsPage({ searchParams }: PageProps) {
   const searchQuery = parseSearchQuery(searchParams.q);
   const needle = searchQuery.toLowerCase();
   const tools = needle
-    ? TOOLS.filter((tool) => `${tool.title} ${tool.copy}`.toLowerCase().includes(needle))
-    : TOOLS;
+    ? HUB_TOOLS.filter((tool) =>
+        `${tool.title} ${tool.copy}`.toLowerCase().includes(needle)
+      )
+    : HUB_TOOLS;
 
-  return <ToolsListing tools={tools} searchQuery={searchQuery} />;
+  return (
+    <>
+      {!searchQuery && (
+        <JsonLdScript
+          data={[
+            breadcrumbSchema([
+              { name: "Home", path: "/" },
+              { name: "Tools", path: PATH },
+            ]),
+            {
+              "@context": "https://schema.org",
+              "@type": "CollectionPage",
+              name: TOOLS_PAGE_TITLE,
+              description: TOOLS_PAGE_DESCRIPTION,
+              url: `${config.BASE_URL}${PATH}`,
+              isPartOf: {
+                "@type": "WebSite",
+                name: config.SITE_NAME,
+                url: config.BASE_URL,
+              },
+              mainEntity: {
+                "@type": "ItemList",
+                numberOfItems: HUB_TOOLS.length,
+                itemListElement: HUB_TOOLS.map((tool, index) => ({
+                  "@type": "ListItem",
+                  position: index + 1,
+                  name: tool.title,
+                  url: `${config.BASE_URL}${tool.href}`,
+                  description: tool.copy,
+                })),
+              },
+            },
+            {
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: TOOL_FAQS.map((item) => ({
+                "@type": "Question",
+                name: item.question,
+                acceptedAnswer: { "@type": "Answer", text: item.answer },
+              })),
+            },
+          ]}
+        />
+      )}
+      <ToolsListing tools={tools} searchQuery={searchQuery} />
+    </>
+  );
 }
