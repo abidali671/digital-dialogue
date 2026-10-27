@@ -115,6 +115,24 @@ const nextConfig = {
             key: "Content-Security-Policy-Report-Only",
             value: cspReportOnly,
           },
+          {
+            key: "Permissions-Policy",
+            value:
+              "camera=(), microphone=(), geolocation=(), payment=(), usb=(), display-capture=()",
+          },
+          {
+            key: "Cross-Origin-Opener-Policy",
+            value: "same-origin-allow-popups",
+          },
+        ],
+      },
+      {
+        source: "/_next/static/:path*",
+        headers: [
+          {
+            key: "Cross-Origin-Resource-Policy",
+            value: "same-site",
+          },
         ],
       },
     ];
