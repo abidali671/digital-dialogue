@@ -53,7 +53,7 @@ export default function FreelanceRateCalculatorPage() {
           <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Tools", href: "/tools" }, { label: "Freelance Rate Calculator" }]} />
           <div className="max-w-3xl">
             <h1>Freelance Rate Calculator</h1>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[#475569] md:text-xl">Work out the hourly rate that still hits your income goal after expenses, platform fees and the hours nobody pays for.</p>
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[#475569] md:text-xl">Work out the hourly rate that still hits your income goal after expenses, platform fees and the hours nobody pays for. Choose PKR to convert US dollar amounts into rupees.</p>
           </div>
         </div>
       </div>

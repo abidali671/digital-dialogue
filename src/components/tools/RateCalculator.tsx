@@ -2,21 +2,28 @@
 
 import { FormEvent, useId, useRef, useState, type ReactNode, type Ref } from "react";
 import Link from "next/link";
+import CalculatorCurrencyFields, { PkrRateField, PkrResultNote } from "@/components/tools/CalculatorCurrencyFields";
 import { ceilCents, computeRate, type BillMode, type RatePeriod, type RateResult } from "@/lib/freelanceRate";
-import { currencySymbol, formatMoney, formatNum, formatPercent, parseDecimal } from "@/lib/upworkFee";
-
-const CURRENCIES = [
-  ["USD", "USD — US dollar ($)"],
-  ["PKR", "PKR — Pakistani rupee (Rs)"],
-  ["EUR", "EUR — Euro (€)"],
-  ["GBP", "GBP — British pound (£)"],
-  ["AED", "AED — UAE dirham"],
-  ["CAD", "CAD — Canadian dollar ($)"],
-  ["AUD", "AUD — Australian dollar ($)"],
-  ["INR", "INR — Indian rupee (₹)"],
-] as const;
+import { formatNum, formatPercent, parseDecimal } from "@/lib/upworkFee";
+import { USD_PKR, entrySymbol, formatConvertedMoney, usdPkrFieldError } from "@/lib/usdPkr";
 
 const FEE_HELP = "https://support.upwork.com/hc/en-us/articles/211062538-Learn-about-the-Freelancer-Service-Fee";
+
+function feeCalculatorQuery(
+  hourly: number,
+  result: RateResult,
+  currency: string,
+  usdPkr: string
+) {
+  const params = new URLSearchParams({
+    rate: hourly.toFixed(2),
+    hours: result.billMonth.toFixed(2),
+    fee: String(result.feePct),
+    currency,
+  });
+  if (currency === "PKR") params.set("usdPkr", usdPkr.trim());
+  return params.toString();
+}
 
 type Values = {
   period: RatePeriod;
@@ -29,6 +36,7 @@ type Values = {
   billPct: string;
   fee: string;
   currency: string;
+  usdPkr: string;
 };
 
 const INITIAL: Values = {
@@ -42,6 +50,7 @@ const INITIAL: Values = {
   billPct: "",
   fee: "10",
   currency: "USD",
+  usdPkr: USD_PKR.rate,
 };
 
 type Errors = Partial<Record<"takeHome" | "expenses" | "workHours" | "weeks" | "billHours" | "billPct" | "fee", string>>;
@@ -53,9 +62,10 @@ export default function RateCalculator() {
   const [result, setResult] = useState<RateResult | null>(null);
   const [warning, setWarning] = useState("");
   const formId = useId();
+  const [rateError, setRateError] = useState("");
   const summaryRef = useRef<HTMLDivElement>(null);
   const firstRef = useRef<HTMLInputElement>(null);
-  const symbol = currencySymbol(values.currency);
+  const symbol = entrySymbol(values.currency);
 
   function setField<K extends keyof Values>(key: K, value: Values[K]) {
     setValues((current) => ({ ...current, [key]: value }));
@@ -117,9 +127,14 @@ export default function RateCalculator() {
     const found = collect(values);
     const next: Errors = {};
     for (const item of found) next[item.key] = item.msg;
+    const fxMsg = values.currency === "PKR" ? usdPkrFieldError(values.usdPkr) : "";
+    setRateError(fxMsg);
     setErrors(next);
-    setSummary(found.map(({ id, msg }) => ({ id, msg })));
-    if (found.length) {
+    setSummary([
+      ...found.map(({ id, msg }) => ({ id, msg })),
+      ...(fxMsg ? [{ id: `${formId}-currency-usd-pkr`, msg: fxMsg }] : []),
+    ]);
+    if (found.length || fxMsg) {
       setResult(null);
       summaryRef.current?.focus();
       return;
@@ -146,10 +161,11 @@ export default function RateCalculator() {
     setSummary([]);
     setResult(null);
     setWarning("");
+    setRateError("");
     firstRef.current?.focus();
   }
 
-  const money = (amount: number) => formatMoney(amount, values.currency);
+  const money = (amount: number) => formatConvertedMoney(amount, values.currency, values.usdPkr);
   const rate = result ? ceilCents(result.hourly) : 0;
   const goal = result && values.period === "year" ? parseDecimal(values.takeHome) || 0 : result?.takeHome || 0;
 
@@ -189,16 +205,29 @@ export default function RateCalculator() {
                   ))}
                 </div>
               </fieldset>
-              <div>
-                <label className="fee-label" htmlFor={`${formId}-currency`}>Currency</label>
-                <div className="fee-field">
-                  <select className="fee-input" id={`${formId}-currency`} value={values.currency} onChange={(event) => setField("currency", event.target.value)}>
-                    {CURRENCIES.map(([code, label]) => <option key={code} value={code}>{label}</option>)}
-                  </select>
-                </div>
-                <p className="fee-hint">Changes the symbol only. No exchange rates are applied.</p>
-              </div>
+              <CalculatorCurrencyFields
+                id={`${formId}-currency`}
+                currency={values.currency}
+                onCurrencyChange={(currency) => {
+                  setField("currency", currency);
+                  if (currency !== "PKR") setRateError("");
+                }}
+              />
             </div>
+            <PkrRateField
+              id={`${formId}-currency-usd-pkr`}
+              currency={values.currency}
+              rate={values.usdPkr}
+              rateError={rateError}
+              onRateChange={(usdPkr) => {
+                setField("usdPkr", usdPkr);
+                if (rateError) setRateError(usdPkrFieldError(usdPkr));
+              }}
+              onRateBlur={(usdPkr) => {
+                if (usdPkr.trim() === "" && !rateError) return;
+                setRateError(values.currency === "PKR" ? usdPkrFieldError(usdPkr) : "");
+              }}
+            />
             <div className="grid gap-6 sm:grid-cols-2">
               <Field id={`${formId}-takeHome`} inputRef={firstRef} label="Take-home goal" required symbol={symbol} value={values.takeHome} placeholder="e.g. 1500" hint={`What you want left each ${values.period}, before tax.`} error={errors.takeHome} onChange={(value) => setField("takeHome", value)} />
               <Field id={`${formId}-expenses`} label="Business expenses" symbol={symbol} value={values.expenses} placeholder="0.00" hint={`Software, ads and other costs each ${values.period}. Optional.`} error={errors.expenses} onChange={(value) => setField("expenses", value)} />
@@ -242,6 +271,7 @@ export default function RateCalculator() {
           )}
           {result && (
             <div>
+              <PkrResultNote currency={values.currency} rate={values.usdPkr} />
               <div className="rounded-xl border border-accent/40 bg-[#f0fdfa] p-5">
                 <p className="text-sm font-bold uppercase tracking-[0.08em] text-[#134e4a]">Minimum hourly rate</p>
                 <p className="fee-display mt-1 font-display text-[2.5rem] font-bold leading-[1.1] text-ink tabular-nums">{money(rate)}<span className="text-2xl">/hr</span></p>
@@ -258,14 +288,14 @@ export default function RateCalculator() {
               </dl>
               <p className="mt-4 text-sm text-[#475569]">
                 Check this rate in the{" "}
-                <Link className="fee-link" href={`/tools/upwork-fee-calculator?rate=${rate.toFixed(2)}&hours=${result.billMonth.toFixed(2)}&fee=${result.feePct}&currency=${values.currency}`}>
+                <Link className="fee-link" href={`/tools/upwork-fee-calculator?${feeCalculatorQuery(rate, result, values.currency, values.usdPkr)}`}>
                   Upwork Fee Calculator
                 </Link>
                 .
               </p>
             </div>
           )}
-          <p className="mt-6 border-t border-line pt-4 text-xs leading-relaxed text-[#475569]">Estimates only. Tax is not included. The currency only changes the symbol.</p>
+          <p className="mt-6 border-t border-line pt-4 text-xs leading-relaxed text-[#475569]">Estimates only. Tax is not included. PKR converts US dollar amounts into rupees. Other currencies only change the symbol.</p>
         </section>
       </div>
     </section>
