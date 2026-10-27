@@ -22,9 +22,9 @@
     "autoprefixer": "10.4.14",
     "clsx": "^1.2.1",
     "eslint": "8.41.0",
-    "eslint-config-next": "13.4.3",
+    "eslint-config-next": "^14.2.35",
     "lucide-react": "^1.49.0",
-    "next": "^13.4.3",
+    "next": "^14.2.35",
     "next-seo": "^6.1.0",
     "next-share": "^0.24.0",
     "postcss": "8.4.23",
@@ -34,7 +34,7 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^13.4.3",
+    "@next/bundle-analyzer": "^14.2.35",
     "cross-env": "^10.1.0"
   }
 }

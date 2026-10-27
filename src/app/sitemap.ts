@@ -35,7 +35,9 @@ function entry(
   path: string,
   options: {
     lastModified?: string | Date;
-    changeFrequency?: string;
+    changeFrequency?: NonNullable<
+      MetadataRoute.Sitemap[number]["changeFrequency"]
+    >;
     priority?: number;
   } = {},
 ) {
