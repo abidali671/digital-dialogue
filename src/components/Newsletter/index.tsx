@@ -8,13 +8,13 @@ const Newsletter = () => {
     <section className="border-y border-line bg-white">
       <ContentContainer className="grid gap-8 py-14 md:grid-cols-[1fr_1fr] md:items-center md:py-16">
         <div>
-          <p className="mb-3 font-mono text-xs uppercase tracking-[0.14em] text-accent">
+          <p className="mb-3 font-mono text-caption uppercase tracking-[0.14em] text-accent">
             Newsletter
           </p>
-          <h2 className="mb-3 font-display text-2xl font-bold tracking-tight text-ink md:text-3xl">
+          <h2 className="mb-3 font-display text-h2 text-ink">
             New posts, straight to your inbox
           </h2>
-          <p className="max-w-md text-base text-mute">
+          <p className="max-w-md text-copy text-mute">
             One email when something worth reading goes live. No spam, no daily
             noise.
           </p>

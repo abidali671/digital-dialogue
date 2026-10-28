@@ -56,7 +56,7 @@ export default function TestimonialCard({ item, featured = false }: Props) {
       />
 
       <div className="absolute left-1/2 top-12 z-10 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-full border-[3px] border-white bg-accent-soft shadow-sm md:h-24 md:w-24">
-        <span className="font-display text-xl font-bold tracking-tight text-accent md:text-2xl">
+        <span className="font-display text-h3 text-accent">
           {initials(item.clientName)}
         </span>
       </div>
@@ -70,14 +70,14 @@ export default function TestimonialCard({ item, featured = false }: Props) {
       >
         <Stars rating={rating} />
 
-        <blockquote className="mt-5 flex-1 text-sm leading-6 text-ink-soft md:text-base md:leading-7">
+        <blockquote className="mt-5 flex-1 text-copy text-ink-soft">
           “{item.quote}”
         </blockquote>
 
-        <p className="mt-6 font-display text-base font-bold tracking-tight text-ink md:text-lg">
+        <p className="mt-6 font-display text-h4 text-ink">
           {item.clientName}
         </p>
-        <p className="mt-1 text-sm text-mute">
+        <p className="mt-1 text-ui text-mute">
           <a
             href={sourceUrl(item.source)}
             target="_blank"

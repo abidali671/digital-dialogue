@@ -162,17 +162,17 @@ export default function UpworkFeeCalculatorPage() {
         <div className="mx-auto w-full max-w-7xl px-5 sm:px-6">
           <div className="fee-card grid gap-8 p-5 sm:p-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12">
             <div>
-              <p className="mb-3 inline-flex items-center rounded-md border border-dashed border-[#cbd5e1] bg-mist px-2 py-1 font-mono text-xs uppercase tracking-[0.1em] text-[#475569]">
+              <p className="mb-3 inline-flex items-center rounded-md border border-dashed border-[#cbd5e1] bg-mist px-2 py-1 font-mono text-caption uppercase tracking-[0.1em] text-[#475569]">
                 Illustrative example
               </p>
               <h2 id="example-title" className="fee-section">
                 Example: a $500 fixed-price milestone
               </h2>
-              <p className="mt-4 leading-relaxed text-[#475569]">
+              <p className="mt-4 text-copy text-[#475569]">
                 This example is for illustration only. It uses a 10% service fee and a $2 withdrawal fee. Your contract’s fee and your payment method’s charges may be different.
               </p>
             </div>
-            <table className="w-full text-[15px]">
+            <table className="w-full text-copy">
               <caption className="sr-only">Illustrative example calculation</caption>
               <tbody>
                 <ExampleRow label="Fixed-price milestone billed" value="$500.00" />
@@ -184,11 +184,11 @@ export default function UpworkFeeCalculatorPage() {
                 <tr>
                   <th scope="row" className="pt-4 pr-4 text-left font-bold text-ink">
                     Estimated take-home
-                    <span className="block text-sm font-normal text-[#475569]">
+                    <span className="block text-ui font-normal text-[#475569]">
                       Effective deduction: 10.4%
                     </span>
                   </th>
-                  <td className="pt-4 text-right font-display text-3xl font-bold text-ink tabular-nums">
+                  <td className="pt-4 text-right font-display text-figure-sm text-ink tabular-nums">
                     $448.00
                   </td>
                 </tr>
@@ -223,7 +223,7 @@ export default function UpworkFeeCalculatorPage() {
 
       <section className="border-t border-line bg-white">
         <div className="mx-auto w-full max-w-7xl px-5 py-8 sm:px-6">
-          <p className="text-sm leading-relaxed text-[#475569]">
+          <p className="text-ui text-[#475569]">
             <strong className="font-semibold text-ink">Disclaimer:</strong> Digital Dialogue is an independent publication. This calculator is not affiliated with, endorsed by, or sponsored by Upwork. All results are estimates for planning only. Your actual fees, rounding, withdrawal charges, exchange rates and taxes may differ. The PKR figure uses the rate shown in the calculator, which you can edit. Always check the fee shown on your Upwork offer or contract and Upwork’s official help pages.
           </p>
         </div>
@@ -245,7 +245,7 @@ function ExampleRow({
     <tr className="border-b border-line">
       <th scope="row" className="py-3 pr-4 text-left font-normal text-[#334155]">
         {label}
-        {detail && <span className="block text-sm text-[#475569]">{detail}</span>}
+        {detail && <span className="block text-ui text-[#475569]">{detail}</span>}
       </th>
       <td className="py-3 text-right font-semibold text-ink tabular-nums">{value}</td>
     </tr>

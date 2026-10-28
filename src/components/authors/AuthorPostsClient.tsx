@@ -59,12 +59,12 @@ const AuthorPostsClient = ({
           <div className="min-w-0 flex-1">
             <Title>{authorName}</Title>
             {authorRole && (
-              <p className="mt-2 font-mono text-xs uppercase tracking-wide text-accent">
+              <p className="mt-2 font-mono text-caption uppercase tracking-wide text-accent">
                 {authorRole}
               </p>
             )}
             {authorAbout && (
-              <p className="mt-4 max-w-3xl text-base leading-relaxed text-mute">
+              <p className="mt-4 max-w-3xl text-lead text-mute">
                 {authorAbout}
               </p>
             )}
@@ -74,7 +74,7 @@ const AuthorPostsClient = ({
         {testimonials.length > 0 && (
           <section className="-mx-4 bg-mist px-4 py-12 sm:-mx-6 sm:px-6 md:mx-0 md:px-8">
             <Title as="h2">Client testimonials</Title>
-            <p className="mt-2 max-w-2xl text-base text-mute">
+            <p className="mt-2 max-w-2xl text-copy text-mute">
               What clients say after working together on real projects.
             </p>
             <div className="mt-10">
@@ -84,7 +84,7 @@ const AuthorPostsClient = ({
         )}
 
         {searchQuery && (
-          <p className="mt-6 text-sm text-mute">
+          <p className="mt-6 text-ui text-mute">
             Showing results for “{searchQuery}”
           </p>
         )}

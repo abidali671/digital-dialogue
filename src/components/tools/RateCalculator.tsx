@@ -243,7 +243,7 @@ export default function RateCalculator() {
         <a href="#result" className="fee-mobile-summary">
           <span>Minimum rate</span>
           <span className="flex items-center gap-2">
-            <b className="text-[16px] tabular-nums">{result ? `${figure}/hr` : "—"}</b>
+            <b className="text-copy tabular-nums">{result ? `${figure}/hr` : "—"}</b>
             <span className="underline underline-offset-4">Breakdown</span>
           </span>
         </a>

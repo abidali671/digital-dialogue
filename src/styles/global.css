@@ -92,6 +92,32 @@ li {
   margin: 16px 0;
 }
 
+@layer components {
+  /* :where keeps these below a utility. This build flattens Tailwind layers, so specificity is what lets text-faq win. */
+  :where(.article-wrapper) h2 {
+    @apply text-h2;
+  }
+
+  :where(.article-wrapper) h3 {
+    @apply text-h3;
+  }
+
+  :where(.article-wrapper) h4 {
+    @apply text-h4;
+  }
+
+  :where(.article-wrapper) p,
+  :where(.article-wrapper) li,
+  :where(.article-wrapper) blockquote p {
+    @apply text-prose;
+  }
+
+  :where(.article-wrapper) th,
+  :where(.article-wrapper) td {
+    @apply text-copy;
+  }
+}
+
 @layer base {
   h1 {
     @apply font-display text-h1 text-ink;

@@ -36,12 +36,12 @@ const Pagination = ({
             className="flex items-center pt-3 text-mute hover:text-accent"
           >
             <Arrow className="rotate-180 transform" />
-            <p className="ml-3 text-sm font-medium leading-none">Previous</p>
+            <p className="ml-3 text-ui font-medium">Previous</p>
           </Link>
         ) : (
           <span className="flex cursor-not-allowed items-center pt-3 text-mute-soft opacity-50">
             <Arrow className="rotate-180 transform" />
-            <p className="ml-3 text-sm font-medium leading-none">Previous</p>
+            <p className="ml-3 text-ui font-medium">Previous</p>
           </span>
         )}
 
@@ -53,7 +53,7 @@ const Pagination = ({
                 key={page}
                 href={pageHref(basePath, page, searchQuery)}
                 className={cx(
-                  "border-t border-transparent px-2 pt-3 text-sm font-medium leading-none text-mute hover:border-accent hover:text-accent",
+                  "border-t border-transparent px-2 pt-3 text-ui font-medium text-mute hover:border-accent hover:text-accent",
                   page === currentPage && "border-accent text-accent"
                 )}
                 aria-current={page === currentPage ? "page" : undefined}
@@ -69,12 +69,12 @@ const Pagination = ({
             href={pageHref(basePath, nextPage, searchQuery)}
             className="flex items-center pt-3 text-mute hover:text-accent"
           >
-            <p className="mr-3 text-sm font-medium leading-none">Next</p>
+            <p className="mr-3 text-ui font-medium">Next</p>
             <Arrow />
           </Link>
         ) : (
           <span className="flex cursor-not-allowed items-center pt-3 text-mute-soft opacity-50">
-            <p className="mr-3 text-sm font-medium leading-none">Next</p>
+            <p className="mr-3 text-ui font-medium">Next</p>
             <Arrow />
           </span>
         )}

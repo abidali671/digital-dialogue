@@ -27,7 +27,7 @@
 }
 
 .navbar-root > .content-wrapper > .mobile-nav-container .nav-list li a {
-  @apply block h-full w-full p-4 text-base text-ink hover:bg-mist;
+  @apply block h-full w-full p-4 text-ui text-ink hover:bg-mist;
 }
 
 .navbar-root > .content-wrapper > .mobile-nav-container .nav-list > li > ul {

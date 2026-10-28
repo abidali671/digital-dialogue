@@ -15,7 +15,7 @@ const AllPosts = ({ posts }: PropsT) => {
       <ContentContainer>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <Title as="h2">Latest articles</Title>
-          <Link href="/blogs" className="link-underline text-sm">
+          <Link href="/blogs" className="link-underline text-ui">
             View all posts
           </Link>
         </div>

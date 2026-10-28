@@ -247,15 +247,15 @@ export default async function BlogDetailPage(props: PageProps) {
                 ]}
               />
 
-              <h1 className="mb-5 font-display text-3xl font-bold leading-[1.15] tracking-tight text-ink md:text-5xl">
+              <h1 className="mb-5 font-display text-h1 text-ink">
                 {title}
               </h1>
-              <p className="mb-8 max-w-2xl text-lg leading-relaxed text-mute">
+              <p className="mb-8 max-w-2xl text-lead text-mute">
                 {excerpt}
               </p>
 
               <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
-                <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs leading-none text-mute-soft">
+                <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-caption text-mute-soft">
                   <time dateTime={toIsoTimestamp(publishedAt)}>
                     {formatLongDate(publishedAt)}
                   </time>
@@ -318,7 +318,7 @@ export default async function BlogDetailPage(props: PageProps) {
             )}
 
             <div className="mt-10 flex flex-wrap items-center gap-4 border-y border-line py-5">
-              <p className="flex h-8 items-center text-sm font-semibold leading-none text-ink">
+              <p className="flex h-8 items-center text-ui font-semibold text-ink">
                 Share this article
               </p>
               <ShareButtons
@@ -342,16 +342,16 @@ export default async function BlogDetailPage(props: PageProps) {
                 </span>
               ) : null}
               <div>
-                <p className="font-mono text-xs uppercase tracking-[0.1em] text-accent">
+                <p className="font-mono text-caption uppercase tracking-[0.1em] text-accent">
                   {author.role}
                 </p>
                 <Link
                   href={`/authors/${author.slug}`}
-                  className="font-display text-xl font-bold text-ink hover:text-accent"
+                  className="font-display text-h4 text-ink hover:text-accent"
                 >
                   {author.name}
                 </Link>
-                <p className="mt-2 text-base text-mute">{author.about}</p>
+                <p className="mt-2 text-copy text-mute">{author.about}</p>
               </div>
             </div>
           </div>

@@ -12,10 +12,10 @@ export default function NotFound() {
   return (
     <main className="container-body">
       <ContentContainer className="py-24 text-center">
-        <p className="mb-3 font-mono text-xs uppercase tracking-[0.14em] text-accent">
+        <p className="mb-3 font-mono text-caption uppercase tracking-[0.14em] text-accent">
           404
         </p>
-        <h1 className="mb-4 font-display text-4xl font-bold text-ink">
+        <h1 className="mb-4 font-display text-h1 text-ink">
           Page not found
         </h1>
         <p className="mb-8 text-mute">

@@ -91,7 +91,7 @@ export default function FreelanceRateCalculatorPage() {
             <div>
               <p className="fee-kicker">How the rate is calculated</p>
               <h2 id="example-title" className="fee-section">Example: a $1,500-a-month goal</h2>
-              <p className="mt-4 max-w-3xl leading-relaxed text-[#475569]">A fictional freelancer wants $1,500 take-home plus $200 of expenses, works 40 hours and bills 25 of them, with a 10% fee and 48 working weeks. The gross-up is $1,888.89 a month across 100 billable hours, so the minimum rate is $18.89 an hour. A day is $94.44 and a 10-hour project is $188.89.</p>
+              <p className="mt-4 max-w-3xl text-copy text-[#475569]">A fictional freelancer wants $1,500 take-home plus $200 of expenses, works 40 hours and bills 25 of them, with a 10% fee and 48 working weeks. The gross-up is $1,888.89 a month across 100 billable hours, so the minimum rate is $18.89 an hour. A day is $94.44 and a 10-hour project is $188.89.</p>
             </div>
             <table className="fee-example-table">
               <caption className="sr-only">Example: a $1,500-a-month goal</caption>
@@ -139,7 +139,7 @@ export default function FreelanceRateCalculatorPage() {
       />
       <section className="border-t border-line bg-white">
         <div className="mx-auto w-full max-w-7xl px-5 py-8 sm:px-6">
-          <p className="text-sm leading-relaxed text-[#475569]">
+          <p className="text-ui text-[#475569]">
             <strong className="font-semibold text-ink">Disclaimer:</strong> Digital Dialogue is an independent publication and is not affiliated with Upwork. Estimates only. Tax is not included. PKR converts US dollar amounts into rupees. Other currencies only change the symbol.
           </p>
         </div>

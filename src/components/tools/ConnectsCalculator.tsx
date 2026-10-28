@@ -247,7 +247,7 @@ export default function ConnectsCalculator() {
         <a href="#result" className="fee-mobile-summary">
           <span>Cost per contract</span>
           <span className="flex items-center gap-2">
-            <b className="text-[16px] tabular-nums">{figure}</b>
+            <b className="text-copy tabular-nums">{figure}</b>
             <span className="underline underline-offset-4">Breakdown</span>
           </span>
         </a>

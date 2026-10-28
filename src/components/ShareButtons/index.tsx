@@ -86,7 +86,7 @@ const ShareButtons = ({
           <FacebookIcon size={32} round />
         </FacebookShareButton>
         {facebookHint && (
-          <div className="absolute left-1/2 top-full z-10 mt-2 w-40 -translate-x-1/2 rounded border border-line bg-white p-2 text-center text-xs font-medium text-ink shadow-sm">
+          <div className="absolute left-1/2 top-full z-10 mt-2 w-40 -translate-x-1/2 rounded border border-line bg-white p-2 text-center text-caption font-medium text-ink shadow-sm">
             Caption copied — paste into Facebook
           </div>
         )}
@@ -113,7 +113,7 @@ const ShareButtons = ({
       >
         <LinkIcon />
         {copied && (
-          <div className="absolute top-full z-10 mt-2 w-28 rounded border border-line bg-white p-1 text-center text-xs font-medium text-accent">
+          <div className="absolute top-full z-10 mt-2 w-28 rounded border border-line bg-white p-1 text-center text-caption font-medium text-accent">
             Copied!
           </div>
         )}

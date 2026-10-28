@@ -24,32 +24,6 @@
   @apply mt-4 scroll-mt-24 font-display text-ink;
 }
 
-/* Sizes sit in the components layer so a utility such as text-faq can win. */
-@layer components {
-  .article-wrapper h2 {
-    @apply text-h2;
-  }
-
-  .article-wrapper h3 {
-    @apply text-h3;
-  }
-
-  .article-wrapper h4 {
-    @apply text-h4;
-  }
-
-  .article-wrapper p,
-  .article-wrapper li,
-  .article-wrapper blockquote p {
-    @apply text-prose;
-  }
-
-  .article-wrapper th,
-  .article-wrapper td {
-    @apply text-copy;
-  }
-}
-
 .article-wrapper a {
   @apply text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent;
 }

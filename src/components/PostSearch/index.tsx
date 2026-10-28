@@ -58,7 +58,7 @@ const PostSearch = ({
             />
             <button
               type="submit"
-              className="h-9 shrink-0 rounded-md bg-accent px-4 text-sm font-bold text-white outline-none transition-colors hover:bg-accent-hover focus-visible:ring-2 focus-visible:ring-white disabled:opacity-70"
+              className="h-9 shrink-0 rounded-md bg-accent px-4 text-ui font-bold text-white outline-none transition-colors hover:bg-accent-hover focus-visible:ring-2 focus-visible:ring-white disabled:opacity-70"
               disabled={isPending}
             >
               {isPending ? "Searching..." : "Search"}

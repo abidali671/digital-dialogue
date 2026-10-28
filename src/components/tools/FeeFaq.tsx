@@ -25,7 +25,7 @@ export default function FeeFaq({ items }: { items: FaqItem[] }) {
               id={panelId}
               role="region"
               aria-labelledby={buttonId}
-              className="max-w-3xl space-y-3 pb-6 leading-relaxed text-[#334155]"
+              className="max-w-3xl space-y-3 pb-6 text-[#334155]"
             >
               {item.answer}
             </div>

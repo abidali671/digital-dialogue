@@ -176,7 +176,7 @@ export function PkrResultNote({
   if (currency !== "PKR") return null;
   const valid = usdPkrFieldError(rate) === "";
   return (
-    <p className="mb-4 text-sm leading-relaxed text-[#475569]">
+    <p className="mb-4 text-ui text-[#475569]">
       {valid
         ? `Converted from US dollars at 1 USD = ${rate.trim()} PKR.`
         : "Enter an exchange rate above 0 to show rupee amounts."}

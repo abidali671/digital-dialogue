@@ -33,12 +33,12 @@ const CategoryBlogsClient = ({
       <ContentContainer className="relative flex flex-col justify-center pt-10">
         <Title>{title}</Title>
         {description && (
-          <p className="mt-4 max-w-3xl text-base leading-relaxed text-mute">
+          <p className="mt-4 max-w-3xl text-lead text-mute">
             {description}
           </p>
         )}
         {searchQuery && (
-          <p className="mt-4 text-sm text-mute">
+          <p className="mt-4 text-ui text-mute">
             Showing results for “{searchQuery}”
           </p>
         )}

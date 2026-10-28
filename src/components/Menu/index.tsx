@@ -37,7 +37,7 @@ const Menu = ({ list, button, buttonLabel }: IMenuProps) => {
               {({ active }) => (
                 <Link
                   href={item.href}
-                  className={`block whitespace-nowrap px-4 py-3 text-sm font-semibold hover:bg-mist hover:text-accent ${
+                  className={`block whitespace-nowrap px-4 py-3 text-ui font-semibold hover:bg-mist hover:text-accent ${
                     active ? "bg-mist text-accent" : "text-ink"
                   }`}
                 >

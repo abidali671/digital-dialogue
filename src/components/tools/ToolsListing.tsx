@@ -36,14 +36,16 @@ export default function ToolsListing({
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Tools" }]} />
         <Title>Freelance calculators for Upwork</Title>
         {!searchQuery && (
-          <div className="mt-4 max-w-3xl space-y-4 text-base leading-relaxed text-mute">
+          <div className="mt-4 max-w-3xl space-y-4 text-lead text-mute">
             {TOOLS_INTRO.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
+              <p key={paragraph} className="text-lead text-mute">
+                {paragraph}
+              </p>
             ))}
           </div>
         )}
         {searchQuery && (
-          <p className="mt-4 text-sm text-mute">
+          <p className="mt-4 text-ui text-mute">
             Showing results for “{searchQuery}”
           </p>
         )}
@@ -69,7 +71,7 @@ export default function ToolsListing({
                     <p>Tool</p>
                   </div>
                   <p className="post-card-title">{tool.title}</p>
-                  <p className="text-sm leading-relaxed text-mute md:text-base">
+                  <p className="text-copy text-mute">
                     {tool.copy}
                   </p>
                   <p className="post-card-read-text">Open calculator</p>
@@ -80,21 +82,21 @@ export default function ToolsListing({
         )}
         {!searchQuery && (
             <section className="mt-16 border-t border-line pt-12" aria-labelledby="tools-guides-title">
-              <h2 id="tools-guides-title" className="font-display text-3xl font-bold tracking-tight text-ink">
+              <h2 id="tools-guides-title" className="font-display text-h2 text-ink">
                 Freelancing guides
               </h2>
-              <p className="mt-3 max-w-3xl leading-relaxed text-mute">
+              <p className="mt-3 max-w-3xl text-copy text-mute">
                 Articles on the site that sit next to these calculators: fees, Connects, pricing and proposals.
               </p>
               <ul className="mt-8 grid gap-6 md:grid-cols-2">
                 {TOOL_ARTICLES.map((article) => (
                   <li key={article.href} className="border-t border-line pt-4">
-                    <h3 className="font-display text-xl font-bold tracking-tight text-ink">
+                    <h3 className="font-display text-h4 text-ink">
                       <Link className="hover:text-accent" href={article.href}>
                         {article.title}
                       </Link>
                     </h3>
-                    <p className="mt-2 leading-relaxed text-mute">{article.copy}</p>
+                    <p className="mt-2 text-copy text-mute">{article.copy}</p>
                   </li>
                 ))}
               </ul>

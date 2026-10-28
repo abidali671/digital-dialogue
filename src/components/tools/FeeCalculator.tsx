@@ -256,7 +256,7 @@ export default function FeeCalculator() {
         <a href="#result" className="fee-mobile-summary">
           <span>Estimated take-home</span>
           <span className="flex items-center gap-2">
-            <b className="text-[16px] tabular-nums">{takeHomeText}</b>
+            <b className="text-copy tabular-nums">{takeHomeText}</b>
             <span className="underline underline-offset-4">Breakdown</span>
           </span>
         </a>

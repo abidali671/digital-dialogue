@@ -90,7 +90,7 @@ export default function UpworkConnectsCalculatorPage() {
             <div>
               <p className="fee-kicker">How the cost is calculated</p>
               <h2 id="example-title" className="fee-section">Example: 40 proposals in 30 days</h2>
-              <p className="mt-4 max-w-3xl leading-relaxed text-[#475569]">A fictional freelancer sends 40 proposals at 12 Connects each, pays $0.15 per Connect, gets 8 replies, 5 interviews and 2 contracts, and adds $20 of other costs. That’s 480 Connects, $72 of Connects spending and $92 in total. Each contract costs $36 in Connects, or $46 including the other costs. The $0.15 figure is only an example.</p>
+              <p className="mt-4 max-w-3xl text-copy text-[#475569]">A fictional freelancer sends 40 proposals at 12 Connects each, pays $0.15 per Connect, gets 8 replies, 5 interviews and 2 contracts, and adds $20 of other costs. That’s 480 Connects, $72 of Connects spending and $92 in total. Each contract costs $36 in Connects, or $46 including the other costs. The $0.15 figure is only an example.</p>
             </div>
             <table className="fee-example-table">
               <caption className="sr-only">Example: 40 proposals in 30 days</caption>
@@ -138,7 +138,7 @@ export default function UpworkConnectsCalculatorPage() {
       />
       <section className="border-t border-line bg-white">
         <div className="mx-auto w-full max-w-7xl px-5 py-8 sm:px-6">
-          <p className="text-sm leading-relaxed text-[#475569]">
+          <p className="text-ui text-[#475569]">
             <strong className="font-semibold text-ink">Disclaimer:</strong> Digital Dialogue is an independent publication and is not affiliated with Upwork. Estimates only. Connects prices and refunds change, so enter the price you pay. PKR converts US dollar amounts into rupees. Other currencies only change the symbol.
           </p>
         </div>

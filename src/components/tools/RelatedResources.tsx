@@ -76,15 +76,15 @@ function ResourceCard({
 }: ResourceItem) {
   return (
     <li className={`fee-card flex flex-col p-6${action === "arrow" ? " relative" : ""}`}>
-      <p className="font-mono text-xs uppercase tracking-[0.1em] text-[#475569]">
+      <p className="font-mono text-caption uppercase tracking-[0.1em] text-[#475569]">
         {kind}
         {note && (
-          <span className="ml-2 inline-flex rounded border border-dashed border-[#a16207] bg-[#fffbeb] px-1.5 py-0.5 align-middle font-mono text-[11px] font-medium uppercase tracking-wide text-[#92400e]">
+          <span className="ml-2 inline-flex rounded border border-dashed border-[#a16207] bg-[#fffbeb] px-1.5 py-0.5 align-middle font-mono text-caption font-medium uppercase tracking-wide text-[#92400e]">
             {note}
           </span>
         )}
       </p>
-      <h3 className={`mt-3 text-xl${titleIsLink ? "" : " text-ink"}`}>
+      <h3 className={`mt-3 text-h4${titleIsLink ? "" : " text-ink"}`}>
         {titleIsLink ? (
           <Link className="hover:text-[#0f766e]" href={href}>
             {title}
@@ -93,15 +93,15 @@ function ResourceCard({
           title
         )}
       </h3>
-      <p className="mt-2 flex-1 leading-relaxed text-[#475569]">{copy}</p>
+      <p className="mt-2 flex-1 text-copy text-[#475569]">{copy}</p>
       {action === "arrow" ? (
-        <p className="mt-5 text-sm font-bold text-[#0f766e]">
+        <p className="mt-5 text-ui font-bold text-[#0f766e]">
           <Link href={href} className="inline-flex items-center gap-1.5 hover:text-[#0f766e]">
             {hrefLabel} <Arrow />
           </Link>
         </p>
       ) : (
-        <p className="mt-4 border-t border-line pt-4 text-sm">
+        <p className="mt-4 border-t border-line pt-4 text-ui">
           <Link className="fee-link" href={href}>
             {hrefLabel}
           </Link>

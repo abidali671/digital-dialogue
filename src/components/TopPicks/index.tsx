@@ -16,7 +16,7 @@ const TopPicks = ({ posts }: IProps) => {
   return (
     <section className="border-b border-line bg-white">
       <ContentContainer className="py-14 md:py-16">
-        <p className="mb-8 font-mono text-xs uppercase tracking-[0.14em] text-mute">
+        <p className="mb-8 font-mono text-caption uppercase tracking-[0.14em] text-mute">
           Editor&apos;s picks
         </p>
         <div className="grid gap-x-10 gap-y-8 md:grid-cols-3">
@@ -26,17 +26,17 @@ const TopPicks = ({ posts }: IProps) => {
               href={`/blogs/${post.fields.category.fields.slug}/${post.fields.slug}`}
               className="group flex gap-4 border-t border-line pt-5"
             >
-              <span className="font-mono text-sm text-accent">
+              <span className="font-mono text-ui text-accent">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <div className="flex flex-1 flex-col gap-2">
-                <p className="font-mono text-xs uppercase tracking-[0.08em] text-mute">
+                <p className="font-mono text-caption uppercase tracking-[0.08em] text-mute">
                   {post.fields.category.fields.label}
                 </p>
-                <h3 className="font-display text-xl font-bold leading-snug tracking-tight text-ink transition-colors line-clamp-2 group-hover:text-accent">
+                <h3 className="font-display text-h4 text-ink transition-colors line-clamp-2 group-hover:text-accent">
                   {post.fields.title}
                 </h3>
-                <p className="font-mono text-xs text-mute-soft">
+                <p className="font-mono text-caption text-mute-soft">
                   {formatShortDate(getPublishedDate(post))}
                 </p>
               </div>

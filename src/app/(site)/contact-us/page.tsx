@@ -25,7 +25,7 @@ export default function ContactUsPage() {
     <ContentContainer className="py-16 md:py-20">
       <div className="mb-10 max-w-3xl">
         <Title>Contact us</Title>
-        <p className="mt-6 text-base leading-relaxed text-mute md:text-lg">
+        <p className="mt-6 text-lead text-mute">
           Digital Dialogue is run by {config.AUTHOR_NAME} from Pakistan. Use
           this page for guide feedback, corrections, article ideas, or
           partnerships that fit the site. Email{" "}
@@ -68,10 +68,10 @@ export default function ContactUsPage() {
 
       <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-start">
         <div>
-          <h2 className="font-display text-2xl font-bold tracking-tight text-ink">
+          <h2 className="font-display text-h2 text-ink">
             Send a message
           </h2>
-          <p className="mt-3 text-base text-mute">
+          <p className="mt-3 text-copy text-mute">
             Include your name, a working email, and a clear subject. Say what
             you need in a few sentences. You can also write directly to{" "}
             <a
@@ -102,7 +102,7 @@ export default function ContactUsPage() {
               }}
             />
             <label className="grid gap-2">
-              <span className="font-mono text-xs uppercase tracking-wide text-mute">
+              <span className="font-mono text-caption uppercase tracking-wide text-mute">
                 Name
               </span>
               <input
@@ -114,7 +114,7 @@ export default function ContactUsPage() {
               />
             </label>
             <label className="grid gap-2">
-              <span className="font-mono text-xs uppercase tracking-wide text-mute">
+              <span className="font-mono text-caption uppercase tracking-wide text-mute">
                 Email
               </span>
               <input
@@ -126,7 +126,7 @@ export default function ContactUsPage() {
               />
             </label>
             <label className="grid gap-2">
-              <span className="font-mono text-xs uppercase tracking-wide text-mute">
+              <span className="font-mono text-caption uppercase tracking-wide text-mute">
                 Subject
               </span>
               <input
@@ -138,7 +138,7 @@ export default function ContactUsPage() {
               />
             </label>
             <label className="grid gap-2">
-              <span className="font-mono text-xs uppercase tracking-wide text-mute">
+              <span className="font-mono text-caption uppercase tracking-wide text-mute">
                 Message
               </span>
               <textarea

@@ -51,20 +51,20 @@ const BlogsClient = ({
       <ContentContainer className="relative flex flex-col justify-center pt-10">
         <Title>Blogs</Title>
         {!searchQuery && categories.length > 0 && (
-          <div className="mt-4 max-w-3xl space-y-3 text-base leading-relaxed text-mute">
-            <p>
+          <div className="mt-4 max-w-3xl space-y-3">
+            <p className="text-lead text-mute">
               Practical guides on <CategoryLinks categories={categories} />.
               Browse the archive below, or open a category when you already know
               the kind of problem you need to solve.
             </p>
-            <p>
+            <p className="text-lead text-mute">
               New articles land here first. Use search if you are looking for a
               specific platform, skill, or workflow.
             </p>
           </div>
         )}
         {searchQuery && (
-          <p className="mt-4 text-sm text-mute">
+          <p className="mt-4 text-ui text-mute">
             Showing results for “{searchQuery}”
           </p>
         )}

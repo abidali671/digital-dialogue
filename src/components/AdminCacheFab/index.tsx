@@ -110,7 +110,7 @@ const AdminCacheFab = () => {
             type="button"
             disabled={busy}
             onClick={() => run("page")}
-            className="rounded-md border border-line bg-mist px-3 py-2 text-left font-mono text-[11px] uppercase tracking-wide text-ink hover:bg-white disabled:opacity-50"
+            className="rounded-md border border-line bg-mist px-3 py-2 text-left font-mono text-caption uppercase tracking-wide text-ink hover:bg-white disabled:opacity-50"
           >
             Clear page
           </button>
@@ -118,7 +118,7 @@ const AdminCacheFab = () => {
             type="button"
             disabled={busy}
             onClick={() => run("site")}
-            className="rounded-md border border-line bg-mist px-3 py-2 text-left font-mono text-[11px] uppercase tracking-wide text-ink hover:bg-white disabled:opacity-50"
+            className="rounded-md border border-line bg-mist px-3 py-2 text-left font-mono text-caption uppercase tracking-wide text-ink hover:bg-white disabled:opacity-50"
           >
             Clear site
           </button>
@@ -126,12 +126,12 @@ const AdminCacheFab = () => {
             type="button"
             disabled={busy}
             onClick={exitAdmin}
-            className="rounded-md border border-line px-3 py-2 text-left font-mono text-[11px] uppercase tracking-wide text-mute hover:bg-mist disabled:opacity-50"
+            className="rounded-md border border-line px-3 py-2 text-left font-mono text-caption uppercase tracking-wide text-mute hover:bg-mist disabled:opacity-50"
           >
             Exit admin
           </button>
           {status && (
-            <p className="break-words px-1 font-mono text-[10px] text-mute">
+            <p className="break-words px-1 font-mono text-caption text-mute">
               {status}
             </p>
           )}
@@ -142,7 +142,7 @@ const AdminCacheFab = () => {
         aria-expanded={open}
         aria-label={open ? "Close cache tools" : "Open cache tools"}
         onClick={() => setOpen((prev) => !prev)}
-        className="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-ink font-mono text-[10px] font-semibold uppercase tracking-wide text-white shadow-md hover:bg-mute"
+        className="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-ink font-mono text-caption font-semibold uppercase tracking-wide text-white shadow-md hover:bg-mute"
       >
         {open ? "×" : "Cache"}
       </button>

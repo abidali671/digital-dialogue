@@ -14,7 +14,7 @@ const PopularTags = () => {
       <ContentContainer className="py-14 md:py-16">
         <div className="flex flex-col gap-2">
           <Title as="h2">Popular tags</Title>
-          <p className="max-w-xl text-base text-mute">
+          <p className="max-w-xl text-copy text-mute">
             Follow a topic into related guides without digging through the full
             archive.
           </p>

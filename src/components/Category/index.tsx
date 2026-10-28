@@ -12,7 +12,7 @@ const Category = ({ data }: ICategoryProps) => {
   return (
     <Link
       href={`/blogs/${slug}`}
-      className="block border-b border-line py-3 font-body text-sm font-semibold text-ink transition-colors hover:text-accent"
+      className="block border-b border-line py-3 font-body text-ui font-semibold text-ink transition-colors hover:text-accent"
     >
       {label}
     </Link>
