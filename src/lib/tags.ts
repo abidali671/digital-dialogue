@@ -3,6 +3,42 @@ import contentful_client from "@/lib/contentful/client";
 import { postHasTagSlug, searchTextFromKeywordSlug } from "@/lib/keywords";
 import type { IPostData } from "@/types";
 
+/** Tag pages with fewer posts are noindex and left out of the sitemap. */
+export const MIN_POSTS_FOR_INDEXABLE_TAG = 3;
+
+export function tagPostStats(
+  posts: { updatedAt?: string; tags: { slug: string }[] }[]
+) {
+  const stats: Record<string, { count: number; lastModified?: string }> = {};
+  const slugs: string[] = [];
+
+  for (const post of posts) {
+    for (const tag of post.tags) {
+      const current = stats[tag.slug];
+      if (!current) {
+        stats[tag.slug] = { count: 1, lastModified: post.updatedAt };
+        slugs.push(tag.slug);
+        continue;
+      }
+      current.count += 1;
+      if (
+        post.updatedAt &&
+        (!current.lastModified ||
+          new Date(post.updatedAt).getTime() >
+            new Date(current.lastModified).getTime())
+      ) {
+        current.lastModified = post.updatedAt;
+      }
+    }
+  }
+
+  return slugs.map((slug) => ({
+    slug,
+    count: stats[slug].count,
+    lastModified: stats[slug].lastModified,
+  }));
+}
+
 export const loadTagPosts = cache(async (slug: string, searchQuery = "") => {
   const tagQuery = searchTextFromKeywordSlug(slug);
   if (!slug || !tagQuery) return [] as IPostData[];
