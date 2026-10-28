@@ -98,10 +98,38 @@
   @apply whitespace-pre-wrap rounded bg-mist px-1.5 py-0.5 font-mono text-sm text-ink;
 }
 
+/* Prose templates are one long line per row. Wrap inside the column, and keep
+   the source line breaks. The toolbar is after the text in the DOM so the
+   template stays first for reading and SEO; column-reverse shows Copy on top. */
+.article-wrapper .code-block {
+  @apply flex min-w-0 max-w-full flex-col-reverse overflow-hidden rounded-lg border border-line bg-ink;
+}
+
+.article-wrapper .code-block-toolbar {
+  @apply flex items-center justify-end border-b border-white/20 px-3 py-2;
+}
+
+.article-wrapper .code-block-copy {
+  @apply inline-flex min-h-[44px] cursor-pointer items-center justify-center rounded-md border border-white/30 bg-white/10 px-3 font-mono text-sm font-medium text-white hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
+}
+
+.article-wrapper .code-block-copy[data-state="copied"] {
+  @apply border-white bg-white text-ink;
+}
+
 .article-wrapper pre {
-  @apply overflow-x-auto rounded-lg border border-line bg-ink p-4 font-mono text-sm leading-6 text-white;
+  @apply m-0 max-w-full overflow-x-auto rounded-lg border border-line bg-ink p-4 font-mono text-base text-white;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.article-wrapper .code-block pre {
+  @apply min-w-0 overflow-x-hidden rounded-none border-0 bg-transparent;
 }
 
 .article-wrapper pre code {
-  @apply whitespace-pre bg-transparent p-0 text-white;
+  @apply block whitespace-pre-wrap rounded-none bg-transparent p-0 font-mono text-base text-white;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
 }
