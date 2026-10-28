@@ -43,6 +43,21 @@ module.exports = {
         Montserrat: ["var(--font-body)", "system-ui", "sans-serif"],
         PT: ["var(--font-display)", "Georgia", "serif"],
       },
+      fontSize: {
+        /* 44px desktop H1 lives only in --fs-h1. Do not add a text-[44px] utility. */
+        h1: ["var(--fs-h1)", { lineHeight: "var(--lh-h1)", letterSpacing: "-0.02em", fontWeight: "700" }],
+        h2: ["var(--fs-h2)", { lineHeight: "var(--lh-h2)", letterSpacing: "-0.01em", fontWeight: "700" }],
+        h3: ["var(--fs-h3)", { lineHeight: "var(--lh-h3)", fontWeight: "700" }],
+        h4: ["var(--fs-h4)", { lineHeight: "var(--lh-h4)", fontWeight: "600" }],
+        faq: ["1.125rem", { lineHeight: "1.4", fontWeight: "600" }],
+        figure: ["var(--fs-figure)", { lineHeight: "1.1", fontWeight: "600" }],
+        "figure-sm": ["1.5rem", { lineHeight: "1.25", fontWeight: "600" }],
+        lead: ["var(--fs-lead)", { lineHeight: "var(--lh-lead)" }],
+        prose: ["var(--fs-prose)", { lineHeight: "var(--lh-prose)" }],
+        copy: ["1rem", { lineHeight: "1.6" }],
+        ui: ["0.875rem", { lineHeight: "1.45" }],
+        caption: ["0.75rem", { lineHeight: "1.35" }],
+      },
       keyframes: {
         "fade-up": {
           "0%": { opacity: "0", transform: "translateY(16px)" },

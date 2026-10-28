@@ -27,11 +27,11 @@
 }
 
 .post-card-root .post-card-content-wrapper .post-card-label-wrapper p {
-  @apply font-mono text-xs font-medium uppercase tracking-[0.08em] text-accent;
+  @apply font-mono text-caption font-medium uppercase tracking-[0.08em] text-accent;
 }
 
 .post-card-root .post-card-content-wrapper .post-card-title {
-  @apply h-auto font-display text-2xl font-bold leading-snug tracking-tight text-ink line-clamp-2 transition-colors;
+  @apply h-auto font-display text-h4 text-ink line-clamp-2 transition-colors;
 }
 
 .post-card-root:hover .post-card-content-wrapper .post-card-title {
@@ -39,15 +39,15 @@
 }
 
 .post-card-root .post-card-content-wrapper .post-card-excerpt {
-  @apply h-auto text-sm text-mute line-clamp-3 md:text-base;
+  @apply h-auto text-copy text-mute line-clamp-3;
 }
 
 .post-card-root .post-card-content-wrapper .post-card-created-date {
-  @apply flex items-center gap-2 font-mono text-xs text-mute-soft md:text-sm;
+  @apply flex items-center gap-2 font-mono text-caption text-mute-soft;
 }
 
 .post-card-root .post-card-content-wrapper .post-card-read-text {
-  @apply inline-flex items-center gap-2 pt-1 text-sm font-semibold text-accent transition-colors hover:text-accent-hover;
+  @apply inline-flex items-center gap-2 pt-1 text-ui font-semibold text-accent transition-colors hover:text-accent-hover;
 }
 
 .post-card-root .post-card-content-wrapper .post-card-read-text::after {
