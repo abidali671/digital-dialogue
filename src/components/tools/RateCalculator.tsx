@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { CalculatorField as Field, Chevron } from "@/components/tools/CalculatorField";
+import PkrRateHint from "@/components/tools/PkrRateHint";
 import { Swatch, ToolResultCard } from "@/components/tools/ToolResultCard";
 import { computeRate, type BillMode, type RatePeriod, type RateResult } from "@/lib/freelanceRate";
 import { formatNum, formatPercent, parseDecimal } from "@/lib/upworkFee";
@@ -415,7 +416,7 @@ export default function RateCalculator() {
                 value={values.usdPkr}
                 suffix="Rs"
                 placeholder="e.g. rate from your bank"
-                hint="Enter today’s rate. Your bank’s rate may differ."
+                hint={<PkrRateHint />}
                 hintId={`${formId}-fx-hint`}
                 describedBy={describedBy("usdPkr", `${formId}-fx-hint`)}
                 error={visible.usdPkr}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 import ConnectsCalculator from "@/components/tools/ConnectsCalculator";
+import ConnectsGuide from "@/components/tools/ConnectsGuide";
 import ToolHero from "@/components/tools/ToolHero";
 import FaqSection from "@/components/tools/FaqSection";
 import RelatedResources, { CALCULATOR_RESOURCES } from "@/components/tools/RelatedResources";
@@ -14,18 +15,19 @@ const OG_IMAGE = {
   alt: "Upwork Connects Calculator — work out your cost per reply, interview and contract",
 };
 
-const TITLE = "Upwork Connects Calculator: Proposal Costs | Digital Dialogue";
-const DESCRIPTION = "Estimate what your Upwork proposals cost in Connects and see your cost per reply, interview and contract, plus your reply and win rates. Free.";
+const TITLE = "Upwork Connects Calculator: Cost per Job | Digital Dialogue";
+const DESCRIPTION = "Work out what your Upwork proposals cost in Connects and dollars, and your cost per reply, interview and contract. Optional PKR view. Free, no sign-up.";
 const PATH = "/tools/upwork-connects-calculator";
 const CONNECTS_HELP = "https://support.upwork.com/hc/en-us/articles/211062898-Understanding-and-using-Connects";
 
 const FAQ = [
-  { question: "What are Upwork Connects?", text: "Connects are the tokens freelancers use on Upwork to submit proposals and for some promotion features, such as boosted proposals. Each job shows how many Connects it needs, and that number can vary." },
-  { question: "Why doesn’t the calculator include a Connects price?", text: "Prices, bundles, free monthly Connects and promotions can change and may differ by account, so you enter the price you actually pay." },
-  { question: "What is a good reply rate?", text: "There’s no single benchmark, because it depends on your niche, profile, the jobs you pick and how fast you apply. The most useful comparison is with yourself: track the same period each month." },
-  { question: "What’s the difference between Connects spending and total acquisition cost?", text: "Connects spending is only what you paid for the Connects you used. Total acquisition cost adds any other costs you entered, such as a membership or tools." },
-  { question: "Why does it say “Not available yet”?", text: "A cost per reply, interview or contract needs at least one of them to divide by. Instead of showing an infinite or misleading $0 figure, the calculator tells you what to add." },
-  { question: "Do refunded Connects count?", text: "Upwork returns Connects in some cases, such as when a client cancels a job before hiring. If Connects came back to you, leave them out of your average so your spending isn’t overstated." },
+  { question: "How much do Upwork Connects cost?", text: "Upwork lists extra Connects at $0.15 each, sold in bundles (checked 29 Oct 2026). You need a verified billing method to buy them. Freelancer Plus, at $19.99 a month, includes 100 Connects a month." },
+  { question: "How many Connects does a proposal need?", text: "It depends on the job. Each job post shows how many Connects it needs, and Upwork says the number can change while the job is posted. Boosting a proposal uses extra Connects on top." },
+  { question: "How much are Upwork Connects in Pakistani rupees?", text: "Multiply the dollar price by your exchange rate. At $0.15 per Connect and an example rate of 280 PKR per USD, one Connect is Rs 42 and 100 Connects are Rs 4,200. Connects are billed in US dollars, so your card or bank’s rate and charges decide the final rupee amount." },
+  { question: "Do I get my Connects back if I don’t get the job?", text: "Usually not. Upwork returns Connects only if the client cancels the job before hiring (not when it expires) or Upwork removes the post. They come back as Connects, not cash. A declined proposal or hiring someone else does not return them." },
+  { question: "What is a good cost per contract on Upwork?", text: "There is no single number. Compare your cost per contract with what a typical contract leaves you after the Upwork fee. If winning a client costs a small share of what they pay you, and they may come back, the Connects are working." },
+  { question: "Is Freelancer Plus cheaper than buying Connects?", text: "Only for Connects, no: 100 bought Connects cost $15, while Freelancer Plus is $19.99 a month. Plus also includes other features, such as a 0% fee on Direct Contracts, so it can make sense if you use those." },
+  { question: "Can I get free Connects on Upwork?", text: "Yes, in some cases. Upwork lists a one-time new user bonus, onboarding tasks, badges, some interviews and a first-boost reward. The amounts vary by account and Upwork changes them from time to time." },
 ] as const;
 
 export const metadata: Metadata = {
@@ -46,7 +48,7 @@ export default function UpworkConnectsCalculatorPage() {
     <div className="fee-page">
       <JsonLdScript data={[
         breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Tools", path: "/tools" }, { name: "Upwork Connects Calculator", path: PATH }]),
-        { "@context": "https://schema.org", "@type": "WebApplication", name: "Upwork Connects Calculator", applicationCategory: "FinanceApplication", operatingSystem: "Web", url: `${config.BASE_URL}${PATH}`, description: DESCRIPTION, offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }, provider: { "@type": "Organization", name: config.SITE_NAME, url: config.BASE_URL } },
+        { "@context": "https://schema.org", "@type": "WebApplication", name: "Upwork Connects Calculator", applicationCategory: "FinanceApplication", operatingSystem: "Any", dateModified: "2026-10-29", url: `${config.BASE_URL}${PATH}`, description: DESCRIPTION, offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }, provider: { "@type": "Organization", name: config.SITE_NAME, url: config.BASE_URL } },
         { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: FAQ.map((item) => ({ "@type": "Question", name: item.question, acceptedAnswer: { "@type": "Answer", text: item.text } })) },
       ]} />
       <section className="fee-hero bg-[#f4f6f8]">
@@ -55,14 +57,23 @@ export default function UpworkConnectsCalculatorPage() {
             <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Tools", href: "/tools" }, { label: "Upwork Connects Calculator" }]} />
             <ToolHero
               title="Upwork Connects Calculator"
-              intro="See what a batch of proposals costs in Connects, and what each reply, interview and contract costs you."
+              intro={
+                <>
+                  <p className="fee-hero-intro">
+                    Every Upwork proposal costs Connects, and Connects cost money. This calculator shows what a batch of proposals really cost you, and what you paid for each reply, interview and contract you won. Use it to see if your proposals pay for themselves and which jobs are worth the Connects.
+                  </p>
+                  <p className="fee-hero-intro">
+                    Upwork sells extra Connects for $0.15 each (checked 29 Oct 2026). If you buy them some other way, for example through Freelancer Plus, enter your own price per Connect.
+                  </p>
+                </>
+              }
               points={[
                 <>
                   <b className="font-semibold text-ink">How it’s calculated:</b> Connects per proposal × proposals × your price, then divided by replies, interviews and contracts.{" "}
                   <a className="fee-link" href="#ex">See the 40-proposal example</a>
                 </>,
                 <>
-                  <b className="font-semibold text-ink">Price source:</b> the price you pay. We don’t assume a Connects price.
+                  <b className="font-semibold text-ink">Price source:</b> the example starts at $0.15, Upwork’s listed price for extra Connects (checked 29 Oct 2026). Replace it with what you pay.
                 </>,
                 <>
                   <b className="font-semibold text-ink">Independent:</b> not affiliated with or endorsed by Upwork.
@@ -104,6 +115,9 @@ export default function UpworkConnectsCalculatorPage() {
             </table>
           </div>
         </div>
+      </section>
+      <section className="border-y border-line bg-white">
+        <ConnectsGuide />
       </section>
       <FaqSection
         title="Upwork Connects questions"

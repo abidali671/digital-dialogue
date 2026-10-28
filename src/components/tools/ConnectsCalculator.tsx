@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import { CalculatorField as Field, Chevron } from "@/components/tools/CalculatorField";
+import PkrRateHint from "@/components/tools/PkrRateHint";
 import { ToolResultCard } from "@/components/tools/ToolResultCard";
 import { computeConnects } from "@/lib/upworkConnects";
 import { formatMoney, formatNum, parseDecimal } from "@/lib/upworkFee";
@@ -330,7 +331,7 @@ export default function ConnectsCalculator() {
                 value={values.usdPkr}
                 suffix="Rs"
                 placeholder="e.g. rate from your bank"
-                hint="Enter today’s rate. Your bank’s rate may differ."
+                hint={<PkrRateHint />}
                 hintId={`${formId}-fx-hint`}
                 describedBy={describedBy("usdPkr", `${formId}-fx-hint`)}
                 error={visible.usdPkr}

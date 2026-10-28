@@ -1,14 +1,12 @@
-import { USD_PKR, usdPkrAsOfLabel } from "@/lib/usdPkr";
-
 /** Document title before the site-name suffix. Resolved length stays under 60 characters. */
-export const TOOLS_PAGE_TITLE = "Upwork Freelance Calculators";
+export const TOOLS_PAGE_TITLE = "Free Freelance Calculators for Upwork";
 
 export const TOOLS_PAGE_DESCRIPTION =
-  "Free calculators for Upwork take-home pay, Connects cost per contract, and the hourly rate that covers fees and unpaid time.";
+  "Free calculators for freelancers: Upwork take-home pay after fees, Connects cost per contract, and the hourly rate you need. No sign-up. PKR optional.";
 
 export const TOOLS_INTRO = [
-  "These calculators estimate Upwork take-home pay, what a batch of proposals costs in Connects, and the hourly rate that covers unpaid time.",
-  "The fee and rate calculators start at 10%, which you should replace with the percentage on your offer. The Connects calculator does not fill in a price. None of them estimate tax. Working in Pakistan? Choose PKR to convert US dollar amounts with an editable rate.",
+  "Freelancing pays well only when you know what you keep. These free calculators help with the three numbers that matter most on Upwork: what you take home after fees, what your proposals cost you, and the hourly rate you need to charge.",
+  "Each one works in your browser, with no sign-up. Enter amounts in US dollars. To see results in Pakistani rupees (PKR), choose PKR and enter your exchange rate. Other currencies change the symbol only. Each page lists the Upwork pages its fee rules come from and the date they were checked.",
 ];
 
 export type HubTool = {
@@ -23,21 +21,21 @@ export const HUB_TOOLS: HubTool[] = [
   {
     href: "/tools/upwork-fee-calculator",
     title: "Upwork Fee Calculator",
-    copy: "Shows what you keep from an hourly or fixed-price Upwork contract after the service fee and any withdrawal costs you add. For freelancers who want a take-home figure before they accept an offer.",
+    copy: "See your take-home pay after the 0%–15% Freelancer Service Fee and withdrawal costs.",
     image: "/upwork-fee-calculator.png",
     alt: "Upwork Fee Calculator showing take-home pay split into what you keep, the service fee, and withdrawal costs.",
   },
   {
     href: "/tools/upwork-connects-calculator",
     title: "Upwork Connects Calculator",
-    copy: "Turns the Connects on a job, plus your replies, interviews and contracts, into a cost per result. For freelancers deciding whether a proposal is worth sending.",
+    copy: "Find out what your proposals cost and what you paid for each reply, interview and contract.",
     image: "/upwork-connects-calculator.png",
     alt: "Upwork Connects Calculator showing a proposal funnel from proposals to replies, interviews, and contracts.",
   },
   {
     href: "/tools/freelance-rate-calculator",
     title: "Freelance Rate Calculator",
-    copy: "Turns a monthly or yearly income goal into the hourly rate that covers expenses, a platform fee and unpaid hours. For freelancers setting a minimum rate before they write a proposal.",
+    copy: "Work out the minimum hourly rate that covers your costs, platform fees and unpaid hours.",
     image: "/freelance-rate-calculator.png",
     alt: "Freelance Rate Calculator showing an hourly rate split into take-home goal, expenses, platform fee, and unbilled time.",
   },
@@ -85,7 +83,8 @@ export type HubFaq = {
 export const TOOL_FAQS: HubFaq[] = [
   {
     question: "Does choosing a currency convert my amounts?",
-    answer: `Only PKR does. Enter amounts in US dollars and the results use an editable exchange rate. The default is the ${USD_PKR.sourceName} weighted average: 1 USD = ${USD_PKR.rate} PKR as of ${usdPkrAsOfLabel()}. Edit it if your payout rate is different. The other currencies only change the symbol and number format.`,
+    answer:
+      "Only PKR does. Enter amounts in US dollars, then enter your exchange rate. The State Bank of Pakistan weighted average and its date are shown as a reference. Until you enter a rate, results stay in US dollars. Other currencies only change the symbol and number format.",
   },
   {
     question: "What fee percentage should I use?",
@@ -93,9 +92,9 @@ export const TOOL_FAQS: HubFaq[] = [
       "The fee and rate calculators start at 10% as an estimate. On Upwork, the freelancer service fee is shown on each offer and can be from 0% to 15% for that contract. Replace 10% with the percentage on your offer.",
   },
   {
-    question: "Why is there no Connects price filled in?",
+    question: "Is the $0.15 Connects price my real price?",
     answer:
-      "The Connects calculator leaves the price blank on purpose. Upwork’s price, bundles and free monthly Connects can change and may differ by account, so you enter what you actually pay.",
+      "No. The $0.15 in the Connects calculator is an example only (Upwork’s listed price for extra Connects, checked 29 Oct 2026). It is not assumed to be your price. Replace it with what you actually pay. Bundles, Freelancer Plus and free monthly Connects can change what you pay.",
   },
   {
     question: "Do these include income tax?",

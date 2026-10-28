@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useId, useMemo, useRef, useState } from "react";
 import { CALCULATOR_CURRENCIES } from "@/components/tools/CalculatorCurrencyFields";
 import { CalculatorField as Field, Chevron } from "@/components/tools/CalculatorField";
+import PkrRateHint from "@/components/tools/PkrRateHint";
 import { Swatch, ToolResultCard } from "@/components/tools/ToolResultCard";
 import {
   FIELD_RULES,
@@ -401,7 +402,7 @@ export default function FeeCalculator() {
                 value={values.usdPkr}
                 suffix="Rs"
                 placeholder="e.g. rate from your bank"
-                hint="Enter today’s rate. Your bank’s rate may differ."
+                hint={<PkrRateHint />}
                 hintId={`${formId}-fx-hint`}
                 describedBy={describedBy("usdPkr", `${formId}-fx-hint`)}
                 error={visibleErrors.usdPkr}

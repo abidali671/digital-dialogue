@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 import FaqSection from "@/components/tools/FaqSection";
 import RateCalculator from "@/components/tools/RateCalculator";
+import RateGuide from "@/components/tools/RateGuide";
 import ToolHero from "@/components/tools/ToolHero";
 import RelatedResources, { CALCULATOR_RESOURCES } from "@/components/tools/RelatedResources";
 import config from "@/lib/config";
@@ -14,18 +15,20 @@ const OG_IMAGE = {
   alt: "Freelance Rate Calculator — find the hourly rate that hits your income goal after expenses, fees and unpaid hours",
 };
 
-const TITLE = "Freelance Rate Calculator: Hourly Rate | Digital Dialogue";
-const DESCRIPTION = "Work out the hourly rate you need to hit your freelance income goal after business expenses, platform fees and unpaid hours. Free, no sign-up required.";
+const TITLE = "Freelance Rate Calculator: What to Charge | Digital Dialogue";
+const DESCRIPTION = "Find the hourly rate you need to charge as a freelancer after expenses, platform fees like Upwork's, and unpaid hours. Day and project rates too. Free.";
 const PATH = "/tools/freelance-rate-calculator";
 const FEE_HELP = "https://support.upwork.com/hc/en-us/articles/211062538-Learn-about-the-Freelancer-Service-Fee";
 
 const FAQ = [
-  { question: "How do I calculate my freelance hourly rate?", text: "Add your take-home goal and business expenses, then gross that up for platform and payment fees by dividing by (1 − fee%). Divide the result by the hours you can actually bill in a month. That’s the minimum hourly rate that covers your goal." },
-  { question: "What’s the difference between billable and working hours?", text: "Working hours are all the time you spend on your business. Billable hours are only the hours a client pays for. Writing proposals, marketing, admin, invoicing, meetings and learning are real work but usually unpaid, so your rate has to cover them." },
-  { question: "Why divide by (1 − fee) instead of adding the fee?", text: "Platforms take their fee from what you bill. If you need $900 and the fee is 10%, adding 10% gives $990, but 10% of $990 is $99, leaving $891. Dividing $900 by 0.9 gives $1,000, and after the $100 fee you keep exactly $900." },
-  { question: "Does this include tax?", text: "No. Tax depends on where you live and how you’re registered, so the calculator leaves it out. If you pay tax on freelance income, raise your take-home goal to allow for it, or check with a qualified tax adviser." },
-  { question: "What fee percentage should I use?", text: "Use the fees you actually pay. On Upwork, the freelancer service fee is shown on each offer and ranges from 0% to 15% per contract. The calculator starts at 10% as an estimate." },
-  { question: "Should I charge exactly this rate?", text: "Treat it as a floor, not a price. It’s the least you can charge and still meet your goal if you bill the hours you entered. Your market, experience and the value you deliver may support a higher rate, and slow months happen." },
+  { question: "How do I calculate my freelance hourly rate?", text: "Add the take-home pay you want to your business expenses, divide by (1 − your platform fee), then divide by the hours you can bill in a month. For example, $2,250 at a 10% fee is $2,500 to bill. Over 92 billable hours, that is $27.17 an hour." },
+  { question: "How many billable hours should I plan for?", text: "Fewer than you work. Proposals, admin, calls and learning are unpaid, so many freelancers can bill only part of a 40-hour week. Track your own time for a few weeks and use that number. The calculator lets you enter billable hours or a billable percentage." },
+  { question: "How do Upwork fees affect my hourly rate?", text: "Upwork takes 0% to 15% of what you bill on each contract. To keep the same take-home, divide your needed income by (1 − the fee). In the example above, a 15% fee instead of 0% raises the minimum rate from $24.46 to $28.77 an hour." },
+  { question: "Should I just add the fee percentage to my rate?", text: "No. The fee is taken from the full amount you bill, so adding the percentage leaves you a little short. Dividing by (1 − fee) gives the exact amount. At 10%, divide by 0.90." },
+  { question: "How do I turn an hourly rate into a day rate or project price?", text: "Multiply your hourly rate by the billable hours in a day for a day rate. For a project, estimate the hours and multiply by your rate, then add room for revisions. The calculator shows a day rate and a 10-hour project price as examples." },
+  { question: "Does the rate calculator include tax?", text: "No. Tax depends on where you live. Add your expected tax to your take-home goal, or check with a tax adviser in your country." },
+  { question: "Can I use the calculator in Pakistani rupees?", text: "Yes. Choose PKR, enter amounts in US dollars, then enter the exchange rate your bank or wallet gives you. The calculator shows the State Bank of Pakistan weighted average and its date as a reference. Until you enter a rate, results stay in US dollars." },
+  { question: "Is this rate what I should charge every client?", text: "It is your minimum. Clients pay for results and skill, so charge more where the market allows, and use this number to know when a job is too cheap to take." },
 ] as const;
 
 export const metadata: Metadata = {
@@ -46,7 +49,7 @@ export default function FreelanceRateCalculatorPage() {
     <div className="fee-page">
       <JsonLdScript data={[
         breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Tools", path: "/tools" }, { name: "Freelance Rate Calculator", path: PATH }]),
-        { "@context": "https://schema.org", "@type": "WebApplication", name: "Freelance Rate Calculator", applicationCategory: "FinanceApplication", operatingSystem: "Web", url: `${config.BASE_URL}${PATH}`, description: DESCRIPTION, offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }, provider: { "@type": "Organization", name: config.SITE_NAME, url: config.BASE_URL } },
+        { "@context": "https://schema.org", "@type": "WebApplication", name: "Freelance Rate Calculator", applicationCategory: "FinanceApplication", operatingSystem: "Any", dateModified: "2026-10-29", url: `${config.BASE_URL}${PATH}`, description: DESCRIPTION, offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }, provider: { "@type": "Organization", name: config.SITE_NAME, url: config.BASE_URL } },
         { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: FAQ.map((item) => ({ "@type": "Question", name: item.question, acceptedAnswer: { "@type": "Answer", text: item.text } })) },
       ]} />
       <section className="fee-hero bg-[#f4f6f8]">
@@ -55,7 +58,16 @@ export default function FreelanceRateCalculatorPage() {
             <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Tools", href: "/tools" }, { label: "Freelance Rate Calculator" }]} />
             <ToolHero
               title="Freelance Rate Calculator"
-              intro="Work out the hourly rate that still hits your income goal after expenses, platform fees and the hours nobody pays for."
+              intro={
+                <>
+                  <p className="fee-hero-intro">
+                    Work out the lowest hourly rate you can charge and still reach your income goal. Enter the take-home pay you want, your business costs, the platform fee, and the hours you can actually bill. The calculator then shows your minimum hourly rate, plus a day rate and a 10-hour project price.
+                  </p>
+                  <p className="fee-hero-intro">
+                    It is a floor, not a target. Charge more where your skills, results and market allow.
+                  </p>
+                </>
+              }
               points={[
                 <>
                   <b className="font-semibold text-ink">How it’s calculated:</b> (take-home + expenses) ÷ (1 − fee %), spread over the hours you can bill.{" "}
@@ -104,6 +116,9 @@ export default function FreelanceRateCalculatorPage() {
             </table>
           </div>
         </div>
+      </section>
+      <section className="border-y border-line bg-white">
+        <RateGuide />
       </section>
       <FaqSection
         title="Freelance rate questions"
