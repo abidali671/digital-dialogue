@@ -354,6 +354,18 @@
   font-weight: 700;
   color: #0f172a;
   cursor: pointer;
+  list-style: none;
+}
+
+.fee-page .fee-acc-btn::-webkit-details-marker {
+  display: none;
+}
+
+.fee-page .fee-acc-btn h3 {
+  margin: 0;
+  flex: 1;
+  font: inherit;
+  color: inherit;
 }
 
 .fee-page .fee-acc-btn:hover {
@@ -372,7 +384,7 @@
   color: #0f172a;
 }
 
-.fee-page .fee-acc-btn[aria-expanded="true"] .fee-acc-icon {
+.fee-page .fee-acc[open] .fee-acc-icon {
   transform: rotate(45deg);
   border-color: #0f766e;
   color: #0f766e;
