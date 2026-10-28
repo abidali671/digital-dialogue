@@ -9,6 +9,7 @@ import {
   type Text,
 } from "@contentful/rich-text-types";
 import Link from "next/link";
+import CopyCodeButton from "@/components/CopyCodeButton";
 import { headingPlainText, uniqueHeadingId } from "@/lib/toc";
 
 const SITE_HOSTS = new Set(["digitaldialogue.pk", "www.digitaldialogue.pk"]);
@@ -87,9 +88,14 @@ export function createRichTextOptions(): Options {
           .replace(/^\n+|\n+$/g, "");
 
         return (
-          <pre>
-            <code>{code}</code>
-          </pre>
+          <div className="code-block">
+            <pre>
+              <code>{code}</code>
+            </pre>
+            <div className="code-block-toolbar">
+              <CopyCodeButton text={code} />
+            </div>
+          </div>
         );
       },
       [BLOCKS.HEADING_2]: (node, children) =>
