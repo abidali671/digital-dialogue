@@ -9,13 +9,13 @@ import constants from "@/constants";
 import { getPostsBySlugs } from "@/lib/posts";
 import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
 import {
+  faqPageSchema,
   JsonLdScript,
   organizationSchema,
   websiteSchema,
 } from "@/lib/schema";
 import { HOME_FAQS } from "@/lib/homeFaqs";
 import { IPostData } from "@/types";
-import { FAQPageJsonLd } from "next-seo";
 
 export const revalidate = 3600;
 
@@ -57,13 +57,8 @@ export default async function HomePage() {
 
   return (
     <>
-      <JsonLdScript data={[organizationSchema(), websiteSchema()]} />
-      <FAQPageJsonLd
-        useAppDir
-        mainEntity={HOME_FAQS.map((faq) => ({
-          questionName: faq.question,
-          acceptedAnswerText: faq.answer,
-        }))}
+      <JsonLdScript
+        data={[organizationSchema(), websiteSchema(), faqPageSchema(HOME_FAQS)]}
       />
       <Hero posts={featuredPost} />
       <TopPicks posts={pickedPosts} />

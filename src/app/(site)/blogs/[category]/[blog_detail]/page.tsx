@@ -20,10 +20,10 @@ import { formatLongDate, getPublishedDate, getReadingTime, toIsoTimestamp, wasUp
 import { pickRelatedPosts, getPostTags, toShareHashtags } from "@/lib/keywords";
 import { isNextNotFound } from "@/lib/next-errors";
 import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
-import { articlePublisher, breadcrumbSchema, JsonLdScript } from "@/lib/schema";
+import { articlePublisher, breadcrumbSchema, faqPageSchema, JsonLdScript } from "@/lib/schema";
 import { extractToc, shouldShowToc } from "@/lib/toc";
 import TableOfContents from "@/components/TableOfContents";
-import { ArticleJsonLd, FAQPageJsonLd } from "next-seo";
+import { ArticleJsonLd } from "next-seo";
 import { getSiteAuthor } from "@/constants/authors";
 
 export const revalidate = 3600;
@@ -223,12 +223,13 @@ export default async function BlogDetailPage(props: PageProps) {
           ])}
         />
         {faqList.length > 0 && (
-          <FAQPageJsonLd
-            useAppDir
-            mainEntity={faqList.map((faq) => ({
-              questionName: faq.question,
-              acceptedAnswerText: faq.answer,
-            }))}
+          <JsonLdScript
+            data={faqPageSchema(
+              faqList.map((faq) => ({
+                question: faq.question,
+                answer: faq.answer,
+              }))
+            )}
           />
         )}
 
