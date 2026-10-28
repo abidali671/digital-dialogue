@@ -13,7 +13,7 @@ const OG_IMAGE = {
   alt: "Freelance Rate Calculator — find the hourly rate that hits your income goal after expenses, fees and unpaid hours",
 };
 
-const TITLE = "Freelance Rate Calculator: Find Your Hourly Rate | Digital Dialogue";
+const TITLE = "Freelance Rate Calculator: Hourly Rate | Digital Dialogue";
 const DESCRIPTION = "Work out the hourly rate you need to hit your freelance income goal after business expenses, platform fees and unpaid hours. Free, no sign-up required.";
 const PATH = "/tools/freelance-rate-calculator";
 const FEE_HELP = "https://support.upwork.com/hc/en-us/articles/211062538-Learn-about-the-Freelancer-Service-Fee";
