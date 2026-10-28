@@ -13,7 +13,7 @@ const OG_IMAGE = {
   alt: "Upwork Connects Calculator — work out your cost per reply, interview and contract",
 };
 
-const TITLE = "Upwork Connects Calculator: Track Proposal Costs | Digital Dialogue";
+const TITLE = "Upwork Connects Calculator: Proposal Costs | Digital Dialogue";
 const DESCRIPTION = "Estimate what your Upwork proposals cost in Connects and see your cost per reply, interview and contract, plus your reply and win rates. Free.";
 const PATH = "/tools/upwork-connects-calculator";
 const CONNECTS_HELP = "https://support.upwork.com/hc/en-us/articles/211062898-Understanding-and-using-Connects";

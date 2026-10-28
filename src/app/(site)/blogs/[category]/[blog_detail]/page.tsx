@@ -20,7 +20,7 @@ import { formatLongDate, getPublishedDate, getReadingTime, toIsoTimestamp, wasUp
 import { pickRelatedPosts, getPostTags, toShareHashtags } from "@/lib/keywords";
 import { isNextNotFound } from "@/lib/next-errors";
 import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
-import { breadcrumbSchema, JsonLdScript } from "@/lib/schema";
+import { articlePublisher, breadcrumbSchema, JsonLdScript } from "@/lib/schema";
 import { extractToc, shouldShowToc } from "@/lib/toc";
 import TableOfContents from "@/components/TableOfContents";
 import { ArticleJsonLd, FAQPageJsonLd } from "next-seo";
@@ -192,15 +192,20 @@ export default async function BlogDetailPage({ params }: PageProps) {
     return (
       <>
         <ArticleJsonLd
-          type="Blog"
+          type="BlogPosting"
           title={title}
           description={excerpt}
-          authorName={author.name}
+          authorName={{
+            name: author.name,
+            url: `${config.BASE_URL}/authors/${author.slug}`,
+          }}
           url={shareUrl}
           keywords={keywords}
           datePublished={toIsoTimestamp(publishedAt)}
           dateModified={toIsoTimestamp(updatedAt)}
           images={["https:" + coverImage.fields.file.url]}
+          publisher={articlePublisher()}
+          id={`${shareUrl}#article`}
           useAppDir
         />
         <JsonLdScript

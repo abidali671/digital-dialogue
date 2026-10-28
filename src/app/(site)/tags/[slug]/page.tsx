@@ -4,7 +4,7 @@ import CategoryBlogsClient from "@/components/blogs/CategoryBlogsClient";
 import { parseSearchQuery } from "@/lib/listing";
 import { labelFromKeywordSlug, getPostTags } from "@/lib/keywords";
 import { isNextNotFound } from "@/lib/next-errors";
-import { loadTagPosts } from "@/lib/tags";
+import { loadTagPosts, MIN_POSTS_FOR_INDEXABLE_TAG } from "@/lib/tags";
 import { REVALIDATE_LISTING } from "@/lib/contentful/client";
 import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { IPostData } from "@/types";
@@ -57,6 +57,10 @@ export async function generateMetadata({
     title: pageTitle(title),
     description,
     alternates: { canonical },
+    robots: {
+      index: posts.length >= MIN_POSTS_FOR_INDEXABLE_TAG,
+      follow: true,
+    },
     openGraph: {
       title: resolvedTitle,
       description,
