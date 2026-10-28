@@ -5,6 +5,7 @@ import contentful_client, {
 } from "@/lib/contentful/client";
 import config from "@/lib/config";
 import { getPostTags } from "@/lib/keywords";
+import { MIN_POSTS_FOR_INDEXABLE_TAG, tagPostStats } from "@/lib/tags";
 import type { ICategoryData, IPostData } from "@/types";
 import { AUTHORS } from "@/constants/authors";
 
@@ -43,9 +44,9 @@ function entry(
 ) {
   return {
     url: path === "/" ? config.BASE_URL : `${config.BASE_URL}${path}`,
-    lastModified: options.lastModified
-      ? new Date(options.lastModified)
-      : new Date(),
+    ...(options.lastModified
+      ? { lastModified: new Date(options.lastModified) }
+      : {}),
     changeFrequency: options.changeFrequency ?? "weekly",
     priority: options.priority ?? 0.5,
   };
@@ -113,21 +114,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }),
     );
 
-    const seenTagSlugs: Record<string, true> = {};
-    const tagSlugs: string[] = [];
-    for (const post of posts as unknown as IPostData[]) {
-      for (const tag of getPostTags(post)) {
-        if (seenTagSlugs[tag.slug]) continue;
-        seenTagSlugs[tag.slug] = true;
-        tagSlugs.push(tag.slug);
-      }
-    }
-    const tagRoutes = tagSlugs.map((slug) =>
-      entry(`/tags/${slug}`, {
-        changeFrequency: "weekly",
-        priority: 0.6,
-      }),
-    );
+    const tagRoutes = tagPostStats(
+      (posts as unknown as IPostData[]).map((post) => ({
+        updatedAt: post.sys.updatedAt,
+        tags: getPostTags(post),
+      })),
+    )
+      .filter((tag) => tag.count >= MIN_POSTS_FOR_INDEXABLE_TAG)
+      .map((tag) =>
+        entry(`/tags/${tag.slug}`, {
+          lastModified: tag.lastModified,
+          changeFrequency: "weekly",
+          priority: 0.6,
+        }),
+      );
 
     return [
       ...staticRoutes,

@@ -2,6 +2,9 @@ import config from "@/lib/config";
 
 type JsonLd = Record<string, unknown>;
 
+/** Same file the homepage Organization schema declares as its logo. */
+const PUBLISHER_LOGO_URL = `${config.BASE_URL}/logo.webp`;
+
 export function JsonLdScript({ data }: { data: JsonLd | JsonLd[] }) {
   const json = JSON.stringify(data)
     .replace(/</g, "\\u003c")
@@ -24,13 +27,29 @@ export function organizationSchema() {
     "@type": "Organization",
     name: config.SITE_NAME,
     url: config.BASE_URL,
-    logo: `${config.BASE_URL}/logo.webp`,
+    logo: PUBLISHER_LOGO_URL,
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer support",
       url: `${config.BASE_URL}/contact-us`,
     },
     sameAs: [config.LINKEDIN_URL, config.UPWORK_URL, config.FIVERR_URL],
+  };
+}
+
+/**
+ * Publisher on article pages. next-seo's publisherLogo prop omits the
+ * organization url, so the article passes this object through instead.
+ */
+export function articlePublisher() {
+  return {
+    "@type": "Organization" as const,
+    name: config.SITE_NAME,
+    url: config.BASE_URL,
+    logo: {
+      "@type": "ImageObject" as const,
+      url: PUBLISHER_LOGO_URL,
+    },
   };
 }
 

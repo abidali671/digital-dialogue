@@ -13,7 +13,7 @@ const OG_IMAGE = {
   alt: "Upwork Fee Calculator — see what you keep after the service fee and withdrawal costs",
 };
 
-const TITLE = "Upwork Fee Calculator: Estimate Your Take-Home Pay | Digital Dialogue";
+const TITLE = "Upwork Fee Calculator: Take-Home Pay | Digital Dialogue";
 const DESCRIPTION =
   "Estimate your Upwork take-home pay after the freelancer service fee and withdrawal costs. Free calculator, no sign-up required.";
 const PATH = "/tools/upwork-fee-calculator";
