@@ -61,6 +61,25 @@ export function entrySymbol(currency: string): string {
   return currencySymbol(currency);
 }
 
+/**
+ * Calculator display. PKR converts only after the user enters a rate, using
+ * en-IN grouping. Until then the figure stays in US dollars.
+ */
+export function formatCalculatorMoney(
+  amount: number,
+  currency: string,
+  usdPkr: string
+): string {
+  if (currency !== "PKR") return formatMoney(amount, currency);
+  const rate = usdPkrRateNumber(usdPkr);
+  if (rate == null) return formatMoney(amount, "USD");
+  const formatted = new Intl.NumberFormat("en-IN", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(amount * rate);
+  return `Rs ${formatted}`;
+}
+
 /** Display helper. Fee, Connects and rate maths stay in the entered units. */
 export function formatConvertedMoney(
   amount: number,

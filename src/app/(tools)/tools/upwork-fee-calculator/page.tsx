@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 import FeeCalculator from "@/components/tools/FeeCalculator";
+import ToolHero from "@/components/tools/ToolHero";
 import FaqSection from "@/components/tools/FaqSection";
 import RelatedResources, { CALCULATOR_RESOURCES } from "@/components/tools/RelatedResources";
 import config from "@/lib/config";
@@ -41,7 +42,7 @@ const FAQ = [
   },
   {
     question: "Does choosing a currency convert my amounts?",
-    text: "PKR does. Enter the contract amounts in US dollars, choose PKR, and the results are converted with an exchange rate you can edit. The default is the State Bank of Pakistan weighted average for the date shown under the rate field. EUR, GBP and the other currencies only change the symbol and number format, so enter those amounts in the currency you want to see.",
+    text: "PKR does. Enter the contract amounts in US dollars, choose PKR, and enter the rupees per US dollar. Until you enter a rate, the result stays in US dollars. EUR, GBP and the other currencies only change the symbol and number format, so enter those amounts in the currency you want to see.",
   },
   {
     question: "How accurate is this calculator?",
@@ -66,14 +67,6 @@ export const metadata: Metadata = {
     images: [OG_IMAGE],
   },
 };
-
-function Check() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" className="shrink-0" fill="none" stroke="currentColor" strokeWidth="2.2">
-      <path d="M4.5 10.5l3.5 3.5 7.5-8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
 
 export default function UpworkFeeCalculatorPage() {
   return (
@@ -116,48 +109,38 @@ export default function UpworkFeeCalculatorPage() {
         ]}
       />
 
-      <div className="border-b border-line bg-white">
-        <div className="mx-auto w-full max-w-7xl px-5 py-10 sm:px-6 md:py-14">
-          <Breadcrumb
-            items={[
-              { label: "Home", href: "/" },
-              { label: "Tools", href: "/tools" },
-              { label: "Upwork Fee Calculator" },
-            ]}
-          />
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
-            <div className="max-w-3xl">
-              <h1>Upwork Fee Calculator</h1>
-              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[#475569] md:text-xl">
-                Estimate what you actually keep from an Upwork contract after the freelancer service fee and any withdrawal or conversion costs. Works for hourly and fixed-price work. Choose PKR to convert US dollar amounts into rupees.
-              </p>
-              <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-accent/40 bg-[#f0fdfa] px-3.5 py-1.5 text-sm font-semibold text-[#134e4a]">
-                <Check />
-                Free calculator · No sign-up required.
-              </p>
-            </div>
-            <ul className="hidden gap-2.5 rounded-xl border border-line bg-mist/60 px-5 py-4 text-sm lg:grid" aria-label="What this calculator covers">
-              {[
-                "Hourly and fixed-price contracts",
-                "Editable service fee %",
-                "Withdrawal and conversion costs",
-                "PKR converted from US dollars",
-              ].map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <span className="text-[#0f766e]">
-                    <Check />
-                  </span>
-                  {item}
-                </li>
-              ))}
-            </ul>
+      <section className="fee-hero bg-[#f4f6f8]">
+        <div className="fee-hero-grid mx-auto w-full max-w-[1200px] px-4 pb-10 pt-4 sm:px-5 min-[1024px]:px-8 min-[1024px]:pb-14 min-[1024px]:pt-10">
+          <div className="min-[1024px]:pt-10">
+            <Breadcrumb
+              items={[
+                { label: "Home", href: "/" },
+                { label: "Tools", href: "/tools" },
+                { label: "Upwork Fee Calculator" },
+              ]}
+            />
+            <ToolHero
+              title="Upwork Fee Calculator"
+              intro="Estimate what you actually keep from an Upwork contract after the service fee and any withdrawal or conversion costs."
+              points={[
+                <>
+                  <b className="font-semibold text-ink">How it’s calculated:</b> your amount, minus the service fee % and any withdrawal costs you add.{" "}
+                  <a className="fee-link" href="#ex">See the $500 example</a>
+                </>,
+                <>
+                  <b className="font-semibold text-ink">Fee source:</b> the % on your Upwork offer and Upwork’s help pages.
+                </>,
+                <>
+                  <b className="font-semibold text-ink">Independent:</b> not affiliated with or endorsed by Upwork.
+                </>,
+              ]}
+            />
           </div>
+          <FeeCalculator />
         </div>
-      </div>
+      </section>
 
-      <FeeCalculator />
-
-      <section aria-labelledby="example-title" className="pb-14 md:pb-20">
+      <section id="ex" aria-labelledby="example-title" className="py-14 md:py-20">
         <div className="mx-auto w-full max-w-7xl px-5 sm:px-6">
           <div className="fee-card grid gap-8 p-5 sm:p-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12">
             <div>
@@ -209,7 +192,7 @@ export default function UpworkFeeCalculatorPage() {
             {[
               ["Pick your contract type", "Choose Hourly to enter your rate and hours, or Fixed-price to enter the total contract or milestone amount."],
               ["Check the fee and extras", "Replace the estimated 10% with the service fee shown on your Upwork offer. Add withdrawal or conversion costs if you know them."],
-              ["Calculate and plan", "Select Calculate take-home to see your estimated payout, the effective deduction and a breakdown you can use when setting rates. Choose PKR to show that payout in rupees."],
+              ["Read the estimate", "The take-home figure updates as you type, with the effective deduction and a breakdown you can use when setting rates. Choose PKR and enter a rate to show that payout in rupees."],
             ].map(([title, copy], index) => (
               <li key={title} className="flex gap-4 border-t border-line pt-5">
                 <span className="font-mono text-sm text-[#0f766e]" aria-hidden="true">

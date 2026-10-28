@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 import FaqSection from "@/components/tools/FaqSection";
 import RateCalculator from "@/components/tools/RateCalculator";
+import ToolHero from "@/components/tools/ToolHero";
 import RelatedResources, { CALCULATOR_RESOURCES } from "@/components/tools/RelatedResources";
 import config from "@/lib/config";
 import { breadcrumbSchema, JsonLdScript } from "@/lib/schema";
@@ -48,22 +49,59 @@ export default function FreelanceRateCalculatorPage() {
         { "@context": "https://schema.org", "@type": "WebApplication", name: "Freelance Rate Calculator", applicationCategory: "FinanceApplication", operatingSystem: "Web", url: `${config.BASE_URL}${PATH}`, description: DESCRIPTION, offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }, provider: { "@type": "Organization", name: config.SITE_NAME, url: config.BASE_URL } },
         { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: FAQ.map((item) => ({ "@type": "Question", name: item.question, acceptedAnswer: { "@type": "Answer", text: item.text } })) },
       ]} />
-      <div className="border-b border-line bg-white">
-        <div className="mx-auto w-full max-w-7xl px-5 py-10 sm:px-6 md:py-14">
-          <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Tools", href: "/tools" }, { label: "Freelance Rate Calculator" }]} />
-          <div className="max-w-3xl">
-            <h1>Freelance Rate Calculator</h1>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[#475569] md:text-xl">Work out the hourly rate that still hits your income goal after expenses, platform fees and the hours nobody pays for. Choose PKR to convert US dollar amounts into rupees.</p>
+      <section className="fee-hero bg-[#f4f6f8]">
+        <div className="fee-hero-grid mx-auto w-full max-w-[1200px] px-4 pb-10 pt-4 sm:px-5 min-[1024px]:px-8 min-[1024px]:pb-14 min-[1024px]:pt-10">
+          <div className="min-[1024px]:pt-10">
+            <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Tools", href: "/tools" }, { label: "Freelance Rate Calculator" }]} />
+            <ToolHero
+              title="Freelance Rate Calculator"
+              intro="Work out the hourly rate that still hits your income goal after expenses, platform fees and the hours nobody pays for."
+              points={[
+                <>
+                  <b className="font-semibold text-ink">How it’s calculated:</b> (take-home + expenses) ÷ (1 − fee %), spread over the hours you can bill.{" "}
+                  <a className="fee-link" href="#ex">See the $1,500 example</a>
+                </>,
+                <>
+                  <b className="font-semibold text-ink">Fee source:</b> the fees you actually pay. Upwork shows its service fee on each offer.
+                </>,
+                <>
+                  <b className="font-semibold text-ink">Independent:</b> not affiliated with or endorsed by Upwork.
+                </>,
+              ]}
+            />
           </div>
+          <RateCalculator />
         </div>
-      </div>
-      <RateCalculator />
-      <section aria-labelledby="example-title" className="pb-14">
-        <div className="mx-auto w-full max-w-7xl px-5 sm:px-6">
-          <div className="fee-card p-5 sm:p-8">
-            <p className="mb-3 font-mono text-xs uppercase tracking-[0.1em] text-[#475569]">Illustrative example</p>
-            <h2 id="example-title" className="fee-section">Example: a $1,500-a-month goal</h2>
-            <p className="mt-4 max-w-3xl leading-relaxed text-[#475569]">A fictional freelancer wants $1,500 take-home plus $200 of expenses, works 40 hours and bills 25 of them, with a 10% fee and 48 working weeks. The gross-up is $1,888.89 a month across 100 billable hours, so the minimum rate is $18.89 an hour. A day is $94.44 and a 10-hour project is $188.89.</p>
+      </section>
+      <section id="ex" aria-labelledby="example-title" className="py-14 md:py-20">
+        <div className="mx-auto w-full max-w-[1200px] px-5 sm:px-6">
+          <div className="fee-example-grid">
+            <div>
+              <p className="fee-kicker">How the rate is calculated</p>
+              <h2 id="example-title" className="fee-section">Example: a $1,500-a-month goal</h2>
+              <p className="mt-4 max-w-3xl leading-relaxed text-[#475569]">A fictional freelancer wants $1,500 take-home plus $200 of expenses, works 40 hours and bills 25 of them, with a 10% fee and 48 working weeks. The gross-up is $1,888.89 a month across 100 billable hours, so the minimum rate is $18.89 an hour. A day is $94.44 and a 10-hour project is $188.89.</p>
+            </div>
+            <table className="fee-example-table">
+              <caption className="sr-only">Example: a $1,500-a-month goal</caption>
+              <tbody>
+                <tr>
+                  <th scope="row">Take-home goal + expenses<span className="fee-example-note">$1,500 + $200</span></th>
+                  <td>$1,700.00</td>
+                </tr>
+                <tr>
+                  <th scope="row">Gross-up for a 10% fee<span className="fee-example-note">$1,700 ÷ (1 − 10%)</span></th>
+                  <td>$1,888.89</td>
+                </tr>
+                <tr>
+                  <th scope="row">Billable hours a month<span className="fee-example-note">25 hrs × 48 weeks ÷ 12</span></th>
+                  <td>100</td>
+                </tr>
+                <tr>
+                  <th scope="row">Minimum hourly rate<span className="fee-example-note">Day $94.44 · 10-hour project $188.89</span></th>
+                  <td>$18.89</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
@@ -84,6 +122,13 @@ export default function FreelanceRateCalculatorPage() {
       <RelatedResources
         items={[CALCULATOR_RESOURCES.fee, CALCULATOR_RESOURCES.connects, CALCULATOR_RESOURCES.guide]}
       />
+      <section className="border-t border-line bg-white">
+        <div className="mx-auto w-full max-w-7xl px-5 py-8 sm:px-6">
+          <p className="text-sm leading-relaxed text-[#475569]">
+            <strong className="font-semibold text-ink">Disclaimer:</strong> Digital Dialogue is an independent publication and is not affiliated with Upwork. Estimates only. Tax is not included. PKR converts US dollar amounts into rupees. Other currencies only change the symbol.
+          </p>
+        </div>
+      </section>
     </div>
   );
 }

@@ -1,12 +1,14 @@
 "use client";
 
-import { FormEvent, useId, useRef, useState, type ReactNode, type Ref } from "react";
-import CalculatorCurrencyFields, { PkrRateField, PkrResultNote } from "@/components/tools/CalculatorCurrencyFields";
-import { computeConnects, type ConnectsResult, type Ratio } from "@/lib/upworkConnects";
-import { formatNum, formatPercent, parseDecimal } from "@/lib/upworkFee";
-import { USD_PKR, entrySymbol, formatConvertedMoney, usdPkrFieldError } from "@/lib/usdPkr";
+import { FormEvent, useEffect, useId, useRef, useState } from "react";
+import { CalculatorField as Field, Chevron } from "@/components/tools/CalculatorField";
+import { ToolResultCard } from "@/components/tools/ToolResultCard";
+import { computeConnects } from "@/lib/upworkConnects";
+import { formatMoney, formatNum, parseDecimal } from "@/lib/upworkFee";
+import { entrySymbol, formatCalculatorMoney, usdPkrFieldError, usdPkrRateNumber } from "@/lib/usdPkr";
 
-const CONNECTS_HELP = "https://support.upwork.com/hc/en-us/articles/211062898-Understanding-and-using-Connects";
+const CONNECTS_HELP =
+  "https://support.upwork.com/hc/en-us/articles/211062898-Understanding-and-using-Connects";
 
 type Values = {
   cost: string;
@@ -20,261 +22,387 @@ type Values = {
   usdPkr: string;
 };
 
-const INITIAL: Values = {
-  cost: "",
-  cpp: "",
-  proposals: "",
-  replies: "",
-  interviews: "",
-  contracts: "",
-  other: "",
+const EXAMPLE: Values = {
+  cost: "0.15",
+  cpp: "12",
+  proposals: "40",
+  replies: "8",
+  interviews: "5",
+  contracts: "2",
+  other: "20",
   currency: "USD",
-  usdPkr: USD_PKR.rate,
+  usdPkr: "",
 };
 
-type Key = "cost" | "cpp" | "proposals" | "replies" | "interviews" | "contracts" | "other";
-type Errors = Partial<Record<Key, string>>;
+type CountKey = "cpp" | "proposals" | "replies" | "interviews" | "contracts";
+type ErrorKey = CountKey | "cost" | "other" | "usdPkr";
+
+function wholeError(label: string, raw: string, max: number) {
+  const value = parseDecimal(raw);
+  if (value === null) return `Enter ${label.toLowerCase()}.`;
+  if (Number.isNaN(value) || !Number.isInteger(value)) return `${label} must be a whole number.`;
+  if (value < 0) return `${label} can’t be negative.`;
+  if (value > max) return `${label} must be ${formatNum(max, 0)} or less.`;
+  return "";
+}
+
+function oneDecimal(value: number) {
+  return new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  }).format(value);
+}
 
 export default function ConnectsCalculator() {
-  const [values, setValues] = useState<Values>(INITIAL);
-  const [errors, setErrors] = useState<Errors>({});
-  const [summary, setSummary] = useState<{ id: string; msg: string }[]>([]);
-  const [warnings, setWarnings] = useState<string[]>([]);
-  const [result, setResult] = useState<ConnectsResult | null>(null);
+  const [values, setValues] = useState<Values>(EXAMPLE);
+  const [showExample, setShowExample] = useState(true);
+  const [touched, setTouched] = useState<Partial<Record<ErrorKey, boolean>>>({});
+  const [announcement, setAnnouncement] = useState("");
+  const [detailsKey, setDetailsKey] = useState(0);
+  const priceRef = useRef<HTMLInputElement>(null);
+  const ready = useRef(false);
   const formId = useId();
-  const [rateError, setRateError] = useState("");
-  const summaryRef = useRef<HTMLDivElement>(null);
-  const firstRef = useRef<HTMLInputElement>(null);
   const symbol = entrySymbol(values.currency);
 
-  function collect(current: Values) {
-    const found: { id: string; msg: string; key: Key }[] = [];
-    const push = (key: Key, msg: string) => {
-      if (msg) found.push({ id: `${formId}-${key}`, msg, key });
-    };
-    const cost = parseDecimal(current.cost);
-    if (cost === null) push("cost", "Enter what you pay per Connect. We don’t assume a price.");
-    else if (Number.isNaN(cost)) push("cost", "Price per Connect must be a number, like 0.15.");
-    else if (cost <= 0) push("cost", "Price per Connect must be more than 0.");
-
-    const cpp = parseDecimal(current.cpp);
-    if (cpp === null) push("cpp", "Enter Connects per proposal.");
-    else if (Number.isNaN(cpp) || !Number.isInteger(cpp)) push("cpp", "Connects per proposal must be a whole number.");
-    else if (cpp <= 0) push("cpp", "Connects per proposal must be more than 0.");
-    else if (cpp > 1000) push("cpp", "Connects per proposal must be 1,000 or less.");
-
-    const counts: [Key, string][] = [
-      ["proposals", "Proposals sent"],
-      ["replies", "Client replies"],
-      ["interviews", "Interviews"],
-      ["contracts", "Contracts won"],
-    ];
-    const parsed: Partial<Record<Key, number>> = {};
-    for (const [key, label] of counts) {
-      const value = parseDecimal(current[key]);
-      if (value === null) push(key, key === "proposals" ? `Enter ${label.toLowerCase()}.` : `Enter ${label.toLowerCase()} (0 if none).`);
-      else if (Number.isNaN(value) || !Number.isInteger(value)) push(key, `${label} must be a whole number.`);
-      else if (value < 0) push(key, `${label} can’t be negative.`);
-      else if (value > 1000000) push(key, `${label} must be 1,000,000 or less.`);
-      else parsed[key] = value;
-    }
-    const proposals = parsed.proposals;
-    if (proposals != null) {
-      for (const [key, label] of counts.slice(1)) {
-        const value = parsed[key];
-        if (value != null && value > proposals) push(key, `${label} can’t be more than the ${formatNum(proposals, 0)} proposals you sent.`);
-      }
-    }
-    if (current.other.trim()) {
-      const other = parseDecimal(current.other);
-      if (other === null || Number.isNaN(other)) push("other", "Other proposal costs must be a number, like 20.");
-      else if (other < 0) push("other", "Other proposal costs can’t be negative.");
-    }
-    return found;
+  const messages: Partial<Record<ErrorKey, string>> = {};
+  if (values.cost.trim() === "") {
+    messages.cost = "Enter what you pay per Connect. We don’t assume a price.";
+  } else {
+    const cost = parseDecimal(values.cost);
+    if (cost === null || Number.isNaN(cost)) messages.cost = "Price per Connect must be a number, like 0.15.";
+    else if (cost < 0) messages.cost = "Price per Connect can’t be negative.";
+  }
+  const cppMessage = wholeError("Connects per proposal", values.cpp, 1000);
+  if (cppMessage) messages.cpp = cppMessage;
+  const proposalsMessage = wholeError("Proposals sent", values.proposals, 1000000);
+  if (proposalsMessage) messages.proposals = proposalsMessage;
+  const repliesMessage = wholeError("Client replies", values.replies, 1000000);
+  if (repliesMessage) messages.replies = repliesMessage;
+  const interviewsMessage = wholeError("Interviews", values.interviews, 1000000);
+  if (interviewsMessage) messages.interviews = interviewsMessage;
+  const contractsMessage = wholeError("Contracts won", values.contracts, 1000000);
+  if (contractsMessage) messages.contracts = contractsMessage;
+  if (values.other.trim()) {
+    const other = parseDecimal(values.other);
+    if (other === null || Number.isNaN(other)) messages.other = "Other proposal costs must be a number, like 20.";
+    else if (other < 0) messages.other = "Other proposal costs can’t be negative.";
+  }
+  const proposals = parseDecimal(values.proposals);
+  const replies = parseDecimal(values.replies);
+  const interviews = parseDecimal(values.interviews);
+  const contracts = parseDecimal(values.contracts);
+  if (!messages.replies && proposals != null && replies != null && replies > proposals) {
+    messages.replies = `Client replies can’t be more than the ${formatNum(proposals, 0)} proposals you sent.`;
+  }
+  if (!messages.interviews && proposals != null && interviews != null && interviews > proposals) {
+    messages.interviews = `Interviews can’t be more than the ${formatNum(proposals, 0)} proposals you sent.`;
+  }
+  if (!messages.contracts && proposals != null && contracts != null && contracts > proposals) {
+    messages.contracts = `Contracts won can’t be more than the ${formatNum(proposals, 0)} proposals you sent.`;
+  }
+  if (values.currency === "PKR" && values.usdPkr.trim()) {
+    const rateMessage = usdPkrFieldError(values.usdPkr);
+    if (rateMessage && rateMessage !== "Enter the exchange rate.") messages.usdPkr = rateMessage;
   }
 
-  function onSubmit(event: FormEvent) {
-    event.preventDefault();
-    const found = collect(values);
-    const next: Errors = {};
-    for (const item of found) next[item.key] = item.msg;
-    const fxMsg = values.currency === "PKR" ? usdPkrFieldError(values.usdPkr) : "";
-    setRateError(fxMsg);
-    setErrors(next);
-    setSummary([
-      ...found.map(({ id, msg }) => ({ id, msg })),
-      ...(fxMsg ? [{ id: `${formId}-currency-usd-pkr`, msg: fxMsg }] : []),
-    ]);
-    if (found.length || fxMsg) {
-      setResult(null);
-      setWarnings([]);
-      summaryRef.current?.focus();
-      return;
-    }
-    const proposals = parseDecimal(values.proposals) || 0;
-    const replies = parseDecimal(values.replies) || 0;
-    const interviews = parseDecimal(values.interviews) || 0;
-    const contracts = parseDecimal(values.contracts) || 0;
-    const notes: string[] = [];
-    if (interviews > replies) notes.push("More interviews than replies. Did you count invites? That’s fine; just check the numbers.");
-    if (contracts > interviews) notes.push("More contracts than interviews. Fine if some clients hired you directly; just check the numbers.");
-    setWarnings(notes);
-    const computed = computeConnects({
-      costPerConnect: parseDecimal(values.cost) || 0,
-      connectsPerProposal: parseDecimal(values.cpp) || 0,
-      proposals,
-      replies,
-      interviews,
-      contracts,
-      otherCosts: parseDecimal(values.other) || 0,
-    });
-    setResult(computed.value);
+  const visible: Partial<Record<ErrorKey, string>> = {};
+  (Object.keys(messages) as ErrorKey[]).forEach((key) => {
+    if (touched[key] && messages[key]) visible[key] = messages[key];
+  });
+
+  const priceMissing = values.cost.trim() === "";
+  const blocking = Boolean(
+    messages.cost || messages.cpp || messages.proposals || messages.replies || messages.interviews || messages.contracts || messages.other
+  );
+  const cpp = parseDecimal(values.cpp);
+  const connectsKnown =
+    cpp != null &&
+    !Number.isNaN(cpp) &&
+    proposals != null &&
+    !Number.isNaN(proposals) &&
+    !messages.cpp &&
+    !messages.proposals;
+  const connectsCount = connectsKnown ? cpp * proposals : null;
+
+  const otherAmount = parseDecimal(values.other) || 0;
+  const computed =
+    blocking
+      ? null
+      : computeConnects({
+          costPerConnect: parseDecimal(values.cost) || 0,
+          connectsPerProposal: cpp || 0,
+          proposals: proposals || 0,
+          replies: replies || 0,
+          interviews: interviews || 0,
+          contracts: contracts || 0,
+          otherCosts: otherAmount,
+        }).value;
+
+  const money = (amount: number) => formatCalculatorMoney(amount, values.currency, values.usdPkr);
+  const showingUsd = values.currency === "PKR" && usdPkrRateNumber(values.usdPkr) == null;
+  const unavailable = computed != null && (contracts || 0) <= 0;
+  const figure = !computed ? "—" : unavailable ? "Not available yet" : money(computed.perContract.total.value || 0);
+  const prompt = priceMissing
+    ? "Add the price you pay per Connect to see your costs."
+    : messages.cost || messages.cpp || messages.proposals || messages.replies || messages.interviews || messages.contracts || messages.other || "Enter a valid number in every required field.";
+
+  const announceText = !computed
+    ? prompt
+    : unavailable
+      ? "Cost per contract not available yet"
+      : `Cost per contract ${figure}`;
+
+  useEffect(() => {
+    const id = window.setTimeout(() => {
+      ready.current = true;
+    }, 0);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  useEffect(() => {
+    if (!ready.current) return;
+    const id = window.setTimeout(() => setAnnouncement(announceText), 500);
+    return () => window.clearTimeout(id);
+  }, [announceText]);
+
+  function touch(key: ErrorKey) {
+    setTouched((current) => ({ ...current, [key]: true }));
   }
 
-  function onReset() {
-    setValues(INITIAL);
-    setErrors({});
-    setSummary([]);
-    setWarnings([]);
-    setResult(null);
-    setRateError("");
-    firstRef.current?.focus();
+  function setField(key: keyof Values, value: string) {
+    setShowExample(false);
+    setValues((current) => ({ ...current, [key]: value }));
+    if (key !== "currency") touch(key as ErrorKey);
   }
 
-  const money = (amount: number) => formatConvertedMoney(amount, values.currency, values.usdPkr);
-  const show = (metric: Ratio | undefined) => (metric?.value == null ? "Not available yet" : money(metric.value));
-  const showPct = (metric: Ratio | undefined) => (metric?.value == null ? "Not available yet" : formatPercent(metric.value, 1));
+  function describedBy(field: ErrorKey, hintId?: string) {
+    return [hintId, visible[field] ? `${formId}-${field}-error` : ""].filter(Boolean).join(" ") || undefined;
+  }
+
+  function resetExample() {
+    setValues(EXAMPLE);
+    setShowExample(true);
+    setTouched({});
+    setAnnouncement("");
+    setDetailsKey((key) => key + 1);
+    window.setTimeout(() => priceRef.current?.focus(), 0);
+  }
+
+  const otherBits =
+    otherAmount > 0 ? `(${formatMoney(otherAmount, values.currency === "PKR" ? "USD" : values.currency)})` : "(optional)";
+  const ratio = (value: number | null | undefined) => (value == null ? "Not available yet" : money(value));
 
   return (
-    <section id="calculator" aria-labelledby="calc-title" className="py-10 md:py-14">
-      <div className="mx-auto grid w-full max-w-7xl items-start gap-6 px-5 sm:px-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-8">
-        <div className="fee-card p-5 sm:p-8">
-          <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
-            <h2 id="calc-title">Your Connects and results</h2>
-            <p className="text-sm text-[#475569]"><span aria-hidden="true">*</span> Required</p>
+    <section aria-labelledby="calc-title" className="fee-hero-card">
+      <form onSubmit={(event: FormEvent) => event.preventDefault()} noValidate>
+        <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+          <h2 id="calc-title" className="fee-contract-title">
+            Your Connects and results
+          </h2>
+          <p className="fee-example-kicker" hidden={!showExample}>
+            Example: 40 proposals in 30 days
+          </p>
+        </div>
+
+        <div className="fee-two">
+          <Field
+            id={`${formId}-cost`}
+            inputRef={priceRef}
+            label={
+              <>
+                Price per Connect <span className="fee-kicker-note">(example price)</span>
+              </>
+            }
+            value={values.cost}
+            symbol={symbol}
+            placeholder="e.g. what you pay"
+            describedBy={describedBy("cost", `${formId}-price-hint`)}
+            error={visible.cost}
+            errorId={`${formId}-cost-error`}
+            onChange={(value) => setField("cost", value)}
+            onBlur={() => touch("cost")}
+          />
+          <Field
+            id={`${formId}-cpp`}
+            label="Connects per proposal"
+            value={values.cpp}
+            suffix="Connects"
+            inputMode="numeric"
+            placeholder="e.g. 12"
+            error={visible.cpp}
+            errorId={`${formId}-cpp-error`}
+            onChange={(value) => setField("cpp", value)}
+            onBlur={() => touch("cpp")}
+          />
+        </div>
+        <p id={`${formId}-price-hint`} className="fee-hint">
+          What you pay; we don’t assume a price. The $0.15 figure is only an example.{" "}
+          <a className="fee-link" href={CONNECTS_HELP} target="_blank" rel="noopener noreferrer">
+            Upwork Help
+          </a>{" "}
+          <span className="fee-kicker-note">(opens Upwork Help in a new tab)</span>
+        </p>
+
+        <a href="#result" className="fee-mobile-summary">
+          <span>Cost per contract</span>
+          <span className="flex items-center gap-2">
+            <b className="text-[16px] tabular-nums">{figure}</b>
+            <span className="underline underline-offset-4">Breakdown</span>
+          </span>
+        </a>
+
+        <fieldset className="fee-block">
+          <legend className="sr-only">Your proposals and results</legend>
+          <div className="fee-counts" style={{ marginTop: 0 }}>
+            {(
+              [
+                ["proposals", "Proposals", values.proposals],
+                ["replies", "Replies", values.replies],
+                ["interviews", "Interviews", values.interviews],
+                ["contracts", "Contracts", values.contracts],
+              ] as const
+            ).map(([key, label, value]) => (
+              <Field
+                key={key}
+                id={`${formId}-${key}`}
+                label={label}
+                value={value}
+                inputMode="numeric"
+                describedBy={[`${formId}-counts-hint`, visible[key] ? `${formId}-${key}-error` : ""].filter(Boolean).join(" ")}
+                error={visible[key]}
+                errorId={`${formId}-${key}-error`}
+                onChange={(next) => setField(key, next)}
+                onBlur={() => touch(key)}
+              />
+            ))}
           </div>
-          <div ref={summaryRef} className="mb-6 rounded-lg border-2 border-[#b91c1c] bg-[#fef2f2] p-4" tabIndex={-1} role="alert" hidden={summary.length === 0}>
-            <h3 className="font-body text-base font-bold tracking-normal text-[#b91c1c]">
-              {summary.length === 1 ? "There is 1 problem to fix" : `There are ${summary.length} problems to fix`}
-            </h3>
-            <ul className="fee-error-list mt-2 space-y-1 text-[15px]">
-              {summary.map((item) => (
-                <li key={item.id}><a className="fee-link" href={`#${item.id}`} onClick={(event) => { event.preventDefault(); document.getElementById(item.id)?.focus(); }}>{item.msg}</a></li>
-              ))}
-            </ul>
+          <p id={`${formId}-counts-hint`} className="fee-hint">
+            Sent, client replies, interviews and contracts won in one period. Use 0 if none yet.
+          </p>
+        </fieldset>
+
+        <noscript>
+          <p className="fee-noscript">
+            Turn on JavaScript to update the estimate. The result below shows the 40-proposal example.
+          </p>
+        </noscript>
+
+        <details key={detailsKey} className="fee-details">
+          <summary>
+            <span>
+              Add other proposal costs <span className="font-normal text-[#64748b]">{otherBits}</span>
+            </span>
+            <Chevron />
+          </summary>
+          <div className="px-3 pb-3">
+            <Field
+              id={`${formId}-other`}
+              label="Other proposal costs"
+              value={values.other}
+              symbol={symbol}
+              hint="Membership or tools for this period. Kept separate from Connects."
+              hintId={`${formId}-other-hint`}
+              describedBy={describedBy("other", `${formId}-other-hint`)}
+              error={visible.other}
+              errorId={`${formId}-other-error`}
+              onChange={(value) => setField("other", value)}
+              onBlur={() => touch("other")}
+            />
           </div>
-          <form className="flex flex-col gap-6" noValidate onSubmit={onSubmit}>
-            <div className="grid gap-6 sm:grid-cols-2">
-              <Field id={`${formId}-cost`} inputRef={firstRef} label="Price per Connect" required symbol={symbol} value={values.cost} placeholder="e.g. 0.15" error={errors.cost} onChange={(value) => setValues((c) => ({ ...c, cost: value }))} hint={<>What you pay. We don’t assume a price. <a className="fee-link" href={CONNECTS_HELP} target="_blank" rel="noopener noreferrer">Upwork Help<span className="sr-only"> (opens Upwork Help in a new tab)</span></a></>} />
-              <Field id={`${formId}-cpp`} label="Connects per proposal" required value={values.cpp} placeholder="e.g. 12" error={errors.cpp} onChange={(value) => setValues((c) => ({ ...c, cpp: value }))} hint="The number shown on the job you bid on." />
-            </div>
-            <div className="grid gap-6 sm:grid-cols-2">
-              <Field id={`${formId}-proposals`} label="Proposals sent" required value={values.proposals} placeholder="e.g. 40" error={errors.proposals} onChange={(value) => setValues((c) => ({ ...c, proposals: value }))} hint="Proposals in the period you’re measuring." />
-              <Field id={`${formId}-replies`} label="Client replies" required value={values.replies} placeholder="0" error={errors.replies} onChange={(value) => setValues((c) => ({ ...c, replies: value }))} hint="Use 0 if nobody replied." />
-              <Field id={`${formId}-interviews`} label="Interviews" required value={values.interviews} placeholder="0" error={errors.interviews} onChange={(value) => setValues((c) => ({ ...c, interviews: value }))} hint="Calls or messages that moved past a reply." />
-              <Field id={`${formId}-contracts`} label="Contracts won" required value={values.contracts} placeholder="0" error={errors.contracts} onChange={(value) => setValues((c) => ({ ...c, contracts: value }))} hint="Use 0 if you haven’t won one yet." />
-            </div>
-            <div className="grid gap-6 sm:grid-cols-2">
-              <Field id={`${formId}-other`} label="Other proposal costs" symbol={symbol} value={values.other} placeholder="0.00" error={errors.other} onChange={(value) => setValues((c) => ({ ...c, other: value }))} hint="Membership or tools for this period. Optional, and kept separate from Connects." />
-              <CalculatorCurrencyFields
-                id={`${formId}-currency`}
-                currency={values.currency}
-                onCurrencyChange={(currency) => {
-                  setValues((current) => ({ ...current, currency }));
-                  if (currency !== "PKR") setRateError("");
-                }}
+        </details>
+      </form>
+
+      <ToolResultCard
+        currencyId={`${formId}-currency`}
+        currency={values.currency}
+        onCurrencyChange={(currency) => setField("currency", currency)}
+        kicker={
+          <>
+            Cost per contract <span className="fee-kicker-note">(incl. other costs)</span>
+          </>
+        }
+        beforeFigure={
+          values.currency === "PKR" ? (
+            <div className="fee-block">
+              <Field
+                id={`${formId}-fx`}
+                label="Exchange rate (PKR per US$)"
+                value={values.usdPkr}
+                suffix="Rs"
+                placeholder="e.g. rate from your bank"
+                hint="Enter today’s rate. Your bank’s rate may differ."
+                hintId={`${formId}-fx-hint`}
+                describedBy={describedBy("usdPkr", `${formId}-fx-hint`)}
+                error={visible.usdPkr}
+                errorId={`${formId}-usdPkr-error`}
+                onChange={(value) => setField("usdPkr", value)}
+                onBlur={() => touch("usdPkr")}
               />
             </div>
-            <PkrRateField
-              id={`${formId}-currency-usd-pkr`}
-              currency={values.currency}
-              rate={values.usdPkr}
-              rateError={rateError}
-              onRateChange={(usdPkr) => {
-                setValues((current) => ({ ...current, usdPkr }));
-                if (rateError) setRateError(usdPkrFieldError(usdPkr));
-              }}
-              onRateBlur={(usdPkr) => {
-                if (usdPkr.trim() === "" && !rateError) return;
-                setRateError(values.currency === "PKR" ? usdPkrFieldError(usdPkr) : "");
-              }}
-            />
-            {warnings.map((note) => <p key={note} className="rounded-lg border border-[#d97706]/50 bg-[#fffbeb] px-3 py-2.5 text-sm font-semibold text-[#92400e]">{note}</p>)}
-            <div className="flex flex-col-reverse gap-3 border-t border-line pt-6 sm:flex-row sm:items-center">
-              <button type="button" className="fee-btn fee-btn-secondary w-full sm:w-auto" onClick={onReset}>Reset</button>
-              <button type="submit" className="fee-btn fee-btn-primary w-full sm:ml-auto sm:w-auto sm:min-w-48">Calculate costs</button>
-            </div>
-          </form>
-        </div>
-        <section aria-labelledby="results-title" className="fee-card p-5 sm:p-8 lg:sticky lg:top-24">
-          <h2 id="results-title" className="mb-5">Your estimate</h2>
-          {!result && (
-            <div className="rounded-lg border border-dashed border-[#cbd5e1] bg-mist/60 px-5 py-8 text-center">
-              <p className="font-semibold text-ink">No estimate yet</p>
-              <p className="mt-1 text-[15px] text-[#475569]">Enter your Connects and results, then select <strong className="font-semibold text-ink">Calculate costs</strong>.</p>
-            </div>
-          )}
-          {result && (
-            <div>
-              <PkrResultNote currency={values.currency} rate={values.usdPkr} />
-              <div className="rounded-xl border border-accent/40 bg-[#f0fdfa] p-5">
-                <p className="text-sm font-bold uppercase tracking-[0.08em] text-[#134e4a]">Cost per contract</p>
-                <p className="fee-display mt-1 font-display text-[2.5rem] font-bold leading-[1.1] text-ink tabular-nums">{show(result.perContract.connects)}</p>
-                <p className="mt-2 text-sm text-[#475569]">
-                  {result.perContract.connects.value == null
-                    ? `You used ${formatNum(result.totalConnects, 0)} Connects (${money(result.spend)}). ${result.perContract.connects.reason}`
-                    : `Connects only. With other costs, each contract is ${money(result.perContract.total.value || 0)}.`}
-                </p>
-              </div>
-              <dl className="mt-5 divide-y divide-line text-[15px]">
-                <Row label="Connects used" detail={`${formatNum(parseDecimal(values.cpp) || 0, 0)} × ${formatNum(parseDecimal(values.proposals) || 0, 0)} proposals`} value={formatNum(result.totalConnects, 0)} />
-                <Row label="Connects spending" value={money(result.spend)} />
-                <Row label="Total acquisition cost" value={money(result.total)} strong />
-                <Row label="Reply rate" value={showPct(result.rates.reply)} />
-                <Row label="Interview rate" value={showPct(result.rates.interview)} />
-                <Row label="Contract rate" value={showPct(result.rates.contract)} />
-              </dl>
-              <div className="mt-6 space-y-3">
-                {result.funnel.map((step) => (
-                  <div key={step.label}>
-                    <div className="mb-1 flex justify-between text-sm">
-                      <span>{step.label}</span>
-                      <span className="tabular-nums">{formatNum(step.count, 0)}{step.share != null ? ` (${formatPercent(step.share, 1)})` : ""}</span>
-                    </div>
-                    <div className="h-2 overflow-hidden rounded-full bg-mist">
-                      <div className="h-full bg-[#0f766e]" style={{ width: `${step.share || 0}%` }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-          <p className="mt-6 border-t border-line pt-4 text-xs leading-relaxed text-[#475569]">Estimates only. Connects prices and refunds change, so enter the price you pay. PKR converts US dollar amounts into rupees. Other currencies only change the symbol.</p>
-        </section>
-      </div>
+          ) : null
+        }
+        figure={figure}
+        unit={unavailable || !computed ? undefined : "per contract"}
+        afterFigure={
+          showingUsd ? (
+            <p className="fee-pkr-note">
+              Enter an exchange rate to see rupees. Showing US dollars until then.
+            </p>
+          ) : null
+        }
+        sentence={
+          <p className="fee-keep-copy">
+            {computed && unavailable && (
+              <>
+                <span className="fee-warn">Add at least 1 contract.</span> Your total so far is{" "}
+                <strong>{money(computed.total)}</strong>.
+              </>
+            )}
+            {computed && !unavailable && (
+              <>
+                <strong>{formatNum(computed.totalConnects, 0)} Connects</strong> cost{" "}
+                <strong>{money(computed.spend)}</strong>. With <strong>{money(computed.other)}</strong> of other
+                costs, that’s <strong>{money(computed.total)}</strong> in total.
+              </>
+            )}
+            {!computed && prompt}
+          </p>
+        }
+        rows={[
+          { label: "Total acquisition cost", value: computed ? money(computed.total) : "—" },
+          {
+            label: (
+              <>
+                Cost per contract <span className="fee-kicker-note">(Connects only)</span>
+              </>
+            ),
+            value: computed ? ratio(computed.perContract.connects.value) : "—",
+          },
+          {
+            label: (
+              <>
+                Connects spending{" "}
+                <span className="fee-kicker-note">
+                  ({connectsCount == null ? "—" : `${formatNum(connectsCount, 0)} Connects`})
+                </span>
+              </>
+            ),
+            value: computed ? money(computed.spend) : "—",
+          },
+          { label: "Cost per reply", value: computed ? ratio(computed.perReply.total.value) : "—" },
+          { label: "Cost per interview", value: computed ? ratio(computed.perInterview.total.value) : "—" },
+          {
+            label: "Reply rate · contract rate",
+            value:
+              computed && computed.rates.reply.value != null && computed.rates.contract.value != null
+                ? `${oneDecimal(computed.rates.reply.value)}% · ${oneDecimal(computed.rates.contract.value)}%`
+                : "Not available yet",
+          },
+        ]}
+        fine="Estimates only. Connects prices and refunds change."
+        onReset={resetExample}
+        announcement={announcement}
+      />
     </section>
-  );
-}
-
-function Row({ label, detail, value, strong }: { label: string; detail?: string; value: string; strong?: boolean }) {
-  return (
-    <div className="flex items-baseline justify-between gap-4 py-3">
-      <dt className="text-[#334155]">{label}{detail && <span className="block text-sm text-[#475569]">{detail}</span>}</dt>
-      <dd className={`${strong ? "font-bold" : "font-semibold"} text-ink tabular-nums`}>{value}</dd>
-    </div>
-  );
-}
-
-function Field({ id, label, required, symbol, value, placeholder, hint, error, onChange, inputRef }: { id: string; label: string; required?: boolean; symbol?: string; value: string; placeholder: string; hint: ReactNode; error?: string; onChange: (value: string) => void; inputRef?: Ref<HTMLInputElement> }) {
-  return (
-    <div>
-      <label className="fee-label" htmlFor={id}>{label} {required && <span aria-hidden="true">*</span>}</label>
-      <div className="fee-field">
-        {symbol && <span className="fee-affix fee-affix-l" aria-hidden="true">{symbol}</span>}
-        <input ref={inputRef} className="fee-input" id={id} type="text" inputMode="decimal" autoComplete="off" spellCheck={false} placeholder={placeholder} value={value} aria-invalid={error ? true : undefined} aria-describedby={error ? `${id}-error ${id}-hint` : `${id}-hint`} onChange={(event) => onChange(event.target.value)} />
-      </div>
-      {error && <p id={`${id}-error`} className="fee-error"><span className="sr-only">Error: </span>{error}</p>}
-      <p id={`${id}-hint`} className="fee-hint">{hint}</p>
-    </div>
   );
 }

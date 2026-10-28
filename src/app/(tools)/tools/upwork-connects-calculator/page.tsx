@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 import ConnectsCalculator from "@/components/tools/ConnectsCalculator";
+import ToolHero from "@/components/tools/ToolHero";
 import FaqSection from "@/components/tools/FaqSection";
 import RelatedResources, { CALCULATOR_RESOURCES } from "@/components/tools/RelatedResources";
 import config from "@/lib/config";
@@ -48,22 +49,59 @@ export default function UpworkConnectsCalculatorPage() {
         { "@context": "https://schema.org", "@type": "WebApplication", name: "Upwork Connects Calculator", applicationCategory: "FinanceApplication", operatingSystem: "Web", url: `${config.BASE_URL}${PATH}`, description: DESCRIPTION, offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }, provider: { "@type": "Organization", name: config.SITE_NAME, url: config.BASE_URL } },
         { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: FAQ.map((item) => ({ "@type": "Question", name: item.question, acceptedAnswer: { "@type": "Answer", text: item.text } })) },
       ]} />
-      <div className="border-b border-line bg-white">
-        <div className="mx-auto w-full max-w-7xl px-5 py-10 sm:px-6 md:py-14">
-          <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Tools", href: "/tools" }, { label: "Upwork Connects Calculator" }]} />
-          <div className="max-w-3xl">
-            <h1>Upwork Connects Calculator</h1>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-[#475569] md:text-xl">See what a batch of proposals costs in Connects, and what each reply, interview and contract costs you. Choose PKR to convert US dollar amounts into rupees.</p>
+      <section className="fee-hero bg-[#f4f6f8]">
+        <div className="fee-hero-grid mx-auto w-full max-w-[1200px] px-4 pb-10 pt-4 sm:px-5 min-[1024px]:px-8 min-[1024px]:pb-14 min-[1024px]:pt-10">
+          <div className="min-[1024px]:pt-10">
+            <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Tools", href: "/tools" }, { label: "Upwork Connects Calculator" }]} />
+            <ToolHero
+              title="Upwork Connects Calculator"
+              intro="See what a batch of proposals costs in Connects, and what each reply, interview and contract costs you."
+              points={[
+                <>
+                  <b className="font-semibold text-ink">How it’s calculated:</b> Connects per proposal × proposals × your price, then divided by replies, interviews and contracts.{" "}
+                  <a className="fee-link" href="#ex">See the 40-proposal example</a>
+                </>,
+                <>
+                  <b className="font-semibold text-ink">Price source:</b> the price you pay. We don’t assume a Connects price.
+                </>,
+                <>
+                  <b className="font-semibold text-ink">Independent:</b> not affiliated with or endorsed by Upwork.
+                </>,
+              ]}
+            />
           </div>
+          <ConnectsCalculator />
         </div>
-      </div>
-      <ConnectsCalculator />
-      <section aria-labelledby="example-title" className="pb-14">
-        <div className="mx-auto w-full max-w-7xl px-5 sm:px-6">
-          <div className="fee-card p-5 sm:p-8">
-            <p className="mb-3 font-mono text-xs uppercase tracking-[0.1em] text-[#475569]">Illustrative example</p>
-            <h2 id="example-title" className="fee-section">Example: 40 proposals in 30 days</h2>
-            <p className="mt-4 max-w-3xl leading-relaxed text-[#475569]">A fictional freelancer sends 40 proposals at 12 Connects each, pays $0.15 per Connect, gets 8 replies, 5 interviews and 2 contracts, and adds $20 of other costs. That’s 480 Connects, $72 of Connects spending and $92 in total. Each contract costs $36 in Connects, or $46 including the other costs. The $0.15 figure is only an example.</p>
+      </section>
+      <section id="ex" aria-labelledby="example-title" className="py-14 md:py-20">
+        <div className="mx-auto w-full max-w-[1200px] px-5 sm:px-6">
+          <div className="fee-example-grid">
+            <div>
+              <p className="fee-kicker">How the cost is calculated</p>
+              <h2 id="example-title" className="fee-section">Example: 40 proposals in 30 days</h2>
+              <p className="mt-4 max-w-3xl leading-relaxed text-[#475569]">A fictional freelancer sends 40 proposals at 12 Connects each, pays $0.15 per Connect, gets 8 replies, 5 interviews and 2 contracts, and adds $20 of other costs. That’s 480 Connects, $72 of Connects spending and $92 in total. Each contract costs $36 in Connects, or $46 including the other costs. The $0.15 figure is only an example.</p>
+            </div>
+            <table className="fee-example-table">
+              <caption className="sr-only">Example: 40 proposals in 30 days</caption>
+              <tbody>
+                <tr>
+                  <th scope="row">Connects used<span className="fee-example-note">40 proposals × 12 Connects</span></th>
+                  <td>480</td>
+                </tr>
+                <tr>
+                  <th scope="row">Connects spending<span className="fee-example-note">480 × $0.15 (example price)</span></th>
+                  <td>$72.00</td>
+                </tr>
+                <tr>
+                  <th scope="row">Total with other costs<span className="fee-example-note">$72 + $20</span></th>
+                  <td>$92.00</td>
+                </tr>
+                <tr>
+                  <th scope="row">Cost per contract<span className="fee-example-note">$36 in Connects only · 2 contracts</span></th>
+                  <td>$46.00</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
@@ -84,6 +122,13 @@ export default function UpworkConnectsCalculatorPage() {
       <RelatedResources
         items={[CALCULATOR_RESOURCES.fee, CALCULATOR_RESOURCES.rate, CALCULATOR_RESOURCES.guide]}
       />
+      <section className="border-t border-line bg-white">
+        <div className="mx-auto w-full max-w-7xl px-5 py-8 sm:px-6">
+          <p className="text-sm leading-relaxed text-[#475569]">
+            <strong className="font-semibold text-ink">Disclaimer:</strong> Digital Dialogue is an independent publication and is not affiliated with Upwork. Estimates only. Connects prices and refunds change, so enter the price you pay. PKR converts US dollar amounts into rupees. Other currencies only change the symbol.
+          </p>
+        </div>
+      </section>
     </div>
   );
 }

@@ -1,29 +1,23 @@
 "use client";
 
-import { FormEvent, useEffect, useId, useRef, useState, type ReactNode, type Ref } from "react";
-import CalculatorCurrencyFields, {
-  CALCULATOR_CURRENCIES,
-  PkrRateField,
-  PkrResultNote,
-} from "@/components/tools/CalculatorCurrencyFields";
+import { FormEvent, useEffect, useId, useMemo, useRef, useState } from "react";
+import { CALCULATOR_CURRENCIES } from "@/components/tools/CalculatorCurrencyFields";
+import { CalculatorField as Field, Chevron } from "@/components/tools/CalculatorField";
+import { Swatch, ToolResultCard } from "@/components/tools/ToolResultCard";
 import {
   FIELD_RULES,
-  FeeResult,
   computeFee,
+  currencySymbol,
   fieldError,
+  formatMoney,
+  formatNum,
   formatPercent,
   parseDecimal,
   roundPercent,
 } from "@/lib/upworkFee";
-import {
-  USD_PKR,
-  entrySymbol,
-  formatConvertedMoney,
-  usdPkrFieldError,
-} from "@/lib/usdPkr";
+import { formatCalculatorMoney, usdPkrFieldError, usdPkrRateNumber } from "@/lib/usdPkr";
 
-const UPWORK_FEE_HELP =
-  "https://support.upwork.com/hc/en-us/articles/211062538-Learn-about-the-Freelancer-Service-Fee";
+const PRESETS = [0, 5, 10, 15] as const;
 
 type Values = {
   type: "hourly" | "fixed";
@@ -37,64 +31,96 @@ type Values = {
   usdPkr: string;
 };
 
-const INITIAL: Values = {
-  type: "hourly",
-  rate: "",
-  hours: "",
-  amount: "",
+const EXAMPLE: Values = {
+  type: "fixed",
+  rate: "35",
+  hours: "40",
+  amount: "500",
   fee: "10",
-  extraFlat: "",
+  extraFlat: "2",
   extraPct: "",
   currency: "USD",
-  usdPkr: USD_PKR.rate,
+  usdPkr: "",
 };
+type FieldName = "rate" | "hours" | "amount" | "fee" | "extraFlat" | "extraPct" | "usdPkr";
 
-const CHECKED_FIELDS = [
-  "rate",
-  "hours",
-  "amount",
-  "fee",
-  "extraFlat",
-  "extraPct",
-] as const;
-
-type FieldName = (typeof CHECKED_FIELDS)[number];
-
-function track(name: string, params: Record<string, string>) {
-  const gtag = (
-    window as Window & { gtag?: (...args: unknown[]) => void }
-  ).gtag;
-  gtag?.("event", name, params);
-}
-
-function AlertIcon({ className }: { className: string }) {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" className={className} fill="currentColor">
-      <path
-        fillRule="evenodd"
-        d="M10 18a8 8 0 100-16 8 8 0 000 16zm-.75-11.5a.75.75 0 011.5 0v4a.75.75 0 01-1.5 0v-4zM10 14.75a1 1 0 100-2 1 1 0 000 2z"
-        clipRule="evenodd"
-      />
-    </svg>
-  );
+function entryMoney(amount: number, currency: string) {
+  return formatMoney(amount, currency === "PKR" ? "USD" : currency);
 }
 
 export default function FeeCalculator() {
-  const [values, setValues] = useState<Values>(INITIAL);
-  const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
-  const [summary, setSummary] = useState<{ id: string; msg: string }[]>([]);
-  const [result, setResult] = useState<FeeResult | null>(null);
-  const [stale, setStale] = useState(false);
+  const [values, setValues] = useState<Values>(EXAMPLE);
+  const [showExample, setShowExample] = useState(true);
+  const [touched, setTouched] = useState<Partial<Record<FieldName, boolean>>>({});
   const [announcement, setAnnouncement] = useState("");
-  const [rateError, setRateError] = useState("");
-  const summaryRef = useRef<HTMLDivElement>(null);
-  const rateRef = useRef<HTMLInputElement>(null);
+  const amountRef = useRef<HTMLInputElement>(null);
+  const ready = useRef(false);
   const formId = useId();
 
-  const symbol = entrySymbol(values.currency);
   const fixed = values.type === "fixed";
-  const money = (amount: number) =>
-    formatConvertedMoney(amount, values.currency, values.usdPkr);
+  const symbol = currencySymbol(values.currency === "PKR" ? "USD" : values.currency);
+  const pkrRate = values.currency === "PKR" ? usdPkrRateNumber(values.usdPkr) : null;
+  const showingUsdBecausePkr = values.currency === "PKR" && pkrRate == null;
+  const displayCurrency = showingUsdBecausePkr ? "USD" : values.currency;
+
+  const fieldMessages = useMemo(() => {
+    const next: Partial<Record<FieldName, string>> = {};
+    const check = (key: FieldName, active: boolean) => {
+      if (!active) return;
+      const message =
+        key === "usdPkr"
+          ? values.usdPkr.trim() === ""
+            ? ""
+            : usdPkrFieldError(values.usdPkr)
+          : fieldError(FIELD_RULES[key], values[key]);
+      if (message) next[key] = message;
+    };
+    check("amount", fixed);
+    check("rate", !fixed);
+    check("hours", !fixed);
+    check("fee", true);
+    check("extraFlat", values.extraFlat.trim() !== "");
+    check("extraPct", values.extraPct.trim() !== "");
+    check("usdPkr", values.currency === "PKR");
+    return next;
+  }, [fixed, values]);
+
+  const visibleErrors = Object.fromEntries(
+    Object.entries(fieldMessages).filter(([key]) => touched[key as FieldName])
+  ) as Partial<Record<FieldName, string>>;
+
+  const contractInvalid = Boolean(
+    visibleErrors.amount ||
+      visibleErrors.rate ||
+      visibleErrors.hours ||
+      visibleErrors.fee ||
+      visibleErrors.extraFlat ||
+      visibleErrors.extraPct
+  );
+
+  const feeNumber = parseDecimal(values.fee);
+  const feeHint =
+    feeNumber != null &&
+    !Number.isNaN(feeNumber) &&
+    feeNumber > 15 &&
+    feeNumber <= 100 &&
+    !visibleErrors.fee;
+
+  const result = contractInvalid
+    ? null
+    : computeFee({
+        type: values.type,
+        rate: parseDecimal(values.rate) || 0,
+        hours: parseDecimal(values.hours) || 0,
+        amount: parseDecimal(values.amount) || 0,
+        feePercent: parseDecimal(values.fee) || 0,
+        extraFlat: parseDecimal(values.extraFlat) || 0,
+        extraPercent: parseDecimal(values.extraPct) || 0,
+      });
+
+    const takeHomeText = result
+    ? formatCalculatorMoney(result.takeHome, values.currency, values.usdPkr)
+    : "—";
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -114,673 +140,344 @@ export default function FeeCalculator() {
         rate: rate || current.rate,
         hours: hours || current.hours,
         fee: fee || current.fee,
+        extraFlat: "",
+        extraPct: "",
         currency: nextCurrency,
         usdPkr:
           nextCurrency === "PKR" && usdPkr && usdPkrFieldError(usdPkr) === ""
             ? usdPkr.trim()
-            : current.usdPkr,
+            : "",
       };
     });
+    setShowExample(false);
   }, []);
 
-  function setField(key: keyof Values, value: string) {
-    setValues((current) => ({ ...current, [key]: value }));
-    if (result) setStale(true);
-    if (errors[key as FieldName]) {
-      const message = fieldError(FIELD_RULES[key], value);
-      setErrors((current) => ({ ...current, [key]: message }));
-    }
-  }
+  useEffect(() => {
+    const id = window.setTimeout(() => {
+      ready.current = true;
+    }, 0);
+    return () => window.clearTimeout(id);
+  }, []);
 
-  function activeError(key: FieldName): string {
-    if (key === "rate" || key === "hours") return fixed ? "" : fieldError(FIELD_RULES[key], values[key]);
-    if (key === "amount") return fixed ? fieldError(FIELD_RULES.amount, values.amount) : "";
-    return fieldError(FIELD_RULES[key], values[key]);
-  }
-
-  function collectErrors() {
-    return CHECKED_FIELDS.flatMap((key) => {
-      const msg = activeError(key);
-      return msg ? [{ id: `${formId}-${key}`, msg, key }] : [];
-    });
-  }
-
-  function blurField(key: FieldName) {
-    if (values[key].trim() === "" && !errors[key]) return;
-    setErrors((current) => ({ ...current, [key]: activeError(key) }));
-  }
-
-  function calculate(focusSummary = true) {
-    const found = collectErrors();
-    const nextErrors: Partial<Record<FieldName, string>> = {};
-    for (const item of found) nextErrors[item.key] = item.msg;
-    const fxMsg =
-      values.currency === "PKR" ? usdPkrFieldError(values.usdPkr) : "";
-    setRateError(fxMsg);
-    setErrors(nextErrors);
-    setSummary([
-      ...found.map(({ id, msg }) => ({ id, msg })),
-      ...(fxMsg ? [{ id: `${formId}-currency-usd-pkr`, msg: fxMsg }] : []),
-    ]);
-    if (found.length || fxMsg) {
-      setAnnouncement("");
-      track("fee_calc_error", { type: values.type, currency: values.currency });
-      if (focusSummary) summaryRef.current?.focus();
-      return;
-    }
-
-    const computed = computeFee({
-      type: values.type,
-      rate: parseDecimal(values.rate) || 0,
-      hours: parseDecimal(values.hours) || 0,
-      amount: parseDecimal(values.amount) || 0,
-      feePercent: parseDecimal(values.fee) || 0,
-      extraFlat: parseDecimal(values.extraFlat) || 0,
-      extraPercent: parseDecimal(values.extraPct) || 0,
-    });
-    setResult(computed);
-    setStale(false);
-    const effective = formatPercent(roundPercent(computed.effective, 2));
-    const spoken = (amount: number) =>
-      formatConvertedMoney(amount, values.currency, values.usdPkr);
-    setAnnouncement("");
-    window.setTimeout(() => {
+  useEffect(() => {
+    if (!ready.current) return;
+    const id = window.setTimeout(() => {
       setAnnouncement(
-        `Estimated take-home: ${spoken(computed.takeHome)} from ${spoken(computed.gross)} gross. Service fee ${spoken(computed.serviceFee)}, additional costs ${spoken(computed.extra)}, total deduction ${effective}.`
+        contractInvalid ? "Enter a valid amount" : `Estimated take-home ${takeHomeText}`
       );
-    }, 50);
-    track("fee_calc_submit", { type: values.type, currency: values.currency });
+    }, 500);
+    return () => window.clearTimeout(id);
+  }, [contractInvalid, takeHomeText]);
 
-    if (window.matchMedia("(max-width: 1099px)").matches) {
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      document.getElementById("fee-results")?.scrollIntoView({
-        behavior: reduce ? "auto" : "smooth",
-        block: "start",
-      });
+  function setField(key: keyof Values, value: string) {
+    setShowExample(false);
+    setValues((current) => ({ ...current, [key]: value }));
+    if (key !== "type" && key !== "currency") {
+      setTouched((current) => ({ ...current, [key]: true }));
     }
+  }
+
+  function resetExample() {
+    setValues(EXAMPLE);
+    setShowExample(true);
+    setTouched({});
+    setAnnouncement("");
+    window.setTimeout(() => amountRef.current?.focus(), 0);
   }
 
   function onSubmit(event: FormEvent) {
     event.preventDefault();
-    calculate(true);
   }
 
-  function onReset() {
-    setValues(INITIAL);
-    setErrors({});
-    setSummary([]);
-    setResult(null);
-    setStale(false);
-    setRateError("");
-    setAnnouncement("Calculator reset.");
-    rateRef.current?.focus();
+  const flatNumber = parseDecimal(values.extraFlat);
+  const pctNumber = parseDecimal(values.extraPct);
+  const extraBits: string[] = [];
+  if (flatNumber != null && !Number.isNaN(flatNumber) && flatNumber > 0) {
+    extraBits.push(`${entryMoney(flatNumber, values.currency)} flat`);
+  }
+  if (pctNumber != null && !Number.isNaN(pctNumber) && pctNumber > 0) {
+    extraBits.push(`${formatNum(pctNumber)}%`);
   }
 
-  function onCurrencyChange(currency: string) {
-    setValues((current) => ({ ...current, currency }));
-    if (currency !== "PKR") setRateError("");
-    if (result && collectErrors().length === 0) {
-      setResult(
-        computeFee({
-          type: values.type,
-          rate: parseDecimal(values.rate) || 0,
-          hours: parseDecimal(values.hours) || 0,
-          amount: parseDecimal(values.amount) || 0,
-          feePercent: parseDecimal(values.fee) || 0,
-          extraFlat: parseDecimal(values.extraFlat) || 0,
-          extraPercent: parseDecimal(values.extraPct) || 0,
-        })
-      );
-      setStale(false);
-    }
-  }
+  const keepShare =
+    result && result.gross > 0 ? (result.takeHome / result.gross) * 100 : 0;
+  const feeShare =
+    result && result.gross > 0 ? (result.serviceFee / result.gross) * 100 : 0;
+  const extraShare =
+    result && result.gross > 0 ? (result.extra / result.gross) * 100 : 0;
+  const costs = result ? result.serviceFee + result.extra : 0;
 
-  function onRateChange(usdPkr: string) {
-    setValues((current) => ({ ...current, usdPkr }));
-    if (rateError) setRateError(usdPkrFieldError(usdPkr));
+  function describedBy(field: FieldName, hintId?: string) {
+    const ids = [hintId, visibleErrors[field] ? `${formId}-${field}-error` : ""]
+      .filter(Boolean)
+      .join(" ");
+    return ids || undefined;
   }
-
-  const shares = result
-    ? {
-        take: result.gross > 0 ? (result.takeHome / result.gross) * 100 : 0,
-        fee: result.gross > 0 ? (result.serviceFee / result.gross) * 100 : 0,
-        extra: result.gross > 0 ? (result.extra / result.gross) * 100 : 0,
-      }
-    : null;
 
   return (
-    <section id="calculator" aria-labelledby="calc-title" className="py-10 md:py-14">
-      <div className="mx-auto grid w-full max-w-7xl items-start gap-6 px-5 sm:px-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-8">
-        <div className="fee-card p-5 sm:p-8">
-          <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
-            <h2 id="calc-title">Your contract</h2>
-            <p className="text-sm text-[#475569]">
-              <span aria-hidden="true">*</span> Required
-            </p>
-          </div>
-
-          <div
-            ref={summaryRef}
-            className="mb-6 rounded-lg border-2 border-[#b91c1c] bg-[#fef2f2] p-4 sm:p-5"
-            tabIndex={-1}
-            role="alert"
-            hidden={summary.length === 0}
-          >
-            <h3 className="flex items-center gap-2 font-body text-base font-bold tracking-normal text-[#b91c1c]">
-              <AlertIcon className="fee-svg-lg shrink-0" />
-              {summary.length === 1
-                ? "There is 1 problem to fix"
-                : `There are ${summary.length} problems to fix`}
-            </h3>
-            <ul className="fee-error-list mt-2 space-y-1 text-[15px] marker:text-[#b91c1c]">
-              {summary.map((item) => (
-                <li key={item.id}>
-                  <a
-                    className="fee-link"
-                    href={`#${item.id}`}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      document.getElementById(item.id)?.focus();
-                    }}
-                  >
-                    {item.msg}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <form className="flex flex-col gap-6" noValidate onSubmit={onSubmit}>
-            <div className="grid gap-6 sm:grid-cols-2">
-              <fieldset>
-                <legend className="fee-label">
-                  Contract type <span aria-hidden="true">*</span>
-                </legend>
-                <div className="fee-segmented">
-                  <label>
-                    <input
-                      type="radio"
-                      name="type"
-                      value="hourly"
-                      checked={values.type === "hourly"}
-                      onChange={() => {
-                        setValues((current) => ({ ...current, type: "hourly" }));
-                        if (result) setStale(true);
-                      }}
-                    />
-                    <span className="fee-dot" aria-hidden="true" />
-                    Hourly
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="type"
-                      value="fixed"
-                      checked={values.type === "fixed"}
-                      onChange={() => {
-                        setValues((current) => ({ ...current, type: "fixed" }));
-                        if (result) setStale(true);
-                      }}
-                    />
-                    <span className="fee-dot" aria-hidden="true" />
-                    Fixed-price
-                  </label>
-                </div>
-              </fieldset>
-
-              <CalculatorCurrencyFields
-                id={`${formId}-currency`}
-                currency={values.currency}
-                onCurrencyChange={onCurrencyChange}
-              />
-            </div>
-            <PkrRateField
-              id={`${formId}-currency-usd-pkr`}
-              currency={values.currency}
-              rate={values.usdPkr}
-              rateError={rateError}
-              onRateChange={onRateChange}
-              onRateBlur={(usdPkr) => {
-                if (usdPkr.trim() === "" && !rateError) return;
-                setRateError(values.currency === "PKR" ? usdPkrFieldError(usdPkr) : "");
-              }}
-            />
-
-            {!fixed && (
-              <div className="grid gap-6 sm:grid-cols-2">
-                <MoneyField
-                  id={`${formId}-rate`}
-                  label="Hourly rate"
-                  required
-                  value={values.rate}
-                  symbol={symbol}
-                  placeholder="e.g. 35"
-                  hint="What you bill the client per hour."
-                  error={errors.rate}
-                  inputRef={rateRef}
-                  onChange={(value) => setField("rate", value)}
-                  onBlur={() => blurField("rate")}
-                />
-                <TextField
-                  id={`${formId}-hours`}
-                  label="Hours worked"
-                  required
-                  value={values.hours}
-                  suffix="hrs"
-                  placeholder="e.g. 40"
-                  hint="Total hours billed on this contract."
-                  error={errors.hours}
-                  onChange={(value) => setField("hours", value)}
-                  onBlur={() => blurField("hours")}
-                />
-              </div>
-            )}
-
-            {fixed && (
-              <MoneyField
-                id={`${formId}-amount`}
-                label="Contract amount"
-                required
-                value={values.amount}
-                symbol={symbol}
-                placeholder="e.g. 500"
-                hint="Total fixed price or milestone amount billed to the client."
-                error={errors.amount}
-                onChange={(value) => setField("amount", value)}
-                onBlur={() => blurField("amount")}
-              />
-            )}
-
-            <div className="sm:max-w-[calc(50%-0.75rem)]">
-              <TextField
-                id={`${formId}-fee`}
-                label="Service fee (estimated)"
-                required
-                value={values.fee}
-                suffix="%"
-                placeholder="10"
-                error={errors.fee}
-                onChange={(value) => setField("fee", value)}
-                onBlur={() => blurField("fee")}
-                hint={
-                  <>
-                    Default 10%. Upwork shows your exact fee (0–15% per contract) on each
-                    offer or proposal.{" "}
-                    <a
-                      className="fee-link"
-                      href={UPWORK_FEE_HELP}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Upwork Help
-                      <span className="sr-only"> (opens Upwork Help in a new tab)</span>
-                    </a>
-                  </>
-                }
-              />
-            </div>
-
-            <fieldset className="rounded-lg border border-line bg-mist/60 p-4 sm:p-5">
-              <legend className="sr-only">Additional costs (optional)</legend>
-              <p className="font-body text-base font-bold text-ink" aria-hidden="true">
-                Additional costs <span className="font-normal text-[#475569]">(optional)</span>
-              </p>
-              <p className="fee-hint mb-4 mt-1">
-                Withdrawal, transfer or currency conversion fees from your payment method
-                or bank. Rates vary by provider, so check theirs.
-              </p>
-              <div className="grid gap-5 sm:grid-cols-2">
-                <MoneyField
-                  id={`${formId}-extraFlat`}
-                  label="Flat amount"
-                  value={values.extraFlat}
-                  symbol={symbol}
-                  placeholder="0.00"
-                  hint="e.g. a per-withdrawal fee."
-                  error={errors.extraFlat}
-                  onChange={(value) => setField("extraFlat", value)}
-                  onBlur={() => blurField("extraFlat")}
-                />
-                <TextField
-                  id={`${formId}-extraPct`}
-                  label="Percentage"
-                  value={values.extraPct}
-                  suffix="%"
-                  placeholder="0"
-                  hint="Applied to the amount left after the service fee."
-                  error={errors.extraPct}
-                  onChange={(value) => setField("extraPct", value)}
-                  onBlur={() => blurField("extraPct")}
-                />
-              </div>
-            </fieldset>
-
-            <div className="flex flex-col-reverse gap-3 border-t border-line pt-6 sm:flex-row sm:items-center">
-              <button type="button" className="fee-btn fee-btn-secondary w-full sm:w-auto" onClick={onReset}>
-                Reset
-              </button>
-              <button type="submit" className="fee-btn fee-btn-primary w-full sm:ml-auto sm:w-auto sm:min-w-48">
-                Calculate take-home
-              </button>
-            </div>
-          </form>
+    <section aria-labelledby="calc-title" className="fee-hero-card">
+      <form onSubmit={onSubmit} noValidate>
+        <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+          <h2 id="calc-title" className="fee-contract-title">
+            Your contract
+          </h2>
+          <p className="fee-example-kicker" hidden={!showExample}>
+            Example: $500 fixed-price job
+          </p>
         </div>
 
-        <section
-          id="fee-results"
-          aria-labelledby="results-title"
-          className="fee-card scroll-mt-24 p-5 sm:p-8 lg:sticky lg:top-24"
-        >
-          <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
-            <h2 id="results-title">Your estimate</h2>
-            <span className="rounded-full border border-line bg-mist px-2.5 py-1 font-mono text-xs uppercase tracking-wide text-[#475569]">
-              Estimate · {values.currency}
-            </span>
+        <fieldset className="mt-4">
+          <legend className="sr-only">Contract type</legend>
+          <div className="fee-segmented" style={{ border: 0, background: "#eef2f6" }}>
+            <label>
+              <input
+                type="radio"
+                name={`${formId}-type`}
+                value="hourly"
+                checked={!fixed}
+                onChange={() => setField("type", "hourly")}
+              />
+              Hourly
+            </label>
+            <label>
+              <input
+                type="radio"
+                name={`${formId}-type`}
+                value="fixed"
+                checked={fixed}
+                onChange={() => setField("type", "fixed")}
+              />
+              Fixed-price
+            </label>
           </div>
-          <div className="sr-only" aria-live="polite" aria-atomic="true">
-            {announcement}
-          </div>
+        </fieldset>
 
-          {!result && (
-            <div className="rounded-lg border border-dashed border-[#cbd5e1] bg-mist/60 px-5 py-8 text-center">
-              <div
-                className="mx-auto mb-4 flex h-10 w-full max-w-64 overflow-hidden rounded-md border border-[#cbd5e1]"
-                aria-hidden="true"
-              >
-                <span className="w-[78%] bg-line" />
-                <span className="w-[14%] bg-[#cbd5e1]" />
-                <span className="w-[8%] bg-mist-soft" />
-              </div>
-              <p className="font-semibold text-ink">No estimate yet</p>
-              <p className="mt-1 text-[15px] text-[#475569]">
-                Enter your contract details and select{" "}
-                <strong className="font-semibold text-ink">Calculate take-home</strong> to
-                see your breakdown.
-              </p>
-            </div>
-          )}
-
-          {result && shares && (
-            <div>
-              <PkrResultNote currency={values.currency} rate={values.usdPkr} />
-              {stale && (
-                <p className="mb-4 flex items-start gap-2 rounded-lg border border-[#d97706]/50 bg-[#fffbeb] px-3 py-2.5 text-sm font-semibold text-[#92400e]">
-                  <AlertIcon className="mt-0.5 shrink-0" />
-                  <span>
-                    Inputs changed. Select <em className="not-italic underline">Calculate take-home</em> to update.
-                  </span>
-                </p>
-              )}
-              <div className="rounded-xl border border-accent/40 bg-[#f0fdfa] p-5">
-                <p className="text-sm font-bold uppercase tracking-[0.08em] text-[#134e4a]">
-                  Estimated take-home
-                </p>
-                <p className="fee-display mt-1 break-words font-display text-[2.5rem] font-bold leading-[1.1] tracking-tight text-ink tabular-nums">
-                  {money(result.takeHome)}
-                </p>
-                <p className="mt-2 text-sm text-[#475569]">
-                  After the estimated service fee and additional costs ·{" "}
-                  {values.type === "hourly"
-                    ? `${money(parseDecimal(values.rate) || 0)}/hr × ${(parseDecimal(values.hours) || 0).toLocaleString("en-US")} hrs`
-                    : "Fixed-price contract"}
-                </p>
-              </div>
-
-              <dl className="mt-5 divide-y divide-line text-[15px]">
-                <Row label="Gross earnings" value={money(result.gross)} />
-                <Row
-                  label={`Estimated service fee (${formatPercent(result.feePercent)})`}
-                  value={`−${money(result.serviceFee)}`}
-                />
-                <div className="flex items-baseline justify-between gap-4 py-3">
-                  <dt>
-                    Additional costs
-                    <span className="block text-sm text-[#475569]">
-                      {result.flat || result.extraPercent
-                        ? [
-                            result.flat ? `${money(result.flat)} flat` : "",
-                            result.extraPercent
-                              ? `${formatPercent(result.extraPercent)} of payout`
-                              : "",
-                          ]
-                            .filter(Boolean)
-                            .join(" + ")
-                        : "None added"}
-                    </span>
-                  </dt>
-                  <dd className="font-semibold text-ink tabular-nums">
-                    {result.extra > 0 ? `−${money(result.extra)}` : money(0)}
-                  </dd>
-                </div>
-                <Row
-                  label="Effective deduction"
-                  value={formatPercent(roundPercent(result.effective, 2))}
-                  strong
-                />
-              </dl>
-              {result.capped && (
-                <p className="mt-2 text-sm text-[#92400e]">
-                  Additional costs were capped at the amount left after the service fee.
-                </p>
-              )}
-
-              <div className="mt-6">
-                <h3 className="font-body text-base font-bold tracking-normal">
-                  Where the gross goes
-                </h3>
-                <div className="fee-bar mt-3" aria-hidden="true">
-                  <BarSeg className="fee-pat-take" share={shares.take} />
-                  <BarSeg className="fee-pat-fee" share={shares.fee} />
-                  <BarSeg className="fee-pat-extra" share={shares.extra} />
-                </div>
-                <ul className="mt-4 grid gap-2.5 text-sm" aria-label="Breakdown of gross earnings">
-                  <Legend
-                    className="fee-pat-take"
-                    label="Take-home (solid)"
-                    amount={money(result.takeHome)}
-                    share={shares.take}
-                  />
-                  <Legend
-                    className="fee-pat-fee"
-                    label="Service fee (striped)"
-                    amount={money(result.serviceFee)}
-                    share={shares.fee}
-                  />
-                  <Legend
-                    className="fee-pat-extra"
-                    label="Additional costs (dotted)"
-                    amount={money(result.extra)}
-                    share={shares.extra}
-                  />
-                </ul>
-              </div>
-            </div>
-          )}
-
-          <p className="mt-6 border-t border-line pt-4 text-xs leading-relaxed text-[#475569]">
-            Estimates only. Not affiliated with or endorsed by Upwork. Taxes are not included.
-          </p>
-        </section>
-      </div>
-    </section>
-  );
-}
-
-function Row({
-  label,
-  value,
-  strong,
-}: {
-  label: string;
-  value: string;
-  strong?: boolean;
-}) {
-  return (
-    <div className="flex items-baseline justify-between gap-4 py-3">
-      <dt className="text-[#334155]">{label}</dt>
-      <dd className={`${strong ? "font-bold" : "font-semibold"} text-ink tabular-nums`}>
-        {value}
-      </dd>
-    </div>
-  );
-}
-
-function BarSeg({ className, share }: { className: string; share: number }) {
-  if (share <= 0) return null;
-  return (
-    <div className={`fee-bar-seg ${className}`} style={{ width: `${share}%` }}>
-      <span>{share >= 12 ? formatPercent(roundPercent(share, 1)) : ""}</span>
-    </div>
-  );
-}
-
-function Legend({
-  className,
-  label,
-  amount,
-  share,
-}: {
-  className: string;
-  label: string;
-  amount: string;
-  share: number;
-}) {
-  return (
-    <li className="flex items-center gap-2.5">
-      <span className={`fee-swatch ${className}`} />
-      <span className="flex-1 text-[#334155]">{label}</span>
-      <span className="tabular-nums text-[#475569]">{amount}</span>
-      <span className="w-14 text-right font-semibold text-ink tabular-nums">
-        {formatPercent(roundPercent(share, 1))}
-      </span>
-    </li>
-  );
-}
-
-function FieldError({ id, message }: { id: string; message?: string }) {
-  if (!message) return null;
-  return (
-    <p id={`${id}-error`} className="fee-error">
-      <AlertIcon className="mt-0.5 shrink-0" />
-      <span>
-        <span className="sr-only">Error: </span>
-        {message}
-      </span>
-    </p>
-  );
-}
-
-function MoneyField({
-  id,
-  label,
-  required,
-  value,
-  symbol,
-  placeholder,
-  hint,
-  error,
-  onChange,
-  onBlur,
-  inputRef,
-}: {
-  id: string;
-  label: string;
-  required?: boolean;
-  value: string;
-  symbol: string;
-  placeholder: string;
-  hint: string;
-  error?: string;
-  onChange: (value: string) => void;
-  onBlur: () => void;
-  inputRef?: Ref<HTMLInputElement>;
-}) {
-  return (
-    <div>
-      <label className="fee-label" htmlFor={id}>
-        {label} {required && <span aria-hidden="true">*</span>}
-      </label>
-      <div className="fee-field">
-        <span className="fee-affix fee-affix-l" aria-hidden="true">
-          {symbol}
-        </span>
-        <input
-          ref={inputRef}
-          className="fee-input"
-          id={id}
-          type="text"
-          inputMode="decimal"
-          autoComplete="off"
-          spellCheck={false}
-          placeholder={placeholder}
-          value={value}
-          aria-invalid={error ? true : undefined}
-          aria-describedby={error ? `${id}-error ${id}-hint` : `${id}-hint`}
-          onChange={(event) => onChange(event.target.value)}
-          onBlur={onBlur}
-        />
-      </div>
-      <FieldError id={id} message={error} />
-      <p id={`${id}-hint`} className="fee-hint">
-        {hint}
-      </p>
-    </div>
-  );
-}
-
-function TextField({
-  id,
-  label,
-  required,
-  value,
-  suffix,
-  placeholder,
-  hint,
-  error,
-  onChange,
-  onBlur,
-}: {
-  id: string;
-  label: string;
-  required?: boolean;
-  value: string;
-  suffix?: string;
-  placeholder: string;
-  hint: ReactNode;
-  error?: string;
-  onChange: (value: string) => void;
-  onBlur: () => void;
-}) {
-  return (
-    <div>
-      <label className="fee-label" htmlFor={id}>
-        {label} {required && <span aria-hidden="true">*</span>}
-      </label>
-      <div className="fee-field">
-        <input
-          className="fee-input"
-          id={id}
-          type="text"
-          inputMode="decimal"
-          autoComplete="off"
-          spellCheck={false}
-          placeholder={placeholder}
-          value={value}
-          aria-invalid={error ? true : undefined}
-          aria-describedby={error ? `${id}-error ${id}-hint` : `${id}-hint`}
-          onChange={(event) => onChange(event.target.value)}
-          onBlur={onBlur}
-        />
-        {suffix && (
-          <span className="fee-affix fee-affix-r" aria-hidden="true">
-            {suffix}
+        <a href="#result" className="fee-mobile-summary">
+          <span>Estimated take-home</span>
+          <span className="flex items-center gap-2">
+            <b className="text-[16px] tabular-nums">{takeHomeText}</b>
+            <span className="underline underline-offset-4">Breakdown</span>
           </span>
-        )}
-      </div>
-      <FieldError id={id} message={error} />
-      <p id={`${id}-hint`} className="fee-hint">
-        {hint}
-      </p>
-    </div>
+        </a>
+
+        <div hidden={fixed} className="mt-3 grid grid-cols-2 gap-3">
+          <Field
+            id={`${formId}-rate`}
+            label="Hourly rate"
+            value={values.rate}
+            symbol={symbol}
+            placeholder="e.g. 35"
+            error={visibleErrors.rate}
+            errorId={`${formId}-rate-error`}
+            onChange={(value) => setField("rate", value)}
+            onBlur={() => setTouched((current) => ({ ...current, rate: true }))}
+          />
+          <Field
+            id={`${formId}-hours`}
+            label="Hours worked"
+            value={values.hours}
+            suffix="hrs"
+            placeholder="e.g. 40"
+            error={visibleErrors.hours}
+            errorId={`${formId}-hours-error`}
+            onChange={(value) => setField("hours", value)}
+            onBlur={() => setTouched((current) => ({ ...current, hours: true }))}
+          />
+        </div>
+
+        <div hidden={!fixed} className="mt-3">
+          <Field
+            id={`${formId}-amount`}
+            label="Contract amount"
+            value={values.amount}
+            symbol={symbol}
+            placeholder="e.g. 500"
+            hint="Total contract or milestone."
+            hintId={`${formId}-amount-hint`}
+            describedBy={describedBy("amount", `${formId}-amount-hint`)}
+            error={visibleErrors.amount}
+            errorId={`${formId}-amount-error`}
+            inputRef={amountRef}
+            onChange={(value) => setField("amount", value)}
+            onBlur={() => setTouched((current) => ({ ...current, amount: true }))}
+          />
+        </div>
+
+        <div className="mt-3">
+          <Field
+            id={`${formId}-fee`}
+            label="Service fee (estimated)"
+            value={values.fee}
+            suffix="%"
+            error={visibleErrors.fee}
+            errorId={`${formId}-fee-error`}
+            describedBy={
+              [feeHint ? `${formId}-fee-hint` : "", visibleErrors.fee ? `${formId}-fee-error` : ""]
+                .filter(Boolean)
+                .join(" ") || undefined
+            }
+            onChange={(value) => setField("fee", value)}
+            onBlur={() => setTouched((current) => ({ ...current, fee: true }))}
+          />
+          <div className="mt-2 flex flex-wrap items-center gap-2" role="group" aria-label="Quick fee presets">
+            {PRESETS.map((preset) => {
+              const pressed = feeNumber === preset;
+              return (
+                <button
+                  key={preset}
+                  type="button"
+                  className="fee-preset"
+                  aria-pressed={pressed}
+                  onClick={() => setField("fee", String(preset))}
+                >
+                  {preset}%
+                </button>
+              );
+            })}
+            <p id={`${formId}-fee-hint`} className="fee-example-kicker">
+              {feeHint ? "Upwork's range is 0–15%." : "Check the % on your offer."}
+            </p>
+          </div>
+        </div>
+
+        <noscript>
+          <p className="fee-noscript">
+            Turn on JavaScript to calculate your own figures. The example above shows a $500 fixed-price job at 10% plus a $2 flat fee: $448.00.
+          </p>
+        </noscript>
+
+        <details className="fee-details">
+          <summary>
+            <span>
+              Add withdrawal or transfer costs{" "}
+              {extraBits.length > 0 && (
+                <span className="font-normal text-[#64748b]">({extraBits.join(", ")})</span>
+              )}
+            </span>
+            <Chevron />
+          </summary>
+          <div className="grid grid-cols-2 gap-3 px-3 pb-3">
+            <Field
+              id={`${formId}-flat`}
+              label="Flat amount"
+              value={values.extraFlat}
+              symbol={symbol}
+              hint="Per withdrawal fee."
+              hintId={`${formId}-flat-hint`}
+              describedBy={describedBy("extraFlat", `${formId}-flat-hint`)}
+              error={visibleErrors.extraFlat}
+              errorId={`${formId}-extraFlat-error`}
+              onChange={(value) => setField("extraFlat", value)}
+              onBlur={() => setTouched((current) => ({ ...current, extraFlat: true }))}
+            />
+            <Field
+              id={`${formId}-xpct`}
+              label="Percentage"
+              value={values.extraPct}
+              suffix="%"
+              hint="Of the amount after fee."
+              hintId={`${formId}-xpct-hint`}
+              describedBy={describedBy("extraPct", `${formId}-xpct-hint`)}
+              error={visibleErrors.extraPct}
+              errorId={`${formId}-extraPct-error`}
+              onChange={(value) => setField("extraPct", value)}
+              onBlur={() => setTouched((current) => ({ ...current, extraPct: true }))}
+            />
+          </div>
+        </details>
+      </form>
+
+      <ToolResultCard
+        currencyId={`${formId}-currency`}
+        currency={values.currency}
+        onCurrencyChange={(currency) => setField("currency", currency)}
+        kicker="Estimated take-home"
+        beforeFigure={
+          values.currency === "PKR" ? (
+            <div className="fee-block">
+              <Field
+                id={`${formId}-fx`}
+                label="Exchange rate (PKR per US$)"
+                value={values.usdPkr}
+                suffix="Rs"
+                placeholder="e.g. rate from your bank"
+                hint="Enter today’s rate. Your bank’s rate may differ."
+                hintId={`${formId}-fx-hint`}
+                describedBy={describedBy("usdPkr", `${formId}-fx-hint`)}
+                error={visibleErrors.usdPkr}
+                errorId={`${formId}-usdPkr-error`}
+                onChange={(value) => setField("usdPkr", value)}
+                onBlur={() => setTouched((current) => ({ ...current, usdPkr: true }))}
+              />
+            </div>
+          ) : null
+        }
+        figure={takeHomeText}
+        unit={displayCurrency}
+        afterFigure={
+          showingUsdBecausePkr ? (
+            <p className="fee-pkr-note">
+              Enter an exchange rate to see rupees. Showing US dollars until then.
+            </p>
+          ) : null
+        }
+        sentence={
+          <p className="fee-keep-copy">
+            {result
+              ? `You keep ${formatPercent(roundPercent(keepShare, 1), 1)} of what you bill. ${formatCalculatorMoney(costs, values.currency, values.usdPkr)} goes to fees and costs.`
+              : "Enter a valid amount to see the estimate."}
+          </p>
+        }
+        bar={[
+          { color: "#0f766e", width: keepShare },
+          { color: "#0f172a", width: feeShare },
+          { color: "#f5c451", width: extraShare },
+        ]}
+        rows={[
+          {
+            label: fixed ? "Billed (fixed-price)" : "Billed (hourly)",
+            value: result ? formatCalculatorMoney(result.gross, values.currency, values.usdPkr) : "—",
+          },
+          {
+            label: (
+              <>
+                <Swatch color="#0f172a" />
+                <span>
+                  Service fee
+                  {result && <span className="ml-1 font-normal">{formatPercent(result.feePercent)}</span>}
+                </span>
+              </>
+            ),
+            value: result ? `−${formatCalculatorMoney(result.serviceFee, values.currency, values.usdPkr)}` : "—",
+          },
+          {
+            label: (
+              <>
+                <Swatch color="#f5c451" />
+                <span>Additional costs</span>
+              </>
+            ),
+            value: result ? `−${formatCalculatorMoney(result.extra, values.currency, values.usdPkr)}` : "—",
+          },
+          {
+            label: "Effective deduction",
+            value: result ? formatPercent(roundPercent(result.effective, 2)) : "—",
+          },
+          {
+            label: (
+              <>
+                <Swatch color="#0f766e" />
+                <span>You keep</span>
+              </>
+            ),
+            value: takeHomeText,
+            keep: true,
+          },
+        ]}
+        fine="Estimates only. Not affiliated with Upwork. Taxes not included."
+        onReset={resetExample}
+        announcement={announcement}
+      />
+    </section>
   );
 }
