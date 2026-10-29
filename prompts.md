@@ -304,7 +304,7 @@ TITLE: [POST TITLE]
 SLUG: [kebab-case-slug]
 CATEGORY: [Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity]
 SCENE FOCUS: [1 short line on what the image should communicate, e.g. YouTube Premium comparison, CSS layout fundamentals, freelance proposal workflow]
-OUTPUT PATH: [e.g. rewrites/youtube-premium-vs-free-is-it-worth-it.webp]
+OUTPUT PATH: [e.g. articles/youtube-premium-vs-free-is-it-worth-it.webp]
 
 STYLE SELECTION (required)
 1) Randomly pick LOOK MODE with equal chance (about 50/50): BRIGHT or DARK.

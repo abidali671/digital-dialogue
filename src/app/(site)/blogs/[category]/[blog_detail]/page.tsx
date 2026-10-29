@@ -9,22 +9,33 @@ import Tag from "@/components/Tag";
 import Title from "@/components/Title";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { createRichTextOptions } from "@/lib/richText";
-import contentful_client, {
-  REVALIDATE_DETAIL,
-} from "@/lib/contentful/client";
+import contentful_client, { REVALIDATE_DETAIL } from "@/lib/contentful/client";
 import { IFaq, IPostData } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import config from "@/lib/config";
-import { formatLongDate, getPublishedDate, getReadingTime, toIsoTimestamp, wasUpdatedAfterPublish } from "@/helper";
+import {
+  formatLongDate,
+  getPublishedDate,
+  getReadingTime,
+  toIsoTimestamp,
+  wasUpdatedAfterPublish,
+} from "@/helper";
 import { pickRelatedPosts, getPostTags, toShareHashtags } from "@/lib/keywords";
 import { isNextNotFound } from "@/lib/next-errors";
 import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
-import { articlePublisher, breadcrumbSchema, faqPageSchema, JsonLdScript } from "@/lib/schema";
+import {
+  articlePublisher,
+  breadcrumbSchema,
+  faqPageSchema,
+  JsonLdScript,
+} from "@/lib/schema";
 import { extractToc, shouldShowToc } from "@/lib/toc";
 import TableOfContents from "@/components/TableOfContents";
 import { ArticleJsonLd } from "next-seo";
 import { getSiteAuthor } from "@/constants/authors";
+import { HUB_TOOLS } from "@/lib/toolsHub";
+import clsx from "clsx";
 
 export const revalidate = 3600;
 
@@ -47,7 +58,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
         content_type: "category",
         "fields.slug": params.category,
       },
-      { revalidate: REVALIDATE_DETAIL }
+      { revalidate: REVALIDATE_DETAIL },
     );
     const category = category_response.items[0];
     if (!category) notFound();
@@ -58,7 +69,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
         "fields.slug": params.blog_detail,
         links_to_entry: category.sys.id,
       },
-      { revalidate: REVALIDATE_DETAIL }
+      { revalidate: REVALIDATE_DETAIL },
     );
     const post = response.items[0] as unknown as IPostData | undefined;
     if (!post) notFound();
@@ -68,7 +79,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
     const resolvedTitle = resolvePageTitle(title);
     const description = toMetaDescription(
       post.fields.excerpt,
-      `Read ${title} on Digital Dialogue.`
+      `Read ${title} on Digital Dialogue.`,
     );
     const imagePath = post.fields.coverImage?.fields?.file?.url;
     const imageUrl = imagePath
@@ -116,7 +127,7 @@ export default async function BlogDetailPage(props: PageProps) {
         content_type: "category",
         "fields.slug": category,
       },
-      { revalidate: REVALIDATE_DETAIL }
+      { revalidate: REVALIDATE_DETAIL },
     );
 
     if (!category_response.items.length) notFound();
@@ -126,7 +137,7 @@ export default async function BlogDetailPage(props: PageProps) {
         "fields.slug": blog_detail,
         links_to_entry: category_response.items[0].sys.id,
       },
-      { revalidate: REVALIDATE_DETAIL }
+      { revalidate: REVALIDATE_DETAIL },
     );
 
     if (!response.items.length) notFound();
@@ -142,7 +153,7 @@ export default async function BlogDetailPage(props: PageProps) {
           limit: 10,
           order: "-sys.updatedAt",
         },
-        { revalidate: REVALIDATE_DETAIL }
+        { revalidate: REVALIDATE_DETAIL },
       ),
       contentful_client.getEntries(
         {
@@ -151,16 +162,21 @@ export default async function BlogDetailPage(props: PageProps) {
           limit: 40,
           order: "-sys.updatedAt",
         },
-        { revalidate: REVALIDATE_DETAIL }
+        { revalidate: REVALIDATE_DETAIL },
       ),
     ]);
 
+    const recentPool = relatedPoolResponse.items as unknown as IPostData[];
+    const latestPosts = recentPool.slice(0, 3);
+    const latestIds = new Set(latestPosts.map((item) => item.sys.id));
     const relatedPosts = pickRelatedPosts(
       post,
       sameCategoryResponse.items as unknown as IPostData[],
-      relatedPoolResponse.items as unknown as IPostData[],
-      3
-    );
+      recentPool,
+      6,
+    )
+      .filter((item) => !latestIds.has(item.sys.id))
+      .slice(0, 3);
     const {
       coverImage,
       category: postCategory,
@@ -175,9 +191,8 @@ export default async function BlogDetailPage(props: PageProps) {
     const { updatedAt } = post.sys;
     const publishedAt = getPublishedDate(post);
     const postTags = getPostTags(post);
-    const faqList = (faqs ?? []).filter(
-      (faq): faq is IFaq =>
-        Boolean(faq?.question?.trim() && faq?.answer?.trim())
+    const faqList = (faqs ?? []).filter((faq): faq is IFaq =>
+      Boolean(faq?.question?.trim() && faq?.answer?.trim()),
     );
     const shareUrl = `${config.BASE_URL}/blogs/${category}/${blog_detail}`;
     const shareHashtags = toShareHashtags(tags || keywords);
@@ -185,7 +200,13 @@ export default async function BlogDetailPage(props: PageProps) {
     const tocHeadings = [
       ...extractToc(content),
       ...(faqList.length > 0
-        ? [{ id: "faqs-section", text: "Frequently asked questions", level: 2 as const }]
+        ? [
+            {
+              id: "faqs-section",
+              text: "Frequently asked questions",
+              level: 2 as const,
+            },
+          ]
         : []),
     ];
 
@@ -228,7 +249,7 @@ export default async function BlogDetailPage(props: PageProps) {
               faqList.map((faq) => ({
                 question: faq.question,
                 answer: faq.answer,
-              }))
+              })),
             )}
           />
         )}
@@ -247,12 +268,8 @@ export default async function BlogDetailPage(props: PageProps) {
                 ]}
               />
 
-              <h1 className="mb-5 font-display text-h1 text-ink">
-                {title}
-              </h1>
-              <p className="mb-8 max-w-2xl text-lead text-mute">
-                {excerpt}
-              </p>
+              <h1 className="mb-5 font-display text-h1 text-ink">{title}</h1>
+              <p className="mb-8 max-w-2xl text-lead text-mute">{excerpt}</p>
 
               <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
                 <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-caption text-mute-soft">
@@ -357,18 +374,63 @@ export default async function BlogDetailPage(props: PageProps) {
           </div>
         </ContentContainer>
 
-        {relatedPosts.length > 0 && (
-          <section className="mt-14 border-t border-line bg-white py-14 md:py-16">
-            <ContentContainer>
-              <Title as="h2">Keep reading</Title>
-              <div className="mt-10 grid gap-10 sm:grid-cols-2 xl:grid-cols-3">
-                {relatedPosts.map((item) => (
-                  <PostCard key={item.fields.slug} data={item} />
-                ))}
-              </div>
-            </ContentContainer>
-          </section>
-        )}
+        {[
+          { title: "Keep reading", posts: relatedPosts },
+          { title: "Latest posts", posts: latestPosts },
+        ]
+          .filter((section) => section.posts.length > 0)
+          .map((section, idx) => (
+            <section
+              key={section.title}
+              className={clsx(
+                "border-t border-line py-14 md:py-16",
+                idx === 0 && "bg-white",
+              )}
+            >
+              <ContentContainer>
+                <Title as="h2">{section.title}</Title>
+                <div className="mt-10 grid gap-10 sm:grid-cols-2 xl:grid-cols-3">
+                  {section.posts.map((item) => (
+                    <PostCard key={item.fields.slug} data={item} />
+                  ))}
+                </div>
+              </ContentContainer>
+            </section>
+          ))}
+
+        <section className="border-t border-line py-14 md:py-16 bg-white">
+          <ContentContainer>
+            <Title as="h2">Free Tools</Title>
+            <div className="mt-10 grid gap-10 sm:grid-cols-2 xl:grid-cols-3">
+              {HUB_TOOLS.map((tool) => (
+                <Link
+                  key={tool.href}
+                  href={tool.href}
+                  className="post-card-root"
+                >
+                  <div className="post-card-cover-wrapper">
+                    <Image
+                      src={tool.image}
+                      alt={tool.alt}
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 1100px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    />
+                  </div>
+                  <div className="post-card-content-wrapper">
+                    <div className="post-card-label-wrapper">
+                      <hr className="post-card-label-line" />
+                      <p>Tool</p>
+                    </div>
+                    <p className="post-card-title">{tool.title}</p>
+                    <p className="text-copy text-mute">{tool.copy}</p>
+                    <p className="post-card-read-text">Open calculator</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </ContentContainer>
+        </section>
       </>
     );
   } catch (error) {

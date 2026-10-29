@@ -66,11 +66,12 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${bodyFont.variable} ${displayFont.variable} ${monoFont.variable}`}
+      suppressHydrationWarning
     >
       <head>
         <GoogleAdSense />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <GoogleAnalytics />
         <Layout>{children}</Layout>
       </body>
