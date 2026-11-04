@@ -25,6 +25,7 @@ Route (app)
 λ /tags/[slug]
 ○ /terms-of-service
 λ /tools
+○ /tools/fiverr-fee-calculator
 ○ /tools/freelance-rate-calculator
 ○ /tools/upwork-connects-calculator
 ○ /tools/upwork-fee-calculator

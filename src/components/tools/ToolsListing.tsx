@@ -34,7 +34,7 @@ export default function ToolsListing({
       />
       <ContentContainer className="relative flex flex-col justify-center pt-10">
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Tools" }]} />
-        <Title>Freelance calculators for Upwork</Title>
+        <Title>Freelance calculators for Upwork and Fiverr</Title>
         {!searchQuery && (
           <div className="mt-4 max-w-3xl space-y-4 text-lead text-mute">
             {TOOLS_INTRO.map((paragraph) => (
@@ -52,7 +52,7 @@ export default function ToolsListing({
         {tools.length === 0 ? (
           <p className="mt-10 text-mute">No tools match “{searchQuery}”.</p>
         ) : (
-          <div className="mt-10 grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-10 lg:grid-cols-3">
+          <div className="mt-10 grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-10 sm:grid-cols-2 xl:grid-cols-4">
             {tools.map((tool, index) => (
               <Link key={tool.href} href={tool.href} className="post-card-root">
                 <div className="post-card-cover-wrapper">
@@ -62,7 +62,7 @@ export default function ToolsListing({
                     fill
                     priority={index === 0}
                     className="object-cover"
-                    sizes="(min-width: 1100px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
                   />
                 </div>
                 <div className="post-card-content-wrapper">

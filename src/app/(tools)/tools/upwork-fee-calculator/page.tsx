@@ -218,7 +218,7 @@ export default function UpworkFeeCalculatorPage() {
       />
 
       <RelatedResources
-        items={[CALCULATOR_RESOURCES.connects, CALCULATOR_RESOURCES.rate, CALCULATOR_RESOURCES.guide]}
+        items={[CALCULATOR_RESOURCES.connects, CALCULATOR_RESOURCES.rate, CALCULATOR_RESOURCES.fiverr]}
       />
 
       <section className="border-t border-line bg-white">

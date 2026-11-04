@@ -1,12 +1,12 @@
 /** Document title before the site-name suffix. Resolved length stays under 60 characters. */
-export const TOOLS_PAGE_TITLE = "Free Freelance Calculators for Upwork";
+export const TOOLS_PAGE_TITLE = "Freelance Calculators: Upwork and Fiverr";
 
 export const TOOLS_PAGE_DESCRIPTION =
-  "Free calculators for freelancers: Upwork take-home pay after fees, Connects cost per contract, and the hourly rate you need. No sign-up. PKR optional.";
+  "Free calculators for freelancers: take-home pay after Upwork and Fiverr fees, Connects cost per contract, and the hourly rate you need. PKR optional.";
 
 export const TOOLS_INTRO = [
-  "Freelancing pays well only when you know what you keep. These free calculators help with the three numbers that matter most on Upwork: what you take home after fees, what your proposals cost you, and the hourly rate you need to charge.",
-  "Each one works in your browser, with no sign-up. Enter amounts in US dollars. To see results in Pakistani rupees (PKR), choose PKR and enter your exchange rate. Other currencies change the symbol only. Each page lists the Upwork pages its fee rules come from and the date they were checked.",
+  "Freelancing pays well only when you know what you keep. These free calculators cover the numbers that matter most on Upwork and Fiverr: what you take home after fees, when Fiverr earnings clear, what your Upwork proposals cost you, and the hourly rate you need to charge.",
+  "Each one works in your browser, with no sign-up. Enter amounts in US dollars. To see results in Pakistani rupees (PKR), choose PKR and enter your exchange rate. Other currencies change the symbol only. Each page lists the Upwork or Fiverr pages its fee rules come from and the date they were checked.",
 ];
 
 export type HubTool = {
@@ -24,6 +24,13 @@ export const HUB_TOOLS: HubTool[] = [
     copy: "See your take-home pay after the 0%–15% Freelancer Service Fee and withdrawal costs.",
     image: "/upwork-fee-calculator.png",
     alt: "Upwork Fee Calculator showing take-home pay split into what you keep, the service fee, and withdrawal costs.",
+  },
+  {
+    href: "/tools/fiverr-fee-calculator",
+    title: "Fiverr Fee Calculator",
+    copy: "See what you keep from a Fiverr order after the 20% fee and withdrawal costs, and the day it clears.",
+    image: "/fiverr-fee-calculator.png",
+    alt: "Fiverr Fee Calculator showing an order split into what you keep, the Fiverr fee, and the withdrawal fee.",
   },
   {
     href: "/tools/upwork-connects-calculator",
@@ -48,6 +55,11 @@ export type HubArticle = {
 };
 
 export const TOOL_ARTICLES: HubArticle[] = [
+  {
+    href: "/blogs/freelancing/fiverr-fees-for-sellers-what-you-keep-and-how-fiverr-payments-work-2026",
+    title: "Fiverr Fees for Sellers: What You Keep and How Fiverr Payments Work",
+    copy: "Follow one $100 order through the 20% fee, clearance and withdrawal, with what buyers pay on their side.",
+  },
   {
     href: "/blogs/freelancing/upwork-fees-how-much-do-freelancers-earn",
     title: "Upwork fees: how much do freelancers earn",

@@ -67,6 +67,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.8,
     }),
+    entry("/tools/fiverr-fee-calculator", {
+      changeFrequency: "monthly",
+      priority: 0.8,
+    }),
     entry("/tools/upwork-connects-calculator", {
       changeFrequency: "monthly",
       priority: 0.8,

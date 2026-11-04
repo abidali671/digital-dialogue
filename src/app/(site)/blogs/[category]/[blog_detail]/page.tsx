@@ -401,7 +401,7 @@ export default async function BlogDetailPage(props: PageProps) {
         <section className="border-t border-line py-14 md:py-16 bg-white">
           <ContentContainer>
             <Title as="h2">Free Tools</Title>
-            <div className="mt-10 grid gap-10 sm:grid-cols-2 xl:grid-cols-3">
+            <div className="mt-10 grid gap-10 sm:grid-cols-2 xl:grid-cols-4">
               {HUB_TOOLS.map((tool) => (
                 <Link
                   key={tool.href}
@@ -414,7 +414,7 @@ export default async function BlogDetailPage(props: PageProps) {
                       alt={tool.alt}
                       fill
                       className="object-cover"
-                      sizes="(min-width: 1100px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
                     />
                   </div>
                   <div className="post-card-content-wrapper">

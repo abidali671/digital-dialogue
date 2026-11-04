@@ -17,6 +17,7 @@ const STATIC_PATHS = [
   "/disclaimer",
   "/tools",
   "/tools/upwork-fee-calculator",
+  "/tools/fiverr-fee-calculator",
   "/tools/upwork-connects-calculator",
   "/tools/freelance-rate-calculator",
   "/feed.xml",
