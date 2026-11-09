@@ -45,12 +45,12 @@ const PostSearch = ({
           aria-busy={isPending}
           className="w-full max-w-xl"
         >
-          <div className="flex h-12 items-center gap-2 rounded-lg border border-line bg-mist pl-4 pr-1 focus-within:border-accent focus-within:ring-2 focus-within:ring-accent">
-            <SearchIcon className="h-5 w-5 shrink-0 text-mute" />
+          <div className="flex h-10 max-h-10 items-center gap-2 rounded-lg border border-line bg-mist pl-3 pr-1 focus-within:border-accent focus-within:ring-2 focus-within:ring-accent">
+            <SearchIcon className="h-4 w-4 shrink-0 text-mute" />
             <input
               ref={inputRef}
               type="search"
-              className="h-full min-w-0 flex-1 appearance-none border-0 bg-transparent text-ink shadow-none outline-none ring-0 placeholder:text-mute-soft focus:border-0 focus:outline-none focus:ring-0"
+              className="h-full min-w-0 flex-1 appearance-none border-0 bg-transparent text-ui text-ink shadow-none outline-none ring-0 placeholder:text-mute-soft focus:border-0 focus:outline-none focus:ring-0"
               placeholder={placeholder}
               aria-label={label}
               value={searchText}
@@ -58,7 +58,7 @@ const PostSearch = ({
             />
             <button
               type="submit"
-              className="h-9 shrink-0 rounded-md bg-accent px-4 text-ui font-bold text-white outline-none transition-colors hover:bg-accent-hover focus-visible:ring-2 focus-visible:ring-white disabled:opacity-70"
+              className="h-8 max-h-8 shrink-0 rounded-md bg-accent px-3 text-ui font-bold leading-none text-white outline-none transition-colors hover:bg-accent-hover focus-visible:ring-2 focus-visible:ring-white disabled:opacity-70"
               disabled={isPending}
             >
               {isPending ? "Searching..." : "Search"}

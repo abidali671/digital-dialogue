@@ -38,11 +38,20 @@ export default function ToolHero({
       ) : (
         intro
       )}
-      <p className="fee-hero-badge">
-        <Check />
-        Free to use · No sign-up required
-      </p>
-      {action}
+      {action ? (
+        <div className="fee-hero-actions">
+          {action}
+          <p className="fee-hero-badge">
+            <Check />
+            Free to use · No sign-up required
+          </p>
+        </div>
+      ) : (
+        <p className="fee-hero-badge">
+          <Check />
+          Free to use · No sign-up required
+        </p>
+      )}
       <ul className="fee-hero-trust">
         {points.map((point, index) => (
           <li key={index}>

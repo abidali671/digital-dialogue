@@ -6,13 +6,16 @@ export default function InvoiceGuide() {
       <h2 className="fee-section">How to use the invoice generator</h2>
       <ol>
         <li>
+          <strong>Pick a template.</strong> Nine looks, from Minimalist to Gold. Choose one at the top of the form. The live preview and the PDF use the same layout. All of them are free.
+        </li>
+        <li>
           <strong>Fill in who is sending and who is paying.</strong> The preview on the right updates as you type. Your name, email, address, tax ID and payment details stay in this browser only.
         </li>
         <li>
           <strong>Add line items.</strong> One line per deliverable, with quantity and rate. The amount is quantity × rate. Add a flat discount or a tax percentage only if they apply.
         </li>
         <li>
-          <strong>Download the PDF.</strong> Use Download PDF, then choose Save as PDF in the print dialog. Nothing is uploaded. Send the file by email or WhatsApp.
+          <strong>Print or download.</strong> Choose Print, Download PDF or Download Word. Files are named from the invoice number, for example INV-0001.pdf or INV-0001.docx. Nothing is uploaded. Send a file by email or WhatsApp.
         </li>
       </ol>
 

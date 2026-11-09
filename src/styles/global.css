@@ -29,6 +29,7 @@
   --lh-lead: 1.6;
   --fs-prose: 1rem;
   --lh-prose: 1.75;
+  --control-h: 2.5rem;
 }
 
 @media (min-width: 768px) {
@@ -48,8 +49,8 @@
 
 html,
 body {
-  overflow-x: hidden;
-  overflow-y: auto;
+  /* clip (not hidden) so position:sticky sidebars still work */
+  overflow-x: clip;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body), system-ui, sans-serif;
@@ -156,11 +157,15 @@ a {
   }
 
   .btn-primary {
-    @apply rounded-lg bg-accent px-6 py-3 text-ui font-bold text-white outline-none transition-colors duration-200 hover:bg-accent-hover focus:outline-none active:bg-accent-hover;
+    @apply inline-flex h-10 max-h-10 items-center justify-center rounded-lg bg-accent px-4 text-ui font-bold leading-none text-white outline-none transition-colors duration-200 hover:bg-accent-hover focus:outline-none active:bg-accent-hover;
   }
 
   .form-input {
-    @apply w-full rounded-lg border border-line bg-white p-3 text-copy text-ink placeholder:text-mute-soft focus:border-accent focus:outline-none;
+    @apply h-10 max-h-10 w-full rounded-lg border border-line bg-white px-3 py-0 text-ui text-ink placeholder:text-mute-soft focus:border-accent focus:outline-none;
+  }
+
+  textarea.form-input {
+    @apply h-auto max-h-none py-2.5 leading-normal;
   }
 
   /** Shared measure for article header, cover and prose so their edges align. */

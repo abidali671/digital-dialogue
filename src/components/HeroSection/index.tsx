@@ -30,13 +30,13 @@ const Hero = ({ posts }: IProps) => {
           <div className="flex flex-wrap items-center gap-3">
             <Link
               href="/blogs"
-              className="rounded-lg bg-accent px-6 py-3 text-ui font-bold text-white transition-colors hover:bg-accent-hover hover:text-white"
+              className="btn-primary hover:text-white"
             >
               Start reading
             </Link>
             <Link
               href="/about"
-              className="rounded-lg border border-white/20 px-6 py-3 text-ui font-semibold text-white transition-colors hover:border-accent hover:text-accent"
+              className="inline-flex h-10 max-h-10 items-center justify-center rounded-lg border border-white/20 px-4 text-ui font-semibold leading-none text-white transition-colors hover:border-accent hover:text-accent"
             >
               About the site
             </Link>

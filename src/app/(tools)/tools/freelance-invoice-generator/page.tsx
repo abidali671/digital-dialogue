@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 import InvoiceGenerator from "@/components/tools/InvoiceGenerator";
 import InvoiceGuide from "@/components/tools/InvoiceGuide";
+import InvoiceSheet from "@/components/tools/InvoiceSheet";
 import ToolHero from "@/components/tools/ToolHero";
 import FaqSection from "@/components/tools/FaqSection";
 import RelatedResources, { CALCULATOR_RESOURCES } from "@/components/tools/RelatedResources";
 import config from "@/lib/config";
+import { computeInvoice, defaultDraft } from "@/lib/invoice";
 import { breadcrumbSchema, JsonLdScript } from "@/lib/schema";
 
 const OG_IMAGE = {
@@ -23,7 +25,7 @@ const PATH = "/tools/freelance-invoice-generator";
 const FAQ = [
   {
     question: "Is this invoice generator really free?",
-    text: "Yes. There is no account, no watermark and no limit on how many invoices you create. The invoice is built in your browser. Download it with the print dialog set to Save as PDF.",
+    text: "Yes. There is no account, no watermark and no limit on how many invoices you create. The invoice is built in your browser. Print it, or download a PDF or a Word file; the filename uses the invoice number.",
   },
   {
     question: "Where is my invoice data stored?",
@@ -66,6 +68,9 @@ export const metadata: Metadata = {
 };
 
 export default function FreelanceInvoiceGeneratorPage() {
+  const sample = defaultDraft();
+  const sampleTotals = computeInvoice(sample);
+
   return (
     <div className="fee-page">
       <JsonLdScript
@@ -126,49 +131,14 @@ export default function FreelanceInvoiceGeneratorPage() {
                 </a>
               }
               points={[
-                "Live preview beside the form",
+                "Live preview beside the form, with nine templates",
                 "Nothing is uploaded; the PDF is made on this device",
                 "USD by default, with PKR and other currencies",
               ]}
             />
           </div>
           <aside className="inv-hero-sample" aria-hidden="true">
-            <p className="inv-kicker">Sample preview</p>
-            <p className="inv-from">Your studio</p>
-            <dl className="inv-meta">
-              <div>
-                <dt>Number</dt>
-                <dd>INV-0001</dd>
-              </div>
-              <div>
-                <dt>Due</dt>
-                <dd>Net 14</dd>
-              </div>
-            </dl>
-            <table className="inv-table">
-              <thead>
-                <tr>
-                  <th scope="col">Description</th>
-                  <th scope="col">Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Landing page</td>
-                  <td>$850.00</td>
-                </tr>
-                <tr>
-                  <td>Revisions</td>
-                  <td>$150.00</td>
-                </tr>
-              </tbody>
-            </table>
-            <dl className="inv-totals">
-              <div className="inv-total">
-                <dt>Total due</dt>
-                <dd>$1,000.00</dd>
-              </div>
-            </dl>
+            <InvoiceSheet draft={sample} totals={sampleTotals} />
           </aside>
         </div>
       </section>

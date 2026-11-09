@@ -3,13 +3,70 @@ import { formatMoney, parseDecimal } from "@/lib/upworkFee";
 export const INVOICE_CURRENCIES = [
   { id: "USD", label: "USD $" },
   { id: "PKR", label: "PKR Rs" },
+  { id: "AED", label: "AED د.إ" },
+  { id: "AUD", label: "AUD $" },
+  { id: "BDT", label: "BDT ৳" },
+  { id: "BRL", label: "BRL R$" },
+  { id: "CAD", label: "CAD $" },
+  { id: "CHF", label: "CHF Fr" },
+  { id: "CNY", label: "CNY ¥" },
+  { id: "DKK", label: "DKK kr" },
   { id: "EUR", label: "EUR €" },
   { id: "GBP", label: "GBP £" },
-  { id: "AED", label: "AED د.إ" },
+  { id: "HKD", label: "HKD $" },
+  { id: "IDR", label: "IDR Rp" },
   { id: "INR", label: "INR ₹" },
+  { id: "JPY", label: "JPY ¥" },
+  { id: "KRW", label: "KRW ₩" },
+  { id: "MXN", label: "MXN $" },
+  { id: "MYR", label: "MYR RM" },
+  { id: "NOK", label: "NOK kr" },
+  { id: "NZD", label: "NZD $" },
+  { id: "PHP", label: "PHP ₱" },
+  { id: "PLN", label: "PLN zł" },
+  { id: "QAR", label: "QAR ر.ق" },
+  { id: "SAR", label: "SAR ر.س" },
+  { id: "SEK", label: "SEK kr" },
+  { id: "SGD", label: "SGD $" },
+  { id: "THB", label: "THB ฿" },
+  { id: "TRY", label: "TRY ₺" },
+  { id: "ZAR", label: "ZAR R" },
 ] as const;
 
 export type InvoiceCurrency = (typeof INVOICE_CURRENCIES)[number]["id"];
+
+export const INVOICE_TEMPLATES = [
+  { id: "minimalist", label: "Minimalist", hint: "Clean and quiet" },
+  { id: "modern", label: "Modern", hint: "Bold header, airy" },
+  { id: "corporate", label: "Corporate", hint: "Formal, detailed" },
+  { id: "classic", label: "Classic", hint: "Teal kicker" },
+  { id: "boutique", label: "Boutique", hint: "Serif, airy" },
+  { id: "midnight", label: "Midnight", hint: "Navy header" },
+  { id: "ledger", label: "Ledger", hint: "Ruled, green" },
+  { id: "mono", label: "Mono", hint: "Typewriter" },
+  { id: "gold", label: "Gold", hint: "Warm accent" },
+] as const;
+
+export type InvoiceTemplate = (typeof INVOICE_TEMPLATES)[number]["id"];
+
+const LEGACY_TEMPLATES: Record<string, InvoiceTemplate> = {
+  bold: "modern",
+  slate: "corporate",
+  band: "boutique",
+  minimal: "minimalist",
+};
+
+export function isInvoiceTemplate(value: unknown): value is InvoiceTemplate {
+  return parseInvoiceTemplate(value) !== undefined;
+}
+
+export function parseInvoiceTemplate(value: unknown): InvoiceTemplate | undefined {
+  if (typeof value !== "string") return undefined;
+  if (INVOICE_TEMPLATES.some((item) => item.id === value)) {
+    return value as InvoiceTemplate;
+  }
+  return LEGACY_TEMPLATES[value];
+}
 
 export type InvoiceLine = {
   id: string;
@@ -29,6 +86,7 @@ export type InvoiceDraft = {
   issueDate: string;
   dueDate: string;
   currency: InvoiceCurrency;
+  template: InvoiceTemplate;
   taxPercent: string;
   discount: string;
   notes: string;
@@ -57,8 +115,8 @@ export function nextLineId(): string {
   return `line-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
 }
 
-export function emptyLine(): InvoiceLine {
-  return { id: nextLineId(), description: "", qty: "1", rate: "" };
+export function emptyLine(id = nextLineId()): InvoiceLine {
+  return { id, description: "", qty: "1", rate: "" };
 }
 
 export function defaultDraft(): InvoiceDraft {
@@ -73,11 +131,12 @@ export function defaultDraft(): InvoiceDraft {
     issueDate: isoDay(0),
     dueDate: isoDay(14),
     currency: "USD",
+    template: "minimalist",
     taxPercent: "0",
     discount: "0",
     notes: "",
     paymentDetails: "",
-    lines: [emptyLine()],
+    lines: [emptyLine("line-1")],
     pkrRate: "",
     showPkrLine: false,
   };
