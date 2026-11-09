@@ -23,10 +23,12 @@ export default function ToolHero({
   title,
   intro,
   points,
+  action,
 }: {
   title: string;
   intro: ReactNode;
   points: ReactNode[];
+  action?: ReactNode;
 }) {
   return (
     <>
@@ -40,6 +42,7 @@ export default function ToolHero({
         <Check />
         Free to use · No sign-up required
       </p>
+      {action}
       <ul className="fee-hero-trust">
         {points.map((point, index) => (
           <li key={index}>

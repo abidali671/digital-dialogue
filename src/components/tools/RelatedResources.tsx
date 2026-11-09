@@ -33,6 +33,22 @@ export const CALCULATOR_RESOURCES = {
     href: "/tools/freelance-rate-calculator",
     hrefLabel: "Open calculator",
   },
+  invoice: {
+    kind: "Tool",
+    title: "Invoice Generator",
+    copy: "Create a freelance invoice with a live preview and download a PDF. No sign-up.",
+    href: "/tools/freelance-invoice-generator",
+    hrefLabel: "Open generator",
+  },
+  invoiceAccounting: {
+    kind: "Guide",
+    title: "Accounting Software for Freelancers",
+    copy: "Compare free plans, trials and prices, and when invoicing software is enough.",
+    href: "/blogs/freelancing/accounting-software-for-freelancers",
+    hrefLabel: "Read guide",
+    titleIsLink: true,
+    action: "arrow",
+  },
   fiverr: {
     kind: "Tool",
     title: "Fiverr Fee Calculator",

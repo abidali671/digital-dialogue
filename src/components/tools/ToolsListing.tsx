@@ -34,7 +34,7 @@ export default function ToolsListing({
       />
       <ContentContainer className="relative flex flex-col justify-center pt-10">
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Tools" }]} />
-        <Title>Freelance calculators for Upwork and Fiverr</Title>
+        <Title>Freelance calculators and invoice tools</Title>
         {!searchQuery && (
           <div className="mt-4 max-w-3xl space-y-4 text-lead text-mute">
             {TOOLS_INTRO.map((paragraph) => (

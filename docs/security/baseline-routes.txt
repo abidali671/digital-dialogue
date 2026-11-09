@@ -26,6 +26,7 @@ Route (app)
 ○ /terms-of-service
 λ /tools
 ○ /tools/fiverr-fee-calculator
+○ /tools/freelance-invoice-generator
 ○ /tools/freelance-rate-calculator
 ○ /tools/upwork-connects-calculator
 ○ /tools/upwork-fee-calculator

@@ -1,13 +1,15 @@
 # Content prompts
 
-Prompts for rewriting existing posts, drafting new articles, and generating cover images for Digital Dialogue  
+Prompts for rewriting existing posts, drafting new articles, and generating cover images for Digital Dialogue
 (freelancing, technology, web development, digital marketing, content creation, and design).
 
-**How to use:** copy one prompt block, fill the bracketed fields, paste into your model.
+**How to use:** copy one prompt block, fill the bracketed fields, paste into your model. An explicit content plan or brief may override length, style, LOOK MODE, or cover style when it states a reason.
 
-**Expected output (prompts 1 and 2):** every response must include title, slug, category, short description, tags, keywords, FAQS, and full blog content. Every KEYWORDS phrase must appear in CONTENT at least once. FAQS is required. Ready to paste into Contentful / the blog detail page.
+**Expected output (prompts 1 and 2):** every response must include TITLE, SLUG, CATEGORY, SHORT DESCRIPTION, TAGS, KEYWORDS, FAQS, and CONTENT in the exact field format below. Ready to paste into Contentful / the blog detail page. Do not publish to Contentful without explicit user approval.
 
-**Expected output (prompt 3):** one cover image, exported as WebP, 1200 x 630. The model randomly picks LOOK MODE (BRIGHT or DARK) and one style (A–F) from the post category pool, then saves a Contentful-ready `coverImage`.
+**Expected output (prompt 3):** one cover image, exported as WebP, exactly 1200 x 630, quality about 85. Default: randomly pick LOOK MODE (BRIGHT or DARK) and one style (A–F) from the post category pool unless the brief/plan names LOOK and style. Save a Contentful-ready `coverImage`.
+
+**CMS notes (verified against DD post content type):** `keywords` is a Contentful **Symbol** (keep the whole comma-separated string **<= 256 characters**). `excerpt` / SHORT DESCRIPTION is Text. Prefer concise topical KEYWORDS over stuffing.
 
 ---
 
@@ -21,13 +23,13 @@ Use when you have a draft, thin post, or uneven article and need a clearer edit 
 You are an editor for a practical tech/freelancing blog (Digital Dialogue). Rewrite the article below in a neutral tone. Keep it specific and useful. Do not turn it into a generic summary or a personal essay.
 
 VOICE & AUDIENCE
-- Audience: freelancers, junior–mid developers, and builders who want clear, usable advice.
+- Audience: freelancers, builders, and readers who want clear, usable advice across freelancing, technology, web development, marketing, content, and design (match the post category; do not force every post into Upwork or web-dev framing).
 - Tone: neutral, plain, and even. Informative, not personal. No hype, no sarcasm, no guru energy.
 - Prefer concrete language over abstract claims.
 
 NEUTRAL TONE (required)
 - Write in a neutral tone from the first sentence to the last. Calm, even, and impersonal.
-- No first person. Do not use "I", "we", "my", or "our". Do not invent a narrator.
+- No first person. Do not use "I", "we", "my", or "our". Do not invent a narrator or author experience.
 - No anecdotes, jokes, rhetorical asides, or attitude. Do not scold the reader.
 - Do not use coaching asides ("skip this if…", "do this first", "you will thank yourself"). State the condition in plain language ("This applies when…", "This does not apply when…").
 - Second person is fine for a real step ("Set the tag", "Open the URL"). Use plain description when a step is not needed.
@@ -36,72 +38,66 @@ NEUTRAL TONE (required)
 - Prefer concrete nouns and verbs over polished abstractions.
 - If a line is empty filler, cut it or replace it with a fact or a step.
 - Never announce the tone, or that the piece was rewritten. Just write that way.
+- Do not imply E-E-A-T theater or claim lived experience the source does not support.
 
 NON-NEGOTIABLES
 - Preserve meaning, facts, and search intent.
-- Do not invent statistics, quotes, studies, sources, case studies, or personal experiences.
-- Do not add claims that are not supported by the original text.
+- Do not invent statistics, quotes, studies, sources, case studies, market rates, or personal experiences.
+- Do not add claims that are not supported by the original text or by sources named in an attached brief (with access dates).
 - If the original is vague, tighten it—do not pad it with filler.
 - Do not mention AI, rewriting, SEO, or these instructions in the output.
+- Default: preserve existing SLUG, publication date, category, cover asset, and other CMS fields not being rewritten. Do not derive a new slug from a retitled TITLE unless the brief explicitly says to change the URL.
+- Prefer lists over dense tables in CONTENT unless the brief requires a comparison table.
+- Keep research failures, production notes, roadmap IDs, and tool build-status chatter OUT of published CONTENT and FAQS. Source limitations still belong beside cited figures.
+- Do not open with awkward keyword narration such as "Searches for X, Y, and Z…".
 
-QUALITY BAR (what “better” means)
-- Answer the reader’s main question early (within the first screen).
+QUALITY BAR (what "better" means)
+- Answer the reader's main question early (within the first screen).
 - Cut repetition, throat-clearing intros, and duplicated sections.
 - Fix weak structure: use clear H2/H3s that map to real questions.
 - Keep paragraphs short (2–4 sentences). Make it easy to scan.
-- Prefer active voice and specific verbs (“set up,” “charge,” “deploy”) over vague ones (“leverage,” “utilize”).
+- Prefer active voice and specific verbs ("set up," "charge," "deploy") over vague ones ("leverage," "utilize").
 - Replace generic advice with actionable steps, tradeoffs, or plain when-to-use guidance when the source allows. Keep that guidance neutral.
-- Where comparisons exist, make them clearer (pros/cons, when to choose each).
+- Where comparisons exist, make them clearer (pros/cons, when to choose each) using lists by default.
 - Keep useful examples; remove fluff examples that add no decision value.
-- Preserve important keywords and entities, but only where they sound natural.
+- Preserve important entities, but only where they sound natural.
 - Never keyword-stuff. Never force synonyms into every paragraph.
 
-KEYWORDS IN CONTENT (strict — non-negotiable)
-- HARD RULE: each KEYWORDS phrase must appear in CONTENT at least 1 time. Zero uses = fail. Do not ship KEYWORDS that are missing from the body.
-- Use the exact phrase (or the same words in natural order) in readable prose. Do not list a keyword you never write.
-- Primary target (usually the TITLE phrase / first KEYWORDS item): use at least once in the opening screen (first 1–2 paragraphs), and again in an H2/H3 when it fits.
-- Every other KEYWORDS item: at least 1 clear use in a body paragraph or heading. Prefer one natural use over repeating the same string.
-- Before you finish: silently check each KEYWORDS item against CONTENT. If any item has fewer than 1 use, either add it to CONTENT or remove it from KEYWORDS.
-- Keep usage natural. Do not dump all KEYWORDS into one sentence, bold every phrase, or add a “Keywords:” line in CONTENT.
-- Case can match readable prose (e.g. “Upwork Connects”); meaning and word order must still match the KEYWORDS entry.
+KEYWORDS (natural, concise)
+- KEYWORDS is an editorial targeting list (comma-separated), not tag chips. Keep the full string <= 256 characters (Contentful Symbol).
+- Prefer 4–8 topical phrases the article truly covers. Primary phrase first when possible.
+- Use the PRIMARY / first KEYWORDS phrase naturally in the opening screen and in an H2/H3 when it fits.
+- Other KEYWORDS: aim for one clear natural use in CONTENT. Prefer dropping a phrase from KEYWORDS over stuffing it.
+- Do not dump all KEYWORDS into one sentence, bold every phrase, or add a "Keywords:" line in CONTENT.
+- Case can match readable prose.
 
 WORD COUNT (CONTENT body only, after CONTENT:)
-- MINIMUM: 900 words. Do not publish below this.
-- MAXIMUM: 1500 words. Do not go over this.
-- TARGET: 900–1500 words for most posts.
-- Expand with useful depth only: steps, checklists, tradeoffs, edge cases, and clear examples grounded in the source.
+- DEFAULT MINIMUM: 900 words. DEFAULT MAXIMUM: 1500 words. TARGET: 900–1500 for most posts.
+- An explicit brief or content plan may set a different length inside or outside that band when it states a reason. Stay useful; do not pad.
+- Expand with useful depth only: steps, checklists, tradeoffs, edge cases, and clear examples grounded in the source or cited brief.
 - Do not pad with filler, repetition, or invented claims to hit the number.
-- If the source is thin, deepen the existing points; do not invent new facts.
 
 REMOVE / AVOID
-- AI filler: “in today’s digital world,” “delve into,” “comprehensive guide,” “unlock,” “elevate,” “landscape,” “robust,” “seamless,” “whether you’re a beginner or a pro,” “it’s important to note,” “in conclusion.”
-- Empty transitions: “Moreover,” “Furthermore,” “Additionally” stacked repeatedly.
+- AI filler: "in today's digital world," "delve into," "comprehensive guide," "unlock," "elevate," "landscape," "robust," "seamless," "whether you're a beginner or a pro," "it's important to note," "in conclusion."
+- Empty transitions: "Moreover," "Furthermore," "Additionally" stacked repeatedly.
 - Buzzword salads and motivational fluff with no practical takeaway.
 - Em dash (—) anywhere in TITLE, SHORT DESCRIPTION, TAGS, KEYWORDS, or CONTENT. Use a comma, period, colon, parentheses, or a regular hyphen (-) instead.
+- Uncited rate charts, "average beginner rates," or earnings guarantees.
+- FAQ heading or Q&A list inside CONTENT (FAQS field only).
 
 METADATA RULES
-- TITLE: clear, specific, matches search intent. Not clickbait. Max ~60 characters when possible.
-- SLUG: URL slug derived from TITLE. Lowercase, words separated by hyphens only.
-  Rules: strip punctuation; replace spaces with `-`; collapse multiple hyphens; no leading/trailing hyphen; ASCII only (e.g. `&` → `and`); keep it readable and preferably under ~60 characters.
-  Example: "Are YouTube Subscriptions Free?" → `are-youtube-subscriptions-free`
+- TITLE: clear, specific, matches search intent. Not clickbait. Max ~60 characters when possible. Add a calendar year only when the brief justifies currency (e.g. priced survey year), not by habit.
+- SLUG: on rewrites, keep the existing slug unless the brief explicitly changes the URL. For brand-new URLs only: lowercase kebab-case from the agreed slug/title; ASCII; preferably under ~60 characters.
 - CATEGORY: pick exactly one from: Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity
   (If none fit perfectly, choose the closest. Do not invent a new category name.)
-- SHORT DESCRIPTION: 140–160 characters. Plain text. One or two sentences. Summarizes the article for meta description + blog cards. No quotes, no markdown, no “learn more.”
+- SHORT DESCRIPTION: 140–160 characters exact. Plain text. One or two sentences. Summarizes the article for meta description + blog cards. No quotes, no markdown, no "learn more." Count characters before shipping.
 - TAGS: 1–5 short public labels, comma-separated. Each value is published as its own tag page (`/tags/…`) and shown under the post, so write reusable hub labels, not search queries.
-  - 1–3 words each. Examples: Upwork, Freelancing, Proposals, Upwork fees, Freelance profile.
-  - Stay inside the niche: practical freelancing / Upwork guides for web developers and beginners.
-  - Reuse the same spelling every time (`Upwork proposals`, not "proposals on Upwork" or "upwork proposal tips") so posts share one tag URL.
-  - No duplicates, no stuffing, no one-off synonyms.
-- KEYWORDS: 5–12 targeted search phrases for this post, comma-separated. Editorial / SEO targeting list (what this article is trying to rank for). Not shown as tag chips.
-  - STRICT: each KEYWORDS phrase must appear in CONTENT at least 1 time. After drafting, silently verify every item; drop any with zero uses.
-  - Pull phrases from the TITLE, H2 topics, SHORT DESCRIPTION, and wording used in CONTENT. Every KEYWORDS item must be something the article covers in plain language.
-  - Include the primary title phrase (or PRIMARY KEYWORD when writing from a brief) plus related phrases that appear as real sections or repeated advice in the body.
-  - May be longer than tags (e.g. `how to write an upwork proposal`, `funded milestone`, `Upwork freelancer service fee`).
-  - Do not invent unused long-tails, synonym lists, or “SEO variants” that never show up in the article.
-  - Do not duplicate TAGS entries unless a short tag is also a real target phrase used in the piece.
-  - No stuffing: only phrases the article actually serves.
+  - 1–3 words each. Examples: Freelancing, Writing, Pricing, Upwork, Proposals.
+  - Match the post niche; do not force Upwork/dev tags onto unrelated categories.
+  - Reuse stable spelling so posts share one tag URL. No duplicates, no stuffing.
+- KEYWORDS: see KEYWORDS section above.
 - FAQS (required): 3–6 real reader questions this article answers, as a valid JSON array only (no markdown fences). Place after KEYWORDS and before CONTENT.
-  - Each item: `{ "question": "...", "answer": "..." }`. Questions must be distinct from H2 titles, not copies of section headings.
+  - Each item: `{ "question": "...", "answer": "..." }`. Questions must be distinct from H2 titles, not copies of section headings, and not duplicates of body FAQ text.
   - Answers: 1–3 sentences, specific, grounded in CONTENT. Never invent filler FAQs.
   - Do not put an FAQ heading or Q&A list inside CONTENT.
 
@@ -112,15 +108,15 @@ OUTPUT FORMAT (follow exactly — no extra commentary before or after)
 
 TITLE: [title]
 
-SLUG: [kebab-case-slug-from-title]
+SLUG: [kebab-case-slug]
 
 CATEGORY: [one category]
 
 SHORT DESCRIPTION: [140–160 character plain-text description]
 
-TAGS: Upwork, Freelancing, Proposals
+TAGS: Freelancing, Writing, Pricing
 
-KEYWORDS: how to write an upwork proposal, upwork proposal tips, upwork for web developers, win upwork jobs
+KEYWORDS: freelance writing rates, per word rate, hourly writing rate
 
 FAQS: [{"question":"...","answer":"..."}]
 
@@ -129,8 +125,8 @@ CONTENT:
 - Do not include an H1 — the site already shows TITLE above the article.
 - Start with the intro paragraph, then H2/H3 body.
 - Do not include an FAQ heading or Q&A list in CONTENT (use the required FAQS field above).
-- CONTENT body must be 900–1500 words (minimum 900, maximum 1500). Useful depth only; no filler.
-- STRICT: each KEYWORDS phrase must appear in this CONTENT at least 1 time. If any has zero uses, add it or remove it from KEYWORDS before you finish.
+- CONTENT body default 900–1500 words unless the brief overrides with a reason.
+- Prefer unordered/ordered lists over tables unless the brief requires a table.
 - If the source is missing a clear takeaway, end with a short, useful closing—not a summary of every section.
 
 CONTENT TO REWRITE:
@@ -141,7 +137,7 @@ CONTENT TO REWRITE:
 
 ## 2. Write a new SEO blog
 
-Use when starting from a topic + keyword brief. Fill every field before running.
+Use when starting from a topic + keyword brief or a saved content plan. Fill every field before running. The plan may override prompt defaults when it states a reason.
 
 ### Prompt
 
@@ -152,13 +148,15 @@ BRIEF
 TOPIC: [TOPIC]
 PRIMARY KEYWORD: [PRIMARY KEYWORD]
 SECONDARY KEYWORDS: [COMMA-SEPARATED KEYWORDS]
-TARGET AUDIENCE: [e.g. beginner freelancers / MERN juniors / content creators]
+TARGET AUDIENCE: [e.g. beginner freelancers globally / MERN juniors / content creators]
 SEARCH INTENT: [informational / comparison / how-to / transactional]
-ANGLE (optional): [what unique point of view or constraint—e.g. “for Pakistan freelancers”, “no-code vs custom”, “beginner mistakes”]
+ANGLE (optional): [constraint—e.g. "method over rate chart", "no invented market rates"]
 PREFERRED CATEGORY (optional): [Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity]
-WORD COUNT TARGET: [e.g. 900–1500] (MINIMUM 900, MAXIMUM 1500 words in CONTENT; stay useful; do not pad to hit a number)
-MUST INCLUDE: [optional: specific points, tools, FAQs]
-MUST AVOID: [optional: competitors, off-topic tangents]
+WORD COUNT TARGET: [default 900–1500] (explicit plan may override with reason; stay useful; do not pad)
+MUST INCLUDE: [optional: sources with access dates, illustrative maths labels, live internal links only]
+MUST AVOID: [optional: soft-404 links, unbuilt tools, uncited rates, first person, tables]
+AGREED SLUG (optional): [keep stable roadmap slug when provided; do not invent a new URL]
+CONTENT PLAN (optional): [paste or path — plan rules win when they conflict with defaults below]
 
 BEFORE WRITING (do this silently—do not show it)
 1) Infer the real search intent behind the primary keyword.
@@ -166,10 +164,11 @@ BEFORE WRITING (do this silently—do not show it)
 3) Choose a structure that answers those questions in a logical order.
 4) Decide what the reader should be able to DO after reading.
 5) Choose the best single category from the allowed list.
+6) If rates, prices, or survey figures appear, separate cited benchmarks from illustrative calculations.
 
 NEUTRAL TONE (required)
 - Write in a neutral tone from the first sentence to the last. Calm, even, and impersonal.
-- No first person. Do not use "I", "we", "my", or "our". Do not invent a narrator or a personal story.
+- No first person. Do not use "I", "we", "my", or "our". Do not invent a narrator, personal story, or author portfolio of rates.
 - No anecdotes, jokes, rhetorical asides, or attitude. Do not scold the reader.
 - Do not use coaching asides ("skip this if…", "do this first", "you will thank yourself"). State the condition in plain language ("This applies when…", "This does not apply when…").
 - Second person is fine for a real step ("Set the tag", "Open the URL"). Use plain description when a step is not needed.
@@ -178,6 +177,7 @@ NEUTRAL TONE (required)
 - Prefer concrete nouns and verbs over abstract marketing language.
 - If a line is empty filler, cut it or replace it with a fact or a step.
 - Never announce the tone, or that the article is "human-written" or "AI-free." Just write that way.
+- Do not imply E-E-A-T theater.
 
 ARTICLE REQUIREMENTS
 
@@ -185,49 +185,45 @@ Title & intro
 - Write a clear, specific title that matches intent (not clickbait). Max ~60 characters when possible.
 - Open with the answer or payoff quickly—no long preamble.
 - State who the advice applies to, in plain language, when that limit matters.
+- Calendar year in TITLE only when justified by the brief.
 
 Structure
 - Use Markdown with H2/H3 only — do not include an H1 (the site already shows TITLE).
 - Each H2 should earn its place (a real question or decision).
 - Use short paragraphs, bullets, and numbered steps when they improve clarity.
-- Do not put an FAQ section in CONTENT. Put 3–6 real reader questions in the required FAQS field as JSON (not recycled H2 summaries).
+- Default: no Markdown tables in CONTENT (use lists). A brief may require a table for a true comparison.
+- Do not put an FAQ section in CONTENT. Put 3–6 real reader questions in the required FAQS field as JSON (not recycled H2 summaries; not duplicated as a body FAQ block).
 
 Substance
 - Be specific: steps, checklists, tradeoffs, examples, edge cases.
-- Prefer “how to decide” over “what is X” fluff when intent is practical.
-- When mentioning tools/platforms, explain fit and limitations—don’t sound like an ad.
+- Prefer "how to decide" over "what is X" fluff when intent is practical.
+- When mentioning tools/platforms, explain fit and limitations—don't sound like an ad. Link only live, useful URLs (or relative DD paths known live).
 - Call out common mistakes and what to do instead.
 - If something depends on context (budget, skill level, country, niche), say so.
+- For money/rates: cite sources with access dates and survey limitations; label illustrative maths as hypothetical; never guarantee earnings; do not claim a tool exists if it is not built.
 
 Word count
-- MINIMUM: 900 words in the CONTENT body (count after CONTENT: only).
-- MAXIMUM: 1500 words. Do not exceed this.
-- TARGET: 900–1500 words unless the BRIEF sets a range inside that band.
-- Never pad with filler, synonym loops, or fake stories to hit the minimum.
+- DEFAULT: 900–1500 words in the CONTENT body (count after CONTENT: only).
+- An explicit BRIEF/plan may override with a stated reason. Never pad with filler, synonym loops, or fake stories.
 
-SEO (natural only — still required)
+SEO (natural only)
 - Use the PRIMARY KEYWORD in the TITLE and in the early intro when it reads naturally.
-- Build the KEYWORDS list from PRIMARY KEYWORD + SECONDARY KEYWORDS the article will cover, then use every KEYWORDS phrase in CONTENT (see KEYWORDS IN CONTENT below).
-- Use related entities/terms a knowledgeable reader expects.
-- No keyword stuffing. No synonym spam. No unused KEYWORDS.
-
-KEYWORDS IN CONTENT (strict — non-negotiable)
-- HARD RULE: each KEYWORDS phrase must appear in CONTENT at least 1 time. Zero uses = fail. Do not ship KEYWORDS that are missing from the body.
-- Use the exact phrase (or the same words in natural order) in readable prose. Do not list a keyword you never write.
-- Primary target (PRIMARY KEYWORD / first KEYWORDS item): use at least once in the opening screen (first 1–2 paragraphs), and again in an H2/H3 when it fits.
-- Every other KEYWORDS item: at least 1 clear use in a body paragraph or heading. Prefer one natural use over repeating the same string.
-- Before you finish: silently check each KEYWORDS item against CONTENT. If any item has fewer than 1 use, either add it to CONTENT or remove it from KEYWORDS.
-- Keep usage natural. Do not dump all KEYWORDS into one sentence, bold every phrase, or add a “Keywords:” line in CONTENT.
-- Case can match readable prose; meaning and word order must still match the KEYWORDS entry.
+- Build KEYWORDS from PRIMARY + only those SECONDARY phrases the article covers; keep the full KEYWORDS string <= 256 characters.
+- Primary: natural use in opening screen; again in an H2/H3 when it fits.
+- Other KEYWORDS: one natural use preferred; drop unused phrases instead of forcing them.
+- Use related entities a knowledgeable reader expects. No stuffing. No synonym spam.
 
 Trust & accuracy
-- Do not invent stats, studies, quotes, surveys, or “experts say.”
-- Do not fabricate personal anecdotes.
-- If data is uncertain, use careful wording (“typically,” “often,” “depends”) instead of fake certainty.
-- Do not make guarantees (“you will rank #1,” “easy passive income”).
+- Do not invent stats, studies, quotes, surveys, market rates, or "experts say."
+- Do not fabricate personal anecdotes or author rate history.
+- If data is uncertain, use careful wording ("typically," "often," "depends," "in that survey sample") instead of fake certainty.
+- Do not make guarantees ("you will rank #1," "easy passive income," "beginners earn $X").
+- Distinguish benchmarks (cited surveys/marketplaces) from illustrative quote calculations.
+- Keep research failures, production notes, roadmap IDs, and tool build-status chatter OUT of published CONTENT and FAQS (put those in a separate verification or plan file). Source limitations still belong beside cited figures in the body.
+- Do not open with awkward keyword narration such as "Searches for X, Y, and Z…" or similar bait lists. Introduce services and decisions in plain language; place KEYWORDS naturally inside real advice.
 
 STYLE BAN LIST
-Avoid: “in today’s fast-paced world,” “delve into,” “comprehensive guide,” “unlock your potential,” “ever-evolving landscape,” “robust solution,” “seamless experience,” “whether you’re a beginner or an expert,” “in conclusion,” stacked “Moreover/Furthermore/Additionally,” and other AI filler.
+Avoid: "in today's fast-paced world," "delve into," "comprehensive guide," "unlock your potential," "ever-evolving landscape," "robust solution," "seamless experience," "whether you're a beginner or an expert," "in conclusion," stacked "Moreover/Furthermore/Additionally," and other AI filler.
 - Never use an em dash (—) in TITLE, SHORT DESCRIPTION, TAGS, KEYWORDS, or CONTENT. Prefer a comma, period, colon, parentheses, or a regular hyphen (-).
 
 ENDING
@@ -236,30 +232,13 @@ ENDING
 
 METADATA RULES
 - TITLE: clear, specific, matches search intent. Not clickbait. Max ~60 characters when possible.
-- SLUG: URL slug derived from TITLE. Lowercase, words separated by hyphens only.
-  Rules: strip punctuation; replace spaces with `-`; collapse multiple hyphens; no leading/trailing hyphen; ASCII only (e.g. `&` → `and`); keep it readable and preferably under ~60 characters.
-  Example: "How to Learn Blockchain for Beginners" → `how-to-learn-blockchain-for-beginners`
-- SHORT DESCRIPTION: 140–160 characters. Plain text. Compelling enough for blog cards and accurate enough for meta description. Must reflect the article. No markdown, no quotes around the whole string, no “Read more.”
-- TAGS: 1–5 short public labels, comma-separated. Each value is published as its own tag page (`/tags/…`) and shown under the post, so write reusable hub labels, not search queries.
-  - 1–3 words each. Examples: Upwork, Freelancing, Proposals, Upwork fees, Freelance profile.
-  - Stay inside the niche: practical freelancing / Upwork guides for web developers and beginners.
-  - Reuse the same spelling every time (`Upwork proposals`, not "proposals on Upwork" or "upwork proposal tips") so posts share one tag URL.
-  - PRIMARY KEYWORD and SECONDARY KEYWORDS from the BRIEF guide title and body. Copy a BRIEF phrase into TAGS only when it is already a 1–3 word hub label.
-  - No duplicates, no stuffing, no one-off synonyms.
-- KEYWORDS: 5–12 targeted search phrases for this post, comma-separated. Editorial / SEO targeting list (what this article is trying to rank for). Not shown as tag chips.
-  - STRICT: each KEYWORDS phrase must appear in CONTENT at least 1 time. After drafting, silently verify every item; drop any with zero uses.
-  - Start from PRIMARY KEYWORD and only those SECONDARY KEYWORDS the finished article actually covers.
-  - Pull remaining phrases from the TITLE, H2 topics, SHORT DESCRIPTION, and wording used in CONTENT. Every KEYWORDS item must map to real advice in the piece.
-  - May be longer phrases (e.g. `how to write an upwork proposal`, `funded milestone`, `Upwork freelancer service fee`).
-  - Do not invent unused long-tails, synonym lists, or “SEO variants” that never appear in the article.
-  - Do not duplicate TAGS entries unless a short tag is also a real target phrase used in the piece.
-  - No stuffing: only phrases the article actually serves.
+- SLUG: use AGREED SLUG / roadmap slug when provided. Otherwise lowercase kebab-case; ASCII; preferably under ~60 characters. Do not change a live post's slug by default.
+- SHORT DESCRIPTION: 140–160 characters exact. Plain text. Accurate for meta + cards. No markdown, no wrapping quotes, no "Read more." Count before shipping.
+- TAGS: 1–5 short public hub labels (1–3 words), comma-separated. Match category niche; do not force Upwork/dev onto every post. Stable spelling. No duplicates.
+- KEYWORDS: 4–8 targeted phrases preferred (still fine up to ~12 if short). Full string <= 256 characters. Editorial SEO list; not tag chips. Only phrases the article serves.
 - CATEGORY: exactly one of: Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity
-  (Use PREFERRED CATEGORY if provided and valid; otherwise pick the best fit.)
-- FAQS (required): 3–6 real reader questions this article answers, as a valid JSON array only (no markdown fences). Place after KEYWORDS and before CONTENT.
-  - Each item: `{ "question": "...", "answer": "..." }`. Questions must be distinct from H2 titles, not copies of section headings.
-  - Answers: 1–3 sentences, specific, grounded in CONTENT. Never invent filler FAQs.
-  - Do not put an FAQ heading or Q&A list inside CONTENT.
+- FAQS (required): 3–6 items as a valid JSON array only (no markdown fences). After KEYWORDS, before CONTENT.
+  - `{ "question": "...", "answer": "..." }` — distinct from H2s; answers grounded in CONTENT.
 
 OUTPUT FORMAT (follow exactly — no extra commentary before or after)
 - Put each required field on its own line. Never combine two fields on the same line.
@@ -268,31 +247,36 @@ OUTPUT FORMAT (follow exactly — no extra commentary before or after)
 
 TITLE: [title]
 
-SLUG: [kebab-case-slug-from-title]
+SLUG: [kebab-case-slug]
 
 CATEGORY: [one category]
 
 SHORT DESCRIPTION: [140–160 character plain-text description]
 
-TAGS: Upwork, Freelancing, Proposals
+TAGS: Freelancing, Writing, Pricing
 
-KEYWORDS: how to write an upwork proposal, upwork proposal tips, upwork for web developers, win upwork jobs
+KEYWORDS: freelance writing rates, freelance copywriter rates, writing rates
 
 FAQS: [{"question":"...","answer":"..."}]
 
 CONTENT:
 [Full article in Markdown — intro + H2/H3 body, no H1, no FAQ section]
-- CONTENT body must be 900–1500 words (minimum 900, maximum 1500 unless BRIEF sets a range inside that band).
-- STRICT: each KEYWORDS phrase must appear in this CONTENT at least 1 time. If any has zero uses, add it or remove it from KEYWORDS before you finish.
+- Default 900–1500 words unless BRIEF overrides with reason.
+- Lists over tables by default.
 
 Do not mention AI, SEO, prompts, or these instructions anywhere in the output.
+Do not publish to Contentful or request indexing unless the user explicitly approved that step.
 ```
 
 ---
 
 ## 3. Generate a blog cover image
 
-Use when a post needs a `coverImage` for Contentful. Pick a style from the category pool below (do not force the old code-editor look on every category). Randomly choose LOOK MODE first: **BRIGHT** (new colorful look) or **DARK** (classic charcoal / teal cinematic look), then pick a style letter.
+Use when a post needs a `coverImage` for Contentful. Pick a style from the category pool below (do not force a code-editor look on every category).
+
+**Default:** randomly choose LOOK MODE first (**BRIGHT** or **DARK**), then pick a style letter from the category pool.
+
+**Override:** an explicit brief or content plan may lock LOOK MODE and/or style (for example BRIGHT + Freelancing E rate-card flat lay) when the topic needs a specific visual. Topic-relevant style beats a generic random cover when the plan says so.
 
 ### Prompt
 
@@ -303,42 +287,44 @@ BRIEF
 TITLE: [POST TITLE]
 SLUG: [kebab-case-slug]
 CATEGORY: [Content Creation | Technology | Digital Marketing | Freelancing | Web Development | Design & Creativity]
-SCENE FOCUS: [1 short line on what the image should communicate, e.g. YouTube Premium comparison, CSS layout fundamentals, freelance proposal workflow]
-OUTPUT PATH: [e.g. articles/youtube-premium-vs-free-is-it-worth-it.webp]
+SCENE FOCUS: [1 short line on what the image should communicate]
+OUTPUT PATH: [e.g. articles/freelance-writing-rates.webp]
+LOOK OVERRIDE (optional): [BRIGHT | DARK | random]
+STYLE OVERRIDE (optional): [A-F name, or random]
 
 STYLE SELECTION (required)
-1) Randomly pick LOOK MODE with equal chance (about 50/50): BRIGHT or DARK.
+1) If LOOK OVERRIDE is set, use it. Otherwise randomly pick LOOK MODE with equal chance: BRIGHT or DARK.
 2) Look at CATEGORY.
-3) From that category's STYLE POOL below, randomly pick ONE style (A, B, C, D, E, or F).
+3) If STYLE OVERRIDE is set, use that letter. Otherwise from that category's STYLE POOL, randomly pick ONE style (A–F).
 4) In your first output line before the image, write: STYLE PICKED: [Category] / [A|B|C|D|E|F] - [style name] / LOOK: [BRIGHT|DARK]
 5) Generate using only that picked style + look mode. Do not blend styles. Do not blend look modes.
 6) Apply the scene composition from the style, then re-light and re-color it to match LOOK MODE (see SHARED LOOK).
-7) If regenerating the same post, pick a different style letter and/or the other look mode when possible.
+7) If regenerating the same post without a locked override, pick a different style letter and/or the other look mode when possible.
 
 SHARED LOOK (all styles)
 - Photorealistic or high-end editorial CGI. Sharp, cinematic, professional publication quality.
 - Soft film grain OK. Shallow depth of field OK at edges only.
 - Fill the frame with one strong composition. No collage of many tiny cards.
 - No people, faces, or hands.
-- No real brand logos (no YouTube, Google, Meta, Figma wordmarks/icons). Use generic UI chrome only.
+- No real brand logos (no YouTube, Google, Meta, Figma, Upwork, Fiverr wordmarks/icons). Use generic UI chrome only.
 - No watermarks, no stock-photo cliches, no giant poster title of the article on top of the image.
-- Small readable UI text inside a mock screen is OK. Do not invent fake stats or follower counts.
+- Small readable UI text inside a mock screen is OK only if generic. Do not invent fake stats, follower counts, or fake market-rate dollar/cent figures on rate sheets.
 
-LOOK MODE: BRIGHT (new colorful look)
+LOOK MODE: BRIGHT (colorful look)
 - The image must read as colorful at a glance, not as a black/gray frame with a thin accent.
 - Use at least 3 distinct hues beyond neutrals (teal/cyan, warm amber/gold, coral/soft red, soft violet, lime/mint, sky blue, paper cream, sage green).
 - Brand accents: teal/cyan and warm amber should appear, but they are accents—not the whole palette.
 - Prefer lit scenes: daylight, golden-hour window light, soft studio gels, or a bright UI theme.
 - Backgrounds: soft color washes, warm wood, paper cream, frosted glass, or gently tinted surfaces—not flat black or charcoal voids.
-- Screens/UI: prefer light or mid-tone interfaces with colored charts, cards, or chrome. Dark UI only if the rest of the scene still carries strong color.
+- Screens/UI: prefer light or mid-tone interfaces. Dark UI only if the rest of the scene still carries strong color.
 - Reject BRIGHT renders that end up mostly black/gray with only a thin teal rim light; regenerate brighter if needed.
 
 LOOK MODE: DARK (classic cinematic look)
 - Palette: charcoal, near-black, soft mist gray, teal/cyan accents. Warm amber highlight optional.
-- Moody cinematic lighting, soft rim lights, subtle specular highlights. Night desk / studio grading is OK.
+- Moody cinematic lighting, soft rim lights, subtle specular highlights.
 - Backgrounds may be charcoal, near-black, or dark mist; keep the scene readable with teal/cyan (and optional amber) accents.
-- Screens/UI: dark editors, dashboards, and browsers are preferred; teal accents on chrome or highlights.
-- Still keep one strong subject and clean composition—do not turn it into muddy noise or pure black emptiness.
+- Screens/UI: dark editors, dashboards, and browsers are preferred.
+- Still keep one strong subject and clean composition.
 - Do not force daylight wood desks or pastel props when LOOK is DARK; adapt the same style scene to the dark palette.
 
 CATEGORY STYLE POOLS
@@ -373,7 +359,7 @@ FREELANCING (pick A, B, C, D, E, or F at random)
 - B) Profile mock: browser showing a generic freelancer profile/dashboard (no marketplace logos), portfolio tiles visible.
 - C) Client workflow board: kanban-style cards (Brief / Draft / Delivery) with a tablet calendar.
 - D) Invoice still life: printed invoice or contract, calculator, pen, and a laptop showing a simple billing UI.
-- E) Rate card flat lay: printed rate sheet, sticky “scope / extras” notes, pens, and a tablet with a simple pricing table UI.
+- E) Rate card flat lay: printed rate sheet, sticky "scope / extras / revisions" notes, pens, and a tablet with a simple pricing table UI (labels only; no fabricated market-rate numbers).
 - F) Kickoff kit: branded folder (generic), project brief printout, sticky milestones, and a laptop with a kickoff checklist UI.
 
 DIGITAL MARKETING (pick A, B, C, D, E, or F at random)
@@ -396,10 +382,11 @@ HARD CONSTRAINTS
 - Final file: WebP only.
 - Final size: exactly 1200 x 630 pixels (1.91:1).
 - Generate at a close landscape ratio (16:9 is fine), then center-crop and resize to 1200 x 630.
-- Export quality: high, optimized WebP (typically 80-90 quality).
+- Export quality: high, optimized WebP (typically 80-90 quality; prefer ~85).
 - Filename: [SLUG].webp (unless OUTPUT PATH is provided).
 - Match SCENE FOCUS to the picked style so the subject fits the category.
 - Match LOOK MODE strictly: BRIGHT stays colorful; DARK stays charcoal/teal cinematic.
+- Generate with an image model / GenerateImage path. Do not substitute a hand-drawn or code-rendered fake cover if generation is blocked; report the blocker instead.
 
 AFTER GENERATING
 1) Center-crop to 1.91:1 if needed.
@@ -415,11 +402,11 @@ AFTER GENERATING
 | Prompt field | Use on site |
 |---|---|
 | `TITLE` | Post title |
-| `SLUG` | Post slug (URL: `/blogs/{category}/{slug}`) |
+| `SLUG` | Post slug (URL: `/blogs/{category-path}/{slug}`) |
 | `CATEGORY` | Category entry |
-| `SHORT DESCRIPTION` | Excerpt + meta description |
+| `SHORT DESCRIPTION` | Excerpt + meta description (aim 140–160 characters) |
 | `TAGS` | Contentful `tags` field. Short hub labels (1–5). Drive `/tags/…` pages and chips under the post |
-| `KEYWORDS` | Contentful `keywords` field. Targeted search phrases for this post (meta / editorial SEO; not tag chips) |
+| `KEYWORDS` | Contentful `keywords` Symbol field (<= 256 characters). Targeted search phrases (meta / editorial SEO; not tag chips) |
 | `FAQS` (required) | Post `faqs` JSON field (`[{ "question", "answer" }, ...]`) |
 | `CONTENT` | Rich text / Markdown body |
 | Cover image (WebP, 1200 x 630) | Post `coverImage` asset |
@@ -437,7 +424,13 @@ Paste one of these under the prompt when needed:
 `Include a practical checklist section the reader can follow the same day.`
 
 **Comparison posts:**  
-`Use a clear comparison table (Markdown) plus a “choose X if / choose Y if” section.`
+`If a true side-by-side comparison is required, use a compact Markdown table plus a "choose X if / choose Y if" list. Otherwise prefer lists.`
 
 **Neutral tone check:**  
 `Keep the tone neutral: no first person, no asides, no hype, no sarcasm. State the fact or the step.`
+
+**Rates / money posts:**  
+`Cite only opened sources with access dates and sample limits. Label illustrative quote maths as hypothetical. No earnings guarantees. No unbuilt calculator claims. Keep roadmap/tool-status/research-failure notes out of the article body and FAQs.`
+
+**No keyword-bait openers:**  
+`Do not start sections with "Searches for X, Y, and Z…" or similar keyword lists. Write the service distinction in plain language.`

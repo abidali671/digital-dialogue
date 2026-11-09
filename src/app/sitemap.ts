@@ -79,6 +79,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly",
       priority: 0.8,
     }),
+    entry("/tools/freelance-invoice-generator", {
+      changeFrequency: "monthly",
+      priority: 0.8,
+    }),
   ];
 
   try {

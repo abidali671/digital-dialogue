@@ -2,11 +2,11 @@
 export const TOOLS_PAGE_TITLE = "Freelance Calculators: Upwork and Fiverr";
 
 export const TOOLS_PAGE_DESCRIPTION =
-  "Free calculators for freelancers: take-home pay after Upwork and Fiverr fees, Connects cost per contract, and the hourly rate you need. PKR optional.";
+  "Free calculators and an invoice generator for freelancers: take-home pay after Upwork and Fiverr fees, Connects cost, hourly rate, and a PDF invoice. PKR optional.";
 
 export const TOOLS_INTRO = [
   "Freelancing pays well only when you know what you keep. These free calculators cover the numbers that matter most on Upwork and Fiverr: what you take home after fees, when Fiverr earnings clear, what your Upwork proposals cost you, and the hourly rate you need to charge.",
-  "Each one works in your browser, with no sign-up. Enter amounts in US dollars. To see results in Pakistani rupees (PKR), choose PKR and enter your exchange rate. Other currencies change the symbol only. Each page lists the Upwork or Fiverr pages its fee rules come from and the date they were checked.",
+  "Each one works in your browser, with no sign-up. Enter amounts in US dollars. To see results in Pakistani rupees (PKR), choose PKR and enter your exchange rate. Other currencies change the symbol only. Each page lists the Upwork or Fiverr pages its fee rules come from and the date they were checked. The invoice generator builds a PDF on this device and does not upload your client data.",
 ];
 
 export type HubTool = {
@@ -45,6 +45,13 @@ export const HUB_TOOLS: HubTool[] = [
     copy: "Work out the minimum hourly rate that covers your costs, platform fees and unpaid hours.",
     image: "/freelance-rate-calculator.png",
     alt: "Freelance Rate Calculator showing an hourly rate split into take-home goal, expenses, platform fee, and unbilled time.",
+  },
+  {
+    href: "/tools/freelance-invoice-generator",
+    title: "Invoice Generator",
+    copy: "Fill in a form, watch the invoice update, and download a PDF. Optional PKR total line.",
+    image: "/freelance-invoice-generator.png",
+    alt: "Freelance invoice generator with a form on the left and a live invoice preview on the right.",
   },
 ];
 
