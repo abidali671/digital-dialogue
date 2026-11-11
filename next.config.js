@@ -1,6 +1,7 @@
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
+const { HELD_MONEY_ONLINE_PATHS } = require("./src/lib/removed-urls");
 
 /**
  * Security headers for crawl audits and browser hardening.
@@ -41,22 +42,11 @@ const cspReportOnly = [
   "report-uri /api/csp-report",
 ].join("; ");
 
-/** Removed niche categories → freelancing hub (301). */
-const REMOVED_CATEGORIES = [
-  "content-creation",
-  "technology",
-  "digital-marketing",
-  "web-development",
-  "design-and-creativity",
-  "design-creativity",
-];
-
-/** Unpublished freelancing posts that used to live under /blogs/freelancing. */
-const REMOVED_FREELANCING_SLUGS = [
-  "how-to-earn-money-online-with-your-smartphone",
-  "how-to-earn-money-online-from-home",
-  "best-ways-to-earn-money-online-with-instagram",
-];
+/**
+ * Typo alias that already 308s to the freelancing hub.
+ * It is not in the removal audit, so this redirect stays.
+ */
+const DESIGN_CREATIVITY_ALIAS = ["design-creativity"];
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -72,7 +62,9 @@ const nextConfig = {
   },
   async redirects() {
     const freelancing = "/blogs/freelancing";
-    const categoryRedirects = REMOVED_CATEGORIES.flatMap((slug) => [
+    // Permanent is 308. These rules run before middleware, so gone URLs
+    // must not be listed here or they would never reach the 410 response.
+    const aliasRedirects = DESIGN_CREATIVITY_ALIAS.flatMap((slug) => [
       {
         source: `/blogs/${slug}`,
         destination: freelancing,
@@ -84,12 +76,12 @@ const nextConfig = {
         permanent: true,
       },
     ]);
-    const postRedirects = REMOVED_FREELANCING_SLUGS.map((slug) => ({
-      source: `/blogs/freelancing/${slug}`,
+    const heldRedirects = HELD_MONEY_ONLINE_PATHS.map((source) => ({
+      source,
       destination: freelancing,
       permanent: true,
     }));
-    return [...categoryRedirects, ...postRedirects];
+    return [...aliasRedirects, ...heldRedirects];
   },
   async headers() {
     return [
