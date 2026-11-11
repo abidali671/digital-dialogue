@@ -3,7 +3,7 @@ import { notFound, redirect } from "next/navigation";
 import { cache } from "react";
 import contentful_client from "@/lib/contentful/client";
 import config from "@/lib/config";
-import CategoryBlogsClient from "@/components/blogs/CategoryBlogsClient";
+import BlogsListing from "@/components/blogs/BlogsListing";
 import { parseSearchQuery } from "@/lib/listing";
 import { isNextNotFound } from "@/lib/next-errors";
 import {
@@ -30,7 +30,7 @@ const loadCategoryPage = cache(
     const category = category_response.items[0] as unknown as
       | ICategoryData
       | undefined;
-    if (!category) return { category: null, posts: [], totalPages: 1 };
+    if (!category) return { category: null, posts: [], total: 0, totalPages: 1 };
 
     const response = await contentful_client.getEntries({
       content_type: "post",
@@ -44,6 +44,7 @@ const loadCategoryPage = cache(
     return {
       category,
       posts: response.items as unknown as IPostData[],
+      total: response.total,
       totalPages: pageCount(response.total, config.BLOGS_PER_PAGE),
     };
   }
@@ -108,7 +109,7 @@ export default async function CategoryPage(props: PageProps) {
   try {
     const searchQuery = parseSearchQuery(searchParams.q);
     const currentPage = parsePageQuery(searchParams.page);
-    const { category, posts, totalPages } = await loadCategoryPage(
+    const { category, posts, total, totalPages } = await loadCategoryPage(
       params.category,
       currentPage,
       searchQuery
@@ -122,7 +123,7 @@ export default async function CategoryPage(props: PageProps) {
       `Browse practical ${label.toLowerCase()} articles, guides, and tips from Digital Dialogue.`;
 
     return (
-      <CategoryBlogsClient
+      <BlogsListing
         posts={posts}
         title={label}
         description={description}
@@ -130,6 +131,7 @@ export default async function CategoryPage(props: PageProps) {
         searchQuery={searchQuery}
         currentPage={currentPage}
         totalPages={totalPages}
+        total={total}
       />
     );
   } catch (error) {

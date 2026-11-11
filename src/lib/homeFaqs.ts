@@ -33,3 +33,21 @@ export const HOME_FAQS: IFaq[] = [
       'Check the "last updated" date on each article. Posts about fees, Connects prices and platform rules go out of date fastest. Guides on how to structure a profile or proposal age more slowly. If you spot something outdated, tell us through the contact page.',
   },
 ];
+
+/** Tool links shown under FAQ answers on the home page only — not in JSON-LD. */
+export const HOME_FAQ_TRY: Record<string, { href: string; label: string }[]> = {
+  "How much does it cost to use Upwork?": [
+    { href: "/tools/upwork-fee-calculator", label: "Upwork Fee Calculator" },
+    {
+      href: "/tools/upwork-connects-calculator",
+      label: "Upwork Connects Calculator",
+    },
+  ],
+  "Should I use Upwork, Fiverr or Freelancer?": [
+    { href: "/tools/fiverr-fee-calculator", label: "Fiverr Fee Calculator" },
+    { href: "/tools/upwork-fee-calculator", label: "Upwork Fee Calculator" },
+  ],
+  "Can I freelance from Pakistan, and how do I get paid?": [
+    { href: "/tools/upwork-fee-calculator", label: "Upwork Fee Calculator" },
+  ],
+};

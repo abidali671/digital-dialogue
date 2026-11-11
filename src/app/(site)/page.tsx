@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
-import Hero from "@/components/HeroSection";
-import TopPicks from "@/components/TopPicks";
-import AllPosts from "@/components/AllPosts";
+import HomeHero from "@/components/home/HomeHero";
+import HomeToolTeasers from "@/components/home/HomeToolTeasers";
+import HomeFeaturedAndPicks from "@/components/home/HomeFeaturedAndPicks";
+import HomeStartHere from "@/components/home/HomeStartHere";
+import HomeLatest from "@/components/home/HomeLatest";
+import HomePopularTags from "@/components/home/HomePopularTags";
 import Newsletter from "@/components/Newsletter";
+import HomeGuide from "@/components/HomeGuide";
 import contentful_client from "@/lib/contentful/client";
 import config from "@/lib/config";
 import constants from "@/constants";
@@ -20,6 +24,7 @@ import { IPostData } from "@/types";
 export const revalidate = 3600;
 
 const HOME_TITLE = `${config.SITE_NAME} | Practical Freelancing Tips`;
+const HOME_LATEST_COUNT = 18;
 
 export const metadata: Metadata = {
   title: pageTitle(HOME_TITLE),
@@ -34,36 +39,40 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const latestCount = config.BLOGS_PER_PAGE;
-  const fetchLimit = 1 + latestCount + config.EDITOR_PICK_SLUGS.length;
+  const fetchLimit = 1 + HOME_LATEST_COUNT + config.EDITOR_PICK_SLUGS.length;
 
-  const [postsRes, pickedPosts] = await Promise.all([
+  const [postsRes, pickedPosts, startHerePosts] = await Promise.all([
     contentful_client.getEntries({
       content_type: "post",
       limit: fetchLimit,
       order: "-sys.updatedAt",
     }),
     getPostsBySlugs(config.EDITOR_PICK_SLUGS),
+    getPostsBySlugs(config.FEATURED_POST_SLUGS),
   ]);
 
   const posts = postsRes.items as unknown as IPostData[];
   const editorPickSlugs = new Set<string>(config.EDITOR_PICK_SLUGS);
 
-  const featuredPost = posts.slice(0, 1);
+  const featuredPost = posts[0];
   const latestPosts = posts
-    .slice(1)
+    .filter((post) => post.fields.slug !== featuredPost?.fields.slug)
     .filter((post) => !editorPickSlugs.has(post.fields.slug))
-    .slice(0, latestCount);
+    .slice(0, HOME_LATEST_COUNT);
 
   return (
-    <>
+    <div className="home-page">
       <JsonLdScript
         data={[organizationSchema(), websiteSchema(), faqPageSchema(HOME_FAQS)]}
       />
-      <Hero posts={featuredPost} />
-      <TopPicks posts={pickedPosts} />
-      <AllPosts posts={latestPosts} />
+      <HomeHero />
+      <HomeToolTeasers />
+      <HomeFeaturedAndPicks featured={featuredPost} picks={pickedPosts} />
+      <HomeStartHere posts={startHerePosts} />
+      <HomeLatest posts={latestPosts} />
       <Newsletter />
-    </>
+      <HomePopularTags />
+      <HomeGuide />
+    </div>
   );
 }

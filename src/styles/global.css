@@ -6,6 +6,7 @@
 @import "./components/post-card.css";
 @import "./pages/blog-detail.css";
 @import "./pages/fee-calculator.css";
+@import "./pages/home.css";
 
 :root {
   --bg: #f4f6f8;

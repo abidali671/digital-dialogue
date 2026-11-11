@@ -3,15 +3,20 @@ import { cache } from "react";
 import contentful_client from "@/lib/contentful/client";
 import config from "@/lib/config";
 import constants from "@/constants";
-import BlogsClient from "@/components/blogs/BlogsClient";
+import BlogsListing from "@/components/blogs/BlogsListing";
 import { parseSearchQuery } from "@/lib/listing";
 import {
   assertPageInRange,
   pageCount,
   parsePageQuery,
 } from "@/lib/pagination";
-import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle, withPageMetaDescription } from "@/lib/metadata";
-import { ICategoryData, IPostData } from "@/types";
+import {
+  DEFAULT_OG_IMAGE,
+  pageTitle,
+  resolvePageTitle,
+  withPageMetaDescription,
+} from "@/lib/metadata";
+import { IPostData } from "@/types";
 
 export const revalidate = 3600;
 
@@ -29,6 +34,7 @@ const loadBlogPage = cache(async (page: number, searchQuery: string) => {
   });
   return {
     response,
+    total: response.total,
     totalPages: pageCount(response.total, config.BLOGS_PER_PAGE),
   };
 });
@@ -38,7 +44,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const currentPage = parsePageQuery(searchParams.page);
   const { totalPages } = await loadBlogPage(
     currentPage,
-    parseSearchQuery(searchParams.q)
+    parseSearchQuery(searchParams.q),
   );
   assertPageInRange(currentPage, totalPages);
   const pageSuffix = currentPage > 1 ? `, Page ${currentPage}` : "";
@@ -46,7 +52,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const resolvedTitle = resolvePageTitle(title);
   const description = withPageMetaDescription(
     constants.descriptions.BLOGS,
-    currentPage
+    currentPage,
   );
   const canonical = currentPage > 1 ? `/blogs?page=${currentPage}` : "/blogs";
 
@@ -68,20 +74,18 @@ export default async function BlogsPage(props: PageProps) {
   const currentPage = parsePageQuery(searchParams.page);
   const searchQuery = parseSearchQuery(searchParams.q);
 
-  const [{ response, totalPages }, categoriesRes] = await Promise.all([
-    loadBlogPage(currentPage, searchQuery),
-    contentful_client.getEntries({ content_type: "category" }),
-  ]);
+  const { response, total, totalPages } = await loadBlogPage(
+    currentPage,
+    searchQuery,
+  );
   assertPageInRange(currentPage, totalPages);
 
-  const categories = categoriesRes.items as unknown as ICategoryData[];
-
   return (
-    <BlogsClient
+    <BlogsListing
       posts={response.items as unknown as IPostData[]}
-      categories={categories}
       currentPage={currentPage}
       totalPages={totalPages}
+      total={total}
       searchQuery={searchQuery}
     />
   );

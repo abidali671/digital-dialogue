@@ -34,7 +34,8 @@ import { extractToc, shouldShowToc } from "@/lib/toc";
 import TableOfContents from "@/components/TableOfContents";
 import { ArticleJsonLd } from "next-seo";
 import { getSiteAuthor } from "@/constants/authors";
-import { HUB_TOOLS } from "@/lib/toolsHub";
+import HomePopularTags from "@/components/home/HomePopularTags";
+import HomeToolTeasers from "@/components/home/HomeToolTeasers";
 import clsx from "clsx";
 
 export const revalidate = 3600;
@@ -398,39 +399,14 @@ export default async function BlogDetailPage(props: PageProps) {
             </section>
           ))}
 
-        <section className="border-t border-line py-14 md:py-16 bg-white">
-          <ContentContainer>
-            <Title as="h2">Free Tools</Title>
-            <div className="mt-10 grid gap-10 sm:grid-cols-2 xl:grid-cols-4">
-              {HUB_TOOLS.map((tool) => (
-                <Link
-                  key={tool.href}
-                  href={tool.href}
-                  className="post-card-root"
-                >
-                  <div className="post-card-cover-wrapper">
-                    <Image
-                      src={tool.image}
-                      alt={tool.alt}
-                      fill
-                      className="object-cover"
-                      sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
-                    />
-                  </div>
-                  <div className="post-card-content-wrapper">
-                    <div className="post-card-label-wrapper">
-                      <hr className="post-card-label-line" />
-                      <p>Tool</p>
-                    </div>
-                    <p className="post-card-title">{tool.title}</p>
-                    <p className="text-copy text-mute">{tool.copy}</p>
-                    <p className="post-card-read-text">Open calculator</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </ContentContainer>
-        </section>
+        <div className="home-page">
+          <HomeToolTeasers
+            heading="Not sure what you’ll keep, charge or spend?"
+            sub="Check a number before you take the job. Each card shows its own example; open one to use your figures."
+            className="border-t border-line"
+          />
+          <HomePopularTags />
+        </div>
       </>
     );
   } catch (error) {

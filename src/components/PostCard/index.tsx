@@ -34,7 +34,7 @@ const PostCard = ({ data, priority = false }: CardPropsT) => {
           <hr className="post-card-label-line" />
           <p>{category.fields.label}</p>
         </div>
-        <p className="post-card-title">{title}</p>
+        <h3 className="post-card-title">{title}</h3>
         <p className="post-card-excerpt">{excerpt}</p>
         <p className="post-card-created-date">
           {formatLongDate(publishedAt)}

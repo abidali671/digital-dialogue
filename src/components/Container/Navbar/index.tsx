@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Transition } from "@headlessui/react";
-
 import Link from "next/link";
 import Image from "next/image";
-import Hamburger from "@/assets/icon/Hamburger";
+import { usePathname } from "next/navigation";
 import ContentContainer from "../../ContentContainer";
 import config from "@/lib/config";
 
@@ -13,15 +12,27 @@ const MOBILE_NAV_ID = "mobile-navigation";
 
 const Navbar = () => {
   const [isMenu, setIsMenu] = useState(false);
+  const pathname = usePathname();
 
   const toggleMenu = () => setIsMenu(!isMenu);
 
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsMenu(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+
+  const isCurrent = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
   return (
-    <div className="navbar-root">
+    <header className="navbar-root">
       <ContentContainer className="content-wrapper">
         <Link
           href="/"
-          className="inline-flex items-center"
+          className="inline-flex min-h-[44px] items-center"
           aria-label={config.SITE_NAME}
         >
           <Image
@@ -33,46 +44,96 @@ const Navbar = () => {
             priority
           />
         </Link>
-        <ul className="nav-list">
-          {config.NAV_LINKS.map((item) => (
-            <li key={item.href}>
-              <Link href={item.href}>{item.label}</Link>
-            </li>
-          ))}
-        </ul>
+        <nav aria-label="Main">
+          <ul className="nav-list">
+            {config.NAV_LINKS.map((item) => {
+              const current = isCurrent(item.href);
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    aria-current={current ? "page" : undefined}
+                    className={current ? "is-current" : undefined}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
         <div className="mobile-nav-container">
           <button
             type="button"
-            className="cursor-pointer text-ink"
+            className="grid h-12 w-12 place-items-center rounded-lg text-ink hover:bg-mist"
             aria-label={isMenu ? "Close menu" : "Open menu"}
             aria-expanded={isMenu}
             aria-controls={MOBILE_NAV_ID}
             onClick={toggleMenu}
           >
-            <Hamburger aria-hidden="true" />
+            {isMenu ? (
+              <svg
+                aria-hidden="true"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              >
+                <path d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            ) : (
+              <svg
+                aria-hidden="true"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              >
+                <path d="M4 7h16M4 12h16M4 17h16" />
+              </svg>
+            )}
           </button>
           <Transition
             as="div"
             show={isMenu}
-            className="fixed left-0 top-[56px] bg-white w-full transition-all duration-500 ease-in-out"
+            className="fixed left-0 top-[64px] bg-white w-full transition-all duration-500 ease-in-out"
             enterFrom="opacity-0 translate-x-full"
             enterTo="opacity-100 translate-x-0"
             leaveFrom="opacity-100 translate-x-0"
             leaveTo="opacity-0 translate-x-full"
           >
-            <div id={MOBILE_NAV_ID} className="mobile-nav-menu">
+            <nav
+              id={MOBILE_NAV_ID}
+              aria-label="Main (mobile)"
+              className="mobile-nav-menu"
+            >
               <ul className="nav-list">
-                {config.NAV_LINKS.map((item) => (
-                  <li key={item.href} onClick={toggleMenu} className="m-0">
-                    <Link href={item.href}>{item.label}</Link>
-                  </li>
-                ))}
+                {config.NAV_LINKS.map((item) => {
+                  const current = isCurrent(item.href);
+                  return (
+                    <li key={item.href} onClick={toggleMenu} className="m-0">
+                      <Link
+                        href={item.href}
+                        aria-current={current ? "page" : undefined}
+                        className={current ? "is-current" : undefined}
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
-            </div>
+            </nav>
           </Transition>
         </div>
       </ContentContainer>
-    </div>
+    </header>
   );
 };
 

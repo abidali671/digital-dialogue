@@ -16,18 +16,21 @@ const NAV_LINKS = [
     href: "/about",
   },
   {
-    label: "Privacy Policy",
-    href: "/privacy-policy",
-  },
-  {
     label: "Contact Us",
     href: "/contact-us",
   },
 ];
 
-const FOOTER_LINKS = NAV_LINKS.filter(
-  (link) => link.href !== "/privacy-policy",
-);
+const FOOTER_LINKS = NAV_LINKS;
+
+const LEGAL_LINKS = [
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms of Service", href: "/terms-of-service" },
+  { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
+  { label: "Disclaimer", href: "/disclaimer" },
+  { label: "Sitemap", href: "/sitemap.xml" },
+  { label: "RSS", href: "/feed.xml" },
+];
 
 const LINKEDIN_URL = "https://www.linkedin.com/in/abid-ali-89ab4a1bb/";
 const UPWORK_URL = "https://www.upwork.com/freelancers/~014093a104f15a71c0";
@@ -56,6 +59,7 @@ const EDITOR_PICK_SLUGS = [
   "best-freelancing-platform-for-beginners-in-pakistan",
   "how-to-use-upwork-as-a-beginner-a-step-by-step-guide",
   "how-to-get-a-job-on-upwork-a-beginners-guide",
+  "upwork-for-beginners-what-to-do-before-the-first-proposals",
 ] as const;
 
 /** Tag hubs linked from home and blogs listing. Freelancing niche only. */
@@ -75,6 +79,7 @@ const POPULAR_TAGS = [
 const config = {
   NAV_LINKS,
   FOOTER_LINKS,
+  LEGAL_LINKS,
   SOCIAL_LINKS,
   FEATURED_POST_SLUGS,
   EDITOR_PICK_SLUGS,
@@ -83,7 +88,7 @@ const config = {
   BASE_URL: "https://www.digitaldialogue.pk",
   GA_MEASUREMENT_ID: "G-WTZCCLQ2FF",
   ADSENSE_CLIENT_ID: "ca-pub-6695195287407019",
-  BLOGS_PER_PAGE: 15,
+  BLOGS_PER_PAGE: 16,
   SITE_NAME: "Digital Dialogue",
   DEFAULT_DESCRIPTION:
     "Practical freelancing tips for web developers and beginners: Upwork profiles, proposals, fees, Connects, and landing clients without fluff.",

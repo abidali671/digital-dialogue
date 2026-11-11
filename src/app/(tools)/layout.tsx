@@ -3,5 +3,9 @@ export default function ToolsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <main className="container-body">{children}</main>;
+  return (
+    <main id="main" tabIndex={-1} className="container-body focus:outline-none">
+      {children}
+    </main>
+  );
 }

@@ -3,31 +3,37 @@
 }
 
 .navbar-root > .content-wrapper {
-  @apply relative flex items-center justify-between py-3;
+  @apply relative flex h-16 items-center justify-between py-0;
 }
 
-.navbar-root > .content-wrapper > .nav-list {
+.navbar-root nav[aria-label="Main"] > .nav-list {
   @apply hidden list-none items-center gap-1 md:flex;
 }
 
-.navbar-root > .content-wrapper > .nav-list > li {
+.navbar-root nav[aria-label="Main"] > .nav-list > li {
   @apply m-0 border-b-0;
 }
-.navbar-root > .content-wrapper > .nav-list > li > a,
-.navbar-root > .content-wrapper > .nav-list > li button {
-  @apply rounded-md px-3 py-2 font-body text-ui font-semibold text-mute transition-colors hover:bg-mist hover:text-ink;
+.navbar-root nav[aria-label="Main"] > .nav-list > li > a {
+  @apply flex h-16 min-w-[44px] items-center justify-center border-b-2 border-transparent px-2.5 font-body text-[16px] text-[#334155] transition-colors hover:border-[#cbd5e1] hover:text-ink;
+}
+.navbar-root nav[aria-label="Main"] > .nav-list > li > a.is-current {
+  @apply border-[#0f766e] font-semibold text-ink;
 }
 
-.navbar-root > .content-wrapper > .mobile-nav-container .nav-list {
+.navbar-root .mobile-nav-container .nav-list {
   @apply m-0;
 }
 
-.navbar-root > .content-wrapper > .mobile-nav-container ul li {
-  @apply list-none text-center font-semibold tracking-wide;
+.navbar-root .mobile-nav-container ul li {
+  @apply list-none text-left font-semibold tracking-wide;
 }
 
-.navbar-root > .content-wrapper > .mobile-nav-container .nav-list li a {
-  @apply block h-full w-full p-4 text-ui text-ink hover:bg-mist;
+.navbar-root .mobile-nav-container .nav-list li a {
+  @apply flex min-h-[56px] items-center border-l-4 border-transparent px-5 text-[18px] text-[#334155] hover:bg-mist;
+}
+
+.navbar-root .mobile-nav-container .nav-list li a.is-current {
+  @apply border-[#0f766e] bg-[#f0fdfa] font-semibold text-ink;
 }
 
 .navbar-root > .content-wrapper > .mobile-nav-container .nav-list > li > ul {
@@ -35,7 +41,7 @@
 }
 
 .navbar-root .mobile-nav-container {
-  @apply md:hidden h-[28px];
+  @apply relative md:hidden;
 }
 
 .navbar-root .mobile-nav-container .mobile-nav-menu {

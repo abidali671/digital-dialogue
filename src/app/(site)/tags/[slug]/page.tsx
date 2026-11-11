@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import CategoryBlogsClient from "@/components/blogs/CategoryBlogsClient";
+import BlogsListing from "@/components/blogs/BlogsListing";
+import config from "@/lib/config";
 import { parseSearchQuery } from "@/lib/listing";
 import { labelFromKeywordSlug, getPostTags } from "@/lib/keywords";
 import { isNextNotFound } from "@/lib/next-errors";
 import { loadTagPosts, MIN_POSTS_FOR_INDEXABLE_TAG } from "@/lib/tags";
-import { REVALIDATE_LISTING } from "@/lib/contentful/client";
+import {
+  assertPageInRange,
+  pageCount,
+  parsePageQuery,
+} from "@/lib/pagination";
 import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
 import { IPostData } from "@/types";
 
@@ -13,7 +18,7 @@ export const revalidate = 3600;
 
 type PageProps = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; page?: string }>;
 };
 
 function resolveTagLabel(slug: string, posts: IPostData[]) {
@@ -40,17 +45,24 @@ function tagPageDescription(label: string, slug: string) {
 
 export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const params = await props.params;
+  const searchParams = await props.searchParams;
   const slug = params.slug?.trim();
   if (!slug) notFound();
 
+  const currentPage = parsePageQuery(searchParams.page);
   const posts = await loadTagPosts(slug);
   if (!posts.length) notFound();
 
+  const totalPages = pageCount(posts.length, config.BLOGS_PER_PAGE);
+  assertPageInRange(currentPage, totalPages);
+
   const label = resolveTagLabel(slug, posts);
-  const title = tagPageTitle(label, slug);
+  const pageSuffix = currentPage > 1 ? `, Page ${currentPage}` : "";
+  const title = `${tagPageTitle(label, slug)}${pageSuffix}`;
   const resolvedTitle = resolvePageTitle(title);
   const description = tagPageDescription(label, slug);
-  const canonical = `/tags/${slug}`;
+  const canonical =
+    currentPage > 1 ? `/tags/${slug}?page=${currentPage}` : `/tags/${slug}`;
 
   return {
     title: pageTitle(title),
@@ -77,22 +89,34 @@ export default async function TagPage(props: PageProps) {
     if (!slug) notFound();
 
     const searchQuery = parseSearchQuery(searchParams.q);
-    const posts = await loadTagPosts(slug, searchQuery);
-    if (!posts.length && !searchQuery) notFound();
-    if (searchQuery && !posts.length) {
+    const currentPage = parsePageQuery(searchParams.page);
+    const allPosts = await loadTagPosts(slug, searchQuery);
+    if (!allPosts.length && !searchQuery) notFound();
+    let labelPosts = allPosts;
+    if (searchQuery && !allPosts.length) {
       const tagged = await loadTagPosts(slug);
       if (!tagged.length) notFound();
+      labelPosts = tagged;
     }
 
-    const label = resolveTagLabel(slug, posts);
+    const total = allPosts.length;
+    const totalPages = pageCount(total, config.BLOGS_PER_PAGE);
+    assertPageInRange(currentPage, totalPages);
+    const start = (currentPage - 1) * config.BLOGS_PER_PAGE;
+    const posts = allPosts.slice(start, start + config.BLOGS_PER_PAGE);
+    const label = resolveTagLabel(slug, labelPosts);
 
     return (
-      <CategoryBlogsClient
+      <BlogsListing
         posts={posts}
         title={tagPageTitle(label, slug)}
         description={tagPageDescription(label, slug)}
         basePath={`/tags/${slug}`}
         searchQuery={searchQuery}
+        currentPage={currentPage}
+        totalPages={totalPages}
+        total={total}
+        activeTagSlug={slug}
       />
     );
   } catch (error) {
