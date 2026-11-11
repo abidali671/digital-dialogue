@@ -36,7 +36,7 @@ const TopPicks = ({ posts }: IProps) => {
                 <h3 className="font-display text-h4 text-ink transition-colors line-clamp-2 group-hover:text-accent">
                   {post.fields.title}
                 </h3>
-                <p className="font-mono text-caption text-mute-soft">
+                <p className="text-caption text-mute">
                   {formatShortDate(getPublishedDate(post))}
                 </p>
               </div>

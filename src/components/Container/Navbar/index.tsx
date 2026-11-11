@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,13 +12,20 @@ const MOBILE_NAV_ID = "mobile-navigation";
 
 const Navbar = () => {
   const [isMenu, setIsMenu] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const pathname = usePathname();
 
   const toggleMenu = () => setIsMenu(!isMenu);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsMenu(false);
+      if (event.key !== "Escape") return;
+      setIsMenu((open) => {
+        if (open) {
+          queueMicrotask(() => menuButtonRef.current?.focus());
+        }
+        return false;
+      });
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
@@ -64,6 +71,7 @@ const Navbar = () => {
         </nav>
         <div className="mobile-nav-container">
           <button
+            ref={menuButtonRef}
             type="button"
             className="grid h-12 w-12 place-items-center rounded-lg text-ink hover:bg-mist"
             aria-label={isMenu ? "Close menu" : "Open menu"}

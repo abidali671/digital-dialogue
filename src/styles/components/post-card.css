@@ -43,7 +43,7 @@
 }
 
 .post-card-root .post-card-content-wrapper .post-card-created-date {
-  @apply flex items-center gap-2 font-mono text-caption text-mute-soft;
+  @apply flex items-center gap-2 font-sans text-caption text-mute;
 }
 
 .post-card-root .post-card-content-wrapper .post-card-read-text {

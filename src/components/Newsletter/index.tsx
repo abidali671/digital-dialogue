@@ -11,13 +11,15 @@ const MESSAGES = {
 
 type Status = "" | "invalid" | "ok" | "err";
 
-/** Email capture. Posts to the same Formspree endpoint as the contact form. */
+/** Email capture. Native POST works without JS; JS uses fetch when available. */
 const Newsletter = () => {
   const [status, setStatus] = useState<Status>("");
   const [pending, setPending] = useState(false);
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (pending) return;
+
     const form = event.currentTarget;
     const email = form.elements.namedItem("email") as HTMLInputElement;
 
@@ -61,7 +63,13 @@ const Newsletter = () => {
               noise.
             </p>
           </div>
-          <form onSubmit={onSubmit} noValidate className="min-w-0">
+          <form
+            action={config.FORM_ACTION}
+            method="POST"
+            onSubmit={onSubmit}
+            noValidate
+            className="min-w-0"
+          >
             <input
               type="text"
               name="_gotcha"
@@ -100,8 +108,8 @@ const Newsletter = () => {
               </div>
               <button
                 type="submit"
-                disabled={pending}
-                className="inline-flex h-10 max-h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-lg bg-[#0f766e] px-5 text-[16px] font-semibold leading-none text-white transition hover:bg-[#115e59] hover:text-white disabled:opacity-70"
+                aria-disabled={pending || undefined}
+                className="inline-flex h-10 max-h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-lg bg-[#0f766e] px-5 text-[16px] font-semibold leading-none text-white transition hover:bg-[#115e59] hover:text-white aria-disabled:opacity-70"
               >
                 {pending ? "Subscribing..." : "Subscribe"}
               </button>

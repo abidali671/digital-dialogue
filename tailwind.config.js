@@ -24,13 +24,15 @@ module.exports = {
           soft: "#EEF2F6",
         },
         accent: {
-          DEFAULT: "#0D9488",
-          hover: "#0F766E",
+          DEFAULT: "#0F766E",
+          hover: "#115E59",
+          icon: "#0D9488",
           soft: "#CCFBF1",
+          wash: "#F0FDFA",
         },
         mute: {
-          DEFAULT: "#64748B",
-          soft: "#94A3B8",
+          DEFAULT: "#475569",
+          soft: "#64748B",
         },
         line: {
           DEFAULT: "#E2E8F0",

@@ -273,7 +273,7 @@ export default async function BlogDetailPage(props: PageProps) {
               <p className="mb-8 max-w-2xl text-lead text-mute">{excerpt}</p>
 
               <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
-                <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-caption text-mute-soft">
+                <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-caption text-mute">
                   <time dateTime={toIsoTimestamp(publishedAt)}>
                     {formatLongDate(publishedAt)}
                   </time>

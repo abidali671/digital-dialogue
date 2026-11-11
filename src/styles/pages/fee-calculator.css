@@ -40,7 +40,7 @@
 }
 
 .fee-page .site-breadcrumb a:hover {
-  color: #0d9488;
+  color: #0f766e;
 }
 
 /* Tailwind 3.3 has no size-* utilities, and an unsized SVG falls back to a huge default. */
@@ -306,7 +306,7 @@
 }
 
 .fee-page .fee-segmented label:has(:focus-visible) {
-  outline: 3px solid #0d9488;
+  outline: 3px solid #0f766e;
   outline-offset: 1px;
 }
 

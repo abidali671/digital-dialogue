@@ -11,20 +11,20 @@ export const revalidate = 3600;
 
 const bodyFont = Source_Sans_3({
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
   variable: "--font-body",
 });
 
 const displayFont = Fraunces({
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
   axes: ["opsz"],
   variable: "--font-display",
 });
 
 const monoFont = IBM_Plex_Mono({
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
   weight: ["400", "500"],
   variable: "--font-mono",
 });

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CoverImage from "@/components/CoverImage";
 import { IPostData } from "@/types";
 import { formatLongDate, getPublishedDate } from "@/helper";
 import { contentfulImageUrl } from "@/lib/contentfulImage";
@@ -17,14 +18,12 @@ export function HomePostCard({
   return (
     <Link href={postHref(post)} className="home-pc group">
       <div className="relative aspect-video w-full overflow-hidden bg-mist-soft">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <CoverImage
           src={contentfulImageUrl(post.fields.coverImage.fields.file.url, 800)}
           alt={post.fields.title}
           width={800}
           height={450}
           loading={priority ? "eager" : "lazy"}
-          decoding="async"
           className="h-full w-full object-cover"
         />
       </div>
@@ -60,14 +59,12 @@ export function BlogsFeaturedCard({ post }: { post: IPostData }) {
         className="home-pc group grid overflow-hidden rounded-2xl lg:grid-cols-[1.15fr_1fr]"
       >
         <div className="relative aspect-video w-full overflow-hidden bg-mist-soft lg:aspect-auto lg:h-full lg:min-h-[320px]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <CoverImage
             src={contentfulImageUrl(post.fields.coverImage.fields.file.url, 1200)}
             alt={post.fields.title}
             width={1200}
             height={675}
             fetchPriority="high"
-            decoding="async"
             className="h-full w-full object-cover"
           />
         </div>

@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
 import { CALCULATOR_CURRENCIES } from "@/components/tools/CalculatorCurrencyFields";
+import type { HomeToolTeaser } from "@/lib/homeTools";
 
 const CURRENCY_LABELS: Record<string, string> = {
   USD: "USD ($)",
@@ -31,24 +33,10 @@ export function Swatch({ color, ring }: { color: string; ring?: boolean }) {
   );
 }
 
-export function ToolResultCard({
-  currencyId,
-  currency,
-  onCurrencyChange,
-  kicker,
-  beforeFigure,
-  figure,
-  unit,
-  afterFigure,
-  sentence,
-  bar,
-  legend,
-  rows,
-  extra,
-  fine,
-  onReset,
-  announcement,
-}: {
+type TeaserProps = { variant: "teaser"; tool: HomeToolTeaser };
+
+type ResultProps = {
+  variant?: "result";
   currencyId: string;
   currency: string;
   onCurrencyChange: (currency: string) => void;
@@ -65,7 +53,69 @@ export function ToolResultCard({
   fine: string;
   onReset: () => void;
   announcement: string;
-}) {
+};
+
+function ToolTeaserCard({ tool }: { tool: HomeToolTeaser }) {
+  return (
+    <article className="home-tcard group">
+      <h3 className="text-[18px] font-semibold leading-snug text-ink md:text-[20px]">
+        {tool.title}
+      </h3>
+      <p className="home-mute mt-1 text-[16px] leading-snug xl:min-h-[2.75rem]">
+        {tool.example}
+      </p>
+      <p className="home-body mt-4 text-[16px] font-semibold">{tool.figureLabel}</p>
+      <p className="mt-1 flex items-baseline gap-2">
+        <span className="font-display text-[30px] font-semibold leading-none tracking-tight text-ink tabular-nums md:text-[36px]">
+          {tool.figure}
+        </span>
+        <span className="home-mute text-[16px]">{tool.figureHint}</span>
+      </p>
+      <dl className="mb-5 mt-4 space-y-1.5 border-t border-line pt-3 text-[16px]">
+        {tool.rows.map((row) => (
+          <div key={row.label} className="flex justify-between gap-3">
+            <dt className="home-body">{row.label}</dt>
+            <dd className="text-right font-semibold tabular-nums text-ink">
+              {row.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <Link
+        href={tool.href}
+        className="home-btn-secondary relative z-[1] mt-auto w-full px-4 group-hover:bg-[#f0fdfa]"
+      >
+        Open calculator
+        <span className="sr-only">: {tool.title}</span>
+      </Link>
+    </article>
+  );
+}
+
+export function ToolResultCard(props: TeaserProps | ResultProps) {
+  if (props.variant === "teaser") {
+    return <ToolTeaserCard tool={props.tool} />;
+  }
+
+  const {
+    currencyId,
+    currency,
+    onCurrencyChange,
+    kicker,
+    beforeFigure,
+    figure,
+    unit,
+    afterFigure,
+    sentence,
+    bar,
+    legend,
+    rows,
+    extra,
+    fine,
+    onReset,
+    announcement,
+  } = props;
+
   return (
     <>
       <div className="fee-result">

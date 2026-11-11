@@ -24,7 +24,7 @@ const Footer = () => {
                 className="h-8 w-auto"
               />
             </Link>
-            <p className="max-w-md text-copy text-mute-soft">
+            <p className="max-w-md text-copy text-[#94a3b8]">
               Practical freelancing tips on platforms, profiles, proposals,
               and landing clients. Written for people who need a clear next
               step, not another theory dump.
@@ -36,7 +36,7 @@ const Footer = () => {
           <FooterLink title="Follow" links={config.SOCIAL_LINKS} />
         </div>
         <div className="border-t border-white/10 pt-6">
-          <p className="text-ui text-mute-soft">
+          <p className="text-ui text-[#94a3b8]">
             © {new Date().getFullYear()} {config.SITE_NAME}. All rights
             reserved. Built by{" "}
             <a

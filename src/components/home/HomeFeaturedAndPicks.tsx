@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CoverImage from "@/components/CoverImage";
 import { IPostData } from "@/types";
 import { formatLongDate, formatShortDate, getPublishedDate } from "@/helper";
 import { contentfulImageUrl } from "@/lib/contentfulImage";
@@ -29,8 +30,7 @@ const HomeFeaturedAndPicks = ({ featured, picks }: Props) => {
               className="home-pc group rounded-2xl"
             >
               <div className="relative aspect-video w-full overflow-hidden bg-mist-soft">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <CoverImage
                   src={contentfulImageUrl(
                     featured.fields.coverImage.fields.file.url,
                     1200,
@@ -39,7 +39,6 @@ const HomeFeaturedAndPicks = ({ featured, picks }: Props) => {
                   width={1200}
                   height={675}
                   fetchPriority="high"
-                  decoding="async"
                   className="h-full w-full object-cover"
                 />
               </div>
@@ -83,8 +82,7 @@ const HomeFeaturedAndPicks = ({ featured, picks }: Props) => {
                         {String(index + 1).padStart(2, "0")}
                       </span>
                       <span className="relative block aspect-video w-24 flex-none overflow-hidden rounded-lg bg-mist-soft sm:w-28">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
+                        <CoverImage
                           src={contentfulImageUrl(
                             post.fields.coverImage.fields.file.url,
                             800,
@@ -93,7 +91,6 @@ const HomeFeaturedAndPicks = ({ featured, picks }: Props) => {
                           width={800}
                           height={450}
                           loading="lazy"
-                          decoding="async"
                           className="h-full w-full object-cover"
                         />
                       </span>
