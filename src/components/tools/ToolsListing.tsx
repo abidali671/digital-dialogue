@@ -193,7 +193,7 @@ export default function ToolsListing({ searchQuery }: { searchQuery: string }) {
               <li className="m-0">
                 <Link
                   href="/"
-                  className="inline-flex min-h-[44px] min-w-[44px] items-center rounded hover:text-ink hover:underline underline-offset-4"
+                  className="inline-flex min-h-[var(--control-h)] min-w-[var(--control-h)] items-center rounded hover:text-ink hover:underline underline-offset-4"
                 >
                   Home
                 </Link>
@@ -229,11 +229,11 @@ export default function ToolsListing({ searchQuery }: { searchQuery: string }) {
                 defaultValue={searchQuery}
                 autoComplete="off"
                 placeholder="Search tools"
-                className="h-12 min-w-0 flex-1 rounded-lg border border-[#7b8798] bg-white px-4 text-[16px] text-ink placeholder:text-[#64748b]"
+                className="h-[var(--control-h-hero)] max-h-[var(--control-h-hero)] min-w-0 flex-1 rounded-lg border border-[#7b8798] bg-white px-4 text-[16px] text-ink placeholder:text-[#64748b]"
               />
               <button
                 type="submit"
-                className="inline-flex h-12 max-h-12 shrink-0 items-center justify-center rounded-lg bg-[#0f766e] px-5 text-[16px] font-semibold leading-none text-white transition hover:bg-[#115e59] hover:text-white"
+                className="inline-flex h-[var(--control-h-hero)] max-h-[var(--control-h-hero)] shrink-0 items-center justify-center rounded-lg bg-[#0f766e] px-5 text-[16px] font-semibold leading-none text-white transition hover:bg-[#115e59] hover:text-white"
               >
                 Search
               </button>
@@ -265,7 +265,7 @@ export default function ToolsListing({ searchQuery }: { searchQuery: string }) {
             </p>
             <Link
               href="/tools"
-              className="inline-flex min-h-[44px] items-center text-[16px] font-semibold text-[#0f766e] underline underline-offset-4 hover:text-[#115e59]"
+              className="inline-flex min-h-[var(--control-h)] items-center text-[16px] font-semibold text-[#0f766e] underline underline-offset-4 hover:text-[#115e59]"
             >
               Clear search
             </Link>
@@ -335,13 +335,13 @@ export default function ToolsListing({ searchQuery }: { searchQuery: string }) {
             <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
               <Link
                 href="/tools"
-                className="inline-flex h-12 items-center justify-center rounded-lg bg-[#0f766e] px-5 text-[16px] font-semibold text-white hover:bg-[#115e59] hover:text-white"
+                className="home-btn-primary"
               >
                 Show all tools
               </Link>
               <Link
                 href={`/blogs?q=${encodeURIComponent(searchQuery)}`}
-                className="inline-flex h-12 items-center justify-center rounded-lg border border-[#0f766e] bg-white px-5 text-[16px] font-semibold text-[#0f766e] hover:bg-[#f0fdfa] hover:text-[#115e59]"
+                className="home-btn-secondary"
               >
                 Search the guides
               </Link>
@@ -389,7 +389,7 @@ export default function ToolsListing({ searchQuery }: { searchQuery: string }) {
             </div>
             <Link
               href="/blogs"
-              className="inline-flex h-12 items-center justify-center rounded-lg border border-[#0f766e] bg-white px-5 text-[16px] font-semibold text-[#0f766e] hover:bg-[#f0fdfa] hover:text-[#115e59]"
+              className="home-btn-secondary"
             >
               View all guides
             </Link>

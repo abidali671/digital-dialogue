@@ -15,7 +15,7 @@ function pageHref(basePath: string, page: number, searchQuery?: string) {
 }
 
 const pagerBtn =
-  "inline-flex h-10 max-h-10 items-center gap-2 rounded-lg border px-4 text-[16px] font-semibold";
+  "inline-flex h-[var(--control-h)] max-h-[var(--control-h)] items-center gap-2 rounded-lg border px-4 text-[16px] font-semibold";
 
 const Pagination = ({
   pages,
@@ -62,8 +62,8 @@ const Pagination = ({
                 aria-current={current ? "page" : undefined}
                 className={
                   current
-                    ? "grid h-10 min-w-[40px] place-items-center rounded-lg bg-[#0f766e] px-3 text-[16px] font-semibold tabular-nums text-white"
-                    : "grid h-10 min-w-[40px] place-items-center rounded-lg px-3 text-[16px] font-semibold tabular-nums text-[#334155] hover:bg-[#f0fdfa] hover:text-[#115e59]"
+                    ? "grid h-[var(--control-h)] min-w-[var(--control-h)] place-items-center rounded-lg bg-[#0f766e] px-3 text-[16px] font-semibold tabular-nums text-white"
+                    : "grid h-[var(--control-h)] min-w-[var(--control-h)] place-items-center rounded-lg px-3 text-[16px] font-semibold tabular-nums text-[#334155] hover:bg-[#f0fdfa] hover:text-[#115e59]"
                 }
               >
                 <span className="sr-only">

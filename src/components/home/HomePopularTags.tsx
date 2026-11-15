@@ -24,7 +24,7 @@ const HomePopularTags = () => {
             <li key={tag.slug} className="m-0 list-none">
               <Link
                 href={`/tags/${tag.slug}`}
-                className="inline-flex min-h-[44px] items-center rounded-full border border-[#cbd5e1] bg-white px-4 text-[16px] font-semibold text-[#334155] transition hover:border-[#0f766e] hover:bg-[#f0fdfa] hover:text-[#115e59]"
+                className="chip inline-flex h-[var(--control-h)] max-h-[var(--chip-h-max)] items-center rounded-full border border-[#cbd5e1] bg-white px-4 text-[16px] font-semibold text-[#334155] transition hover:border-[#0f766e] hover:bg-[#f0fdfa] hover:text-[#115e59]"
               >
                 {tag.label}
               </Link>

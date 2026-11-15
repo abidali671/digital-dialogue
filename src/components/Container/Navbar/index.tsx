@@ -39,7 +39,7 @@ const Navbar = () => {
       <ContentContainer className="content-wrapper">
         <Link
           href="/"
-          className="inline-flex min-h-[44px] items-center"
+          className="inline-flex min-h-[var(--control-h)] items-center"
           aria-label={config.SITE_NAME}
         >
           <Image
@@ -73,7 +73,7 @@ const Navbar = () => {
           <button
             ref={menuButtonRef}
             type="button"
-            className="grid h-12 w-12 place-items-center rounded-lg text-ink hover:bg-mist"
+            className="grid h-[var(--control-h)] w-[var(--control-h)] place-items-center rounded-lg text-ink hover:bg-mist"
             aria-label={isMenu ? "Close menu" : "Open menu"}
             aria-expanded={isMenu}
             aria-controls={MOBILE_NAV_ID}

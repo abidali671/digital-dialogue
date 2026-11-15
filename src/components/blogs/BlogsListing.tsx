@@ -28,10 +28,106 @@ const HERO_TOOLS = [
   { href: "/tools/fiverr-fee-calculator", label: "Fiverr Fee" },
 ];
 
+const BLOGS_TICKS = [
+  "Upwork profiles, proposals, Connects and fees",
+  "Fiverr fees, seller levels and first orders",
+  "Getting paid in Pakistan: JazzCash, Easypaisa, Payoneer",
+  "Beginner guides to platforms, niches and rates",
+];
+
 const chipActive =
-  "inline-flex min-h-[44px] items-center rounded-full border border-[#0f766e] bg-[#0f766e] px-4 text-[16px] font-semibold text-white hover:bg-[#115e59] hover:text-white";
+  "chip inline-flex h-[var(--control-h)] max-h-[var(--chip-h-max)] items-center rounded-full border border-[#0f766e] bg-[#0f766e] px-4 text-[16px] font-semibold text-white hover:bg-[#115e59] hover:text-white";
 const chipIdle =
-  "inline-flex min-h-[44px] items-center rounded-full border border-[#cbd5e1] bg-white px-4 text-[16px] font-semibold text-[#334155] transition hover:border-[#0f766e] hover:bg-[#f0fdfa] hover:text-[#115e59]";
+  "chip inline-flex h-[var(--control-h)] max-h-[var(--chip-h-max)] items-center rounded-full border border-[#cbd5e1] bg-white px-4 text-[16px] font-semibold text-[#334155] transition hover:border-[#0f766e] hover:bg-[#f0fdfa] hover:text-[#115e59]";
+
+const heroField =
+  "h-[var(--control-h-hero)] max-h-[var(--control-h-hero)] min-w-0 flex-1 rounded-lg border border-[#7b8798] bg-white px-4 text-[16px] leading-none text-ink placeholder:text-[#64748b]";
+const heroBtn =
+  "inline-flex h-[var(--control-h-hero)] max-h-[var(--control-h-hero)] shrink-0 items-center justify-center rounded-lg bg-[#0f766e] px-5 text-[16px] font-semibold leading-none text-white transition hover:bg-[#115e59] hover:text-white";
+
+function CheckIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="mt-1 h-4 w-4 flex-none text-[#0f766e]"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 1 1 1.4-1.4l3.8 3.8 6.8-6.8a1 1 0 0 1 1.4 0z" />
+    </svg>
+  );
+}
+
+function TopicsNav({
+  allGuidesCurrent,
+  activeTagSlug,
+}: {
+  allGuidesCurrent: boolean;
+  activeTagSlug?: string;
+}) {
+  return (
+    <nav id="topics" aria-label="Browse by topic" className="mt-6">
+      <p className="home-mute text-[12px] font-bold uppercase tracking-[0.08em]">
+        Topics
+      </p>
+      <ul className="mt-2 m-0 flex list-none flex-wrap gap-2">
+        <li className="m-0 list-none">
+          <Link
+            href="/blogs"
+            aria-current={allGuidesCurrent ? "page" : undefined}
+            className={allGuidesCurrent ? chipActive : chipIdle}
+          >
+            All guides
+          </Link>
+        </li>
+        {config.POPULAR_TAGS.map((tag) => {
+          const current = tag.slug === activeTagSlug;
+          return (
+            <li key={tag.slug} className="m-0 list-none">
+              <Link
+                href={`/tags/${tag.slug}`}
+                aria-current={current ? "page" : undefined}
+                className={current ? chipActive : chipIdle}
+              >
+                {tag.label}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  );
+}
+
+function SearchForm({
+  action,
+  searchQuery,
+}: {
+  action: string;
+  searchQuery: string;
+}) {
+  return (
+    <form role="search" action={action} method="get">
+      <label htmlFor="q" className="sr-only">
+        Search guides
+      </label>
+      <div className="flex gap-2">
+        <input
+          id="q"
+          name="q"
+          type="search"
+          defaultValue={searchQuery}
+          autoComplete="off"
+          placeholder="Search guides"
+          className={heroField}
+        />
+        <button type="submit" className={heroBtn}>
+          Search
+        </button>
+      </div>
+    </form>
+  );
+}
 
 const BlogsListing = ({
   posts,
@@ -51,6 +147,8 @@ const BlogsListing = ({
   const end = (currentPage - 1) * config.BLOGS_PER_PAGE + posts.length;
   const shortcuts = isSearch ? matchingSearchTools(searchQuery) : [];
   const allGuidesCurrent = !isSearch && !activeTagSlug && basePath === "/blogs";
+  const toolsHero =
+    currentPage === 1 && basePath === "/blogs" && !activeTagSlug;
   const gridHeading = isSearch
     ? `Results for “${searchQuery}”`
     : currentPage === 1
@@ -59,101 +157,124 @@ const BlogsListing = ({
 
   return (
     <div className="home-page">
-      <section aria-labelledby="h1" className="bg-mist">
-        <div className="home-inner pb-10 pt-8 lg:pb-12 lg:pt-12">
-          <div className="grid gap-x-14 gap-y-4 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-end">
-            <h1
-              id="h1"
-              className="font-display text-[30px] font-bold leading-[1.2] tracking-tight text-ink md:text-[44px] md:leading-[1.15]"
-            >
-              {title}
-            </h1>
-            <p className="home-body text-[16px] leading-relaxed md:text-[18px]">
-              {description}
-            </p>
-          </div>
-          <div className="mt-6 flex flex-wrap items-start justify-between gap-x-8 gap-y-3">
-            <form
-              role="search"
-              action={basePath}
-              method="get"
-              className="w-full lg:max-w-[560px]"
-            >
-              <label htmlFor="q" className="sr-only">
-                Search guides
-              </label>
-              <div className="flex gap-2">
-                <input
-                  id="q"
-                  name="q"
-                  type="search"
-                  defaultValue={searchQuery}
-                  autoComplete="off"
-                  placeholder="Search guides"
-                  className="h-10 max-h-10 min-w-0 flex-1 rounded-lg border border-[#7b8798] bg-white px-4 text-[16px] leading-none text-ink placeholder:text-[#64748b]"
-                />
-                <button
-                  type="submit"
-                  className="inline-flex h-10 max-h-10 items-center justify-center rounded-lg bg-[#0f766e] px-5 text-[16px] font-semibold leading-none text-white transition hover:bg-[#115e59] hover:text-white"
-                >
-                  Search
-                </button>
-              </div>
-              <p className="home-mute mt-2 text-[16px] leading-snug">
-                New articles land here first. Use search if you are looking for
-                a specific platform, skill, or workflow.
-              </p>
-            </form>
-            <p className="home-body hidden items-center gap-1 text-[16px] lg:flex">
-              <span className="home-mute mr-2 text-[12px] font-bold uppercase tracking-[0.08em]">
-                Free calculators
-              </span>
-              {HERO_TOOLS.map((tool, index) => (
-                <span key={tool.href} className="inline-flex items-center gap-1">
-                  {index > 0 ? (
-                    <span aria-hidden="true" className="home-mute">
-                      ·
-                    </span>
-                  ) : null}
-                  <Link href={tool.href} className="home-link">
-                    {tool.label}
-                  </Link>
-                </span>
-              ))}
-            </p>
-          </div>
-          <nav id="topics" aria-label="Browse by topic" className="mt-6">
-            <p className="home-mute text-[12px] font-bold uppercase tracking-[0.08em]">
-              Topics
-            </p>
-            <ul className="mt-2 m-0 flex list-none flex-wrap gap-2">
-              <li className="m-0 list-none">
-                <Link
-                  href="/blogs"
-                  aria-current={allGuidesCurrent ? "page" : undefined}
-                  className={allGuidesCurrent ? chipActive : chipIdle}
-                >
-                  All guides
-                </Link>
-              </li>
-              {config.POPULAR_TAGS.map((tag) => {
-                const current = tag.slug === activeTagSlug;
-                return (
-                  <li key={tag.slug} className="m-0 list-none">
+      {toolsHero ? (
+        <div className="bg-mist">
+          <section
+            aria-labelledby="h1"
+            className="mx-auto grid max-w-[1200px] grid-cols-[minmax(0,1fr)] gap-5 px-4 pb-6 pt-4 sm:px-5 md:pt-8 min-[1024px]:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] min-[1024px]:items-end min-[1024px]:gap-x-14 min-[1024px]:px-8 min-[1024px]:pb-6 min-[1024px]:pt-10"
+          >
+            <div>
+              <nav aria-label="Breadcrumb">
+                <ol className="m-0 flex list-none flex-wrap items-center gap-1.5 p-0 text-[16px] font-semibold text-mute">
+                  <li className="m-0">
                     <Link
-                      href={`/tags/${tag.slug}`}
-                      aria-current={current ? "page" : undefined}
-                      className={current ? chipActive : chipIdle}
+                      href="/"
+                      className="inline-flex min-h-[var(--control-h)] min-w-[var(--control-h)] items-center rounded hover:text-ink hover:underline underline-offset-4"
                     >
-                      {tag.label}
+                      Home
                     </Link>
                   </li>
-                );
-              })}
-            </ul>
-          </nav>
+                  <li className="m-0" aria-hidden="true">
+                    /
+                  </li>
+                  <li className="m-0 text-[#0f766e]" aria-current="page">
+                    Blogs
+                  </li>
+                </ol>
+              </nav>
+              <h1
+                id="h1"
+                className="text-balance font-display text-[30px] font-bold leading-[1.2] tracking-tight text-ink md:mt-1 md:text-[44px] md:leading-[1.15]"
+              >
+                {title}
+              </h1>
+              <p className="mt-3 max-w-[62ch] text-[16px] leading-relaxed text-[#334155] md:mt-4 md:text-[18px]">
+                {description}
+              </p>
+            </div>
+            <div>
+              <SearchForm action={basePath} searchQuery={searchQuery} />
+              <ul
+                className="mt-5 hidden list-none space-y-2 p-0 text-[16px] leading-snug text-[#334155] min-[1024px]:block"
+                aria-label="What the guides cover"
+              >
+                {BLOGS_TICKS.map((item) => (
+                  <li key={item} className="m-0 flex gap-2.5">
+                    <CheckIcon />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+          <div className="mx-auto max-w-[1200px] px-4 pb-10 pt-4 sm:px-5 min-[1024px]:px-8 min-[1024px]:pb-12 min-[1024px]:pt-2">
+            {!isSearch ? (
+              <div className="flex items-center gap-3">
+                <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-[#0f766e]">
+                  Latest
+                </p>
+                <span aria-hidden="true" className="h-px flex-1 bg-[#cbd5e1]" />
+                <p className="text-[14px] text-mute">
+                  {total} {total === 1 ? "post" : "posts"}
+                </p>
+              </div>
+            ) : null}
+            <TopicsNav
+              allGuidesCurrent={allGuidesCurrent}
+              activeTagSlug={activeTagSlug}
+            />
+          </div>
         </div>
-      </section>
+      ) : (
+        <section aria-labelledby="h1" className="bg-mist">
+          <div className="home-inner pb-10 pt-8 min-[1024px]:pb-12 min-[1024px]:pt-12">
+            <div className="grid gap-x-14 gap-y-4 min-[1024px]:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] min-[1024px]:items-end">
+              <h1
+                id="h1"
+                className="font-display text-[30px] font-bold leading-[1.2] tracking-tight text-ink md:text-[44px] md:leading-[1.15]"
+              >
+                {title}
+              </h1>
+              <p className="home-body text-[16px] leading-relaxed md:text-[18px]">
+                {description}
+              </p>
+            </div>
+            <div className="mt-6 flex flex-wrap items-start justify-between gap-x-8 gap-y-3">
+              <div className="w-full min-[1024px]:max-w-[560px]">
+                <SearchForm action={basePath} searchQuery={searchQuery} />
+                <p className="home-mute mt-2 text-[16px] leading-snug">
+                  New articles land here first. Use search if you are looking
+                  for a specific platform, skill, or workflow.
+                </p>
+              </div>
+              <p className="home-body hidden items-center gap-1 text-[16px] min-[1024px]:flex">
+                <span className="home-mute mr-2 text-[12px] font-bold uppercase tracking-[0.08em]">
+                  Free calculators
+                </span>
+                {HERO_TOOLS.map((tool, index) => (
+                  <span
+                    key={tool.href}
+                    className="inline-flex items-center gap-1"
+                  >
+                    {index > 0 ? (
+                      <span aria-hidden="true" className="home-mute">
+                        ·
+                      </span>
+                    ) : null}
+                    <Link href={tool.href} className="home-link">
+                      {tool.label}
+                    </Link>
+                  </span>
+                ))}
+              </p>
+            </div>
+            <TopicsNav
+              allGuidesCurrent={allGuidesCurrent}
+              activeTagSlug={activeTagSlug}
+            />
+          </div>
+        </section>
+      )}
 
       <div className="home-inner pb-14 lg:pb-20">
         <p id="announce" className="sr-only" role="status" aria-live="polite">

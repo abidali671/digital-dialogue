@@ -36,8 +36,12 @@
   color: var(--home-mute);
 }
 
+.chip {
+  max-height: var(--chip-h-max);
+}
+
 .home-btn-primary {
-  @apply inline-flex h-10 max-h-10 items-center justify-center gap-2 rounded-lg px-5 text-[16px] font-semibold leading-none text-white transition;
+  @apply inline-flex h-control max-h-control items-center justify-center gap-2 rounded-lg px-5 text-[16px] font-semibold leading-none text-white transition;
   background: var(--home-accent);
 }
 
@@ -47,7 +51,7 @@
 }
 
 .home-btn-secondary {
-  @apply inline-flex h-10 max-h-10 items-center justify-center gap-2 rounded-lg border bg-white px-5 text-[16px] font-semibold leading-none transition;
+  @apply inline-flex h-control max-h-control items-center justify-center gap-2 rounded-lg border bg-white px-5 text-[16px] font-semibold leading-none transition;
   border-color: var(--home-accent);
   color: var(--home-accent);
 }
@@ -58,14 +62,14 @@
 }
 
 .home-btn-lg {
-  height: 48px;
-  max-height: 48px;
+  height: var(--control-h-hero);
+  max-height: var(--control-h-hero);
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
 
 .home-link {
-  @apply inline-flex min-h-[44px] items-center font-semibold underline underline-offset-4;
+  @apply inline-flex min-h-control items-center font-semibold underline underline-offset-4;
   color: var(--home-accent);
 }
 

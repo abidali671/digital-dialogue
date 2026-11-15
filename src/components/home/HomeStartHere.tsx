@@ -29,7 +29,7 @@ const HomeStartHere = ({ posts }: Props) => {
               <li key={post.fields.slug} className="m-0 list-none">
                 <Link
                   href={`/blogs/${post.fields.category.fields.slug}/${post.fields.slug}`}
-                  className="group flex min-h-14 items-center gap-4 py-3 pr-1 text-[16px] font-semibold text-ink hover:text-[#115e59]"
+                  className="group flex min-h-[var(--control-h)] items-center gap-4 py-1 pr-1 text-[16px] font-semibold text-ink hover:text-[#115e59]"
                 >
                   <span
                     aria-hidden="true"

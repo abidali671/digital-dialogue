@@ -40,11 +40,13 @@ const HomeGuide = () => {
             question: faq.question,
             answer: faq.answer,
             extra: tryLinks ? (
-              <p className="home-body mt-2 pb-2 text-[16px]">
-                <span className="font-semibold text-ink">Try it:</span>{" "}
+              <p className="home-body mt-2 flex flex-wrap items-center gap-x-2 gap-y-2 pb-2 text-[16px]">
+                <span className="font-semibold text-ink">Try it:</span>
                 {tryLinks.map((link, i) => (
-                  <span key={link.href}>
-                    {i > 0 ? " · " : null}
+                  <span key={link.href} className="inline-flex items-center gap-x-2">
+                    {i > 0 ? (
+                      <span aria-hidden="true">·</span>
+                    ) : null}
                     <Link href={link.href} className="home-link">
                       {link.label}
                     </Link>

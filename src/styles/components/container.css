@@ -29,7 +29,7 @@
 }
 
 .navbar-root .mobile-nav-container .nav-list li a {
-  @apply flex min-h-[56px] items-center border-l-4 border-transparent px-5 text-[18px] text-[#334155] hover:bg-mist;
+  @apply flex min-h-control items-center border-l-4 border-transparent px-5 text-[18px] text-[#334155] hover:bg-mist;
 }
 
 .navbar-root .mobile-nav-container .nav-list li a.is-current {

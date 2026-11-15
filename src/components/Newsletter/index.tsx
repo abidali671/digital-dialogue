@@ -103,13 +103,13 @@ const Newsletter = () => {
                   placeholder="you@example.com"
                   aria-invalid={status === "invalid" || undefined}
                   aria-describedby="nl-msg"
-                  className="mt-1.5 h-10 max-h-10 w-full rounded-lg border border-[#7b8798] bg-white px-3 text-[16px] leading-none text-ink placeholder:text-[#64748b] aria-[invalid=true]:border-[#b91c1c]"
+                  className="mt-1.5 h-[var(--control-h)] max-h-[var(--control-h)] w-full rounded-lg border border-[#7b8798] bg-white px-3 text-[16px] leading-none text-ink placeholder:text-[#64748b] aria-[invalid=true]:border-[#b91c1c]"
                 />
               </div>
               <button
                 type="submit"
                 aria-disabled={pending || undefined}
-                className="inline-flex h-10 max-h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-lg bg-[#0f766e] px-5 text-[16px] font-semibold leading-none text-white transition hover:bg-[#115e59] hover:text-white aria-disabled:opacity-70"
+                className="inline-flex h-[var(--control-h)] max-h-[var(--control-h)] shrink-0 items-center justify-center whitespace-nowrap rounded-lg bg-[#0f766e] px-5 text-[16px] font-semibold leading-none text-white transition hover:bg-[#115e59] hover:text-white aria-disabled:opacity-70"
               >
                 {pending ? "Subscribing..." : "Subscribe"}
               </button>

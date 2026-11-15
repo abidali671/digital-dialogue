@@ -31,6 +31,8 @@
   --fs-prose: 1rem;
   --lh-prose: 1.75;
   --control-h: 2.5rem;
+  --control-h-hero: 3rem;
+  --chip-h-max: 2.5rem;
 }
 
 @media (min-width: 768px) {

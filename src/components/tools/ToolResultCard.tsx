@@ -128,7 +128,7 @@ function ToolListingCard(props: FigureCard | PreviewCard) {
       )}
       <Link
         href={props.href}
-        className="relative z-[1] mt-auto inline-flex h-12 min-h-[48px] w-full items-center justify-center gap-2 rounded-lg border border-[#0f766e] bg-white px-4 text-[16px] font-semibold text-[#0f766e] transition hover:bg-[#f0fdfa] hover:text-[#115e59] group-hover:bg-[#f0fdfa]"
+        className="relative z-[1] mt-auto inline-flex h-[var(--control-h)] min-h-[var(--control-h)] w-full items-center justify-center gap-2 rounded-lg border border-[#0f766e] bg-white px-4 text-[16px] font-semibold text-[#0f766e] transition hover:bg-[#f0fdfa] hover:text-[#115e59] group-hover:bg-[#f0fdfa]"
       >
         {props.ctaLabel}
         <span className="sr-only">: {props.title}</span>

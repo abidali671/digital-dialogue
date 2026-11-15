@@ -70,6 +70,26 @@ module.exports = {
           "100%": { opacity: "1" },
         },
       },
+      height: {
+        control: "var(--control-h)",
+        "control-hero": "var(--control-h-hero)",
+        chip: "var(--chip-h-max)",
+      },
+      minHeight: {
+        control: "var(--control-h)",
+        "control-hero": "var(--control-h-hero)",
+      },
+      maxHeight: {
+        control: "var(--control-h)",
+        "control-hero": "var(--control-h-hero)",
+        chip: "var(--chip-h-max)",
+      },
+      minWidth: {
+        control: "var(--control-h)",
+      },
+      width: {
+        control: "var(--control-h)",
+      },
       animation: {
         "fade-up": "fade-up 0.7s ease-out both",
         "fade-in": "fade-in 0.5s ease-out both",
