@@ -16,7 +16,7 @@ const SITE_HOSTS = new Set(["digitaldialogue.pk", "www.digitaldialogue.pk"]);
 const SAFE_SCHEME = /^(https?:|mailto:|tel:|#|\/)/i;
 
 /** Site paths use Next.js Link. External, mail, and same-page hashes stay anchors. */
-function internalPath(uri: string): string | null {
+export function internalPath(uri: string): string | null {
   const value = uri.trim();
   if (
     !value ||
@@ -74,8 +74,9 @@ function renderHeading(
   return <HeadingTag id={id}>{children}</HeadingTag>;
 }
 
-export function createRichTextOptions(): Options {
-  const usedHeadingIds: Record<string, number> = {};
+export function createRichTextOptions(
+  usedHeadingIds: Record<string, number> = {},
+): Options {
 
   return {
     renderNode: {

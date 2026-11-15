@@ -1,14 +1,10 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
+import ArticleToc from "@/components/article/ArticleToc";
+import ShareRow from "@/components/article/ShareRow";
 import Breadcrumb from "@/components/Breadcrumb";
-import ContentContainer from "@/components/ContentContainer";
-import PostCard from "@/components/PostCard";
-import PostFaqs from "@/components/PostFaqs";
-import ShareButtons from "@/components/ShareButtons";
-import Tag from "@/components/Tag";
-import Title from "@/components/Title";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { createRichTextOptions } from "@/lib/richText";
+import CoverImage from "@/components/CoverImage";
+import FaqSection from "@/components/tools/FaqSection";
 import contentful_client, { REVALIDATE_DETAIL } from "@/lib/contentful/client";
 import { IFaq, IPostData } from "@/types";
 import Image from "next/image";
@@ -21,7 +17,7 @@ import {
   toIsoTimestamp,
   wasUpdatedAfterPublish,
 } from "@/helper";
-import { pickRelatedPosts, getPostTags, toShareHashtags } from "@/lib/keywords";
+import { pickRelatedPosts, getPostTags } from "@/lib/keywords";
 import { isNextNotFound } from "@/lib/next-errors";
 import { DEFAULT_OG_IMAGE, pageTitle, resolvePageTitle } from "@/lib/metadata";
 import {
@@ -31,12 +27,13 @@ import {
   JsonLdScript,
 } from "@/lib/schema";
 import { extractToc, shouldShowToc } from "@/lib/toc";
-import TableOfContents from "@/components/TableOfContents";
+import { renderArticleBody } from "@/lib/articleBody";
+import { contentfulImageUrl } from "@/lib/contentfulImage";
 import { ArticleJsonLd } from "next-seo";
 import { getSiteAuthor } from "@/constants/authors";
-import HomePopularTags from "@/components/home/HomePopularTags";
 import HomeToolTeasers from "@/components/home/HomeToolTeasers";
-import clsx from "clsx";
+import { HomePostCard } from "@/components/home/HomePostCard";
+import Newsletter from "@/components/Newsletter";
 
 export const revalidate = 3600;
 
@@ -167,24 +164,18 @@ export default async function BlogDetailPage(props: PageProps) {
       ),
     ]);
 
-    const recentPool = relatedPoolResponse.items as unknown as IPostData[];
-    const latestPosts = recentPool.slice(0, 3);
-    const latestIds = new Set(latestPosts.map((item) => item.sys.id));
     const relatedPosts = pickRelatedPosts(
       post,
       sameCategoryResponse.items as unknown as IPostData[],
-      recentPool,
-      6,
-    )
-      .filter((item) => !latestIds.has(item.sys.id))
-      .slice(0, 3);
+      relatedPoolResponse.items as unknown as IPostData[],
+      3,
+    );
     const {
       coverImage,
       category: postCategory,
       title,
       content,
       excerpt,
-      tags,
       keywords,
       faqs,
     } = post.fields;
@@ -196,8 +187,8 @@ export default async function BlogDetailPage(props: PageProps) {
       Boolean(faq?.question?.trim() && faq?.answer?.trim()),
     );
     const shareUrl = `${config.BASE_URL}/blogs/${category}/${blog_detail}`;
-    const shareHashtags = toShareHashtags(tags || keywords);
     const readingTime = getReadingTime(content);
+    const { nodes: articleNodes, insertedHref } = renderArticleBody(content);
     const tocHeadings = [
       ...extractToc(content),
       ...(faqList.length > 0
@@ -255,157 +246,239 @@ export default async function BlogDetailPage(props: PageProps) {
           />
         )}
 
-        <header className="border-b border-line bg-white">
-          <ContentContainer className="py-12 md:py-16">
-            <div className="reading-column">
-              <Breadcrumb
-                items={[
-                  { label: "Home", href: "/" },
-                  { label: "Blogs", href: "/blogs" },
-                  {
-                    label: postCategory.fields.label,
-                    href: `/blogs/${postCategory.fields.slug}`,
-                  },
-                ]}
-              />
-
-              <h1 className="mb-5 font-display text-h1 text-ink">{title}</h1>
-              <p className="mb-8 max-w-2xl text-lead text-mute">{excerpt}</p>
-
-              <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
-                <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-caption text-mute">
-                  <time dateTime={toIsoTimestamp(publishedAt)}>
-                    {formatLongDate(publishedAt)}
-                  </time>
-                  {wasUpdatedAfterPublish(publishedAt, updatedAt) && (
-                    <>
-                      <span aria-hidden>·</span>
-                      <time dateTime={toIsoTimestamp(updatedAt)}>
-                        Updated {formatLongDate(updatedAt)}
-                      </time>
-                    </>
-                  )}
-                  <span aria-hidden>·</span>
-                  <span>{readingTime} min read</span>
-                </p>
-                <ShareButtons
-                  url={shareUrl}
-                  title={title}
-                  excerpt={excerpt}
-                  hashtags={shareHashtags}
-                />
-              </div>
-            </div>
-          </ContentContainer>
-        </header>
-
-        <ContentContainer className="pt-10">
-          <figure className="reading-column">
-            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl border border-line bg-mist-soft">
-              <Image
-                src={"https:" + coverImage.fields.file.url}
-                alt={title}
-                fill
-                priority
-                sizes="(min-width: 768px) 768px, 100vw"
-                className="object-cover"
-              />
-            </div>
-          </figure>
-        </ContentContainer>
-
-        <ContentContainer className="pb-4 pt-10">
-          <div className="reading-column">
-            <article className="article-wrapper">
-              {shouldShowToc(tocHeadings) && (
-                <TableOfContents headings={tocHeadings} />
-              )}
-              {documentToReactComponents(content, createRichTextOptions())}
-            </article>
-
-            <PostFaqs faqs={faqList} />
-
-            {postTags.length > 0 && (
-              <div className="mt-12 flex flex-wrap gap-2">
-                {postTags.map((item) => (
-                  <Tag key={item.slug} href={`/tags/${item.slug}`}>
-                    {item.label}
-                  </Tag>
-                ))}
-              </div>
+        <div className="home-page bg-white">
+          <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-x-16 px-4 pb-14 pt-4 sm:px-5 min-[1024px]:grid-cols-[248px_minmax(0,760px)] min-[1024px]:justify-center min-[1024px]:px-8 min-[1024px]:pt-8">
+            {shouldShowToc(tocHeadings) ? (
+              <aside
+                className="article-tools sticky top-[88px] hidden max-h-[calc(100vh-112px)] self-start overflow-y-auto min-[1024px]:block"
+                aria-label="Article tools"
+              >
+                <ArticleToc headings={tocHeadings} variant="sidebar" />
+                <div className="mt-8">
+                  <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-mute">
+                    Share
+                  </p>
+                  <div className="mt-3">
+                    <ShareRow url={shareUrl} title={title} announce />
+                  </div>
+                </div>
+              </aside>
+            ) : (
+              <div className="hidden min-[1024px]:block" />
             )}
 
-            <div className="mt-10 flex flex-wrap items-center gap-4 border-y border-line py-5">
-              <p className="flex h-8 items-center text-ui font-semibold text-ink">
-                Share this article
-              </p>
-              <ShareButtons
-                url={shareUrl}
-                title={title}
-                excerpt={excerpt}
-                hashtags={shareHashtags}
-              />
-            </div>
+            <div>
+              <header>
+                <Breadcrumb
+                  items={[
+                    { label: "Home", href: "/" },
+                    { label: "Blogs", href: "/blogs" },
+                    {
+                      label: postCategory.fields.label,
+                      href: `/blogs/${postCategory.fields.slug}`,
+                    },
+                  ]}
+                />
+                <h1 className="font-display text-[30px] font-bold leading-[1.2] tracking-tight text-ink md:text-[44px] md:leading-[1.15]">
+                  {title}
+                </h1>
+                <p className="mt-4 max-w-[60ch] text-[16px] leading-relaxed text-mute md:text-[18px]">
+                  {excerpt}
+                </p>
+                <div className="mt-6 flex items-center gap-3 border-t border-line pt-5">
+                  {author.picture ? (
+                    <Image
+                      src={author.picture}
+                      alt=""
+                      width={44}
+                      height={44}
+                      className="h-11 w-11 flex-none rounded-full bg-mist object-cover"
+                    />
+                  ) : null}
+                  <div>
+                    <p className="text-[16px] text-ink">
+                      By{" "}
+                      <Link
+                        href={`/authors/${author.slug}`}
+                        className="inline-flex min-h-[var(--control-h)] items-center font-semibold text-[#0f766e] underline underline-offset-4 hover:text-[#115e59]"
+                      >
+                        {author.name}
+                      </Link>
+                    </p>
+                    <p className="text-[16px] text-mute">
+                      <time dateTime={toIsoTimestamp(publishedAt)}>
+                        {formatLongDate(publishedAt)}
+                      </time>
+                      {wasUpdatedAfterPublish(publishedAt, updatedAt) ? (
+                        <>
+                          <span aria-hidden> · </span>
+                          <time dateTime={toIsoTimestamp(updatedAt)}>
+                            Updated {formatLongDate(updatedAt)}
+                          </time>
+                        </>
+                      ) : null}
+                      <span aria-hidden> · </span>
+                      {readingTime} min read
+                    </p>
+                  </div>
+                </div>
+              </header>
 
-            <div className="mt-10 flex flex-col gap-4 rounded-xl border border-line bg-white p-6 sm:flex-row">
-              {author.picture ? (
-                <span className="h-16 w-16 shrink-0 overflow-hidden rounded-full bg-mist">
+              <figure className="mt-8 overflow-hidden rounded-xl border border-line bg-mist-soft">
+                <CoverImage
+                  src={contentfulImageUrl(coverImage.fields.file.url, 1200)}
+                  alt={title}
+                  width={1200}
+                  height={630}
+                  fetchPriority="high"
+                  className="aspect-[1200/630] h-auto w-full object-cover"
+                />
+              </figure>
+
+              {shouldShowToc(tocHeadings) ? (
+                <ArticleToc headings={tocHeadings} variant="disclosure" />
+              ) : null}
+
+              <article className="article-wrapper prose-dd mt-10">
+                {articleNodes}
+              </article>
+
+              <FaqSection
+                layout="inline"
+                id="faqs-section"
+                headingId="faqs-heading"
+                title="Frequently asked questions"
+                items={faqList.map((faq) => ({
+                  question: faq.question,
+                  answer: faq.answer,
+                }))}
+              />
+
+              {postTags.length > 0 ? (
+                <nav aria-label="Tags" className="mt-12">
+                  <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-mute">
+                    Tags
+                  </p>
+                  <ul className="mt-3 m-0 flex list-none flex-wrap gap-2">
+                    {postTags.map((item) => (
+                      <li key={item.slug} className="m-0 list-none">
+                        <Link
+                          href={`/tags/${item.slug}`}
+                          className="chip inline-flex h-[var(--control-h)] max-h-[var(--chip-h-max)] items-center rounded-full border border-[#cbd5e1] bg-white px-4 text-[16px] font-semibold text-[#334155] transition hover:border-[#0f766e] hover:bg-[#f0fdfa] hover:text-[#115e59]"
+                        >
+                          {item.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              ) : null}
+
+              <section
+                aria-labelledby="share-h"
+                className="mt-10 border-y border-line py-6 min-[1024px]:hidden"
+              >
+                <h2
+                  id="share-h"
+                  className="mb-3 font-display text-[20px] font-bold text-ink"
+                >
+                  Share this article
+                </h2>
+                <ShareRow url={shareUrl} title={title} />
+              </section>
+              <section
+                aria-labelledby="share-h-end"
+                className="mt-10 hidden border-y border-line py-6 min-[1024px]:block"
+              >
+                <h2
+                  id="share-h-end"
+                  className="mb-3 font-display text-[20px] font-bold text-ink"
+                >
+                  Share this article
+                </h2>
+                <ShareRow url={shareUrl} title={title} />
+              </section>
+
+              <section
+                aria-labelledby="au-h"
+                className="mt-10 flex flex-col gap-4 rounded-2xl border border-line bg-white p-5 sm:flex-row sm:gap-5 sm:p-6"
+              >
+                {author.picture ? (
                   <Image
-                    alt={author.pictureAlt || author.name}
                     src={author.picture}
+                    alt=""
                     width={64}
                     height={64}
-                    className="h-full w-full object-cover"
+                    className="h-16 w-16 flex-none rounded-full bg-mist object-cover"
                   />
-                </span>
-              ) : null}
-              <div>
-                <p className="font-mono text-caption uppercase tracking-[0.1em] text-accent">
-                  {author.role}
-                </p>
-                <Link
-                  href={`/authors/${author.slug}`}
-                  className="font-display text-h4 text-ink hover:text-accent"
-                >
-                  {author.name}
-                </Link>
-                <p className="mt-2 text-copy text-mute">{author.about}</p>
-              </div>
+                ) : null}
+                <div>
+                  <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-[#0f766e]">
+                    {author.role}
+                  </p>
+                  <h2
+                    id="au-h"
+                    className="mt-1 font-display text-[20px] font-bold leading-tight text-ink md:text-[24px]"
+                  >
+                    <Link
+                      href={`/authors/${author.slug}`}
+                      className="inline-flex min-h-[var(--control-h)] items-center rounded hover:text-[#0f766e]"
+                    >
+                      {author.name}
+                    </Link>
+                  </h2>
+                  <p className="text-[16px] leading-relaxed text-[#334155]">
+                    {author.about}
+                  </p>
+                  <Link
+                    href={`/authors/${author.slug}`}
+                    className="mt-2 inline-flex min-h-[var(--control-h)] items-center gap-1.5 text-[16px] font-semibold text-[#0f766e] underline underline-offset-4 hover:text-[#115e59]"
+                  >
+                    All guides by {author.name}
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
+              </section>
             </div>
           </div>
-        </ContentContainer>
 
-        {[
-          { title: "Keep reading", posts: relatedPosts },
-          { title: "Latest posts", posts: latestPosts },
-        ]
-          .filter((section) => section.posts.length > 0)
-          .map((section, idx) => (
+          {relatedPosts.length > 0 ? (
             <section
-              key={section.title}
-              className={clsx(
-                "border-t border-line py-14 md:py-16",
-                idx === 0 && "bg-white",
-              )}
+              aria-labelledby="rel-h"
+              className="border-t border-line bg-mist"
             >
-              <ContentContainer>
-                <Title as="h2">{section.title}</Title>
-                <div className="mt-10 grid gap-10 sm:grid-cols-2 xl:grid-cols-3">
-                  {section.posts.map((item) => (
-                    <PostCard key={item.fields.slug} data={item} />
-                  ))}
+              <div className="home-inner py-14 min-[1024px]:py-16">
+                <div className="flex flex-wrap items-end justify-between gap-4">
+                  <div>
+                    <p className="home-eyebrow">Related guides</p>
+                    <h2 id="rel-h" className="home-h2">
+                      Keep reading
+                    </h2>
+                  </div>
+                  <Link href="/blogs" className="home-btn-secondary">
+                    View all guides
+                  </Link>
                 </div>
-              </ContentContainer>
+                <ul className="mt-8 m-0 grid list-none gap-6 sm:grid-cols-2 min-[1024px]:grid-cols-3">
+                  {relatedPosts.map((item) => (
+                    <li key={item.fields.slug} className="m-0 h-full list-none">
+                      <HomePostCard post={item} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </section>
-          ))}
+          ) : null}
 
-        <div className="home-page">
           <HomeToolTeasers
-            heading="Not sure what you’ll keep, charge or spend?"
-            sub="Check a number before you take the job. Each card shows its own example; open one to use your figures."
-            className="border-t border-line"
+            heading="More free calculators"
+            sub=""
+            headingId="mt-h"
+            excludeHrefs={insertedHref ? [insertedHref] : []}
+            columns={3}
+            className="border-t border-line bg-white"
           />
-          <HomePopularTags />
+          <Newsletter />
         </div>
       </>
     );

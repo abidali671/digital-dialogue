@@ -1,60 +1,286 @@
 .article-wrapper {
-  @apply flow-root font-body text-ink-soft;
+  @apply flow-root font-body;
 }
 
-.article-wrapper > * + * {
-  @apply mt-6;
+.prose-dd {
+  color: #1e293b;
+  font-size: 16px;
+  line-height: 1.75;
 }
 
-.article-wrapper > .article-toc + * {
-  @apply mt-6 md:mt-0;
+@media (min-width: 768px) {
+  .prose-dd {
+    font-size: 18px;
+    line-height: 1.7;
+  }
 }
 
-.article-toc {
-  @apply w-full rounded-lg border border-line bg-white p-4 md:float-right md:mb-6 md:ml-8 md:mt-0 md:w-[16.5rem];
+.prose-dd > p,
+.prose-dd > ul,
+.prose-dd > ol,
+.prose-dd > h2,
+.prose-dd > h3,
+.prose-dd > .callout {
+  max-width: 68ch;
 }
 
-.article-wrapper .article-toc-title {
-  @apply mb-0 font-mono text-caption font-medium uppercase tracking-[0.14em] text-mute;
+.prose-dd > * + * {
+  margin-top: 1.25em;
 }
 
-.article-wrapper h2,
-.article-wrapper h3,
-.article-wrapper h4 {
-  @apply mt-4 scroll-mt-24 font-display text-ink;
+.prose-dd > h2 {
+  scroll-margin-top: 88px;
+  margin-top: 2.4em;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: #0f172a;
+  text-wrap: balance;
 }
 
-.article-wrapper a {
-  @apply text-accent underline decoration-accent/30 underline-offset-4 hover:decoration-accent;
+.prose-dd > h2::before {
+  content: "";
+  display: block;
+  width: 32px;
+  height: 3px;
+  margin-bottom: 14px;
+  border-radius: 2px;
+  background: #0f766e;
 }
 
-.article-wrapper p {
-  @apply text-ink-soft;
+.prose-dd > h3 {
+  scroll-margin-top: 88px;
+  margin-top: 1.9em;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #0f172a;
 }
 
-.article-wrapper ul,
-.article-wrapper ol {
-  @apply ml-6 flex flex-col gap-2;
+.prose-dd > h2 + *,
+.prose-dd > h3 + * {
+  margin-top: 0.75em;
 }
 
-.article-wrapper li {
-  @apply my-0 text-ink-soft;
+@media (min-width: 768px) {
+  .prose-dd > h2 {
+    font-size: 30px;
+    line-height: 1.2;
+  }
+  .prose-dd > h3 {
+    font-size: 24px;
+  }
 }
 
-.article-wrapper li p {
-  @apply my-0;
+.prose-dd :is(p, li) strong {
+  font-weight: 700;
+  color: #0f172a;
 }
 
-.article-wrapper .article-toc ol {
-  @apply ml-5 mt-2 flex-none list-decimal gap-0;
+.prose-dd :is(p, li, td) a {
+  color: #0f766e;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  padding-block: 2px;
+  overflow-wrap: anywhere;
+  border-radius: 2px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
-.article-wrapper .article-toc li {
-  @apply my-1 text-ui text-ink;
+.prose-dd :is(p, li, td) a:hover {
+  color: #115e59;
+  text-decoration-thickness: 2px;
 }
 
-.article-wrapper .article-toc a {
-  @apply text-ui font-normal text-accent no-underline hover:underline;
+.prose-dd ul,
+.prose-dd ol {
+  margin-left: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.prose-dd li {
+  position: relative;
+  padding-left: 1.75em;
+  color: #1e293b;
+}
+
+.prose-dd li + li {
+  margin-top: 0.5em;
+}
+
+.prose-dd ul > li::before {
+  content: "";
+  position: absolute;
+  top: 0.72em;
+  left: 0.45em;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: #0f766e;
+}
+
+.prose-dd ol {
+  counter-reset: s;
+}
+
+.prose-dd ol > li {
+  counter-increment: s;
+  min-height: 1.75em;
+  padding-left: 2.4em;
+}
+
+.prose-dd ol > li::before {
+  content: counter(s);
+  position: absolute;
+  top: 0.1em;
+  left: 0;
+  width: 1.6em;
+  height: 1.6em;
+  border: 1.5px solid #0f766e;
+  border-radius: 999px;
+  color: #0f766e;
+  font-size: 0.8em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5em;
+  text-align: center;
+}
+
+.prose-dd > [tabindex="-1"]:focus,
+#faqs-section[tabindex="-1"]:focus {
+  outline: none;
+}
+
+.callout {
+  display: flex;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 0 12px 12px 0;
+  border-left: 4px solid #0f766e;
+  background: #f0fdfa;
+  color: #134e4a;
+}
+
+.callout svg {
+  flex: none;
+  margin-top: 0.3em;
+  color: #0f766e;
+}
+
+.callout.warn {
+  border-color: #b45309;
+  background: #fffbeb;
+  color: #78350f;
+}
+
+.callout.warn svg {
+  color: #b45309;
+}
+
+.article-toc a {
+  display: flex;
+  align-items: center;
+  min-height: var(--control-h);
+  padding: 8px 12px;
+  border-left: 2px solid #e2e8f0;
+  color: #334155;
+  font-size: 16px;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.article-toc a:hover {
+  border-left-color: #94a3b8;
+  color: #0f172a;
+}
+
+.article-toc a[aria-current="location"] {
+  border-left-color: #0f766e;
+  background: #f0fdfa;
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.share-tip {
+  position: relative;
+}
+
+.share-tip .share-tt {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  z-index: 20;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #0f172a;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s;
+}
+
+.share-tip:hover .share-tt,
+.share-tip:has(:focus-visible) .share-tt,
+.share-tip:has(.is-copied) .share-tt {
+  visibility: visible;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .share-tip .share-tt {
+    transition: none;
+  }
+}
+
+.article-tbl {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.article-tbl table {
+  min-width: 560px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.article-tbl th,
+.article-tbl td {
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem 1rem;
+}
+
+.article-tbl th {
+  background: #f4f6f8;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.article-tbl th:first-child,
+.article-tbl td:first-child {
+  position: sticky;
+  left: 0;
+  background: #fff;
+}
+
+.prose-dd code {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.875em;
+  background: #f4f6f8;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.1em 0.35em;
+  color: #0f172a;
 }
 
 .article-wrapper blockquote {
@@ -73,26 +299,6 @@
   @apply my-2 border-line;
 }
 
-.article-wrapper table {
-  @apply w-full border-collapse rounded-lg border border-line text-left;
-}
-
-.article-wrapper th,
-.article-wrapper td {
-  @apply border border-line px-4 py-2;
-}
-
-.article-wrapper th {
-  @apply bg-mist font-semibold text-ink;
-}
-
-.article-wrapper code {
-  @apply whitespace-pre-wrap rounded bg-mist px-1.5 py-0.5 font-mono text-ui text-ink;
-}
-
-/* Prose templates are one long line per row. Wrap inside the column, and keep
-   the source line breaks. The toolbar is after the text in the DOM so the
-   template stays first for reading and SEO; column-reverse shows Copy on top. */
 .article-wrapper .code-block {
   @apply flex min-w-0 max-w-full flex-col-reverse overflow-hidden rounded-lg border border-line bg-ink;
 }
@@ -111,15 +317,13 @@
 
 .article-wrapper pre {
   @apply m-0 max-w-full overflow-x-auto rounded-lg border border-line bg-ink p-4 font-mono text-copy text-white;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
+  white-space: pre;
 }
 
 .article-wrapper .code-block pre {
-  @apply min-w-0 overflow-x-hidden rounded-none border-0 bg-transparent;
+  @apply min-w-0 rounded-none border-0 bg-transparent;
 }
 
 .article-wrapper pre code {
-  @apply block whitespace-pre-wrap rounded-none bg-transparent p-0 font-mono text-copy text-white;
-  overflow-wrap: anywhere;
+  @apply block rounded-none border-0 bg-transparent p-0 font-mono text-copy text-white;
 }

@@ -10,26 +10,30 @@ export default function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="site-breadcrumb mb-6 flex flex-wrap items-center gap-2 font-mono text-caption uppercase tracking-[0.1em] text-mute"
+      className="site-breadcrumb mb-4 flex flex-wrap items-center gap-1.5 text-[16px] font-semibold text-mute"
     >
       {items.map((item, index) => {
         const isLast = index === items.length - 1;
         return (
           <Fragment key={`${item.href ?? "current"}-${item.label}`}>
-            {index > 0 && <span className="text-mute-soft">/</span>}
+            {index > 0 && (
+              <span aria-hidden="true" className="text-mute">
+                /
+              </span>
+            )}
             {item.href ? (
               <Link
                 href={item.href}
                 className={
                   isLast
-                    ? "text-accent hover:text-accent-hover"
-                    : "hover:text-accent"
+                    ? "inline-flex min-h-[var(--control-h)] items-center rounded px-1 text-[#0f766e] hover:text-[#115e59] hover:underline focus-visible:underline"
+                    : "inline-flex min-h-[var(--control-h)] items-center rounded px-1 hover:text-ink hover:underline"
                 }
               >
                 {item.label}
               </Link>
             ) : (
-              <span className="text-accent" aria-current="page">
+              <span className="text-[#0f766e]" aria-current="page">
                 {item.label}
               </span>
             )}
