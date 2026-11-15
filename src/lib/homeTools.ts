@@ -1,11 +1,4 @@
-import {
-  CLEARANCE_DAYS,
-  FIVERR_SELLER_FEE_PERCENT,
-  computeFiverrFee,
-} from "@/lib/fiverrFee";
-import { computeRate } from "@/lib/freelanceRate";
-import { computeConnects } from "@/lib/upworkConnects";
-import { computeFee, formatMoney } from "@/lib/upworkFee";
+import { TOOL_EXAMPLES, type ToolExample } from "@/lib/tool-examples";
 
 export type HomeToolRow = { label: string; value: string };
 
@@ -19,134 +12,31 @@ export type HomeToolTeaser = {
   rows: HomeToolRow[];
 };
 
-const USD = "USD";
-
-function minus(amount: number) {
-  return `−${formatMoney(amount, USD)}`;
+function toHomeTeaser(example: ToolExample): HomeToolTeaser {
+  return {
+    href: example.href,
+    title: example.title,
+    example: example.meta,
+    figureLabel: example.label,
+    figure: example.figure,
+    figureHint: example.unit ?? "",
+    rows: example.rows,
+  };
 }
 
-const feeExample = computeFee({
-  type: "fixed",
-  rate: 35,
-  hours: 40,
-  amount: 500,
-  feePercent: 10,
-  extraFlat: 2,
-  extraPercent: 0,
-});
+/** Teaser cards. Figures come from `lib/tool-examples.ts`. */
+export const HOME_TOOL_TEASERS: HomeToolTeaser[] = TOOL_EXAMPLES.map(toHomeTeaser);
 
-const rateExample = computeRate({
-  period: "month",
-  billMode: "hours",
-  takeHome: 1500,
-  expenses: 200,
-  workHours: 40,
-  weeks: null,
-  billHours: 25,
-  billPct: 62.5,
-  fee: 10,
-}).value;
-
-const connectsExample = computeConnects({
-  costPerConnect: 0.15,
-  connectsPerProposal: 12,
-  proposals: 40,
-  replies: 8,
-  interviews: 5,
-  contracts: 2,
-  otherCosts: 20,
-}).value;
-
-const fiverrExample = computeFiverrFee({
-  price: 100,
-  extras: 0,
-  tip: 0,
-  payoutFee: 0,
-});
-
-if (!rateExample || !connectsExample) {
-  throw new Error("Calculator example defaults failed to compute");
-}
-
-const costPerContract = connectsExample.perContract.total.value ?? 0;
-const costPerReply = connectsExample.perReply.total.value ?? 0;
-const costPerInterview = connectsExample.perInterview.total.value ?? 0;
-
-/** Teaser cards. Figures come from each calculator's default example. */
-export const HOME_TOOL_TEASERS: HomeToolTeaser[] = [
+export const FOOTER_TOOL_LINKS = [
+  ...HOME_TOOL_TEASERS.map((tool) => ({
+    label: tool.title,
+    href: tool.href,
+  })),
   {
-    href: "/tools/upwork-fee-calculator",
-    title: "Upwork Fee Calculator",
-    example: "Example: $500 fixed-price job",
-    figureLabel: "Estimated take-home",
-    figure: formatMoney(feeExample.takeHome, USD),
-    figureHint: "after fees",
-    rows: [
-      { label: "Billed", value: formatMoney(feeExample.gross, USD) },
-      {
-        label: `Service fee (${feeExample.feePercent}%)`,
-        value: minus(feeExample.serviceFee),
-      },
-      { label: "Withdrawal fee", value: minus(feeExample.extra) },
-    ],
-  },
-  {
-    href: "/tools/freelance-rate-calculator",
-    title: "Freelance Rate Calculator",
-    example: "Example: $1,500-a-month goal",
-    figureLabel: "Minimum rate",
-    figure: formatMoney(rateExample.hourly, USD),
-    figureHint: "/hr",
-    rows: [
-      { label: "Day rate", value: formatMoney(rateExample.day, USD) },
-      {
-        label: `${rateExample.projectHours}-hour project`,
-        value: formatMoney(rateExample.project, USD),
-      },
-      { label: "Bill each month", value: formatMoney(rateExample.gross, USD) },
-    ],
-  },
-  {
-    href: "/tools/upwork-connects-calculator",
-    title: "Upwork Connects Calculator",
-    example: "Example: 40 proposals in 30 days",
-    figureLabel: "Cost per contract",
-    figure: formatMoney(costPerContract, USD),
-    figureHint: "per contract",
-    rows: [
-      { label: "Total cost", value: formatMoney(connectsExample.total, USD) },
-      { label: "Cost per reply", value: formatMoney(costPerReply, USD) },
-      {
-        label: "Cost per interview",
-        value: formatMoney(costPerInterview, USD),
-      },
-    ],
-  },
-  {
-    href: "/tools/fiverr-fee-calculator",
-    title: "Fiverr Fee Calculator",
-    example: "Example: $100 order, PayPal",
-    figureLabel: "Estimated withdrawn",
-    figure: formatMoney(fiverrExample.received, USD),
-    figureHint: `from ${formatMoney(fiverrExample.gross, USD)}`,
-    rows: [
-      { label: "Order total", value: formatMoney(fiverrExample.gross, USD) },
-      {
-        label: `Fiverr fee (${FIVERR_SELLER_FEE_PERCENT}%)`,
-        value: minus(fiverrExample.fiverrFee),
-      },
-      {
-        label: "Clears after",
-        value: `${CLEARANCE_DAYS.standard} days`,
-      },
-    ],
+    label: "Invoice Generator",
+    href: "/tools/freelance-invoice-generator",
   },
 ];
-
-export const FOOTER_TOOL_LINKS = HOME_TOOL_TEASERS.map((tool) => ({
-  label: tool.title,
-  href: tool.href,
-}));
 
 export type SearchToolShortcut = {
   href: string;

@@ -3,6 +3,141 @@ import Link from "next/link";
 import { CALCULATOR_CURRENCIES } from "@/components/tools/CalculatorCurrencyFields";
 import type { HomeToolTeaser } from "@/lib/homeTools";
 
+type ListingRow = { label: string; value: string };
+
+type ListingBase = {
+  title: string;
+  href: string;
+  ctaLabel: string;
+  description?: string;
+  meta?: string;
+  rows: ListingRow[];
+  layout?: "stack" | "wide";
+  headingLevel?: "h2" | "h3";
+  span?: boolean;
+};
+
+type FigureCard = ListingBase & {
+  variant: "figure";
+  label: string;
+  figure: string;
+  unit?: string;
+  preview?: never;
+};
+
+type PreviewCard = ListingBase & {
+  variant: "preview";
+  label: string;
+  preview: ReactNode;
+  figure?: never;
+  unit?: never;
+};
+
+function CtaArrow() {
+  return (
+    <svg
+      aria-hidden="true"
+      className="h-4 w-4 transition group-hover:translate-x-0.5"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fillRule="evenodd"
+        d="M10.3 3.3a1 1 0 0 1 1.4 0l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 0 1-1.4-1.4l4.3-4.3H3a1 1 0 1 1 0-2h11.6l-4.3-4.3a1 1 0 0 1 0-1.4z"
+        clipRule="evenodd"
+      />
+    </svg>
+  );
+}
+
+function ListingRows({ rows }: { rows: ListingRow[] }) {
+  return (
+    <dl className="space-y-1.5 text-[16px]">
+      {rows.map((row) => (
+        <div key={row.label} className="flex justify-between gap-3">
+          <dt className="text-[#334155]">{row.label}</dt>
+          <dd className="text-right font-semibold tabular-nums text-ink">
+            {row.value}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+function ToolListingCard(props: FigureCard | PreviewCard) {
+  const Heading = props.headingLevel === "h2" ? "h2" : "h3";
+  const descMin =
+    props.span
+      ? "min-[1024px]:min-h-[4.125rem]"
+      : "md:min-h-[4.125rem]";
+  const wide = props.layout === "wide";
+  const previewSlot =
+    props.variant === "preview" ? (
+      <>
+        <p className="text-[16px] font-semibold text-[#334155]">{props.label}</p>
+        <div className="mt-2">{props.preview}</div>
+      </>
+    ) : (
+      <>
+        <p className="text-[16px] font-semibold text-[#334155]">{props.label}</p>
+        <p className="mt-1 flex items-baseline gap-2">
+          <span className="font-display text-[30px] font-semibold leading-none tracking-tight text-ink tabular-nums md:text-[36px]">
+            {props.figure}
+          </span>
+          {props.unit ? (
+            <span className="text-[16px] text-mute">{props.unit}</span>
+          ) : null}
+        </p>
+      </>
+    );
+  const wideCols =
+    props.variant === "preview"
+      ? "xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
+      : "xl:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]";
+
+  return (
+    <article className="home-tcard group">
+      <Heading className="text-[18px] font-semibold leading-snug text-ink md:text-[20px]">
+        {props.title}
+      </Heading>
+      {props.description ? (
+        <p className={`mt-1 text-[16px] leading-snug text-[#334155] ${descMin}`}>
+          {props.description}
+        </p>
+      ) : null}
+      {props.meta ? (
+        <p className="mt-2 text-[16px] leading-snug text-mute">{props.meta}</p>
+      ) : null}
+      {wide ? (
+        <div
+          className={`mb-5 mt-4 xl:grid xl:items-start xl:gap-6 ${wideCols}`}
+        >
+          <div>{previewSlot}</div>
+          <div className="mt-4 border-t border-[#e2e8f0] pt-3 xl:mt-0 xl:border-l xl:border-t-0 xl:pl-6 xl:pt-0">
+            <ListingRows rows={props.rows} />
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="mt-4">{previewSlot}</div>
+          <div className="mb-5 mt-4 border-t border-[#e2e8f0] pt-3">
+            <ListingRows rows={props.rows} />
+          </div>
+        </>
+      )}
+      <Link
+        href={props.href}
+        className="relative z-[1] mt-auto inline-flex h-12 min-h-[48px] w-full items-center justify-center gap-2 rounded-lg border border-[#0f766e] bg-white px-4 text-[16px] font-semibold text-[#0f766e] transition hover:bg-[#f0fdfa] hover:text-[#115e59] group-hover:bg-[#f0fdfa]"
+      >
+        {props.ctaLabel}
+        <span className="sr-only">: {props.title}</span>
+        <CtaArrow />
+      </Link>
+    </article>
+  );
+}
+
 const CURRENCY_LABELS: Record<string, string> = {
   USD: "USD ($)",
   PKR: "PKR (Rs)",
@@ -92,9 +227,19 @@ function ToolTeaserCard({ tool }: { tool: HomeToolTeaser }) {
   );
 }
 
-export function ToolResultCard(props: TeaserProps | ResultProps) {
+export type ToolResultCardProps =
+  | TeaserProps
+  | FigureCard
+  | PreviewCard
+  | ResultProps;
+
+export function ToolResultCard(props: ToolResultCardProps) {
   if (props.variant === "teaser") {
     return <ToolTeaserCard tool={props.tool} />;
+  }
+
+  if (props.variant === "figure" || props.variant === "preview") {
+    return <ToolListingCard {...props} />;
   }
 
   const {

@@ -38,12 +38,6 @@ type PageProps = {
 export default async function ToolsPage(props: PageProps) {
   const searchParams = await props.searchParams;
   const searchQuery = parseSearchQuery(searchParams.q);
-  const needle = searchQuery.toLowerCase();
-  const tools = needle
-    ? HUB_TOOLS.filter((tool) =>
-        `${tool.title} ${tool.copy}`.toLowerCase().includes(needle)
-      )
-    : HUB_TOOLS;
 
   return (
     <>
@@ -89,7 +83,7 @@ export default async function ToolsPage(props: PageProps) {
           ]}
         />
       )}
-      <ToolsListing tools={tools} searchQuery={searchQuery} />
+      <ToolsListing searchQuery={searchQuery} />
     </>
   );
 }

@@ -5,24 +5,30 @@ export default function FaqSection({
   title,
   intro,
   items,
+  headingId = "faq-h",
 }: {
   title: string;
-  intro: ReactNode;
+  intro?: ReactNode;
   items: FaqItem[];
+  headingId?: string;
 }) {
   return (
-    <section aria-labelledby="faq-title" className="py-14 md:py-20">
-      <div className="mx-auto grid w-full max-w-7xl gap-10 px-5 sm:px-6 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)]">
-        <div>
-          <p className="mb-3 font-mono text-caption uppercase tracking-[0.14em] text-[#0f766e]">
-            FAQ
-          </p>
-          <h2 id="faq-title" className="fee-section">
-            {title}
-          </h2>
-          <p className="mt-4 text-copy text-[#475569]">{intro}</p>
+    <section aria-labelledby={headingId} className="home-page bg-white">
+      <div className="home-inner py-14 lg:py-20">
+        <div className="grid gap-8 lg:grid-cols-[1fr_1.6fr] lg:gap-14">
+          <div>
+            <p className="home-eyebrow">FAQ</p>
+            <h2 id={headingId} className="home-h2">
+              {title}
+            </h2>
+            {intro ? (
+              <p className="home-body mt-2 text-[16px] leading-relaxed">
+                {intro}
+              </p>
+            ) : null}
+          </div>
+          <FeeFaq items={items} />
         </div>
-        <FeeFaq items={items} />
       </div>
     </section>
   );
