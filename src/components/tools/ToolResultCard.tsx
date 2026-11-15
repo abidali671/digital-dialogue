@@ -221,6 +221,7 @@ function ToolTeaserCard({ tool }: { tool: HomeToolTeaser }) {
         className="home-btn-secondary relative z-[1] mt-auto w-full px-4 group-hover:bg-[#f0fdfa]"
       >
         Open calculator
+        <span aria-hidden="true">→</span>
         <span className="sr-only">: {tool.title}</span>
       </Link>
     </article>
@@ -311,7 +312,11 @@ export function ToolResultCard(props: ToolResultCardProps) {
           {extra}
           <div className="fee-result-foot">
             <p className="fee-fine">{fine}</p>
-            <button type="button" className="fee-link shrink-0 bg-transparent" onClick={onReset}>
+            <button
+              type="button"
+              className="fee-reset shrink-0"
+              onClick={onReset}
+            >
               Reset to example
             </button>
           </div>

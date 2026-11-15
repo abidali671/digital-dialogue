@@ -4,7 +4,7 @@ import contentful_client from "@/lib/contentful/client";
 import config from "@/lib/config";
 import constants from "@/constants";
 import BlogsListing from "@/components/blogs/BlogsListing";
-import { parseSearchQuery } from "@/lib/listing";
+import { paginateMatchedPosts, parseSearchQuery } from "@/lib/listing";
 import {
   assertPageInRange,
   pageCount,
@@ -25,12 +25,29 @@ type PageProps = {
 };
 
 const loadBlogPage = cache(async (page: number, searchQuery: string) => {
+  if (searchQuery) {
+    const response = await contentful_client.getEntries({
+      content_type: "post",
+      limit: 1000,
+      order: "-sys.updatedAt",
+    });
+    const matched = paginateMatchedPosts(
+      response.items as unknown as IPostData[],
+      searchQuery,
+      page,
+    );
+    return {
+      response: { ...response, items: matched.posts, total: matched.total },
+      total: matched.total,
+      totalPages: matched.totalPages,
+    };
+  }
+
   const response = await contentful_client.getEntries({
     content_type: "post",
     limit: config.BLOGS_PER_PAGE,
     skip: (page - 1) * config.BLOGS_PER_PAGE,
     order: "-sys.updatedAt",
-    ...(searchQuery ? { query: searchQuery } : {}),
   });
   return {
     response,

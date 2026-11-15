@@ -61,7 +61,7 @@ body {
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px;
+  scroll-padding-top: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -131,7 +131,7 @@ li {
   :where(.article-wrapper) p,
   :where(.article-wrapper) li,
   :where(.article-wrapper) blockquote p {
-    @apply text-prose;
+    @apply text-prose text-ink-soft;
   }
 
   :where(.article-wrapper) th,

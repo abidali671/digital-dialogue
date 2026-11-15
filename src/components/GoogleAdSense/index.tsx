@@ -1,14 +1,15 @@
+import Script from "next/script";
 import config from "@/lib/config";
 
-/** AdSense loader. The publisher id is public; it ships in the page head. */
+/** AdSense loader. Loaded after hydration so auto-ads cannot rewrite the DOM first. */
 const GoogleAdSense = () => {
   const client = config.ADSENSE_CLIENT_ID;
   if (!client) return null;
 
   return (
-    <script
-      async
+    <Script
       src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${client}`}
+      strategy="lazyOnload"
       crossOrigin="anonymous"
     />
   );

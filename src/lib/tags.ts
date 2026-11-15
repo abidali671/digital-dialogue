@@ -1,6 +1,7 @@
 import { cache } from "react";
 import contentful_client from "@/lib/contentful/client";
 import { postHasTagSlug, searchTextFromKeywordSlug } from "@/lib/keywords";
+import { postMatchesListingQuery } from "@/lib/listing";
 import type { IPostData } from "@/types";
 
 /** Tag pages with fewer posts are noindex and left out of the sitemap. */
@@ -48,12 +49,14 @@ export const loadTagPosts = cache(async (slug: string, searchQuery = "") => {
     "fields.tags[match]": tagQuery,
     order: "-sys.updatedAt",
     limit: 100,
-    ...(searchQuery ? { query: searchQuery } : {}),
   });
 
   let posts = (tagged.items as unknown as IPostData[]).filter((post) =>
     postHasTagSlug(post, slug)
   );
+  if (searchQuery) {
+    posts = posts.filter((post) => postMatchesListingQuery(post, searchQuery));
+  }
 
   if (!posts.length && !searchQuery) {
     const keywordMatch = await contentful_client.getEntries({

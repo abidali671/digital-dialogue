@@ -52,19 +52,17 @@ const HomeToolTeasers = ({
             <span aria-hidden="true">→</span>
           </Link>
         </div>
-        <ul
-          className={`mt-6 m-0 grid list-none gap-5 sm:grid-cols-2 ${
+        <div
+          className={`mt-6 grid gap-5 sm:grid-cols-2 ${
             columns === 3
               ? "min-[1024px]:grid-cols-3"
               : "xl:grid-cols-4"
           }`}
         >
           {tools.map((tool) => (
-            <li key={tool.href} className="m-0 list-none">
-              <ToolResultCard variant="teaser" tool={tool} />
-            </li>
+            <ToolResultCard key={tool.href} variant="teaser" tool={tool} />
           ))}
-        </ul>
+        </div>
         <Link
           href="/tools"
           className="home-link mt-4 text-[16px] sm:hidden"

@@ -4,7 +4,7 @@ import { cache } from "react";
 import contentful_client from "@/lib/contentful/client";
 import config from "@/lib/config";
 import BlogsListing from "@/components/blogs/BlogsListing";
-import { parseSearchQuery } from "@/lib/listing";
+import { paginateMatchedPosts, parseSearchQuery } from "@/lib/listing";
 import { isNextNotFound } from "@/lib/next-errors";
 import {
   assertPageInRange,
@@ -32,13 +32,32 @@ const loadCategoryPage = cache(
       | undefined;
     if (!category) return { category: null, posts: [], total: 0, totalPages: 1 };
 
+    if (searchQuery) {
+      const response = await contentful_client.getEntries({
+        content_type: "post",
+        links_to_entry: category.sys.id,
+        order: "-sys.updatedAt",
+        limit: 1000,
+      });
+      const matched = paginateMatchedPosts(
+        response.items as unknown as IPostData[],
+        searchQuery,
+        page,
+      );
+      return {
+        category,
+        posts: matched.posts,
+        total: matched.total,
+        totalPages: matched.totalPages,
+      };
+    }
+
     const response = await contentful_client.getEntries({
       content_type: "post",
       links_to_entry: category.sys.id,
       order: "-sys.updatedAt",
       limit: config.BLOGS_PER_PAGE,
       skip: (page - 1) * config.BLOGS_PER_PAGE,
-      ...(searchQuery ? { query: searchQuery } : {}),
     });
 
     return {

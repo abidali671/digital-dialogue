@@ -1,33 +1,13 @@
 import type { Metadata } from "next";
-import { Fraunces, IBM_Plex_Mono, Source_Sans_3 } from "next/font/google";
 import Layout from "@/components/layout";
 import GoogleAdSense from "@/components/GoogleAdSense";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import config from "@/lib/config";
+import { bodyFont, displayFont, monoFont } from "@/lib/fonts";
 import { DEFAULT_OG_IMAGE } from "@/lib/metadata";
 import "@/styles/global.css";
 
 export const revalidate = 3600;
-
-const bodyFont = Source_Sans_3({
-  subsets: ["latin"],
-  display: "optional",
-  variable: "--font-body",
-});
-
-const displayFont = Fraunces({
-  subsets: ["latin"],
-  display: "optional",
-  axes: ["opsz"],
-  variable: "--font-display",
-});
-
-const monoFont = IBM_Plex_Mono({
-  subsets: ["latin"],
-  display: "optional",
-  weight: ["400", "500"],
-  variable: "--font-mono",
-});
 
 export const metadata: Metadata = {
   title: config.SITE_NAME,
@@ -65,15 +45,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bodyFont.variable} ${displayFont.variable} ${monoFont.variable}`}
+      className={`${bodyFont.variable} ${displayFont.variable} ${monoFont.variable} ${displayFont.className} ${monoFont.className} ${bodyFont.className}`}
       suppressHydrationWarning
     >
-      <head>
-        <GoogleAdSense />
-      </head>
-      <body suppressHydrationWarning>
-        <GoogleAnalytics />
+      <body className={bodyFont.className} suppressHydrationWarning>
         <Layout>{children}</Layout>
+        <GoogleAnalytics />
+        <GoogleAdSense />
       </body>
     </html>
   );

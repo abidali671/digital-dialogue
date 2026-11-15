@@ -2,7 +2,8 @@
   @apply flow-root font-body;
 }
 
-.prose-dd {
+.prose-dd,
+.prose-dd p {
   color: #1e293b;
   font-size: 16px;
   line-height: 1.75;

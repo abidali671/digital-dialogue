@@ -32,7 +32,7 @@ const EXAMPLE: Values = {
   takeHome: "1500",
   expenses: "200",
   workHours: "40",
-  weeks: "",
+  weeks: "48",
   billHours: "25",
   billPct: "62.5",
   fee: "10",
@@ -390,7 +390,7 @@ export default function RateCalculator() {
               value={values.weeks}
               suffix="wks"
               placeholder="48"
-              hint="Leave blank to use 48."
+              hint="48 weeks leaves 4 weeks unpaid."
               hintId={`${formId}-weeks-hint`}
               describedBy={describedBy("weeks", `${formId}-weeks-hint`)}
               error={visible.weeks}
