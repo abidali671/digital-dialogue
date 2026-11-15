@@ -250,7 +250,7 @@ export default async function BlogDetailPage(props: PageProps) {
           <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-x-16 px-4 pb-14 pt-4 sm:px-5 min-[1024px]:grid-cols-[248px_minmax(0,760px)] min-[1024px]:justify-center min-[1024px]:px-8 min-[1024px]:pt-8">
             {shouldShowToc(tocHeadings) ? (
               <aside
-                className="article-tools sticky top-[88px] hidden max-h-[calc(100vh-112px)] self-start overflow-y-auto min-[1024px]:block"
+                className="article-tools sticky top-[88px] hidden self-start min-[1024px]:block"
                 aria-label="Article tools"
               >
                 <ArticleToc headings={tocHeadings} variant="sidebar" />
