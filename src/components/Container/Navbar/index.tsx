@@ -47,7 +47,7 @@ const Navbar = () => {
             alt={config.SITE_NAME}
             width={200}
             height={39}
-            className="h-8 w-auto md:h-9"
+            className="h-8 w-auto bg-transparent md:h-9"
             priority
           />
         </Link>
