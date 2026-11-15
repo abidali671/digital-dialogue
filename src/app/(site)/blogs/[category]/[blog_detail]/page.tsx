@@ -188,7 +188,7 @@ export default async function BlogDetailPage(props: PageProps) {
     );
     const shareUrl = `${config.BASE_URL}/blogs/${category}/${blog_detail}`;
     const readingTime = getReadingTime(content);
-    const { nodes: articleNodes, insertedHref } = renderArticleBody(content);
+    const { nodes: articleNodes } = renderArticleBody(content);
     const tocHeadings = [
       ...extractToc(content),
       ...(faqList.length > 0
@@ -474,8 +474,6 @@ export default async function BlogDetailPage(props: PageProps) {
             heading="More free calculators"
             sub=""
             headingId="mt-h"
-            excludeHrefs={insertedHref ? [insertedHref] : []}
-            columns={3}
             className="border-t border-line bg-white"
           />
           <Newsletter />

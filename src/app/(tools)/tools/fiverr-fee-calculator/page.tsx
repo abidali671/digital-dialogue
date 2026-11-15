@@ -4,7 +4,7 @@ import FiverrFeeCalculator from "@/components/tools/FiverrFeeCalculator";
 import FiverrFeeGuide from "@/components/tools/FiverrFeeGuide";
 import ToolHero from "@/components/tools/ToolHero";
 import FaqSection from "@/components/tools/FaqSection";
-import RelatedResources, { CALCULATOR_RESOURCES } from "@/components/tools/RelatedResources";
+import HomeToolTeasers from "@/components/home/HomeToolTeasers";
 import config from "@/lib/config";
 import { breadcrumbSchema, JsonLdScript } from "@/lib/schema";
 
@@ -73,6 +73,7 @@ export const metadata: Metadata = {
 
 export default function FiverrFeeCalculatorPage() {
   return (
+    <>
     <div className="fee-page">
       <JsonLdScript
         data={[
@@ -212,8 +213,12 @@ export default function FiverrFeeCalculatorPage() {
         items={FAQ.map((item) => ({ question: item.question, answer: <p>{item.text}</p> }))}
       />
 
-      <RelatedResources
-        items={[CALCULATOR_RESOURCES.fiverrFees, CALCULATOR_RESOURCES.fiverrPayout, CALCULATOR_RESOURCES.rate]}
+    </div>
+      <HomeToolTeasers
+        heading="More free calculators"
+        sub=""
+        headingId="more-tools-h"
+        className="border-t border-line bg-white"
       />
 
       <section className="border-t border-line bg-white">
@@ -223,7 +228,7 @@ export default function FiverrFeeCalculatorPage() {
           </p>
         </div>
       </section>
-    </div>
+    </>
   );
 }
 

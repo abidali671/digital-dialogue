@@ -5,7 +5,7 @@ import InvoiceGuide from "@/components/tools/InvoiceGuide";
 import InvoiceSheet from "@/components/tools/InvoiceSheet";
 import ToolHero from "@/components/tools/ToolHero";
 import FaqSection from "@/components/tools/FaqSection";
-import RelatedResources, { CALCULATOR_RESOURCES } from "@/components/tools/RelatedResources";
+import HomeToolTeasers from "@/components/home/HomeToolTeasers";
 import config from "@/lib/config";
 import { computeInvoice, defaultDraft } from "@/lib/invoice";
 import { breadcrumbSchema, JsonLdScript } from "@/lib/schema";
@@ -72,6 +72,7 @@ export default function FreelanceInvoiceGeneratorPage() {
   const sampleTotals = computeInvoice(sample);
 
   return (
+    <>
     <div className="fee-page">
       <JsonLdScript
         data={[
@@ -159,8 +160,12 @@ export default function FreelanceInvoiceGeneratorPage() {
         items={FAQ.map((item) => ({ question: item.question, answer: <p>{item.text}</p> }))}
       />
 
-      <RelatedResources
-        items={[CALCULATOR_RESOURCES.invoiceAccounting, CALCULATOR_RESOURCES.fee, CALCULATOR_RESOURCES.fiverr]}
+    </div>
+      <HomeToolTeasers
+        heading="More free calculators"
+        sub=""
+        headingId="more-tools-h"
+        className="border-t border-line bg-white"
       />
 
       <section className="border-t border-line bg-white">
@@ -170,6 +175,6 @@ export default function FreelanceInvoiceGeneratorPage() {
           </p>
         </div>
       </section>
-    </div>
+    </>
   );
 }

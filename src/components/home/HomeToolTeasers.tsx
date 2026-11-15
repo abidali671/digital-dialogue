@@ -28,7 +28,7 @@ const HomeToolTeasers = ({
     <section
       id="tools"
       aria-labelledby={headingId}
-      className={`scroll-mt-20 bg-mist ${className}`.trim()}
+      className={`home-page scroll-mt-20 bg-mist ${className}`.trim()}
     >
       <div className="home-inner pb-12 pt-6 lg:pb-16 lg:pt-8">
         <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">

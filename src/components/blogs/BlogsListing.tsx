@@ -398,7 +398,7 @@ const BlogsListing = ({
       </div>
 
       <HomeToolTeasers
-        heading="Not sure what you’ll keep, charge or spend?"
+        heading="Not sure what you'll keep, charge or spend?"
         sub="Check a number before you take the job. Each card shows its own example; open one to use your figures."
         className="border-t border-line"
       />

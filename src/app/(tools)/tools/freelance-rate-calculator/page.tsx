@@ -4,7 +4,7 @@ import FaqSection from "@/components/tools/FaqSection";
 import RateCalculator from "@/components/tools/RateCalculator";
 import RateGuide from "@/components/tools/RateGuide";
 import ToolHero from "@/components/tools/ToolHero";
-import RelatedResources, { CALCULATOR_RESOURCES } from "@/components/tools/RelatedResources";
+import HomeToolTeasers from "@/components/home/HomeToolTeasers";
 import config from "@/lib/config";
 import { breadcrumbSchema, JsonLdScript } from "@/lib/schema";
 
@@ -46,6 +46,7 @@ export const metadata: Metadata = {
 
 export default function FreelanceRateCalculatorPage() {
   return (
+    <>
     <div className="fee-page">
       <JsonLdScript data={[
         breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Tools", path: "/tools" }, { name: "Freelance Rate Calculator", path: PATH }]),
@@ -134,8 +135,12 @@ export default function FreelanceRateCalculatorPage() {
         }
         items={FAQ.map((item) => ({ question: item.question, answer: <p>{item.text}</p> }))}
       />
-      <RelatedResources
-        items={[CALCULATOR_RESOURCES.fee, CALCULATOR_RESOURCES.connects, CALCULATOR_RESOURCES.guide]}
+    </div>
+      <HomeToolTeasers
+        heading="More free calculators"
+        sub=""
+        headingId="more-tools-h"
+        className="border-t border-line bg-white"
       />
       <section className="border-t border-line bg-white">
         <div className="mx-auto w-full max-w-7xl px-5 py-8 sm:px-6">
@@ -144,6 +149,6 @@ export default function FreelanceRateCalculatorPage() {
           </p>
         </div>
       </section>
-    </div>
+    </>
   );
 }
