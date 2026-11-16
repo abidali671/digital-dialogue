@@ -8,6 +8,7 @@ export default function FaqSection({
   headingId = "faq-h",
   id,
   layout = "page",
+  compact = false,
 }: {
   title: string;
   intro?: ReactNode;
@@ -15,6 +16,7 @@ export default function FaqSection({
   headingId?: string;
   id?: string;
   layout?: "page" | "inline";
+  compact?: boolean;
 }) {
   if (!items.length) return null;
 
@@ -47,7 +49,7 @@ export default function FaqSection({
 
   return (
     <section id={id} aria-labelledby={headingId} className="home-page bg-white">
-      <div className="home-inner py-14 lg:py-20">
+      <div className={compact ? "home-inner py-10 lg:py-12" : "home-inner py-14 lg:py-20"}>
         <div className="grid gap-8 lg:grid-cols-[1fr_1.6fr] lg:gap-14">
           <div>{heading}</div>
           <FeeFaq items={items} />

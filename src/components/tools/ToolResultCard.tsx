@@ -37,6 +37,8 @@ function CtaArrow() {
   return (
     <svg
       aria-hidden="true"
+      width="16"
+      height="16"
       className="h-4 w-4 transition group-hover:translate-x-0.5"
       viewBox="0 0 20 20"
       fill="currentColor"

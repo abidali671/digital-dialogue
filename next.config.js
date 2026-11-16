@@ -16,8 +16,8 @@ const contentSecurityPolicy = [
   "img-src 'self' data: blob: https://images.ctfassets.net https://*.ctfassets.net https://pagead2.googlesyndication.com https://*.googlesyndication.com https://www.google.com https://www.gstatic.com https://www.google-analytics.com https://www.googletagmanager.com",
   "font-src 'self' data:",
   "style-src 'self' 'unsafe-inline'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagservices.com https://www.google.com https://www.gstatic.com https://adservice.google.com https://www.googletagmanager.com",
-  "connect-src 'self' https://formspree.io https://cdn.contentful.com https://images.ctfassets.net https://pagead2.googlesyndication.com https://*.googlesyndication.com https://www.google.com https://googleads.g.doubleclick.net https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://www.googletagservices.com https://www.google.com https://www.gstatic.com https://adservice.google.com https://www.googletagmanager.com https://fundingchoicesmessages.google.com",
+  "connect-src 'self' https://formspree.io https://cdn.contentful.com https://images.ctfassets.net https://pagead2.googlesyndication.com https://*.googlesyndication.com https://www.google.com https://googleads.g.doubleclick.net https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.adtrafficquality.google",
   "frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.google.com https://www.googletagmanager.com",
   "upgrade-insecure-requests",
 ].join("; ");
@@ -38,7 +38,6 @@ const cspReportOnly = [
   "connect-src 'self' https://formspree.io https://cdn.contentful.com https://images.ctfassets.net https://*.googlesyndication.com https://www.google.com https://*.doubleclick.net https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.adtrafficquality.google https://fundingchoicesmessages.google.com",
   "frame-src 'self' https://*.doubleclick.net https://tpc.googlesyndication.com https://*.googlesyndication.com https://www.google.com https://www.googletagmanager.com https://*.adtrafficquality.google https://fundingchoicesmessages.google.com",
   "worker-src 'self' blob:",
-  "upgrade-insecure-requests",
   "report-uri /api/csp-report",
 ].join("; ");
 

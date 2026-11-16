@@ -4,6 +4,8 @@ function Check() {
   return (
     <svg
       aria-hidden="true"
+      width="16"
+      height="16"
       viewBox="0 0 20 20"
       className="shrink-0"
       fill="none"
@@ -32,6 +34,15 @@ export default function ToolHero({
 }) {
   return (
     <>
+      {/* Hide badge/trust before CSS so unsized SVGs cannot inflate the 390px column. */}
+      <style>{`
+        .fee-page .fee-hero-badge,
+        .fee-page .fee-hero-trust { display: none !important; }
+        @media (min-width: 1024px) {
+          .fee-page .fee-hero-badge { display: inline-flex !important; }
+          .fee-page .fee-hero-trust { display: block !important; }
+        }
+      `}</style>
       <h1>{title}</h1>
       {typeof intro === "string" ? (
         <p className="fee-hero-intro">{intro}</p>

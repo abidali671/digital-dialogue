@@ -58,7 +58,7 @@ export function BlogsFeaturedCard({ post }: { post: IPostData }) {
         href={postHref(post)}
         className="home-pc group grid overflow-hidden rounded-2xl lg:grid-cols-[1.15fr_1fr]"
       >
-        <div className="relative aspect-video w-full overflow-hidden bg-mist-soft lg:aspect-auto lg:h-full lg:min-h-[320px]">
+        <div className="relative aspect-video w-full overflow-hidden bg-mist-soft">
           <CoverImage
             src={contentfulImageUrl(post.fields.coverImage.fields.file.url, 1200)}
             alt={post.fields.title}

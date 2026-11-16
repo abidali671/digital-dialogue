@@ -471,9 +471,15 @@
   color: #334155;
 }
 
+.fee-page .fee-hero-badge svg,
+.fee-page .fee-hero-trust svg {
+  width: 16px;
+  height: 16px;
+}
+
 .fee-page .fee-hero-badge,
 .fee-page .fee-hero-trust {
-  display: none;
+  display: none !important;
 }
 
 .fee-page .fee-hero-badge {
@@ -967,11 +973,11 @@
   }
 
   .fee-page .fee-hero-badge {
-    display: inline-flex;
+    display: inline-flex !important;
   }
 
   .fee-page .fee-hero-trust {
-    display: block;
+    display: block !important;
   }
 
   .fee-page .fee-mobile-summary {

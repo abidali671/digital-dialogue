@@ -37,7 +37,7 @@ export default function FeeFaq({
                 aria-hidden="true"
                 className="grid h-8 w-8 flex-none place-items-center rounded-full border border-[#cbd5e1] text-[#334155] transition group-open:rotate-45"
               >
-                <Plus className="h-4 w-4" />
+                <Plus className="h-4 w-4" width={16} height={16} />
               </span>
             </summary>
             <div

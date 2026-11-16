@@ -49,6 +49,8 @@ function CheckIcon() {
   return (
     <svg
       aria-hidden="true"
+      width="16"
+      height="16"
       className="mt-1 h-4 w-4 flex-none text-[#0f766e]"
       viewBox="0 0 20 20"
       fill="currentColor"

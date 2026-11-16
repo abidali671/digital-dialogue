@@ -79,7 +79,7 @@ export function CalculatorField({
 
 export function Chevron() {
   return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" fill="currentColor">
+    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
       <path d="M5.3 7.3a1 1 0 0 1 1.4 0L10 10.6l3.3-3.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 0-1.4z" />
     </svg>
   );

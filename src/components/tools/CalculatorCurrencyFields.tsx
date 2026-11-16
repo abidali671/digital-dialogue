@@ -90,6 +90,8 @@ export default function CalculatorCurrencyFields({
         </select>
         <svg
           aria-hidden="true"
+          width="20"
+          height="20"
           viewBox="0 0 20 20"
           className="fee-svg-lg pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#475569]"
           fill="none"

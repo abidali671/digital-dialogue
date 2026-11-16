@@ -102,6 +102,8 @@ function CheckIcon() {
   return (
     <svg
       aria-hidden="true"
+      width="16"
+      height="16"
       className="mt-1 h-4 w-4 flex-none text-[#0f766e]"
       viewBox="0 0 20 20"
       fill="currentColor"
@@ -115,6 +117,8 @@ function GuideArrow() {
   return (
     <svg
       aria-hidden="true"
+      width="16"
+      height="16"
       className="h-4 w-4 transition group-hover:translate-x-0.5"
       viewBox="0 0 20 20"
       fill="currentColor"
@@ -253,7 +257,7 @@ export default function ToolsListing({ searchQuery }: { searchQuery: string }) {
         </div>
       </section>
 
-      <div className="mx-auto max-w-[1200px] px-4 pb-14 pt-4 sm:px-5 min-[1024px]:px-8 min-[1024px]:pb-16 min-[1024px]:pt-2">
+      <div className="mx-auto max-w-[1200px] px-4 pb-10 pt-4 sm:px-5 min-[1024px]:px-8 min-[1024px]:pb-12 min-[1024px]:pt-2">
         <p className="sr-only" role="status" aria-live="polite">
           {status}
         </p>
@@ -351,7 +355,7 @@ export default function ToolsListing({ searchQuery }: { searchQuery: string }) {
       </div>
 
       <section aria-labelledby="how-h" className="border-t border-[#e2e8f0] bg-white">
-        <div className="mx-auto grid max-w-[1200px] gap-6 px-4 py-14 sm:px-5 min-[1024px]:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] min-[1024px]:gap-14 min-[1024px]:px-8 min-[1024px]:py-16">
+        <div className="mx-auto grid max-w-[1200px] gap-6 px-4 py-10 sm:px-5 min-[1024px]:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)] min-[1024px]:gap-14 min-[1024px]:px-8 min-[1024px]:py-12">
           <div>
             <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-[#0f766e]">
               Before you start
@@ -370,7 +374,7 @@ export default function ToolsListing({ searchQuery }: { searchQuery: string }) {
       </section>
 
       <section aria-labelledby="guides-h" className="border-t border-[#e2e8f0] bg-[#f4f6f8]">
-        <div className="mx-auto max-w-[1200px] px-4 py-14 sm:px-5 min-[1024px]:px-8 min-[1024px]:py-20">
+        <div className="mx-auto max-w-[1200px] px-4 py-10 sm:px-5 min-[1024px]:px-8 min-[1024px]:py-12">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-[#0f766e]">
@@ -425,6 +429,7 @@ export default function ToolsListing({ searchQuery }: { searchQuery: string }) {
         title="Calculator questions"
         intro="Short answers on take-home pay, Connects, hourly rates and currency."
         items={TOOL_FAQS}
+        compact
       />
     </div>
   );
