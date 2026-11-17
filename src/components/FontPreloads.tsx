@@ -1,0 +1,34 @@
+export default function FontPreloads() {
+  return (
+    <>
+      <link
+        rel="preload"
+        href="/fonts/source-sans-3-latin-400.woff2"
+        as="font"
+        type="font/woff2"
+        crossOrigin="anonymous"
+      />
+      <link
+        rel="preload"
+        href="/fonts/source-sans-3-latin-700.woff2"
+        as="font"
+        type="font/woff2"
+        crossOrigin="anonymous"
+      />
+      <link
+        rel="preload"
+        href="/fonts/fraunces-latin.woff2"
+        as="font"
+        type="font/woff2"
+        crossOrigin="anonymous"
+      />
+      <link
+        rel="preload"
+        href="/fonts/ibm-plex-mono-latin-400.woff2"
+        as="font"
+        type="font/woff2"
+        crossOrigin="anonymous"
+      />
+    </>
+  );
+}

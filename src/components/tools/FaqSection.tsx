@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import FeeFaq, { type FaqItem } from "@/components/tools/FeeFaq";
+import FaqList, { type FaqItem } from "@/components/FaqList";
 
 export default function FaqSection({
   title,
@@ -41,7 +41,7 @@ export default function FaqSection({
       >
         {heading}
         <div className="mt-4 max-w-[68ch]">
-          <FeeFaq items={items} />
+          <FaqList items={items} />
         </div>
       </section>
     );
@@ -52,7 +52,7 @@ export default function FaqSection({
       <div className={compact ? "home-inner py-10 lg:py-12" : "home-inner py-14 lg:py-20"}>
         <div className="grid gap-8 lg:grid-cols-[1fr_1.6fr] lg:gap-14">
           <div>{heading}</div>
-          <FeeFaq items={items} />
+          <FaqList items={items} />
         </div>
       </div>
     </section>

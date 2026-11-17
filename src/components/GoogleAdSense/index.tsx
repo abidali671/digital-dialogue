@@ -4,9 +4,11 @@ import Script from "next/script";
 import { usePathname } from "next/navigation";
 import config from "@/lib/config";
 
-/** Auto ads on calculator pages reflow the hero after load (production CLS). */
+/** Auto ads above the first result on /tools and posts push MAIN and the tool cards. */
 function skipAutoAds(pathname: string) {
-  return pathname.startsWith("/tools/") && pathname !== "/tools/";
+  if (pathname === "/tools" || pathname.startsWith("/tools/")) return true;
+  const parts = pathname.split("/").filter(Boolean);
+  return parts[0] === "blogs" && parts.length >= 3;
 }
 
 /** AdSense loader. After hydration so auto-ads cannot rewrite the DOM first. */

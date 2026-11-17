@@ -7,7 +7,7 @@ export type FaqItem = {
   extra?: ReactNode;
 };
 
-export default function FeeFaq({
+export default function FaqList({
   items,
   openFirst = true,
 }: {

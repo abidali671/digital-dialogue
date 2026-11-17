@@ -460,8 +460,22 @@
   transform: rotate(180deg);
 }
 
+.fee-page .site-breadcrumb {
+  min-height: 2.5rem;
+}
+
 .fee-page .fee-hero h1 {
   margin-top: 0.75rem;
+}
+
+@media (max-width: 767px) {
+  .fee-page .site-breadcrumb {
+    min-height: 70px;
+  }
+
+  .fee-page .fee-hero h1 {
+    min-height: 4.5rem;
+  }
 }
 
 .fee-page .fee-hero-intro {

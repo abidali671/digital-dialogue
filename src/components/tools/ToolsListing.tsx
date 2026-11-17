@@ -257,7 +257,7 @@ export default function ToolsListing({ searchQuery }: { searchQuery: string }) {
         </div>
       </section>
 
-      <div className="mx-auto max-w-[1200px] px-4 pb-10 pt-4 sm:px-5 min-[1024px]:px-8 min-[1024px]:pb-12 min-[1024px]:pt-2">
+      <div className="mx-auto max-w-[1200px] px-4 pb-10 pt-4 sm:px-5 min-[1024px]:px-8 min-[1024px]:pb-[4.5rem] min-[1024px]:pt-2">
         <p className="sr-only" role="status" aria-live="polite">
           {status}
         </p>

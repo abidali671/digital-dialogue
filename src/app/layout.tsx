@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Layout from "@/components/layout";
+import FontPreloads from "@/components/FontPreloads";
 import GoogleAdSense from "@/components/GoogleAdSense";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import config from "@/lib/config";
-import { bodyFont, displayFont, monoFont } from "@/lib/fonts";
 import { DEFAULT_OG_IMAGE } from "@/lib/metadata";
 import "@/styles/global.css";
 
@@ -43,12 +43,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${bodyFont.variable} ${displayFont.variable} ${monoFont.variable} ${displayFont.className} ${monoFont.className} ${bodyFont.className}`}
-      suppressHydrationWarning
-    >
-      <body className={bodyFont.className} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <FontPreloads />
+      </head>
+      <body className="font-body" suppressHydrationWarning>
         <Layout>{children}</Layout>
         <GoogleAnalytics />
         <GoogleAdSense />
